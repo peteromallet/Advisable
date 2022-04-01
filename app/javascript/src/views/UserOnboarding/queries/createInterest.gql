@@ -1,8 +1,0 @@
-mutation CreateInterest($input: CreateCaseStudyInterestInput!) {
-  createCaseStudyInterest(input: $input) {
-    interest {
-      id
-      term
-    }
-  }
-}

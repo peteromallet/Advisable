@@ -1,35 +1,50 @@
-import { XCircle } from "@styled-icons/heroicons-solid";
+import { ArrowSmRight, XCircle } from "@styled-icons/heroicons-solid";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SimpleBar from "simplebar-react";
-import { useCreateInterest, useDeleteInterest } from "./queries";
+import Button from "src/components/Button";
+import { useCreateInterests, useDeleteInterest } from "./queries";
 import SuggestedInterest from "./SuggestedInterest";
+import InterestInput from "./InterestInput";
 import SUGGESTED_INTERESTS from "./suggestedInterests";
+import Arrow from "./arrow";
 
 export default function Interests({ data }) {
-  const [createInterest] = useCreateInterest();
+  const navigate = useNavigate();
+  const [interests, setInterests] = useState(data.interests.map((i) => i.term));
+  const [deleteInterest] = useDeleteInterest();
+  const [createInterests, { loading }] = useCreateInterests();
 
   const addInterest = (interest) => {
-    createInterest({
+    setInterests([...interests, interest]);
+  };
+
+  const removeInterest = (interest) => {
+    setInterests(interests.filter((i) => i !== interest));
+
+    const savedInterest = data.interests.find((i) => i.term === interest);
+    deleteInterest({
       variables: {
-        input: { term: interest },
-      },
-      optimisticResponse: {
-        createCaseStudyInterest: {
-          interest: {
-            __typename: "CaseStudyInterest",
-            id: "PENDING",
-            term: interest,
-          },
-        },
+        input: { id: savedInterest.id },
       },
     });
   };
 
-  const interests = data.interests;
+  const handleContinue = async () => {
+    await createInterests({
+      variables: {
+        input: {
+          terms: interests,
+        },
+      },
+    });
+
+    navigate("/");
+  };
+
   const suggestedInterests = useMemo(() => {
-    const interestTerms = data.interests.map((i) => i.term);
-    return SUGGESTED_INTERESTS.filter((i) => !interestTerms.includes(i));
-  }, [data]);
+    return SUGGESTED_INTERESTS.filter((i) => !interests.includes(i));
+  }, [interests]);
 
   return (
     <div className="container mx-auto flex gap-12">
@@ -44,7 +59,30 @@ export default function Interests({ data }) {
             like to see below.
           </p>
 
-          <YourInterests interests={interests} />
+          <div className="mb-8">
+            <InterestInput onAdd={addInterest} />
+          </div>
+
+          <YourInterests interests={interests} onRemove={removeInterest} />
+
+          {interests.length > 0 ? (
+            <Button
+              size="lg"
+              loading={loading}
+              onClick={handleContinue}
+              suffix={<ArrowSmRight />}
+            >
+              Continue
+            </Button>
+          ) : (
+            <div className="flex max-w-[360px] gap-4 pl-5">
+              <div className="flex-shrink-0 -mt-4">
+                <Arrow />
+              </div>
+              Add any interests you like or pick from the list of popular
+              interests
+            </div>
+          )}
         </div>
       </div>
       <div className="w-full">
@@ -57,42 +95,20 @@ export default function Interests({ data }) {
   );
 }
 
-function YourInterests({ interests }) {
-  const [deleteInterest] = useDeleteInterest();
-
+function YourInterests({ interests, onRemove }) {
   if (interests.length === 0) return null;
 
-  const removeInterest = (interest) => {
-    deleteInterest({
-      variables: {
-        input: { id: interest.id },
-      },
-      update(cache) {
-        cache.modify({
-          fields: {
-            interests(existingInterests) {
-              return existingInterests.filter((i) => i.id !== interest.id);
-            },
-          },
-        });
-      },
-    });
-  };
-
   return (
-    <div>
+    <div className="mb-10">
       <h4 className="uppercase text-sm font-medium mb-1">Your Interests</h4>
       <div className="flex flex-wrap gap-2">
         {interests.map((interest) => (
           <div
-            key={interest.id}
+            key={interest}
             className="pl-4 pr-3 py-2 rounded-full bg-neutral800 text-white inline-flex items-center gap-2"
           >
-            {interest.term}
-            <button
-              className="inline-flex"
-              onClick={() => removeInterest(interest)}
-            >
+            {interest}
+            <button className="inline-flex" onClick={() => onRemove(interest)}>
               <XCircle className="w-5 h-5" />
             </button>
           </div>

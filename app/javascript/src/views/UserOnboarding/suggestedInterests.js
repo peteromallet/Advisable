@@ -11,6 +11,8 @@ const INTERESTS = [
   "Create funny B2B content",
   "Create viral linkedin posts",
   "Reposition FinTech brand",
+  "Mobile app for healthcare industry",
+  "Increase page views for blog",
 ];
 
 const SUGGESTED_INTERESTS = [
