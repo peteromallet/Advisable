@@ -14,19 +14,6 @@ def clear_unavailable_until_today
   Specialist.where("unavailable_until < ?", Time.zone.today).update_all(unavailable_until: nil)
 end
 
-def create_invoices
-  today = Time.zone.today
-  return unless today == today.beginning_of_month
-
-  yesterday = Time.zone.yesterday
-  last_months_payments = Payment.with_status("succeeded").where(created_at: yesterday.beginning_of_month..today)
-  companies_with_payments = Company.where(id: last_months_payments.select(:company_id))
-  companies_with_payments.each do |company|
-    invoice = Invoice.create(company:, year: yesterday.year, month: yesterday.month)
-    GenerateInvoicePdfJob.perform_later(invoice, notify: true)
-  end
-end
-
 def topup_case_study_searches
   RefreshCaseStudySearchesJob.perform_now
 end
@@ -39,7 +26,6 @@ namespace :cron do
   task daily: :environment do
     clear_magic_links
     clear_unavailable_until_today
-    create_invoices
   end
 
   task weekly: :environment do
