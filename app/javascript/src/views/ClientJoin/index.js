@@ -20,7 +20,6 @@ function ClientJoin() {
 
   // Redirect to root if client or specialist logged in
   if (viewer && viewer.applicationStage !== "Application Started") {
-    console.log("REDIRECTING");
     return <Navigate to="/" />;
   }
 
