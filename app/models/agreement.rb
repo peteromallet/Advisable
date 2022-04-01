@@ -6,8 +6,7 @@ class Agreement < ApplicationRecord
   has_logidze
 
   DEFAULT_DUE_DAYS = 5
-  VALID_STATUSES = %w[pending reminded accepted declined].freeze
-  ACCEPTABLE_STATUSES = %w[pending reminded].freeze
+  VALID_STATUSES = %w[pending accepted declined].freeze
   VALID_COLLABORATIONS = %w[fixed hourly flexible].freeze
   VALID_INVOICINGS = %w[upfront recurring after flexible].freeze
 
@@ -21,15 +20,16 @@ class Agreement < ApplicationRecord
   validates :collaboration, inclusion: {in: VALID_COLLABORATIONS}, allow_blank: true
   validates :invoicing, inclusion: {in: VALID_INVOICINGS}, allow_blank: true
 
-  scope :accepted, -> { where(status: "accepted") }
-  scope :pending, -> { where(status: "pending") }
+  VALID_STATUSES.each do |status|
+    scope status, -> { where(status:) }
+  end
 
   def due_days
     super.presence || DEFAULT_DUE_DAYS
   end
 
   def acceptable?
-    ACCEPTABLE_STATUSES.include?(status)
+    status == "pending"
   end
   alias declinable? acceptable?
 end
@@ -44,6 +44,7 @@ end
 #  hourly_rate   :integer
 #  invoicing     :string
 #  reason        :string
+#  reminded_at   :datetime
 #  status        :string
 #  uid           :string           not null
 #  created_at    :datetime         not null

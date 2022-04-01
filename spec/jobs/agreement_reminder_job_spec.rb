@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe AgreementReminderJob do
-  let(:status) { "pending" }
   let(:created_at) { 4.days.ago }
-  let!(:agreement) { create(:agreement, status:, created_at:) }
+  let(:reminded_at) { nil }
+  let!(:agreement) { create(:agreement, created_at:, reminded_at:) }
 
   it "sends reminder only once" do
     described_class.perform_now
@@ -26,7 +26,7 @@ RSpec.describe AgreementReminderJob do
   end
 
   context "when already reminded" do
-    let(:status) { "reminded" }
+    let(:reminded_at) { 1.day.ago }
 
     it "does not send reminder" do
       described_class.perform_now
