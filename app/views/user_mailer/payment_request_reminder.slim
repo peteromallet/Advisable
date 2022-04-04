@@ -11,7 +11,7 @@
     ' You can approve it and complete the payment following the button below.
   = render "emails/spacing", height: "32px"
   = render "emails/paragraph" do
-    ' Please note that the request is due on #{@payment_request.due_date.strftime("%d %B %Y")}.
+    ' Please note that the request is due on #{@payment_request.due_at.strftime("%d %B %Y")}.
     ' If you have any questions regarding the work it refers to feel free to reach out to #{@payment_request.specialist.account.name}, while if you need help completing your payment please contact us at <a href="mailto:finance@advisable.com">finance@advisable.com</a>.
   = render "emails/spacing", height: "32px"
   = render "emails/button", href: magic_link(@agreement.user.account, payment_request_url(@payment_request)) do
