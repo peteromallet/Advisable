@@ -20,6 +20,7 @@
 /db/seeds/test_data.yml
 /db/seeds/assets/images/*
 !/db/seeds/assets/images/.keep
+/lib/tasks/data/case_studies
 
 /node_modules
 /yarn-error.log
