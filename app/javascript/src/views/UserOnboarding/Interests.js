@@ -8,7 +8,7 @@ import { useCreateInterests, useDeleteInterest } from "./queries";
 import SuggestedInterest from "./SuggestedInterest";
 import InterestInput from "./InterestInput";
 import SUGGESTED_INTERESTS from "./suggestedInterests";
-import Arrow from "./arrow";
+import Arrow from "./Arrow";
 
 export default function Interests({ data }) {
   const navigate = useNavigate();
