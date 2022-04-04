@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useTimeout } from "src/hooks/useTimeout";
 import { useNavigate } from "react-router-dom";
+import { useShortlists } from "../Discover/queries";
+import useInterval from "src/hooks/useInterval";
 
 function Card(props) {
   return (
@@ -22,10 +23,19 @@ const SPACING = 116;
 
 export default function CreatingFeed() {
   const navigate = useNavigate();
+  const [seconds, setSeconds] = useState(0);
 
-  useTimeout(() => {
-    navigate("/");
-  }, 5000);
+  const { data } = useShortlists();
+
+  useInterval(() => {
+    setSeconds(seconds + 1);
+  }, [1000]);
+
+  useEffect(() => {
+    if (seconds >= 5 && data) {
+      navigate("/");
+    }
+  }, [seconds, data, navigate]);
 
   return (
     <div className="w-full grid place-items-center">

@@ -25,8 +25,8 @@ export function useShortlist() {
   });
 }
 
-export function useShortlists() {
-  return useQuery(SHORTLISTS);
+export function useShortlists(opts) {
+  return useQuery(SHORTLISTS, opts);
 }
 
 export function useCurrentCompany() {
