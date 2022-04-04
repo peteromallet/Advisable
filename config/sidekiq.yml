@@ -18,6 +18,8 @@ production:
     every: 10 minutes
   PaymentRequestDueJob:
     every: 10 minutes
+  PaymentRequestDueJob:
+    every: 10 minutes
   ConsultationReminderJob:
     every: 10 minutes
   InterviewRequestReminderJob:
