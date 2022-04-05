@@ -5,11 +5,9 @@ require "csv"
 
 # rubocop:disable Rails/SkipsModelValidations
 class TestData
-  AMOUNT_OF_RANDOM_IMAGES = 100
-  AMOUNT_OF_CASE_STUDIES = 100
-  YML_NAME = "test_data.yml"
-  YML_PATH = "db/seeds/#{YML_NAME}".freeze
-  IMAGES_PATH = "db/seeds/assets/images/"
+  YML_NAME = "test_data_2022_04.yml"
+  DATA_DIR = "db/seeds/data"
+  YML_PATH = "#{DATA_DIR}/#{YML_NAME}".freeze
 
   extend Memoist
 

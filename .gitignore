@@ -17,10 +17,9 @@
 /storage/*
 
 # Ignore seed data
-/db/seeds/test_data.yml
+/db/seeds/data/*
 /db/seeds/assets/images/*
 !/db/seeds/assets/images/.keep
-/lib/tasks/data/case_studies
 
 /node_modules
 /yarn-error.log
