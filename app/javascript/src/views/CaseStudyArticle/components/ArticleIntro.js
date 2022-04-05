@@ -32,12 +32,16 @@ function Achievements({ caseStudy }) {
 export default function ArticleIntro({ caseStudy }) {
   return (
     <div>
-      <PassportAvatar
-        src={caseStudy.specialist.avatar}
-        size="sm"
-        name={caseStudy.specialist.name}
-      />
-      <img src={caseStudy.company.favicon} />
+      <div className="flex">
+        <PassportAvatar
+          src={caseStudy.specialist.avatar}
+          size="sm"
+          name={caseStudy.specialist.name}
+        />
+        <div className="flex bg-gray-200 rounded-md h-[52px] w-11 items-center justify-center">
+          <img src={caseStudy.company.favicon} className="rounded w-6 h-6" />
+        </div>
+      </div>
       <h1 className="text-5xl font-extrabold">{caseStudy.title}</h1>
       <AdvisableComment caseStudy={caseStudy} />
       <CompanyBox caseStudy={caseStudy} />
