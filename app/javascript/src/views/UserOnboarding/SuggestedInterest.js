@@ -20,9 +20,9 @@ const styles = composeStyles({
 
 export default function SuggestedInterest({ children, ...props }) {
   return (
-    <div className={styles()} {...props}>
+    <button className={styles()} {...props}>
       <PlusSm className="w-4 h-4" />
       {children}
-    </div>
+    </button>
   );
 }

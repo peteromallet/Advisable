@@ -51,6 +51,7 @@ export default function Industry({ data }) {
         {filteredIndustries.map((industry) => (
           <div
             key={industry.id}
+            data-testid="industry"
             className="bg-white shadow-md rounded-md p-5 cursor-pointer border-2 border-solid border-transparent hover:shadow-xl hover:border-neutral700"
             onClick={handleSelection(industry)}
           >
