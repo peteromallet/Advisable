@@ -141,6 +141,26 @@
       "note": ""
     },
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "5f98ed6dae64aa9ee164962257d0bfe86310817f53b99b5a716bcefc138d58cd",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/data_from_production.rb",
+      "line": 100,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{:BRAKEMAN_SAFE_LITERAL}) TO #{TestData::PRUNED_DIR}/#{:BRAKEMAN_SAFE_LITERAL}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "DataFromProduction",
+        "method": "prepare_file"
+      },
+      "user_input": "TestData::PRUNED_DIR",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "8ab2d6d7e83f332188f7e42d636e99f228a6ab789a0075efd599cb5dd29ae42c",
@@ -167,7 +187,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/data_from_production.rb",
-      "line": 46,
+      "line": 59,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{:BRAKEMAN_SAFE_LITERAL}) TO #{TestData::DATA_DIR}/#{:BRAKEMAN_SAFE_LITERAL}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -261,6 +281,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-04-05 13:35:47 +0200",
+  "updated": "2022-04-05 15:54:39 +0200",
   "brakeman_version": "5.2.1"
 }
