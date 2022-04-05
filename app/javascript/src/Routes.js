@@ -47,7 +47,14 @@ const MainRoutes = () => {
           element={<CaseStudyReview />}
         />
         <Route path="/review/:id/*" element={<TestimonialFlow />} />
-        <Route path="/setup/*" element={<UserOnboarding />} />
+        <Route
+          path="/setup/*"
+          element={
+            <RequireAuthentication clientOnly>
+              <UserOnboarding />
+            </RequireAuthentication>
+          }
+        />
         <Route path="*" element={<ApplicationRoutes />} />
       </Routes>
     </Suspense>
