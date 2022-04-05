@@ -1,6 +1,6 @@
 import Sticky from "react-stickynode";
 import { ArrowSmRight, XCircle } from "@styled-icons/heroicons-solid";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import SimpleBar from "simplebar-react";
@@ -44,9 +44,14 @@ export default function Interests({ data }) {
     navigate("../complete");
   };
 
-  const suggestedInterests = useMemo(() => {
-    return SUGGESTED_INTERESTS.filter((i) => !interests.includes(i));
-  }, [interests]);
+  const handleSuggestionClick = (interest) => {
+    const isSeleted = interests.includes(interest);
+    if (isSeleted) {
+      removeInterest(interest);
+    } else {
+      addInterest(interest);
+    }
+  };
 
   return (
     <div className="container mx-auto flex gap-12">
@@ -99,8 +104,8 @@ export default function Interests({ data }) {
       >
         <Sticky top={50} enabled>
           <SuggestedInterests
-            suggestions={suggestedInterests}
-            onClick={addInterest}
+            selected={interests}
+            onClick={handleSuggestionClick}
           />
         </Sticky>
       </motion.div>
@@ -131,7 +136,7 @@ function YourInterests({ interests, onRemove }) {
   );
 }
 
-function SuggestedInterests({ suggestions, onClick }) {
+function SuggestedInterests({ selected, onClick }) {
   const scrollRef = useRef();
   const [top, setTop] = useState(true);
 
@@ -160,8 +165,12 @@ function SuggestedInterests({ suggestions, onClick }) {
         data-top={top}
       >
         <div className="flex flex-wrap gap-3 pb-12">
-          {suggestions.map((interest, i) => (
-            <SuggestedInterest key={i} onClick={() => onClick(interest)}>
+          {SUGGESTED_INTERESTS.map((interest, i) => (
+            <SuggestedInterest
+              key={i}
+              onClick={() => onClick(interest)}
+              isSelected={selected.includes(interest)}
+            >
               {interest}
             </SuggestedInterest>
           ))}
