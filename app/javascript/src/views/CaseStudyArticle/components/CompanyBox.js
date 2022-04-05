@@ -6,7 +6,7 @@ export default function CompanyBox({ caseStudy }) {
   return (
     <div className="flex items-center gap-4 border border-solid border-slate-400 rounded-[20px] px-6 py-4">
       <div className="flex gap-2 items-center">
-        <img src={caseStudy.company.favicon} />
+        <img src={caseStudy.company.favicon} className="h-8 w-8 rounded" />
         <span className="text-xl">{caseStudy.company.name}</span>
       </div>
       <Divider />
