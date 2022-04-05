@@ -18,6 +18,7 @@
 
 # Ignore seed data
 /db/seeds/data/*
+!/db/seeds/data/.keep
 /db/seeds/assets/images/*
 !/db/seeds/assets/images/.keep
 

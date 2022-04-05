@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "zip"
+
 class DataFromProduction
   TABLE_NAMES = %i[
     case_study_articles
@@ -15,27 +17,38 @@ class DataFromProduction
     skill_category_skills
   ].freeze
 
-  attr_reader :file
+  attr_reader :source_dir
+
+  def initialize
+    TestData.new.seed_people! if Specialist.none?
+  end
 
   def create_file!
     download_data_from_production
     destroy_local_data
     populate_local_tables
+    prune_data
     prepare_file
     upload_file
   end
 
+  def populate_local_tables(source_dir: TestData::DATA_DIR)
+    @source_dir = source_dir
+
+    populate("companies")
+    populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"])
+    populate("embeddings")
+    populate("sections")
+    populate("contents")
+    populate("industries", prefix: "")
+    populate("industries")
+    populate("skills", prefix: "")
+    populate("skill_categories", prefix: "")
+    populate("skill_category_skills", prefix: "")
+    populate("skills", ignore_columns: ["search_id"])
+  end
+
   private
-
-  def prepare_file
-    puts "Preparing file…"
-  end
-
-  def upload_file
-    puts "Uploading to S3…"
-    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: TestData::YML_NAME)
-    obj.upload_file(TestData::YML_PATH)
-  end
 
   def download_data_from_production
     puts "Downloading from production…"
@@ -64,23 +77,46 @@ class DataFromProduction
     Industry.delete_all
   end
 
-  def populate_local_tables
-    populate("companies")
-    populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"])
-    populate("embeddings")
-    populate("sections")
-    populate("contents")
-    populate("industries", prefix: "")
-    populate("industries")
-    populate("skills", prefix: "")
-    populate("skill_categories", prefix: "")
-    populate("skill_category_skills", prefix: "")
-    populate("skills", ignore_columns: ["search_id"])
+  def prune_data
+    puts "Pruning data…"
+    CaseStudy::Article.where.not(id: CaseStudy::Article.searchable.by_score.limit(100).select(:id)).destroy_all
+
+    inactive_skills = Skill.where(active: [nil, false])
+    CaseStudy::Skill.where(skill: inactive_skills).delete_all
+    inactive_skills.delete_all
+
+    inactive_industries = Industry.where(active: [nil, false])
+    CaseStudy::Industry.where(industry: inactive_industries).delete_all
+    inactive_industries.delete_all
+  end
+
+  def prepare_file
+    puts "Preparing file…"
+
+    FileUtils.remove_file(TestData::ZIP_PATH) if File.exist?(TestData::ZIP_PATH)
+    FileUtils.remove_dir(TestData::PRUNED_DIR) if File.exist?(TestData::PRUNED_DIR)
+    FileUtils.mkdir(TestData::PRUNED_DIR)
+    TABLE_NAMES.each do |table|
+      `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"`
+    end
+
+    entries = Dir.entries(TestData::PRUNED_DIR.to_s).select { |f| f.end_with?(".csv") }
+    ::Zip::File.open(TestData::ZIP_PATH, create: true) do |zipfile|
+      entries.each do |filename|
+        zipfile.add(filename, "#{TestData::PRUNED_DIR}/#{filename}")
+      end
+    end
+  end
+
+  def upload_file
+    puts "Uploading to S3…"
+    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: TestData::ZIP_NAME)
+    obj.upload_file(TestData::ZIP_PATH)
   end
 
   def populate(table, ignore_columns: [], map_columns: [], prefix: "case_study_")
     puts "Populating #{table}…"
-    rows = CSV.read("#{TestData::DATA_DIR}/#{prefix}#{table}.csv", headers: true)
+    rows = CSV.read("#{source_dir}/#{prefix}#{table}.csv", headers: true)
     mapped_colums = {}
     map_columns.each do |column|
       mapped_colums[column] = column.sub(/_id$/, "").capitalize.constantize.pluck(:id)
