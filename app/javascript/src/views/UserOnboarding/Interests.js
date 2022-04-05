@@ -1,3 +1,4 @@
+import Sticky from "react-stickynode";
 import { ArrowSmRight, XCircle } from "@styled-icons/heroicons-solid";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -49,7 +50,7 @@ export default function Interests({ data }) {
 
   return (
     <div className="container mx-auto flex gap-12">
-      <div className="pb-12 max-w-[680px] w-full">
+      <div className="pb-12 max-w-[680px] w-full shrink-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,9 +61,9 @@ export default function Interests({ data }) {
             What topics are you interested in?
           </h2>
           <p className="text-lg mb-10">
-            With Advisable you can discover how other companies solved their
-            problems and achieved their goals. We'll recommend projects related
-            to these topics.
+            Advisable helps you discover how other companies solved their
+            problems and achieved their goals. To do this, we give you
+            recommendations related to the topics you select.
           </p>
 
           <div className="mb-8">
@@ -96,10 +97,12 @@ export default function Interests({ data }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <SuggestedInterests
-          suggestions={suggestedInterests}
-          onClick={addInterest}
-        />
+        <Sticky top={50} enabled>
+          <SuggestedInterests
+            suggestions={suggestedInterests}
+            onClick={addInterest}
+          />
+        </Sticky>
       </motion.div>
     </div>
   );
@@ -149,7 +152,7 @@ function SuggestedInterests({ suggestions, onClick }) {
   return (
     <>
       <h4 className="uppercase text-xs font-medium text-neutral-400 mb-3">
-        Popular Interests
+        Popular Topics
       </h4>
       <SimpleBar
         ref={scrollRef}

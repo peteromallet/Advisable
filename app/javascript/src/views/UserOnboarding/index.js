@@ -35,7 +35,7 @@ export const STEPS = [
     component: Audience,
   },
   {
-    title: "Interests",
+    title: "Topics",
     path: "interests",
     component: Interests,
   },

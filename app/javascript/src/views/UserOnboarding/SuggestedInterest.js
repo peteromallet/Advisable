@@ -9,10 +9,10 @@ const styles = composeStyles({
     px-4
     border-solid
     inline-flex
-    border-2
+    border
     cursor-pointer
     border-neutral-300
-    hover:border-neutral-400
+    hover:border-indigo-500
     items-center
     gap-1
   `,
