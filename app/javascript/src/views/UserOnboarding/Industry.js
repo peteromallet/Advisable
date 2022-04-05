@@ -34,7 +34,7 @@ export default function Industry({ data }) {
           What industry is your company in?
         </h2>
         <p className="text-lg text-neutral700 mb-4">
-          We’ll use this to find projects in the same industry
+          We’ll use this to recommend projects from similar industries.
         </p>
         <div className="w-[400px] mx-auto">
           <Input

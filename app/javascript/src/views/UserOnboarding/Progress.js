@@ -5,15 +5,15 @@ import { STEPS } from "./index";
 const numberStyles = composeStyles({
   base: `w-5 h-5 bg-neutral300 rounded-full text-white grid place-items-center text-xs font-semibold`,
   variants: {
-    active: `bg-blue900`,
+    active: `!bg-blue900`,
     complete: `bg-blue500 bg-gradient-to-l from-blue500 to-purple500`,
   },
 });
 
 const labelStyles = composeStyles({
-  base: `text-neutral500`,
+  base: `text-neutral400 font-medium`,
   variants: {
-    active: `text-blue900`,
+    active: `!text-blue900`,
   },
 });
 

@@ -61,8 +61,8 @@ export default function Interests({ data }) {
           </h2>
           <p className="text-lg mb-10">
             With Advisable you can discover how other companies solved their
-            problems and achieved their goals. Add the types of projects you‘d
-            like to see below.
+            problems and achieved their goals. We'll recommend projects related
+            to these topics.
           </p>
 
           <div className="mb-8">

@@ -46,11 +46,11 @@ export default function Audience({ data }) {
           className="bg-white rounded-xl shadow-xl p-10"
         >
           <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
-            Who are your customers?
+            Who are your ideal customers?
           </h2>
           <p className="text-lg text-neutral700 mb-8">
-            Let us know who your customers are and we’ll use this to help find
-            case studies that were targeted at similar customers.
+            We’ll use this to recommend projects that were targeted at similar
+            customers.
           </p>
           <Formik
             initialValues={initialValues}
@@ -89,17 +89,17 @@ export default function Audience({ data }) {
           <QuestionMarkCircle className="w-10 h-10 mb-4 -ml-1 text-blue900" />
 
           <p className="mb-8 text-lg">
-            Try to be as specific as possible to get the best results.
+            Use a simple, precise description to get the best results.
           </p>
 
           <h5 className="font-medium mb-1">Examples</h5>
           <ul className="text-neutral900">
-            <li>Entrepreneurs</li>
-            <li>Startups in fintech</li>
-            <li>Companies in fashion</li>
-            <li>Accounting companies in Germany</li>
-            <li>Some other example</li>
-            <li>Another example</li>
+            <li>Startup founders</li>
+            <li>Marketers</li>
+            <li>FinTech startups</li>
+            <li>Mid-sized German companies</li>
+            <li>CFOs at large companies</li>
+            <li>Software Developers</li>
           </ul>
         </motion.div>
       </div>

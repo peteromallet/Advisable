@@ -47,8 +47,8 @@ export default function Company({ data }) {
           Tell us about your company
         </h2>
         <p className="text-lg text-neutral700 mb-8">
-          Let's start by getting to know your company. We'll use this
-          information to find projects relevant to your company.
+          We’ll use this information to recommend projects relevant to your
+          company.
         </p>
         <Formik
           initialValues={initialValues}
