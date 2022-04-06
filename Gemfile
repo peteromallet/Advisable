@@ -55,6 +55,7 @@ gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
 gem "twilio-ruby"
+gem "zip"
 
 group :development, :test do
   gem "database_cleaner-active_record"
