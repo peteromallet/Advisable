@@ -14,7 +14,6 @@
 .onboarding_interests {
   width: 100%;
   position: relative;
-  overflow-y: scroll;
   height: calc(100vh - var(--header-size) - 68px);
 
   &:before,
