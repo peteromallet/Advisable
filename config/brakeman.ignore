@@ -81,6 +81,46 @@
       "note": ""
     },
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "46f15d887f8c709f8ed15833545fcdff68f508f4945edc31093698356e1e513e",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/data_from_production.rb",
+      "line": 80,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "DataFromProduction",
+        "method": "prepare_file"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "49aab07223e12a0d8f6273a1330c94832e4542cc7ec15282e351cc5d5290dce4",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/data_from_production.rb",
+      "line": 50,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "DataFromProduction",
+        "method": "download_data_from_production"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4da323945ff653a8c15fa8b1e2eba12b144a66c7d415317dee7a7802d2c57485",
@@ -141,26 +181,6 @@
       "note": ""
     },
     {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "5f98ed6dae64aa9ee164962257d0bfe86310817f53b99b5a716bcefc138d58cd",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/lib/data_from_production.rb",
-      "line": 100,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{:BRAKEMAN_SAFE_LITERAL}) TO #{TestData::PRUNED_DIR}/#{:BRAKEMAN_SAFE_LITERAL}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "DataFromProduction",
-        "method": "prepare_file"
-      },
-      "user_input": "TestData::PRUNED_DIR",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "8ab2d6d7e83f332188f7e42d636e99f228a6ab789a0075efd599cb5dd29ae42c",
@@ -178,26 +198,6 @@
       },
       "user_input": "attribute.name",
       "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "a9e2a3ff67334ad9df69771cb09a5b062165b76a4e892c4c956a63c3c384bc25",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/lib/data_from_production.rb",
-      "line": 59,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{:BRAKEMAN_SAFE_LITERAL}) TO #{TestData::DATA_DIR}/#{:BRAKEMAN_SAFE_LITERAL}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "DataFromProduction",
-        "method": "download_data_from_production"
-      },
-      "user_input": "TestData::DATA_DIR",
-      "confidence": "Medium",
       "note": ""
     },
     {
@@ -281,6 +281,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-04-05 15:54:39 +0200",
+  "updated": "2022-04-06 08:39:17 +0200",
   "brakeman_version": "5.2.1"
 }

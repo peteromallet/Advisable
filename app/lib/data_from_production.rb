@@ -3,19 +3,11 @@
 require "zip"
 
 class DataFromProduction
-  TABLE_NAMES = %i[
-    case_study_articles
-    case_study_companies
-    case_study_contents
-    case_study_industries
-    case_study_sections
-    case_study_skills
-    case_study_embeddings
-    industries
-    skills
-    skill_categories
-    skill_category_skills
+  CLASSES = [
+    CaseStudy::Industry, CaseStudy::Skill, CaseStudy::Content, CaseStudy::Section, CaseStudy::Embedding,
+    CaseStudy::Article, CaseStudy::Company, SkillCategorySkill, SkillCategory, Skill, Industry
   ].freeze
+  TABLE_NAMES = CLASSES.map(&:table_name).freeze
 
   attr_reader :source_dir
 
@@ -53,28 +45,16 @@ class DataFromProduction
   def download_data_from_production
     puts "Downloading from production…"
     FileUtils.mkdir_p(TestData::DATA_DIR)
-    TABLE_NAMES.each do |table|
-      next if File.exist?("#{TestData::DATA_DIR}/#{table}.csv")
-
-      `heroku pg:psql -c "\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"`
-    end
+    TABLE_NAMES.
+      reject { |table| File.exist?("#{TestData::DATA_DIR}/#{table}.csv") }.
+      each { |table| `heroku pg:psql -c "\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
   end
 
   def destroy_local_data
     puts "Destroying existing local data…"
     Review.delete_all
     Label.delete_all
-    CaseStudy::Industry.delete_all
-    CaseStudy::Skill.delete_all
-    CaseStudy::Content.delete_all
-    CaseStudy::Section.delete_all
-    CaseStudy::Embedding.delete_all
-    CaseStudy::Article.delete_all
-    CaseStudy::Company.delete_all
-    SkillCategorySkill.delete_all
-    SkillCategory.delete_all
-    Skill.delete_all
-    Industry.delete_all
+    CLASSES.each(&:delete_all)
   end
 
   def prune_data
@@ -97,13 +77,10 @@ class DataFromProduction
     FileUtils.remove_file(TestData::ZIP_PATH) if File.exist?(TestData::ZIP_PATH)
     FileUtils.remove_dir(TestData::PRUNED_DIR) if File.exist?(TestData::PRUNED_DIR)
     FileUtils.mkdir(TestData::PRUNED_DIR)
-    TABLE_NAMES.each do |table|
-      `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"`
-    end
+    TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
 
-    entries = Dir.entries(TestData::PRUNED_DIR.to_s).select { |f| f.end_with?(".csv") }
     ::Zip::File.open(TestData::ZIP_PATH, create: true) do |zipfile|
-      entries.each do |filename|
+      Dir.entries(TestData::PRUNED_DIR.to_s).select { |f| f.end_with?(".csv") }.each do |filename|
         zipfile.add(filename, "#{TestData::PRUNED_DIR}/#{filename}")
       end
     end
