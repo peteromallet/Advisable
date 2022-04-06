@@ -59,9 +59,12 @@ export default function UserOnboarding() {
       <header className="onboarding_heading px-5 flex justify-between items-center">
         <Logo />
         <Progress matchingStepIndex={matchingStepIndex} />
-        <div className="w-[80px] text-neutral600">
-          Step {matchingStepIndex === -1 ? 0 : matchingStepIndex + 1} of{" "}
-          {STEPS.length}
+        <div className="w-[120px] text-right">
+          {matchingStepIndex >= 0 && (
+            <span className="w-[80px] text-neutral600">
+              Step {matchingStepIndex + 1} of {STEPS.length}
+            </span>
+          )}
         </div>
       </header>
       <div className="onboarding_content flex flex-1">
