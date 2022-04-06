@@ -80,6 +80,7 @@ class DataFromProduction
   def prune_data
     puts "Pruning data…"
     CaseStudy::Article.where.not(id: CaseStudy::Article.searchable.by_score.limit(100).select(:id)).destroy_all
+    CaseStudy::Company.where.not(id: CaseStudy::Article.select(:company_id)).destroy_all
 
     inactive_skills = Skill.where(active: [nil, false])
     CaseStudy::Skill.where(skill: inactive_skills).delete_all

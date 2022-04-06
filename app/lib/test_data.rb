@@ -93,7 +93,6 @@ class TestData
   end
 
   def populate_labels
-    puts "Populating labels…"
     labels_data = []
     Skill.pluck(:id, :name).each do |id, name|
       labels_data << {name:, slug: name.parameterize, skill_id: id, industry_id: nil, country_id: nil, created_at: now, updated_at: now, published_at: now}
