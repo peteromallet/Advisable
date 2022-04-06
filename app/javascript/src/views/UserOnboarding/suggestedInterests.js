@@ -23,7 +23,6 @@ const INTERESTS = [
   "Build Marketing Strategy",
   "B2B Ghostwriting",
   "Growth Marketing",
-  "Creative PR Strategy",
   "Improve Funnel Conversion Rate",
   "Redesign Website",
   "Design Paid Marketing Assets",

@@ -40,8 +40,8 @@ RSpec.describe "Client signup", type: :system do
     click_on("Continue")
 
     # Interests
-    first(:button, "Launch a podcast").click
-    first(:button, "Improve conversion rate").click
+    first(:button, "Creative PR Strategy").click
+    first(:button, "Improve SEO Rankings").click
     click_on("Continue")
 
     expect(page).to have_content("Setting up your feed")
