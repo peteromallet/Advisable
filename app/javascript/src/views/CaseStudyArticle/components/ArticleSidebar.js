@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useViewportScroll } from "framer-motion";
+import React from "react";
 
 const SectionType = ({ children }) => (
   <div className="p-2 text-sm font-[650] uppercase">{children}</div>
@@ -13,55 +12,64 @@ const SectionTypeHover = ({ children }) => (
 
 const Header = ({ children }) => <div className="p-2">{children}</div>;
 
-const SectionMenuItem = ({ section }) => (
-  <div className="group cursor-pointer relative overflow-visible">
-    <SectionType>{section.type}</SectionType>
-    <SectionTypeHover section={section}>
-      <SectionType>{section.type}</SectionType>
-      <Header>{section.header.text}</Header>
-    </SectionTypeHover>
-  </div>
+const Heading = ({ item }) => (
+  <a href={`#${item.id}`}>
+    <div className="group cursor-pointer relative overflow-visible">
+      <SectionType>{item.section.type}</SectionType>
+      <SectionTypeHover>
+        <SectionType>{item.section.type}</SectionType>
+        <Header>{item.text}</Header>
+      </SectionTypeHover>
+    </div>
+  </a>
 );
 
-const Subheader = ({ subheader }) => (
-  <h6 className="p-2 pl-6 cursor-pointer hover:bg-white rounded-xs hover:shadow-lg hover:z-20">
-    {subheader.text}
-  </h6>
-);
+const Subheading = ({ item }) => {
+  return (
+    <a key={item.id} href={`#${item.id}`}>
+      <h6 className="p-2 pl-6 cursor-pointer hover:bg-white rounded-xs hover:shadow-lg hover:z-20">
+        {item.text}
+      </h6>
+    </a>
+  );
+};
 
-export default function ArticleSidebar({ caseStudy }) {
-  const { scrollYProgress } = useViewportScroll();
+export default function ArticleSidebar({ elements, scrollState }) {
+  const menuItems = elements
+    .map((el, index) => ({ ...el, index }))
+    .filter(({ __typename }) => __typename === "Heading");
 
-  const sections = caseStudy.sections.map((section) => ({
-    id: section.id,
-    type: section.type,
-    header: section.contents.find((content) => content.size == "h1"),
-    subheaders: section.contents.filter((content) => content.size == "h2"),
-  }));
-
-  useEffect(() => {
-    console.log("scroll", scrollYProgress);
-  }, [scrollYProgress]);
+  const numOfItems = menuItems.length;
+  let active;
+  let activeMenu;
+  for (let i = elements.length - 1; i > -1; i--) {
+    if (scrollState[i] && !active) {
+      active = i;
+      console.log(menuItems);
+    }
+    if (menuItems[i]?.index <= active) {
+      activeMenu = i;
+    }
+    if (active && activeMenu) break;
+  }
+  console.log(`active menu: ${activeMenu}, last on screen: ${active}`);
 
   return (
     <div>
       <div className="min-w-[320px] sticky top-28">
-        <div
-          style={{ width: `${scrollYProgress}%` }}
-          className="h-2 bg-red-700"
-        />
-        {sections.map((section) => (
-          <div key={section.id}>
-            <a href={`#${section.id}`}>
-              <SectionMenuItem section={section} />
-            </a>
-            {section.subheaders.map((subheader) => (
-              <a key={subheader.id} href={`#${subheader.id}`}>
-                <Subheader subheader={subheader} />
-              </a>
-            ))}
-          </div>
-        ))}
+        <div className="absolute top-0 bottom-0 w-0.5 bg-gray-200">
+          <div
+            style={{ height: `${(100 / numOfItems) * (activeMenu + 1)}%` }}
+            className={`absolute top-0 left-0 right-0 bg-blue-600 transition-height`}
+          />
+        </div>
+        {menuItems.map((item) =>
+          item.size === "h1" ? (
+            <Heading item={item} key={item.id} />
+          ) : (
+            <Subheading item={item} key={item.id} />
+          ),
+        )}
       </div>
     </div>
   );
