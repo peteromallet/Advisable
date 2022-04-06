@@ -20,20 +20,20 @@ class TestData
   end
 
   def seed!
-    ensure_csv_files_exist!
+    ensure_csv_files_exist
     populate_pruned_data if CaseStudy::Article.none?
-
     [Label, Review, Event, Guild::Post, Agreement, PaymentRequest, Payment].each do |model|
       next unless model.none?
 
       puts "Populating #{model.table_name}…"
       __send__("populate_#{model.table_name}")
     end
+    reset_pkey_sequences
   end
 
   private
 
-  def ensure_csv_files_exist!
+  def ensure_csv_files_exist
     unless File.exist?(ZIP_PATH)
       obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: ZIP_NAME)
       obj.download_file(ZIP_PATH)
@@ -43,6 +43,13 @@ class TestData
     FileUtils.mkdir(PRUNED_DIR)
     Zip::File.open(ZIP_PATH) do |zip_file|
       zip_file.each { |entry| entry.extract("#{PRUNED_DIR}/#{entry.name}") }
+    end
+  end
+
+  def reset_pkey_sequences
+    puts "Resetting pkey sequences…"
+    ActiveRecord::Base.connection.tables.each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t)
     end
   end
 
