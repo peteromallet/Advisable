@@ -22,6 +22,15 @@ class PeopleData
     dump_data
   end
 
+  def attach_avatars!
+    puts "Attaching avatars..."
+    advisable_yml.each do |person|
+      path = "db/seeds/assets/avatars/#{person[:avatar]}"
+      Account.find_by(email: person[:email]).avatar.attach(io: File.open(path), filename: person[:avatar])
+      Account.find_by(email: person[:email].sub("@", "+specialist@")).avatar.attach(io: File.open(path), filename: person[:avatar])
+    end
+  end
+
   private
 
   def destroy_existing_data
@@ -68,18 +77,8 @@ class PeopleData
     end
     specialist_data = advisable_data.pluck(:specialist).compact
     user_data = advisable_data.pluck(:user).compact
-    specialist_ids = Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
-    user_ids = User.upsert_all(user_data, unique_by: :account_id).pluck("id")
-
-    Specialist.where(id: specialist_ids).each_with_index do |specialist, i|
-      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
-      specialist.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
-    end
-
-    User.where(id: user_ids).each_with_index do |user, i|
-      path = "db/seeds/assets/avatars/#{advisable_yml[i][:avatar]}"
-      user.account.avatar.attach(io: File.open(path), filename: advisable_yml[i][:avatar])
-    end
+    Specialist.upsert_all(specialist_data, unique_by: :account_id).pluck("id")
+    User.upsert_all(user_data, unique_by: :account_id).pluck("id")
   end
 
   def dump_data

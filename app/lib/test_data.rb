@@ -77,6 +77,7 @@ class TestData
 
   def populate_pruned_data
     ProductionData.new.populate_local_tables(source_dir: PRUNED_DIR)
+    PeopleData.new.attach_avatars!
     attach_images_to_cs_contents
   end
 
