@@ -17,6 +17,8 @@ import { Loading } from "src/components";
 import "./onboarding.css";
 import Progress from "./Progress";
 import CreatingFeed from "./CreatingFeed";
+import useMediaQuery from "src/utilities/useMediaQuery";
+import LogoMark from "src/components/LogoMark";
 
 export const STEPS = [
   {
@@ -43,6 +45,7 @@ export const STEPS = [
 
 export default function UserOnboarding() {
   const location = useLocation();
+  const isDesktop = useMediaQuery("(min-width: 720px)");
   const { loading, data } = useOnboardingData();
 
   const matchingStepIndex = useMemo(() => {
@@ -56,18 +59,22 @@ export default function UserOnboarding() {
 
   return (
     <div className="onboarding flex flex-col min-h-screen">
-      <header className="onboarding_heading px-5 flex justify-between items-center">
-        <Logo />
-        <Progress matchingStepIndex={matchingStepIndex} />
-        <div className="w-[120px] text-right">
+      <header className="onboarding_heading px-5 flex items-center">
+        <div className="flex-1 flex justify-start mr-auto">
+          {isDesktop ? <Logo /> : <LogoMark />}
+        </div>
+        <div className="flex-1 flex justify-center">
+          <Progress matchingStepIndex={matchingStepIndex} />
+        </div>
+        <div className="flex-1 flex justify-end text-right ml-auto">
           {matchingStepIndex >= 0 && (
-            <span className="w-[80px] text-neutral600">
+            <span className="w-[80px] text-sm lg:text-base text-neutral500">
               Step {matchingStepIndex + 1} of {STEPS.length}
             </span>
           )}
         </div>
       </header>
-      <div className="onboarding_content flex flex-1">
+      <div className="onboarding_content flex flex-1 py-5 lg:py-10 px-5">
         <Routes>
           <Route index element={<Welcome data={data} />} />
           {STEPS.map((step) => (

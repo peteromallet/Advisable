@@ -116,6 +116,7 @@ export default function Company({ data }) {
             <SubmitButton
               variant="gradient"
               size="l"
+              width={{ _: "100%", m: "auto" }}
               suffix={<ArrowSmRight />}
               disableUntilValid
             >

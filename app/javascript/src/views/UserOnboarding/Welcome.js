@@ -110,7 +110,7 @@ export default function Welcome() {
             logoPosition="-64px -128px"
           />
         </div>
-        <div className="p-10 pb-16 text-center">
+        <div className="p-8 lg:p-10 pb-16 text-center">
           <h2 className="text-3xl font-semibold tracking-tight mb-2 text-blue900">
             Let's build your feed
           </h2>
@@ -119,8 +119,12 @@ export default function Welcome() {
             about your company and interests in order to customise your
             experience.
           </p>
-          <Link to="company">
-            <Button size="lg" className="mx-auto" suffix={<ArrowSmRight />}>
+          <Link to="company" className="block lg:inline-block">
+            <Button
+              size="lg"
+              className="w-full mx-auto"
+              suffix={<ArrowSmRight />}
+            >
               Get Started
             </Button>
           </Link>

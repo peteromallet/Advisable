@@ -11,7 +11,7 @@ const numberStyles = composeStyles({
 });
 
 const labelStyles = composeStyles({
-  base: `text-neutral400 font-medium`,
+  base: `hidden lg:block text-neutral400 font-medium`,
   variants: {
     active: `!text-blue900`,
   },
@@ -43,7 +43,7 @@ function CheckIcon() {
 
 export default function Progress({ matchingStepIndex }) {
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-2 lg:gap-5">
       {STEPS.map((step, index) => {
         return (
           <React.Fragment key={step.title}>
@@ -56,7 +56,7 @@ export default function Progress({ matchingStepIndex }) {
               {step.title}
             </ProgressStep>
             {index + 1 < STEPS.length && (
-              <div className="h-px bg-neutral-300 w-5" />
+              <div className="h-px bg-neutral-300 w-[12px] lg:w-5" />
             )}
           </React.Fragment>
         );
