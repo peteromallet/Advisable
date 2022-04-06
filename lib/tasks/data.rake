@@ -8,17 +8,7 @@ namespace :data do
     TestData.new.seed!
   end
 
-  task industries: :environment do
-    industries_file = Rails.root.join("lib/tasks/data/industries.txt")
-    industries = File.readlines(industries_file).map(&:strip)
-    industries.each { |name| Industry.create(name:) }
-  end
-
-  task interviews: :environment do
-    Interview.find_each do |interview|
-      next unless interview.application&.specialist_id
-
-      interview.update!(specialist_id: interview.application.specialist_id)
-    end
+  task create_file: :environment do
+    ProductionData.new.create_file!
   end
 end
