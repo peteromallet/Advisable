@@ -46,6 +46,7 @@ gem "rack-attack"
 gem "rails", "~> 7.0.0"
 gem "ruby-openai"
 gem "ruby-progressbar", require: false
+gem "rubyzip"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
@@ -55,7 +56,6 @@ gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
 gem "twilio-ruby"
-gem "zip"
 
 group :development, :test do
   gem "database_cleaner-active_record"

@@ -579,7 +579,6 @@ GEM
     yard (0.9.27)
       webrick (~> 1.7.0)
     zeitwerk (2.5.4)
-    zip (2.0.2)
 
 PLATFORMS
   arm64-darwin
@@ -654,6 +653,7 @@ DEPENDENCIES
   rubocop-rspec
   ruby-openai
   ruby-progressbar
+  rubyzip
   selenium-webdriver
   sentry-rails
   sentry-ruby
@@ -672,7 +672,6 @@ DEPENDENCIES
   web-console
   webdrivers
   webmock
-  zip
 
 RUBY VERSION
    ruby 3.1.1p18
