@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require "zip"
+require "csv"
 
-class DataFromProduction
+# rubocop:disable Rails/SkipsModelValidations
+class ProductionData
   CLASSES = [
     CaseStudy::Industry, CaseStudy::Skill, CaseStudy::Content, CaseStudy::Section, CaseStudy::Embedding,
     CaseStudy::Article, CaseStudy::Company, SkillCategorySkill, SkillCategory, Skill, Industry
@@ -11,13 +13,10 @@ class DataFromProduction
 
   attr_reader :source_dir
 
-  def initialize
-    TestData.new.seed_people! if Specialist.none?
-  end
-
   def create_file!
-    download_data_from_production
     destroy_local_data
+    PeopleData.new.seed!
+    download_data_from_production
     populate_local_tables
     prune_data
     prepare_file
@@ -27,6 +26,7 @@ class DataFromProduction
   def populate_local_tables(source_dir: TestData::DATA_DIR)
     @source_dir = source_dir
 
+    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, prefix: "") } if Account.none?
     populate("companies")
     populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"])
     populate("embeddings")
@@ -75,8 +75,7 @@ class DataFromProduction
     puts "Preparing file…"
 
     FileUtils.remove_file(TestData::ZIP_PATH) if File.exist?(TestData::ZIP_PATH)
-    FileUtils.remove_dir(TestData::PRUNED_DIR) if File.exist?(TestData::PRUNED_DIR)
-    FileUtils.mkdir(TestData::PRUNED_DIR)
+    FileUtils.mkdir_p(TestData::PRUNED_DIR)
     TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
 
     ::Zip::File.open(TestData::ZIP_PATH, create: true) do |zipfile|
@@ -117,6 +116,7 @@ class DataFromProduction
     end
     model_prefix = "#{prefix.camelize}::" if prefix.present?
     model = "#{model_prefix}#{table.singularize.camelize}".constantize
-    model.upsert_all(sql) # rubocop:disable Rails/SkipsModelValidations
+    model.upsert_all(sql)
   end
 end
+# rubocop:enable Rails/SkipsModelValidations

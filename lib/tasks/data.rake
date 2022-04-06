@@ -9,6 +9,6 @@ namespace :data do
   end
 
   task create_file: :environment do
-    DataFromProduction.new.create_file!
+    ProductionData.new.create_file!
   end
 end
