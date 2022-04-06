@@ -46,6 +46,9 @@ module.exports = {
         lg: "1.5rem",
         xl: "2rem",
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
   plugins: [

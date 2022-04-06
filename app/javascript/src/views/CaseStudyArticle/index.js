@@ -5,7 +5,6 @@ import ErrorBoundary from "src/components/ErrorBoundary";
 import SidebarCard from "./components/SidebarCard";
 import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
-import ArticleSidebar from "./components/ArticleSidebar";
 
 export default function ShortlistArticle() {
   const { data, loading, error } = useArticle();
@@ -21,10 +20,7 @@ export default function ShortlistArticle() {
           <ArticleIntro caseStudy={data.caseStudy} />
         </div>
         <hr />
-        <div className="flex gap-20">
-          <ArticleSidebar caseStudy={data.caseStudy} />
-          <ArticleContent caseStudy={data.caseStudy} />
-        </div>
+        <ArticleContent caseStudy={data.caseStudy} />
       </div>
     </ErrorBoundary>
   );
