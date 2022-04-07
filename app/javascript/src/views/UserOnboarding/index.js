@@ -58,7 +58,7 @@ export default function UserOnboarding() {
   if (loading) return <Loading />;
 
   return (
-    <div className="onboarding flex flex-col min-h-screen">
+    <div className="onboarding flex flex-col lg:min-h-screen">
       <header className="onboarding_heading px-5 flex items-center">
         <div className="flex-1 flex justify-start mr-auto">
           {isDesktop ? <Logo /> : <LogoMark />}
@@ -68,13 +68,13 @@ export default function UserOnboarding() {
         </div>
         <div className="flex-1 flex justify-end text-right ml-auto">
           {matchingStepIndex >= 0 && (
-            <span className="w-[80px] text-sm lg:text-base text-neutral500">
+            <span className="hidden md:block w-[80px] text-base text-neutral500">
               Step {matchingStepIndex + 1} of {STEPS.length}
             </span>
           )}
         </div>
       </header>
-      <div className="onboarding_content flex flex-1 py-5 lg:py-10 px-5">
+      <div className="onboarding_content flex flex-1 py-2 pb-5 md:py-10 px-5 lg:pb-0">
         <Routes>
           <Route index element={<Welcome data={data} />} />
           {STEPS.map((step) => (

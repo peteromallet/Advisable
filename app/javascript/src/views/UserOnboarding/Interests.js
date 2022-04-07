@@ -10,9 +10,11 @@ import SuggestedInterest from "./SuggestedInterest";
 import InterestInput from "./InterestInput";
 import SUGGESTED_INTERESTS from "./suggestedInterests";
 import Arrow from "./Arrow";
+import useMediaQuery from "src/utilities/useMediaQuery";
 
 export default function Interests({ data }) {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(min-width: 768px");
   const [interests, setInterests] = useState(data.interests.map((i) => i.term));
   const [deleteInterest] = useDeleteInterest();
   const [createInterests, { loading }] = useCreateInterests();
@@ -54,62 +56,104 @@ export default function Interests({ data }) {
   };
 
   return (
-    <div className="container mx-auto flex gap-12">
-      <div className="pb-12 max-w-[680px] w-full shrink-0">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white min-h-full p-10 rounded-xl shadow-xl"
-        >
-          <h2 className="text-3xl font-semibold tracking-tight mb-2">
-            What topics are you interested in?
-          </h2>
-          <p className="text-lg mb-10">
-            Advisable helps you discover how other companies solved their
-            problems and achieved their goals. To do this, we give you
-            recommendations related to the topics you select.
-          </p>
-
-          <div className="mb-8">
-            <InterestInput onAdd={addInterest} />
-          </div>
-
-          <YourInterests interests={interests} onRemove={removeInterest} />
-
-          {interests.length > 0 ? (
-            <Button
-              size="lg"
-              loading={loading}
-              onClick={handleContinue}
-              suffix={<ArrowSmRight />}
-            >
-              Continue
-            </Button>
-          ) : (
-            <div className="flex max-w-[360px] gap-4 pl-5">
-              <div className="flex-shrink-0 -mt-4">
-                <Arrow />
-              </div>
-              Add any interests you like or pick from the list of popular
-              interests
-            </div>
-          )}
-        </motion.div>
+    <div className="container mx-auto block lg:flex gap-12">
+      <div className="hidden lg:block pb-12 max-w-[680px] w-full shrink-0">
+        <InterestsCard
+          interests={interests}
+          addInterest={addInterest}
+          removeInterest={removeInterest}
+          loading={loading}
+          handleContinue={handleContinue}
+        />
       </div>
       <motion.div
         className="w-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        <Sticky top={50} enabled>
+        <Sticky top={50} enabled={!isMobile}>
+          <div className="block lg:hidden mb-8">
+            <TitleAndDescription />
+          </div>
           <SuggestedInterests
             selected={interests}
             onClick={handleSuggestionClick}
           />
         </Sticky>
       </motion.div>
+
+      <div className="lg:hidden fixed bg-white left-0 bottom-0 right-0 p-4 shadow-xl">
+        <Button
+          size="lg"
+          className="w-full"
+          loading={loading}
+          onClick={handleContinue}
+          suffix={<ArrowSmRight />}
+        >
+          Continue
+        </Button>
+      </div>
     </div>
+  );
+}
+
+function TitleAndDescription() {
+  return (
+    <>
+      <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+        What topics are you interested in?
+      </h2>
+      <p className="md:text-lg">
+        Advisable helps you discover how other companies solved their problems
+        and achieved their goals. To do this, we give you recommendations
+        related to the topics you select.
+      </p>
+    </>
+  );
+}
+
+function InterestsCard({
+  interests,
+  addInterest,
+  removeInterest,
+  loading,
+  handleContinue,
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white min-h-full p-6 md:p-10 rounded-xl shadow-xl"
+    >
+      <div className="mb-10">
+        <TitleAndDescription />
+      </div>
+
+      <div className="mb-8">
+        <InterestInput onAdd={addInterest} />
+      </div>
+
+      <YourInterests interests={interests} onRemove={removeInterest} />
+
+      {interests.length > 0 ? (
+        <Button
+          size="lg"
+          loading={loading}
+          onClick={handleContinue}
+          suffix={<ArrowSmRight />}
+        >
+          Continue
+        </Button>
+      ) : (
+        <div className="flex max-w-[360px] gap-4 pl-5">
+          <div className="flex-shrink-0 -mt-4">
+            <Arrow />
+          </div>
+          Add any interests you like or pick from the list of popular interests
+        </div>
+      )}
+    </motion.div>
   );
 }
 
@@ -156,7 +200,7 @@ function SuggestedInterests({ selected, onClick }) {
 
   return (
     <>
-      <h4 className="uppercase text-xs font-medium text-neutral-400 mb-3">
+      <h4 className="hidden lg:block uppercase text-xs font-medium text-neutral-400 mb-3">
         Popular Topics
       </h4>
       <SimpleBar

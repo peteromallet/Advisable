@@ -37,18 +37,18 @@ export default function Audience({ data }) {
   };
 
   return (
-    <div className="mx-auto w-[1080px] flex gap-10">
-      <div className="min-w-[680px] w-full pb-12">
+    <div className="mx-auto w-[1080px] block lg:flex gap-10">
+      <div className="lg:min-w-[680px] w-full pb-6 lg:pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white rounded-xl shadow-xl p-10"
+          className="bg-white rounded-xl shadow-xl p-8 md:p-10"
         >
-          <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
+          <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-2 text-blue900">
             Who are your ideal customers?
           </h2>
-          <p className="text-lg text-neutral700 mb-8">
+          <p className="md:text-lg text-neutral700 mb-8">
             We’ll use this to recommend projects that were targeted at similar
             customers.
           </p>
@@ -73,6 +73,7 @@ export default function Audience({ data }) {
                 variant="gradient"
                 size="l"
                 suffix={<ArrowSmRight />}
+                width={{ _: "100%", m: "auto" }}
               >
                 Continue
               </SubmitButton>
@@ -84,7 +85,7 @@ export default function Audience({ data }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="rounded-xl bg-neutral100 p-10 border-2 border-solid border-neutral200"
+          className="rounded-xl bg-neutral100 p-6 md:p-10 border-2 border-solid border-neutral200"
         >
           <QuestionMarkCircle className="w-10 h-10 mb-4 -ml-1 text-blue900" />
 

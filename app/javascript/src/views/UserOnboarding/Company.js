@@ -41,12 +41,12 @@ export default function Company({ data }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white shadow-xl rounded-xl p-10"
+        className="bg-white shadow-xl rounded-xl p-8 md:p-10"
       >
-        <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
+        <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-2 text-blue900">
           Tell us about your company
         </h2>
-        <p className="text-lg text-neutral700 mb-8">
+        <p className="md:text-lg text-neutral700 mb-8">
           We’ll use this information to recommend projects relevant to your
           company.
         </p>

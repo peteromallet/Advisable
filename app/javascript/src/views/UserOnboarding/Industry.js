@@ -29,14 +29,14 @@ export default function Industry({ data }) {
 
   return (
     <div className="w-full">
-      <div className="text-center mb-10">
-        <h2 className="font-semibold text-3xl tracking-tight leading-none mb-2 text-blue900">
+      <div className="text-center mb-4 md:mb-12">
+        <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-2 text-blue900">
           What industry is your company in?
         </h2>
-        <p className="text-lg text-neutral700 mb-4">
+        <p className="md:text-lg text-neutral700 mb-4">
           We’ll use this to recommend projects from similar industries.
         </p>
-        <div className="w-[400px] mx-auto">
+        <div className="w-auto md:w-[400px] mx-auto">
           <Input
             rounded
             autoFocus
@@ -47,7 +47,7 @@ export default function Industry({ data }) {
           />
         </div>
       </div>
-      <div className="container mx-auto grid grid-cols-4 gap-4">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {filteredIndustries.map((industry) => (
           <div
             key={industry.id}

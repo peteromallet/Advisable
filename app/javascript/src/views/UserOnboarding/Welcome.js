@@ -110,24 +110,26 @@ export default function Welcome() {
             logoPosition="-64px -128px"
           />
         </div>
-        <div className="p-8 lg:p-10 lg:pb-16 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight mb-2 text-blue900">
+        <div className="pt-6 p-2 md:p-10 md:pb-16 text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2 text-blue900">
             Let's build your feed
           </h2>
-          <p className="px-8 text-lg mb-12 text-neutral800">
+          <p className="px-4 md:px-8 md:text-lg mb-6 md:mb-12 text-neutral800">
             Before we give you access, we need you to answer a few questions
             about your company and interests in order to customise your
             experience.
           </p>
-          <Link to="company" className="block lg:inline-block">
-            <Button
-              size="lg"
-              className="w-full mx-auto"
-              suffix={<ArrowSmRight />}
-            >
-              Get Started
-            </Button>
-          </Link>
+          <div className="p-4 md:p-0">
+            <Link to="company" className="block md:inline-block">
+              <Button
+                size="lg"
+                className="w-full mx-auto"
+                suffix={<ArrowSmRight />}
+              >
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>

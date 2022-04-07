@@ -13,32 +13,35 @@
 .onboarding_interests {
   width: 100%;
   position: relative;
-  height: calc(100vh - var(--header-size) - 68px);
 
-  &:before,
-  &:after {
-    content: "";
-    width: 100%;
-    z-index: 2;
-    height: 60px;
-    pointer-events: none;
-    position: absolute;
-  }
+  @media (min-width: 1024px) {
+    height: calc(100vh - var(--header-size) - 68px);
 
-  &:before {
-    top: 0;
-    opacity: 0;
-    transition: opacity 100ms;
-    background: linear-gradient(hsla(240, 9%, 97%, 1), hsla(240, 9%, 97%, 0));
-  }
+    &:before,
+    &:after {
+      content: "";
+      width: 100%;
+      z-index: 2;
+      height: 60px;
+      pointer-events: none;
+      position: absolute;
+    }
 
-  &:after {
-    bottom: 0;
-    background: linear-gradient(hsla(240, 9%, 97%, 0), hsla(240, 9%, 97%, 1));
-  }
+    &:before {
+      top: 0;
+      opacity: 0;
+      transition: opacity 100ms;
+      background: linear-gradient(hsla(240, 9%, 97%, 1), hsla(240, 9%, 97%, 0));
+    }
 
-  &[data-top="false"]::before {
-    opacity: 1;
+    &:after {
+      bottom: 0;
+      background: linear-gradient(hsla(240, 9%, 97%, 0), hsla(240, 9%, 97%, 1));
+    }
+
+    &[data-top="false"]::before {
+      opacity: 1;
+    }
   }
 }
 
