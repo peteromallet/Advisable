@@ -7,8 +7,9 @@ module CaseStudy
     has_logidze
 
     belongs_to :account
+    has_many :interest_articles, dependent: :destroy
 
-    validates :term, uniqueness: {case_sensitive: false, scope: :account_id} # rubocop:disable Rails/UniqueValidationWithoutIndex
+    validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
     def articles
       find_articles! if article_ids.blank?
@@ -47,7 +48,7 @@ end
 #  id          :bigint           not null, primary key
 #  article_ids :jsonb
 #  min_score   :decimal(, )
-#  term        :string
+#  term        :citext
 #  term_data   :jsonb
 #  uid         :string           not null
 #  created_at  :datetime         not null
@@ -56,8 +57,9 @@ end
 #
 # Indexes
 #
-#  index_case_study_interests_on_account_id  (account_id)
-#  index_case_study_interests_on_uid         (uid) UNIQUE
+#  index_case_study_interests_on_account_id           (account_id)
+#  index_case_study_interests_on_term_and_account_id  (term,account_id) UNIQUE
+#  index_case_study_interests_on_uid                  (uid) UNIQUE
 #
 # Foreign Keys
 #
