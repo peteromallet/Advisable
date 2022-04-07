@@ -1,22 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
-
-const Availability = ({ unavailableUntil }) => (
-  <div className="flex justify-items-center items-center">
-    {unavailableUntil ? (
-      <>
-        <div className="h-2.5 w-2.5 bg-gray-600 rounded-full mr-2" />
-        <p>Unavailable for hire</p>
-      </>
-    ) : (
-      <>
-        <div className="h-2.5 w-2.5 bg-blue-700 rounded-full mr-2" />
-        <p> Available for hire </p>
-      </>
-    )}
-  </div>
-);
+import Availability from "./Availability";
 
 export default function SidebarCard({ specialist }) {
   const { timezone } = specialist.account;
