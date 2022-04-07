@@ -110,8 +110,8 @@ export default function CreatingFeed() {
             Setting up your feed...
           </h4>
           <p>
-            We're searching for projects that match your interests. This should
-            only take a moment
+            We’re searching for projects that match your company and interests.
+            This should only take a moment
           </p>
         </div>
       </div>

@@ -48,49 +48,18 @@ function Logos() {
   );
 }
 
-function Title({ children, ...props }) {
-  return (
-    <Text
-      fontSize={{ _: "5xl", xl: 48 }}
-      letterSpacing="-0.016em"
-      color="white"
-      fontWeight={560}
-      {...props}
-    >
-      {children}
-    </Text>
-  );
-}
-
 function FormsContent() {
   return (
     <>
-      <Box mb={{ xl: 20 }}>
-        <Title>Advisable helps</Title>
-        <Title
-          css={`
-            background-image: linear-gradient(
-              135deg,
-              #b782fc,
-              #dec3ff 50%,
-              #8f97fc
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-          `}
-        >
-          ambitious companies
-        </Title>
-        <Title mb={{ _: 4, l: 5 }}>succeed</Title>
-        <Text
-          fontSize={{ _: "m", l: "l" }}
-          color="white"
-          lineHeight={{ _: "m", l: "l" }}
-        >
-          Get recommended brilliant talent and learn about them by exploring
-          case studies of their work.
-        </Text>
-      </Box>
+      <div className="mb-16">
+        <h1 className="text-5xl text-white font-semibold tracking-tight mb-8 leading-tight">
+          Start discovering SaaS growth & marketing projects
+        </h1>
+        <p className="text-xl text-white leading-relaxed">
+          Be inspired by proven marketing tactics & strategies, and flexibly
+          hire the talent behind them.
+        </p>
+      </div>
       <Logos />
     </>
   );
