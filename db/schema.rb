@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_07_070236) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_07_074539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -280,7 +280,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_070236) do
   create_table "case_study_interest_articles", force: :cascade do |t|
     t.bigint "interest_id", null: false
     t.bigint "article_id", null: false
-    t.integer "score"
+    t.decimal "similarity"
     t.boolean "favorite"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -293,12 +293,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_070236) do
     t.string "uid", null: false
     t.bigint "account_id", null: false
     t.citext "term"
-    t.jsonb "article_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.jsonb "term_data"
-    t.decimal "min_score"
     t.index ["account_id"], name: "index_case_study_interests_on_account_id"
     t.index ["term", "account_id"], name: "index_case_study_interests_on_term_and_account_id", unique: true
     t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true

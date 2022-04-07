@@ -12,13 +12,12 @@ module CaseStudy
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
     def articles
-      find_articles! if article_ids.blank?
-      Article.searchable.where(id: article_ids)
+      find_articles! if interest_articles.none?
+      Article.where(id: interest_articles.select(:article_id))
     end
 
     def find_articles!
-      embeddings = Embedding.ordered_articles_for(term_vector).last(5)
-      update!(article_ids: embeddings.pluck(:article_id), min_score: embeddings.first[:similarity])
+      interest_articles.insert_all!(Embedding.ordered_articles_for(term_vector).last(5)) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def term_vector
@@ -45,15 +44,13 @@ end
 #
 # Table name: case_study_interests
 #
-#  id          :bigint           not null, primary key
-#  article_ids :jsonb
-#  min_score   :decimal(, )
-#  term        :citext
-#  term_data   :jsonb
-#  uid         :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  account_id  :bigint           not null
+#  id         :bigint           not null, primary key
+#  term       :citext
+#  term_data  :jsonb
+#  uid        :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  account_id :bigint           not null
 #
 # Indexes
 #
