@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
@@ -15,6 +16,11 @@ export default function ShortlistArticle() {
 
   return (
     <ErrorBoundary>
+      {data?.caseStudy && (
+        <Helmet>
+          <title>Advisable | {data.caseStudy?.title}</title>
+        </Helmet>
+      )}
       <div>
         <div className="flex gap-20 items-start">
           <SidebarCard specialist={data.caseStudy.specialist} />
