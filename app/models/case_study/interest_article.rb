@@ -6,6 +6,9 @@ module CaseStudy
     belongs_to :article
 
     validates :article_id, uniqueness: {scope: :interest_id}
+
+    scope :by_similarity, -> { order("similarity DESC NULLS LAST") }
+    scope :distinct_articles, -> { select("DISTINCT ON (article_id) article_id, id").order(:article_id) }
   end
 end
 
