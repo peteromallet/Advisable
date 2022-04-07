@@ -94,8 +94,8 @@ export default function Welcome() {
             initial={{ y: 80 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
-            heading="Chiel and Nike"
-            title="Helping Nike optimize SEO traffic and reduce page bloat by 10X"
+            heading="Shiyam and Freshworks"
+            title="Generating over $1 million ARR for freshworks with paid search"
             avatarPosition="0 -64px"
             logoPosition="-64px -64px"
             gradient="from-purple-200 to-blue-300"
@@ -110,7 +110,7 @@ export default function Welcome() {
             logoPosition="-64px -128px"
           />
         </div>
-        <div className="p-8 lg:p-10 pb-16 text-center">
+        <div className="p-8 lg:p-10 lg:pb-16 text-center">
           <h2 className="text-3xl font-semibold tracking-tight mb-2 text-blue900">
             Let's build your feed
           </h2>
