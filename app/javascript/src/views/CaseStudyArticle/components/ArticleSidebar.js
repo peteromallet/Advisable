@@ -41,18 +41,16 @@ export default function ArticleSidebar({ elements, scrollState }) {
 
   const numOfItems = menuItems.length;
   let active;
-  let activeMenu;
+  let activeMenu = 0;
   for (let i = elements.length - 1; i > -1; i--) {
     if (scrollState[i] && !active) {
       active = i;
-      console.log(menuItems);
     }
     if (menuItems[i]?.index <= active) {
       activeMenu = i;
     }
     if (active && activeMenu) break;
   }
-  console.log(`active menu: ${activeMenu}, last on screen: ${active}`);
 
   return (
     <div>
