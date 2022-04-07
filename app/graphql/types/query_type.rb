@@ -336,8 +336,8 @@ module Types
     def favorited_articles
       requires_client!
       interests = current_user.account.interests
-      interest_articles = CaseStudy::InterestArticle.where(interest: interests, favorite: true)
-      CaseStudy::Article.for_feed.where(id: interest_articles.select(:article_id))
+      interest_articles = ::CaseStudy::InterestArticle.where(interest: interests, favorite: true)
+      ::CaseStudy::Article.for_feed.where(id: interest_articles.select(:article_id))
     end
   end
 end
