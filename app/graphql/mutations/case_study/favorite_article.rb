@@ -6,28 +6,17 @@ module Mutations
       graphql_name "FavoriteCaseStudyArticle"
 
       argument :article, ID, required: true
-      argument :interest, ID, required: true
 
-      field :success, Boolean, null: false
+      field :article, Types::CaseStudy::Article, null: false
 
-      def authorized?(interest:, **_args)
+      def authorized?(**_args)
         requires_client!
-
-        interest = ::CaseStudy::Interest.find_by!(uid: interest)
-        policy = ::CaseStudy::InterestPolicy.new(current_user, interest)
-        return true if policy.favorite?
-
-        ApiError.not_authorized("You do not have permissions to favorite this Case Study!")
       end
 
-      def resolve(article:, interest:)
+      def resolve(article:)
         article = ::CaseStudy::Article.find_by!(uid: article)
-        interest = ::CaseStudy::Interest.find_by!(uid: interest)
-        interest_article = interest.interest_articles.find_by!(article:)
-
-        interest_article.update!(favorite: true)
-
-        {success: true}
+        ::CaseStudy::FavoritedArticle.find_or_create_by!(account: current_user.account, article:)
+        {article:}
       end
     end
   end

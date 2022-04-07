@@ -17,7 +17,6 @@ end
 # Table name: case_study_interest_articles
 #
 #  id          :bigint           not null, primary key
-#  favorite    :boolean
 #  similarity  :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
