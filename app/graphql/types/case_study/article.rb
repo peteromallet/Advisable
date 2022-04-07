@@ -63,6 +63,12 @@ module Types
         search.archived.include?(object.id)
       end
 
+      field :is_favorited, Boolean, null: false
+      def is_favorited
+        # this only runs single query even when we have many articles so don't use exists? or similar
+        current_user.account.favorited_articles.any? { |fa| fa.article_id == object.id }
+      end
+
       field :shares, [SharedArticle], null: true
       field :review, Types::CaseStudyArticleReview, null: true
     end

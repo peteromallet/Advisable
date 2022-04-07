@@ -8,15 +8,13 @@ module CaseStudy
 
     belongs_to :account
     has_many :interest_articles, dependent: :destroy
+    has_many :articles, through: :interest_articles
 
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
-    def articles
-      find_articles! if interest_articles.none?
-      Article.where(id: interest_articles.select(:article_id))
-    end
-
     def find_articles!
+      return if interest_articles.any?
+
       interest_articles.insert_all!(Embedding.ordered_articles_for(term_vector).last(5)) # rubocop:disable Rails/SkipsModelValidations
     end
 

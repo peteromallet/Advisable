@@ -335,10 +335,13 @@ module Types
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
     def feed
       requires_client!
+      interests = current_user.account.interests
+      interests.each(&:find_articles!) # ensure articles are there
+
       interest_article_ids = ::CaseStudy::InterestArticle.
         distinct_articles.
         by_similarity.
-        where(interest: current_user.account.interests).
+        where(interest: interests).
         map(&:id) # don't use .pluck here, it will ignore distinct
 
       ::CaseStudy::InterestArticle.where(id: interest_article_ids).joins(:article).merge(::CaseStudy::Article.for_feed)

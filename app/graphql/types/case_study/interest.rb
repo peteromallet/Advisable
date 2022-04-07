@@ -33,8 +33,7 @@ module Types
       field :results, Article.connection_type, null: true do
         argument :refresh_results, Boolean, required: false
       end
-      def results(refresh_results: false)
-        object.find_articles! if refresh_results
+      def results(**_args)
         object.articles.for_feed
       end
 

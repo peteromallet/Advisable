@@ -7,10 +7,18 @@ module Types
       description "Type definition for CaseStudy::InterestArticle"
 
       field :id, ID, null: false
+
       field :article, Article, null: false
+      def article
+        dataloader.with(::ActiveRecordSource, ::CaseStudy::Article).load(object.article_id)
+      end
+
       field :interest, Interest, null: false
+      def interest
+        dataloader.with(::ActiveRecordSource, ::CaseStudy::Interest).load(object.interest_id)
+      end
+
       field :similarity, Float, null: true
-      field :favorite, Boolean, null: true
     end
   end
 end
