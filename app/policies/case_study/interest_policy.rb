@@ -6,6 +6,8 @@ module CaseStudy
       user_owner? || admin?
     end
     alias delete? read?
+    alias favorite? read?
+    alias unfavorite? read?
 
     def user_owner?
       record.account&.user == current_user
