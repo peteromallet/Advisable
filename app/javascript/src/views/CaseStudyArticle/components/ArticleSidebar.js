@@ -54,7 +54,7 @@ export default function ArticleSidebar({ elements, scrollState }) {
 
   return (
     <div>
-      <div className="min-w-[320px] sticky top-28">
+      <div className="min-w-[320px] sticky top-[164px]">
         <div className="absolute top-0 bottom-0 w-0.5 bg-gray-200">
           <div
             style={{ height: `${(100 / numOfItems) * (activeMenu + 1)}%` }}
