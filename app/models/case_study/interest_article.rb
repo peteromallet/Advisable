@@ -4,6 +4,8 @@ module CaseStudy
   class InterestArticle < ApplicationRecord
     belongs_to :interest
     belongs_to :article
+
+    validates :article_id, uniqueness: {scope: :interest_id}
   end
 end
 
@@ -13,7 +15,7 @@ end
 #
 #  id          :bigint           not null, primary key
 #  favorite    :boolean
-#  score       :integer
+#  similarity  :decimal(, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  article_id  :bigint           not null
