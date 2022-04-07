@@ -14,7 +14,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     <<-GRAPHQL
       mutation {
         createCaseStudyInterests(input: {
-          terms: #{terms},
+          terms: #{terms}
         }) {
           interests {
             id
@@ -34,6 +34,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     expect(interest.account).to eq(user.account)
     expect(interest.log_data.responsible_id).to eq(user.account_id)
     expect(interest.interest_articles).to be_blank
+    interest.find_articles!
     expect(interest.articles).to match_array([article1, article2])
     interest.interest_articles.reload
     expect(interest.interest_articles.pluck(:article_id)).to match_array([article1.id, article2.id])

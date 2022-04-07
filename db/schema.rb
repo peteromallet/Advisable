@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_07_074539) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_07_121536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -265,6 +265,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_074539) do
     t.index ["article_id"], name: "index_case_study_embeddings_on_article_id"
   end
 
+  create_table "case_study_favorited_articles", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "article_id"], name: "index_cs_favorited_articles_on_account_and_article", unique: true
+    t.index ["account_id"], name: "index_case_study_favorited_articles_on_account_id"
+    t.index ["article_id"], name: "index_case_study_favorited_articles_on_article_id"
+  end
+
   create_table "case_study_industries", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "article_id", null: false
@@ -281,7 +291,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_074539) do
     t.bigint "interest_id", null: false
     t.bigint "article_id", null: false
     t.decimal "similarity"
-    t.boolean "favorite"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_case_study_interest_articles_on_article_id"
@@ -1183,6 +1192,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_074539) do
   add_foreign_key "case_study_articles", "specialists"
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_embeddings", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_favorited_articles", "accounts"
+  add_foreign_key "case_study_favorited_articles", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
   add_foreign_key "case_study_interest_articles", "case_study_articles", column: "article_id"

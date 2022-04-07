@@ -22,6 +22,7 @@ module CaseStudy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
     has_many :embeddings, dependent: :destroy
     has_many :interest_articles, dependent: :destroy
+    has_many :favorited_articles, dependent: :destroy
     has_one :review, class_name: "::Review", foreign_key: :case_study_article, inverse_of: :case_study_article, dependent: :destroy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
     has_one_attached :cover_photo
