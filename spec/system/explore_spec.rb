@@ -33,7 +33,7 @@ RSpec.describe "Discover", type: :system do
 
   describe "/explore" do
     it "lists the users shortlists and they can click into one" do
-      search = create(:case_study_interest, term: "Test shortlist", account:)
+      search = create(:case_study_interest, term: "Test shortlist", account:, article_ids: [article1.id])
       authenticate_as(user)
       visit("/explore")
       expect(page).to have_content("Test shortlist")

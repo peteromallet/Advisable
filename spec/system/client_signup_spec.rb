@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Client signup", type: :system do
   before do
+    allow_any_instance_of(CaseStudy::Interest).to receive(:articles).and_return([])
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     create(:industry, name: "Financial Services")
     create(:industry, name: "Development")
@@ -18,7 +19,7 @@ RSpec.describe "Client signup", type: :system do
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
     fill_in("email", with: "michael+scott@dundermifflin.com")
-    click_on("Get Started")
+    click_on("Create Your Free Account")
     expect(page).to have_content("Welcome to Advisable!")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
