@@ -6,6 +6,7 @@ module Types
       graphql_name "CaseStudyInterestArticle"
       description "Type definition for CaseStudy::InterestArticle"
 
+      field :id, ID, null: false
       field :article, Article, null: false
       field :interest, Interest, null: false
       field :similarity, Float, null: true

@@ -15,6 +15,9 @@ module Types
       field :id, ID, null: false, method: :uid
       field :term, String, null: false
       field :articles, Article.connection_type, null: true
+      def articles
+        object.articles.for_feed
+      end
 
       # TODO: Remove these because they are only here for the purpose of duck typing with CaseStudy::Search. 👇
       field :name, String, null: false, method: :term
@@ -32,7 +35,7 @@ module Types
       end
       def results(refresh_results: false)
         object.find_articles! if refresh_results
-        object.articles
+        object.articles.for_feed
       end
 
       field :primary_skill, Skill, null: true
