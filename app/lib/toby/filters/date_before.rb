@@ -7,7 +7,7 @@ module Toby
         return records if value.empty?
         return records if value.first.blank?
 
-        records.where(attribute.name => (...value.first.to_date))
+        records.where(attribute.sql_name => (...value.first.to_date))
       end
     end
   end

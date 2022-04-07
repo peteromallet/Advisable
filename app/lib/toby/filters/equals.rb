@@ -10,11 +10,11 @@ module Toby
         return records if value.blank?
 
         if attribute.respond_to?(:uuid?) && attribute.uuid?
-          valid_uuid?(value) ? records.where("#{attribute.name} = ?", value) : records.none
+          valid_uuid?(value) ? records.where("#{attribute.sql_name} = ?", value) : records.none
         elsif attribute.case_insensitive_compare
-          records.where("LOWER(#{attribute.name}) = LOWER(?)", value)
+          records.where("LOWER(#{attribute.sql_name}) = LOWER(?)", value)
         else
-          records.where("#{attribute.name} = ?", value)
+          records.where("#{attribute.sql_name} = ?", value)
         end
       end
     end

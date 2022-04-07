@@ -19,6 +19,14 @@ module Toby
         raise "Input type not defined"
       end
 
+      def table_name
+        resource.model.table_name
+      end
+
+      def sql_name
+        "#{table_name}.#{name}"
+      end
+
       def humanized_name
         name.to_s.humanize
       end
