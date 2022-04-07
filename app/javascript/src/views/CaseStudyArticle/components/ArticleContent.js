@@ -23,12 +23,12 @@ const CONTENT_TYPES = {
 const scrollReducer = (state, action) => {
   switch (action.type) {
     case "IN_VIEWPORT":
-      console.log("in viewport", action, state);
-      state[action.payload] = true;
+      if (action.payload.element.__typename === "Heading") return state;
+      state[action.payload.index] = true;
       return [...state];
     case "OUT_VIEWPORT":
-      console.log("out of viewport", action, state);
-      state[action.payload] = false;
+      if (action.payload.element.__typename === "Heading") return state;
+      state[action.payload.index] = false;
       return [...state];
   }
 };
@@ -51,8 +51,6 @@ export default function ArticleContent({ caseStudy }) {
     })),
   );
 
-  console.log("elements", elements);
-
   return (
     <div className="flex gap-20">
       <ArticleSidebar elements={elements} scrollState={scrollState} />
@@ -60,8 +58,11 @@ export default function ArticleContent({ caseStudy }) {
         {elements.map((element, index) => (
           <motion.div
             key={element.id}
-            onViewportEnter={() => inViewport(index)}
-            onViewportLeave={() => outViewport(index)}
+            onViewportEnter={() => inViewport({ index, element })}
+            onViewportLeave={() => outViewport({ index, element })}
+            viewport={{
+              margin: "0px 0px -50% 0px",
+            }}
           >
             <CaseStudyContentBlock
               element={element}
