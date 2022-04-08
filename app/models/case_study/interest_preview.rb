@@ -2,6 +2,7 @@
 
 module CaseStudy
   class InterestPreview < ApplicationRecord
+    include TermData
     include Uid
     uid_prefix "csp"
 
