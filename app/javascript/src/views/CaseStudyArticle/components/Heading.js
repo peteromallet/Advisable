@@ -1,21 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Header = (props) => (
-  <div>
+const Header = ({ id, section, ...props }) => (
+  <motion.div className="first:mt-0 mt-20" {...props}>
     <h6 className="text-sm uppercase font-[550] leading-5">
-      <div id={props.id} className="relative top-[-92px]" />
-      {props.section.type}
+      <div id={id} className="relative top-[-92px]" />
+      {section.type}
     </h6>
-    <motion.h1 className="text-[2rem] font-[550]">
-      <div id={props.id} className="relative top-[-92px]" />
+    <motion.h1 className="text-[2rem] leading-10 mb-4 pb-px font-[550]">
       {props.children}
     </motion.h1>
-  </div>
+  </motion.div>
 );
 
-const Subheader = ({ id, children }) => (
-  <motion.h1 className="text-[1.625rem] font-[550]">
+const Subheader = ({ id, children, ...props }) => (
+  <motion.h1 className="text-[1.625rem] font-[550]" {...props}>
     <div id={id} className="relative top-[-92px]" />
     {children}
   </motion.h1>

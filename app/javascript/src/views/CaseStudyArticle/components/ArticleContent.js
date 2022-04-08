@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import { motion } from "framer-motion";
 import Images from "./Images";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
@@ -56,20 +55,17 @@ export default function ArticleContent({ caseStudy }) {
       <ArticleSidebar elements={elements} scrollState={scrollState} />
       <div>
         {elements.map((element, index) => (
-          <motion.div
+          <CaseStudyContentBlock
+            element={element}
+            inViewport={inViewport}
+            outViewport={outViewport}
             key={element.id}
             onViewportEnter={() => inViewport({ index, element })}
             onViewportLeave={() => outViewport({ index, element })}
             viewport={{
               margin: "0px 0px -50% 0px",
             }}
-          >
-            <CaseStudyContentBlock
-              element={element}
-              inViewport={inViewport}
-              outViewport={outViewport}
-            />
-          </motion.div>
+          />
         ))}
       </div>
     </div>

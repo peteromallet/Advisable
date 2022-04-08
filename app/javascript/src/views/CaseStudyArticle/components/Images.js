@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import css from "@styled-system/css";
 import styled from "styled-components";
 import { Box, theme } from "@advisable/donut";
@@ -68,11 +69,11 @@ const StyledImages = styled.div`
   ${(p) => STYLES[p.number] || GRID};
 `;
 
-function CaseStudyImages({ images }) {
+function CaseStudyImages({ images, ...props }) {
   const dialog = useImageGallery();
 
   return (
-    <Box paddingTop={2} paddingBottom={12}>
+    <motion.div as={Box} paddingTop={2} paddingBottom={12} {...props}>
       <ImageGallery dialog={dialog} images={images} />
 
       <StyledImages number={images.length - 1}>
@@ -84,7 +85,7 @@ function CaseStudyImages({ images }) {
           />
         ))}
       </StyledImages>
-    </Box>
+    </motion.div>
   );
 }
 
