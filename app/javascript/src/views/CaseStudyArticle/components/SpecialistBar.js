@@ -48,7 +48,6 @@ export default function SpecialistBar({ specialist, visibility }) {
           <Button variant="primary" className="ml-auto">
             Connect
           </Button>
-          <Button variant="outlined">Remove</Button>
         </div>
       </div>
     </div>
