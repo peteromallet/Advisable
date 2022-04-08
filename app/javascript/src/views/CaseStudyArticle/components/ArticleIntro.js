@@ -53,7 +53,7 @@ export default function ArticleIntro({ caseStudy }) {
           <img src={caseStudy.company.favicon} className="rounded w-6 h-6" />
         </SuperEllipse>
       </div>
-      <h1 className="text-5xl text-slate-900 leading-[48px] font-extrabold mb-7">
+      <h1 className="text-5xl text-slate-900 leading-[48px] font-extrabold mb-7 tracking-tight">
         {caseStudy.title}
       </h1>
       <CompanyBox caseStudy={caseStudy} />
