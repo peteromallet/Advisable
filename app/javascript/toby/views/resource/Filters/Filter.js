@@ -35,11 +35,13 @@ function FilterType({ filter, resource, onChange }) {
 
   const handleChange = useCallback(
     (e) => {
-      const filter = attribute.filters.find((f) => f.name === e.target.value);
+      const filter = attribute?.filters.find((f) => f.name === e.target.value);
       onChange(filter);
     },
     [attribute, onChange],
   );
+
+  if (!attribute) return null;
 
   return (
     <Select size="s" value={filter.type} onChange={handleChange}>
