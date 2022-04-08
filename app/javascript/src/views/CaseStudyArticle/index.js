@@ -37,7 +37,7 @@ export default function ShortlistArticle() {
             visibility={specialistBar}
           />
           <ArticleIntro caseStudy={data.caseStudy} />
-          <hr className="absolute bottom-0 left-0 right-0" />
+          <hr className="absolute bottom-0 left-0 right-0 -z-10" />
         </div>
         <ArticleContent caseStudy={data.caseStudy} />
       </div>
