@@ -2,6 +2,8 @@
 
 module CaseStudy
   class InterestPreview < ApplicationRecord
+    MAX_RESULTS = 5
+
     include TermData
     include Uid
     uid_prefix "csp"
@@ -9,6 +11,11 @@ module CaseStudy
     belongs_to :account
 
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
+
+    def update_results!
+      articles = articles_by_relevancy.first(MAX_RESULTS)
+      update!(results: articles.pluck(:article_id))
+    end
   end
 end
 
