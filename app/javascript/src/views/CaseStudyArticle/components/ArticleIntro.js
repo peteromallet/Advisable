@@ -4,36 +4,8 @@ import SuperEllipse from "react-superellipse";
 import LogoMark from "src/components/LogoMark";
 import PassportAvatar from "src/components/PassportAvatar";
 import CompanyBox from "./CompanyBox";
+import Achievements from "./Achievements";
 import AdvisableComment from "./AdvisableComment";
-
-const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
-
-function Achievements({ caseStudy }) {
-  const achievements = caseStudy.sections
-    .find((s) => s.type === "outcome")
-    .contents.find((c) => c.__typename === "Results").results;
-
-  return (
-    <div>
-      {achievements.map((achievement, index) => (
-        <div
-          key={`achievement-${index}`}
-          className="flex items-center gap-3 mb-6"
-        >
-          <span className="text-[32px] text-slate-400 leading-8 font-[550]">
-            {index + 1}
-          </span>
-          <div>
-            <span className="text-xs leading-3 text-slate-300 font-[550] uppercase">
-              {NUM_TO_WORD[index]} achievement
-            </span>
-            <p className="text-xl text-gray-900">{achievement}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function ArticleIntro({ caseStudy }) {
   return (
@@ -64,7 +36,7 @@ export default function ArticleIntro({ caseStudy }) {
       </h1>
       <CompanyBox caseStudy={caseStudy} />
       <AdvisableComment caseStudy={caseStudy} />
-      <Achievements caseStudy={caseStudy} />
+      <Achievements sections={caseStudy.sections} />
     </div>
   );
 }
