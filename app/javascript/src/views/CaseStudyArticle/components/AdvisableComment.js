@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function AdvisableComment({ caseStudy }) {
-  if (!caseStudy.company?.name || !caseStudy.companyType?.[0]) return null;
+  if (!caseStudy.company?.name && !caseStudy.companyType?.[0]) return null;
 
   return (
     <div className="px-6 pt-4 pb-5 mb-5 bg-gray-50 rounded-lg border-gray-300 border-solid border">
