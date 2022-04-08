@@ -57,13 +57,7 @@ export default function ArticleIntro({ caseStudy }) {
         {caseStudy.title}
       </h1>
       <CompanyBox caseStudy={caseStudy} />
-      <div className="px-6 pt-4 pb-5 mb-5 bg-gray-50 rounded-lg border-gray-300 border-solid border">
-        <p className="font-[550] text-lg text-slate-900">
-          We&apos;re recommending {caseStudy.specialist.firstName} base on their
-          project with {caseStudy.company.name}
-        </p>
-        <p className="text-lg font-[350]">{caseStudy.comment}</p>
-      </div>
+      <AdvisableComment caseStudy={caseStudy} />
       <Achievements caseStudy={caseStudy} />
     </div>
   );
