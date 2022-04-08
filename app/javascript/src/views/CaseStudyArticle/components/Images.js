@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import css from "@styled-system/css";
 import styled from "styled-components";
-import { Box, theme } from "@advisable/donut";
+import { theme } from "@advisable/donut";
 import ImageGallery, { useImageGallery } from "src/components/ImageGallery";
 
 const StyledImage = styled.img`
@@ -73,7 +73,7 @@ function CaseStudyImages({ images, ...props }) {
   const dialog = useImageGallery();
 
   return (
-    <motion.div as={Box} paddingTop={2} paddingBottom={12} {...props}>
+    <motion.div className="pt-2 pb-12" {...props}>
       <ImageGallery dialog={dialog} images={images} />
 
       <StyledImages number={images.length - 1}>
