@@ -1,8 +1,10 @@
+import React from "react";
 import { PlusSm } from "@styled-icons/heroicons-solid";
 import SuperEllipse from "react-superellipse";
-import React from "react";
+import LogoMark from "src/components/LogoMark";
 import PassportAvatar from "src/components/PassportAvatar";
 import CompanyBox from "./CompanyBox";
+import AdvisableComment from "./AdvisableComment";
 
 const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
 
@@ -50,7 +52,11 @@ export default function ArticleIntro({ caseStudy }) {
           r2={0.362}
           className="flex bg-gray-200 h-[48px] w-[42px] items-center justify-center"
         >
-          <img src={caseStudy.company.favicon} className="rounded w-6 h-6" />
+          {caseStudy.company?.favicon ? (
+            <img className="rounded w-6 h-6" src={caseStudy.company?.favicon} />
+          ) : (
+            <LogoMark size={16} color="blue" />
+          )}
         </SuperEllipse>
       </div>
       <h1 className="text-5xl text-slate-900 leading-[48px] font-extrabold mb-7 tracking-tight">
