@@ -1,20 +1,22 @@
 import React from "react";
 
 const SectionType = ({ children }) => (
-  <div className="p-2 text-sm font-[650] uppercase">{children}</div>
+  <div className="p-2 text-sm font-[650] leading-4 uppercase">{children}</div>
 );
 
 const SectionTypeHover = ({ children }) => (
-  <div className="bg-white group-hover:drop-shadow-lg transition-shadow rounded-xs hidden absolute top-0 left-0 right-0 group-hover:block z-10 pointer-events-none overflow-visible">
+  <div className="bg-white group-hover:drop-shadow-lg transition-shadow rounded-xs hidden absolute top-0 left-2 right-0 group-hover:block z-10 pointer-events-none overflow-visible">
     {children}
   </div>
 );
 
-const Header = ({ children }) => <div className="p-2">{children}</div>;
+const Header = ({ children }) => (
+  <div className="p-2 leading-4">{children}</div>
+);
 
 const Heading = ({ item }) => (
   <a href={`#${item.id}`}>
-    <div className="group cursor-pointer relative overflow-visible">
+    <div className="group cursor-pointer relative overflow-visible pl-2">
       <SectionType>{item.section.type}</SectionType>
       <SectionTypeHover>
         <SectionType>{item.section.type}</SectionType>
@@ -27,7 +29,7 @@ const Heading = ({ item }) => (
 const Subheading = ({ item }) => {
   return (
     <a key={item.id} href={`#${item.id}`}>
-      <h6 className="p-2 pl-6 cursor-pointer hover:bg-white rounded-xs hover:shadow-lg hover:z-20">
+      <h6 className="leading-4 p-2 ml-2 pl-6 cursor-pointer hover:bg-white rounded-xs hover:shadow-lg hover:z-20">
         {item.text}
       </h6>
     </a>
