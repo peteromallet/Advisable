@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_01_073859) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_07_121536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -265,6 +265,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_01_073859) do
     t.index ["article_id"], name: "index_case_study_embeddings_on_article_id"
   end
 
+  create_table "case_study_favorited_articles", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "article_id"], name: "index_cs_favorited_articles_on_account_and_article", unique: true
+    t.index ["account_id"], name: "index_case_study_favorited_articles_on_account_id"
+    t.index ["article_id"], name: "index_case_study_favorited_articles_on_article_id"
+  end
+
   create_table "case_study_industries", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "article_id", null: false
@@ -277,17 +287,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_01_073859) do
     t.index ["uid"], name: "index_case_study_industries_on_uid", unique: true
   end
 
+  create_table "case_study_interest_articles", force: :cascade do |t|
+    t.bigint "interest_id", null: false
+    t.bigint "article_id", null: false
+    t.decimal "similarity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_case_study_interest_articles_on_article_id"
+    t.index ["interest_id", "article_id"], name: "index_interest_articles_on_interest_id_and_article_id", unique: true
+    t.index ["interest_id"], name: "index_case_study_interest_articles_on_interest_id"
+  end
+
   create_table "case_study_interests", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "account_id", null: false
-    t.string "term"
-    t.jsonb "article_ids"
+    t.citext "term"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.jsonb "term_data"
-    t.decimal "min_score"
     t.index ["account_id"], name: "index_case_study_interests_on_account_id"
+    t.index ["term", "account_id"], name: "index_case_study_interests_on_term_and_account_id", unique: true
     t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true
   end
 
@@ -1172,8 +1192,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_01_073859) do
   add_foreign_key "case_study_articles", "specialists"
   add_foreign_key "case_study_contents", "case_study_sections", column: "section_id"
   add_foreign_key "case_study_embeddings", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_favorited_articles", "accounts"
+  add_foreign_key "case_study_favorited_articles", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_industries", "industries"
+  add_foreign_key "case_study_interest_articles", "case_study_articles", column: "article_id"
+  add_foreign_key "case_study_interest_articles", "case_study_interests", column: "interest_id"
   add_foreign_key "case_study_interests", "accounts"
   add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"

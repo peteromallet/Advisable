@@ -331,5 +331,27 @@ module Types
       requires_client!
       current_user.account.interests
     end
+
+    field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
+    def feed
+      requires_client!
+      interests = current_user.account.interests
+      interests.each(&:find_articles!) # ensure articles are there
+
+      interest_article_ids = ::CaseStudy::InterestArticle.
+        distinct_articles.
+        by_similarity.
+        where(interest: interests).
+        map(&:id) # don't use .pluck here, it will ignore distinct
+
+      ::CaseStudy::InterestArticle.where(id: interest_article_ids).joins(:article).merge(::CaseStudy::Article.for_feed)
+    end
+
+    field :favorited_articles, Types::CaseStudy::Article.connection_type, null: true
+    def favorited_articles
+      requires_client!
+      favorited = current_user.account.favorited_articles
+      ::CaseStudy::Article.for_feed.where(id: favorited.select(:article_id))
+    end
   end
 end

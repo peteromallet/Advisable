@@ -21,6 +21,8 @@ module CaseStudy
     has_many :search_feedbacks, dependent: :destroy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
     has_many :embeddings, dependent: :destroy
+    has_many :interest_articles, dependent: :destroy
+    has_many :favorited_articles, dependent: :destroy
     has_one :review, class_name: "::Review", foreign_key: :case_study_article, inverse_of: :case_study_article, dependent: :destroy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
     has_one_attached :cover_photo
@@ -28,6 +30,8 @@ module CaseStudy
     scope :published, -> { where.not(published_at: nil) }
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
+    scope :reverse_chronological, -> { order(published_at: :desc) }
+    scope :for_feed, -> { searchable.reverse_chronological }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
 
     def self.find_by_slug_or_id(slug)

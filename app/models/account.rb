@@ -20,6 +20,7 @@ class Account < ApplicationRecord
   has_many :interviewer_articles, inverse_of: :interviewer, foreign_key: :interviewer_id, class_name: "CaseStudy::Article", dependent: :nullify
   has_many :editor_articles, inverse_of: :editor, foreign_key: :editor_id, class_name: "CaseStudy::Article", dependent: :nullify
   has_many :interests, class_name: "CaseStudy::Interest", dependent: :destroy
+  has_many :favorited_articles, class_name: "CaseStudy::FavoritedArticle", dependent: :destroy
   has_many :messages, dependent: :nullify, foreign_key: :author_id, inverse_of: :author
   has_many :conversation_participants, dependent: :destroy
   has_many :conversations, through: :conversation_participants
