@@ -50,8 +50,19 @@ module CaseStudy
       slug || uid
     end
 
+    def embedding
+      Embedding.for_article(self)
+    end
+
     def path
       "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
+    end
+
+    def similar(limit: 5)
+      similar_ids = Rails.cache.fetch("case_study_article_similar_#{id}_#{limit}", expires_in: 1.day) do
+        Embedding.ordered_articles_for(embedding.vector).last(limit + 1).pluck(:article_id).reverse
+      end
+      Article.where(id: similar_ids - [id]).in_order_of(:id, similar_ids)
     end
 
     def text_for_embedding

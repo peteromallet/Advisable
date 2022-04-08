@@ -69,6 +69,7 @@ module Types
         current_user.account.favorited_articles.any? { |fa| fa.article_id == object.id }
       end
 
+      field :similar, [Article], null: false
       field :shares, [SharedArticle], null: true
       field :review, Types::CaseStudyArticleReview, null: true
     end
