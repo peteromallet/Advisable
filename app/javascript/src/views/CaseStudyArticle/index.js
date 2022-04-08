@@ -17,8 +17,6 @@ export default function ShortlistArticle() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
-  console.log("scroll", window.scrollY);
-
   return (
     <ErrorBoundary>
       {data?.caseStudy && (
