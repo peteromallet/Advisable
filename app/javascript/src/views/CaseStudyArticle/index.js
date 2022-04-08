@@ -17,6 +17,8 @@ export default function ShortlistArticle() {
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
+  console.log("scroll", window.scrollY);
+
   return (
     <ErrorBoundary>
       {data?.caseStudy && (
@@ -24,21 +26,21 @@ export default function ShortlistArticle() {
           <title>Advisable | {data.caseStudy?.title}</title>
         </Helmet>
       )}
-      <div>
-        <div className="flex gap-20 items-start">
-          <motion.div
-            onViewportLeave={() => setSpecialistBar(true)}
-            onViewportEnter={() => setSpecialistBar(false)}
-          >
-            <SidebarCard specialist={data.caseStudy.specialist} />
-          </motion.div>
-          <SpecialistBar
-            specialist={data.caseStudy.specialist}
-            visibility={specialistBar}
-          />
-          <ArticleIntro caseStudy={data.caseStudy} />
-          <hr className="absolute bottom-0 left-0 right-0 -z-10" />
-        </div>
+      <div className="w-[1198px] py-10 mx-auto flex gap-20 items-start">
+        <motion.div
+          onViewportLeave={() => setSpecialistBar(true)}
+          onViewportEnter={() => setSpecialistBar(false)}
+        >
+          <SidebarCard specialist={data.caseStudy.specialist} />
+        </motion.div>
+        <SpecialistBar
+          specialist={data.caseStudy.specialist}
+          visibility={specialistBar}
+        />
+        <ArticleIntro caseStudy={data.caseStudy} />
+      </div>
+      <hr className="border-neutral200" />
+      <div className="w-[1198px] py-10 mx-auto">
         <ArticleContent caseStudy={data.caseStudy} />
       </div>
     </ErrorBoundary>
