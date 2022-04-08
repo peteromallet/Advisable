@@ -13,7 +13,7 @@ module Toby
           association_id = reflection.source_reflection.association_primary_key
           records.includes(through => reflection.source_reflection.name).where(through => {reflection.name => {association_id => value}})
         else
-          records.joins(attribute.name).where(attribute.name => {reflection.active_record_primary_key => value}).distinct
+          records.joins(attribute.sql_name).where(attribute.sql_name => {reflection.active_record_primary_key => value}).distinct
         end
       end
     end

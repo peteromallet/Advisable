@@ -4,7 +4,7 @@ module Toby
   module Filters
     class HasAny < BaseFilter
       def apply(records, attribute, **_opts)
-        records.where.associated(attribute.name)
+        records.where.associated(attribute.sql_name)
       end
     end
   end

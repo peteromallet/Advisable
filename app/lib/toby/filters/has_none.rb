@@ -4,7 +4,7 @@ module Toby
   module Filters
     class HasNone < BaseFilter
       def apply(records, attribute, **_opts)
-        records.where.missing(attribute.name)
+        records.where.missing(attribute.sql_name)
       end
     end
   end

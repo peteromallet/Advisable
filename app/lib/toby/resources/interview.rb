@@ -10,6 +10,7 @@ module Toby
       attribute :reason, Attributes::String
       attribute :specialist, Attributes::BelongsTo
       attribute :user, Attributes::BelongsTo, readonly: true
+      attribute :agreement, Lookups::Interviews::Agreement
       attribute :availability_note, Attributes::String
       attribute :call_requested_at, Attributes::DateTime
       attribute :call_scheduled_at, Attributes::DateTime

@@ -7,7 +7,7 @@ module Toby
         return records if value.empty?
         return records if value.first.blank?
 
-        records.where("#{attribute.name} < ? ", value.first)
+        records.where("#{attribute.sql_name} < ? ", value.first)
       end
     end
   end
