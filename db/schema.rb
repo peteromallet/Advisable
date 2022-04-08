@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_08_093552) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_08_115632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -319,6 +319,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_08_093552) do
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
     t.jsonb "term_data"
+    t.decimal "treshold"
     t.index ["account_id"], name: "index_case_study_interests_on_account_id"
     t.index ["term", "account_id"], name: "index_case_study_interests_on_term_and_account_id", unique: true
     t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true

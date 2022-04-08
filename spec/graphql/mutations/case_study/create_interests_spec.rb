@@ -36,6 +36,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     expect(interest.interest_articles).to be_blank
     interest.find_articles!
     expect(interest.articles).to match_array([article1, article2])
+    expect(interest.treshold.round(2)).to eq(0.61)
     interest.interest_articles.reload
     expect(interest.interest_articles.pluck(:article_id)).to match_array([article1.id, article2.id])
     expect(interest.interest_articles.first.similarity.round(2)).to eq(0.61)
