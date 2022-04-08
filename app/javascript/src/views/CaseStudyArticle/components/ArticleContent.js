@@ -52,7 +52,7 @@ export default function ArticleContent({ caseStudy }) {
   );
 
   return (
-    <div className="flex gap-20">
+    <div className="flex gap-20 pt-16">
       <ArticleSidebar elements={elements} scrollState={scrollState} />
       <div>
         {elements.map((element, index) => (
