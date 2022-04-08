@@ -17,6 +17,10 @@ fragment ViewerFields on ViewerUnion {
     avatar
     account {
       id
+      subscriptions {
+        name
+        subscribed
+      }
     }
     clientApplication {
       id
@@ -47,6 +51,10 @@ fragment ViewerFields on ViewerUnion {
     guildCalendlyLink
     account {
       id
+      subscriptions {
+        name
+        subscribed
+      }
     }
   }
 }

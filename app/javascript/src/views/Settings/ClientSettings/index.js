@@ -10,6 +10,7 @@ import OldInvoices from "./StripeInvoices";
 import Password from "./Password";
 import Invoice from "./StripeInvoices/Invoice";
 import AccountSettings from "../AccountSettings";
+import NotificationSettings from "./Notifications";
 
 // Renders the settings view for a client user type.
 const ClientSettings = () => {
@@ -41,6 +42,7 @@ const ClientSettings = () => {
             <Route path="/invoices/*" element={<Invoices />} />
             <Route path="/password" element={<Password />} />
             <Route path="/account" element={<AccountSettings />} />
+            <Route path="/notifications" element={<NotificationSettings />} />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
