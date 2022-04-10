@@ -1,6 +1,6 @@
 import React from "react";
 
-const Divider = () => <div className="w-px h-8 bg-gray-300 last:hidden" />;
+const Divider = () => <div className="w-px h-8 bg-neutral200 last:hidden" />;
 
 const Item = ({ children, label, hidden, ...props }) => {
   if (!children || hidden === true) return null;
@@ -9,7 +9,7 @@ const Item = ({ children, label, hidden, ...props }) => {
     <>
       <div {...props}>
         {Boolean(label) && (
-          <div className="uppercase text-xs text-gray-400 font-[550]">
+          <div className="uppercase text-xs leading-4 text-neutral400 font-[550]">
             {label}
           </div>
         )}
@@ -33,23 +33,27 @@ export default function CompanyBox({ caseStudy }) {
   const companyType = caseStudy.companyType?.[0];
 
   return (
-    <div className="flex items-center gap-7 mb-5 border border-solid border-gray-300 rounded-[20px] pl-6 pr-8 py-4">
+    <div className="flex ring-1 ring-inset ring-neutral200 items-center gap-7 mb-5 rounded-[20px] pl-6 pr-8 pt-4 pb-5">
       <Item className="flex gap-2 items-center">
         <img src={favicon} className="h-8 w-8 rounded" />
-        <span className="text-xl">{name}</span>
+        <div className="text-xl font-[450] text-neutral900">{name}</div>
       </Item>
       <Item label="type" hidden={!companyType}>
-        <span>{companyType}</span>
+        <div className="font-[450] text-neutral900 leading-5">
+          {companyType}
+        </div>
       </Item>
       <Item label="focus" hidden={!businessType}>
-        <span>{businessType}</span>
+        <div className="font-[450] text-neutral900 leading-5">
+          {businessType}
+        </div>
       </Item>
       <Item label="website" hidden={!website}>
         <a
           href={website?.href}
           target="_blank"
           rel="noreferrer"
-          className="text-blue-600"
+          className="font-[450] text-blue500 leading-5"
         >
           {website?.hostname}
         </a>
