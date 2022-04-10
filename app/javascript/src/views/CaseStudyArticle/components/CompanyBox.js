@@ -24,7 +24,12 @@ export default function CompanyBox({ caseStudy }) {
   if (!caseStudy.company) return null;
 
   const { favicon, businessType, name } = caseStudy.company;
-  const website = new URL(caseStudy.company?.website);
+  let website;
+  try {
+    website = new URL(caseStudy.company?.website);
+  } catch {
+    website = null;
+  }
   const companyType = caseStudy.companyType?.[0];
 
   return (
