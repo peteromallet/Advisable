@@ -11,7 +11,7 @@ export default function ArticleIntro({ caseStudy }) {
         company={caseStudy.company}
         specialist={caseStudy.specialist}
       />
-      <h1 className="text-5xl text-slate-900 leading-[48px] font-extrabold mb-7 tracking-tight">
+      <h1 className="text-5xl text-neutral800 leading-[48px] pt-0.5 pb-0.5 font-extrabold mb-7 tracking-tight">
         {caseStudy.title}
       </h1>
       <CompanyBox caseStudy={caseStudy} />
