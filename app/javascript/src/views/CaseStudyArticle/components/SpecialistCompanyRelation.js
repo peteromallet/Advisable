@@ -6,15 +6,12 @@ import PassportAvatar from "src/components/PassportAvatar";
 
 export default function SpecialistCompanyRelation({ specialist, company }) {
   return (
-    <div className="flex items-center mb-4">
+    <div className="inline-flex gap-3 relative items-center mb-6">
       <PassportAvatar
         src={specialist.avatar}
         size="sm"
         name={specialist.name}
       />
-      <div className="flex items-center justify-center p-px rounded-full bg-white w-[22px] h-[22px] mx-[-5px] z-10">
-        <PlusSm />
-      </div>
       <SuperEllipse
         r1={0.1}
         r2={0.362}
@@ -26,6 +23,9 @@ export default function SpecialistCompanyRelation({ specialist, company }) {
           <LogoMark size={16} color="blue" />
         )}
       </SuperEllipse>
+      <div className="absolute inset-0 m-auto flex items-center justify-center p-px rounded-full bg-white w-[22px] h-[22px]">
+        <PlusSm />
+      </div>
     </div>
   );
 }
