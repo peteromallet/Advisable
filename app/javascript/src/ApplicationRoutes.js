@@ -8,6 +8,7 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
+import Feed from "./views/Feed";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -53,6 +54,15 @@ const ApplicationRoutes = () => {
             element={
               <RequireAuthentication>
                 <FreelancerDashboard />
+              </RequireAuthentication>
+            }
+          />
+
+          <Route
+            path="/feed"
+            element={
+              <RequireAuthentication clientOnly>
+                <Feed />
               </RequireAuthentication>
             }
           />

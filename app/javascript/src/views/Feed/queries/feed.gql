@@ -1,0 +1,23 @@
+query Feed {
+  feed {
+    edges {
+      node {
+        id
+        interest {
+          id
+          term
+        }
+        article {
+          id
+          title
+          subtitle
+          company {
+            id
+            name
+            favicon
+          }
+        }
+      }
+    }
+  }
+}
