@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_08_115632) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_11_112105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_08_115632) do
     t.datetime "disabled_at", precision: nil
     t.jsonb "features"
     t.string "timezone"
+    t.jsonb "showcased_articles"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
