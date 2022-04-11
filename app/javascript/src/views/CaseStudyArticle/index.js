@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
-import { motion } from "framer-motion";
 import { useArticle } from "./queries";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";

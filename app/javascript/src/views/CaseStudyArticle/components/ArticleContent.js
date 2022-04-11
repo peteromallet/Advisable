@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import Images from "./Images";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
@@ -11,19 +11,6 @@ const CONTENT_TYPES = {
   Paragraph,
 };
 
-const scrollReducer = (state, action) => {
-  switch (action.type) {
-    case "IN_VIEWPORT":
-      if (action.payload.element.__typename === "Heading") return state;
-      state[action.payload.index] = true;
-      return [...state];
-    case "OUT_VIEWPORT":
-      if (action.payload.element.__typename === "Heading") return state;
-      state[action.payload.index] = false;
-      return [...state];
-  }
-};
-
 function CaseStudyContentBlock({ element, ...props }) {
   const Component = CONTENT_TYPES[element.__typename];
   if (!Component) return null;
@@ -31,10 +18,6 @@ function CaseStudyContentBlock({ element, ...props }) {
 }
 
 export default function ArticleContent({ caseStudy }) {
-  const [scrollState, dispatch] = useReducer(scrollReducer, []);
-  const inViewport = (payload) => dispatch({ type: "IN_VIEWPORT", payload });
-  const outViewport = (payload) => dispatch({ type: "OUT_VIEWPORT", payload });
-
   const elements = caseStudy.sections.flatMap((section) =>
     section.contents.map((cont) => ({
       ...cont,
@@ -44,16 +27,13 @@ export default function ArticleContent({ caseStudy }) {
 
   return (
     <div className="flex gap-20">
-      <ArticleSidebar elements={elements} scrollState={scrollState} />
+      <ArticleSidebar elements={elements} />
       <div>
         {elements.map((element, index) => (
           <CaseStudyContentBlock
             element={element}
-            inViewport={inViewport}
-            outViewport={outViewport}
             key={element.id}
-            onViewportEnter={() => inViewport({ index, element })}
-            onViewportLeave={() => outViewport({ index, element })}
+            data-content-block={index}
             viewport={{
               margin: "0px 0px -50% 0px",
             }}

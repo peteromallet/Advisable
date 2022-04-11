@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useCallback, useState } from "react";
 
 const SectionType = ({ children }) => (
   <div className="pl-2 py-2 leading-5 text-sm text-neutral700 font-[650] uppercase">
@@ -65,7 +65,8 @@ const Subheading = ({ item }) => {
   );
 };
 
-export default function ArticleSidebar({ elements, scrollState }) {
+export default function ArticleSidebar({ elements }) {
+  const [scrollState, setScrollState] = useState([]);
   const menuItems = elements
     .map((el, index) => ({ ...el, index }))
     .filter(({ __typename }) => __typename === "Heading");
@@ -82,6 +83,26 @@ export default function ArticleSidebar({ elements, scrollState }) {
     }
     if (active && activeMenu) break;
   }
+
+  const callback = useCallback((entries) => {
+    setScrollState((scrollState) => {
+      let newState = [...scrollState];
+      entries.forEach((e) => {
+        const index = parseInt(e?.target?.dataset?.contentBlock);
+        newState[index] = e.isIntersecting;
+      });
+      return newState;
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    const observer = new IntersectionObserver(callback);
+
+    const blocks = document.querySelectorAll("*[data-content-block]");
+    blocks.forEach((block) => observer.observe(block));
+
+    return () => blocks.forEach((block) => observer.unobserve(block));
+  }, [callback]);
 
   return (
     <div>
