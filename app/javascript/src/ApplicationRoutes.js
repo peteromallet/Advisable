@@ -59,7 +59,7 @@ const ApplicationRoutes = () => {
           />
 
           <Route
-            path="/feed"
+            path="/feed/*"
             element={
               <RequireAuthentication clientOnly>
                 <Feed />

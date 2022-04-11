@@ -1,0 +1,15 @@
+#import "./articleFields.gql"
+
+query InterestFeed($id: ID!) {
+  interest(id: $id) {
+    id
+    term
+    articles {
+      edges {
+        node {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

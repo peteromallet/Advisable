@@ -1,0 +1,10 @@
+fragment ArticleFields on CaseStudyArticle {
+  id
+  title
+  subtitle
+  company {
+    id
+    name
+    favicon
+  }
+}

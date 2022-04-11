@@ -1,3 +1,5 @@
+#import "./articleFields.gql"
+
 query Feed {
   feed {
     edges {
@@ -8,14 +10,7 @@ query Feed {
           term
         }
         article {
-          id
-          title
-          subtitle
-          company {
-            id
-            name
-            favicon
-          }
+          ...ArticleFields
         }
       }
     }
