@@ -23,7 +23,7 @@ module Toby
       end
 
       def lazy_model
-        attribute.try(:lazy_model) || reflection.klass
+        attribute.try(:lazy_model) || reflection&.klass
       end
 
       private
