@@ -12,16 +12,18 @@ export default function Achievements({ sections }) {
       {achievements.map((achievement, index) => (
         <div
           key={`achievement-${index}`}
-          className="flex items-center gap-3 mb-6"
+          className="flex items-start gap-3 mb-6"
         >
-          <span className="text-[32px] text-slate-400 leading-8 font-[550]">
+          <div className="text-[32px] text-neutral400 leading-6 pt-1  font-[550]">
             {index + 1}
-          </span>
+          </div>
           <div>
-            <span className="text-xs leading-3 text-slate-300 font-[550] uppercase">
+            <div className="text-xs leading-4 text-neutral300 font-[550] uppercase">
               {NUM_TO_WORD[index]} achievement
-            </span>
-            <p className="text-xl text-gray-900">{achievement}</p>
+            </div>
+            <p className="text-xl text-neutral900 leading-6 pt-px pb-[3px]">
+              {achievement}
+            </p>
           </div>
         </div>
       ))}
