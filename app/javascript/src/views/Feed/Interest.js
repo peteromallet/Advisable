@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useInterest } from "./queries";
 import FeedItem from "./components/FeedItem";
+import EndlessScroll from "./components/EndlessScroll";
 
 export default function Interest() {
   const { interest: id } = useParams();
-  const { data, loading, error } = useInterest({ variables: { id } });
+  const { data, loading, error, fetchMore } = useInterest({
+    variables: { id },
+  });
+
+  const handleLoadMore = useCallback(() => {
+    if (!data) return;
+    if (!data.feed.pageInfo.hasNextPage) return;
+    fetchMore({ variables: { cursor: data.feed.pageInfo.endCursor } });
+  }, [fetchMore, data]);
 
   if (loading) return <>loading...</>;
   const results = data.interest.articles.edges.map((e) => e.node);
@@ -18,6 +27,7 @@ export default function Interest() {
       {results.map((result) => (
         <FeedItem key={result.id} article={result} />
       ))}
+      <EndlessScroll onLoadMore={handleLoadMore} />
     </div>
   );
 }

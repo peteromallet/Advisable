@@ -1,10 +1,14 @@
 #import "./articleFields.gql"
 
-query InterestFeed($id: ID!) {
+query InterestFeed($id: ID!, $cursor: String) {
   interest(id: $id) {
     id
     term
-    articles {
+    articles(first: 15, after: $cursor) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           ...ArticleFields
