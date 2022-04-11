@@ -24,7 +24,10 @@ const Availability = ({ unavailableUntil }) =>
 
 export default function SidebarCard({ specialist }) {
   return (
-    <div className="min-w-[320px] w-[320px] rounded-[40px] bg-white drop-shadow-xl p-8 pt-10 flex flex-col">
+    <div
+      id="specialistInfo"
+      className="min-w-[320px] w-[320px] rounded-[40px] bg-white drop-shadow-xl p-8 pt-10 flex flex-col"
+    >
       <Link
         as="div"
         className="mb-7 mx-auto rounded-full"

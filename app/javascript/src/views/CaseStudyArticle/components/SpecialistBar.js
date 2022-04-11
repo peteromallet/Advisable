@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import PassportAvatar from "src/components/PassportAvatar";
 import Button from "src/components/Button";
@@ -19,12 +19,27 @@ const Availability = ({ unavailableUntil }) => (
   </div>
 );
 
-export default function SpecialistBar({ specialist, visibility }) {
+export default function SpecialistBar({ specialist }) {
+  const [open, setOpen] = useState(false);
+
+  const callback = useCallback((entries) => {
+    const [entry] = entries;
+    setOpen(!entry.isIntersecting);
+  }, []);
+
+  useLayoutEffect(() => {
+    const sidebar = document.querySelector("#specialistInfo");
+    const observer = new IntersectionObserver(callback);
+    observer.observe(sidebar);
+
+    return () => observer.unobserve(sidebar);
+  }, [callback]);
+
   return (
     <div
       style={{
-        top: visibility ? "68px" : "0",
-        opacity: visibility ? 1 : 0,
+        top: open ? "68px" : "0",
+        opacity: open ? 1 : 0,
       }}
       className="fixed left-0 right-0 bg-white h-[72px] shadow transition-all"
     >

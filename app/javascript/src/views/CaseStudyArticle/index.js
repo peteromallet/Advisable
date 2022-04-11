@@ -12,7 +12,6 @@ import SpecialistBar from "./components/SpecialistBar";
 
 export default function ShortlistArticle() {
   const { data, loading, error } = useArticle();
-  const [specialistBar, setSpecialistBar] = useState();
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
@@ -25,16 +24,8 @@ export default function ShortlistArticle() {
         </Helmet>
       )}
       <div className="w-[1198px] pt-10 pb-24 mx-auto flex gap-20 items-start">
-        <motion.div
-          onViewportLeave={() => setSpecialistBar(true)}
-          onViewportEnter={() => setSpecialistBar(false)}
-        >
-          <SpecialistCard specialist={data.caseStudy.specialist} />
-        </motion.div>
-        <SpecialistBar
-          specialist={data.caseStudy.specialist}
-          visibility={specialistBar}
-        />
+        <SpecialistCard specialist={data.caseStudy.specialist} />
+        <SpecialistBar specialist={data.caseStudy.specialist} />
         <ArticleIntro caseStudy={data.caseStudy} />
       </div>
       <hr className="border-neutral200 pb-[3px]" />
