@@ -12,7 +12,7 @@ export default function Achievements({ sections }) {
       {achievements.map((achievement, index) => (
         <div
           key={`achievement-${index}`}
-          className="flex items-start gap-3 mb-6"
+          className="flex items-start gap-3 mb-6 last:mb-0"
         >
           <div className="text-[32px] text-neutral400 leading-6 pt-1  font-[550]">
             {index + 1}

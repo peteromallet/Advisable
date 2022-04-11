@@ -4,19 +4,11 @@ import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import ArticleSidebar from "./ArticleSidebar";
 
-const CaseStudySection = ({ id, type }) => (
-  <h6 className="text-sm uppercase font-[550] leading-5">
-    <div id={id} className="relative top-[-92px]" />
-    {type}
-  </h6>
-);
-
 const CONTENT_TYPES = {
   Images,
   Heading,
   Results: null,
   Paragraph,
-  CaseStudySection,
 };
 
 const scrollReducer = (state, action) => {
@@ -51,7 +43,7 @@ export default function ArticleContent({ caseStudy }) {
   );
 
   return (
-    <div className="flex gap-20 pt-16">
+    <div className="flex gap-20">
       <ArticleSidebar elements={elements} scrollState={scrollState} />
       <div>
         {elements.map((element, index) => (

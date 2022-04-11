@@ -6,7 +6,7 @@ import SpecialistCompanyRelation from "./SpecialistCompanyRelation";
 
 export default function ArticleIntro({ caseStudy }) {
   return (
-    <div className="pb-20">
+    <div>
       <SpecialistCompanyRelation
         company={caseStudy.company}
         specialist={caseStudy.specialist}

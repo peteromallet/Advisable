@@ -24,7 +24,7 @@ export default function ShortlistArticle() {
           <title>Advisable | {data.caseStudy?.title}</title>
         </Helmet>
       )}
-      <div className="w-[1198px] py-10 mx-auto flex gap-20 items-start">
+      <div className="w-[1198px] pt-10 pb-24 mx-auto flex gap-20 items-start">
         <motion.div
           onViewportLeave={() => setSpecialistBar(true)}
           onViewportEnter={() => setSpecialistBar(false)}
@@ -37,8 +37,8 @@ export default function ShortlistArticle() {
         />
         <ArticleIntro caseStudy={data.caseStudy} />
       </div>
-      <hr className="border-neutral200" />
-      <div className="w-[1198px] py-10 mx-auto">
+      <hr className="border-neutral200 pb-[3px]" />
+      <div className="w-[1198px] pb-10 pt-20 mx-auto">
         <ArticleContent caseStudy={data.caseStudy} />
       </div>
     </ErrorBoundary>
