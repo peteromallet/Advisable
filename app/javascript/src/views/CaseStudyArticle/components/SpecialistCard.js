@@ -1,5 +1,4 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import { Link } from "@advisable/donut";
 import Button from "src/components/Button";
 import { ChatAlt } from "@styled-icons/heroicons-solid";
@@ -29,16 +28,13 @@ export default function SidebarCard({ specialist }) {
       className="min-w-[320px] w-[320px] rounded-[40px] bg-white drop-shadow-xl p-8 pt-10 flex flex-col"
     >
       <Link
-        as="div"
-        className="mb-7 mx-auto rounded-full"
+        className="mb-7 mx-auto rounded-full overflow-hidden w-48 h-48 border-4 border-neutral100 border-solid hover:border-neutral300"
         to={specialist.profilePath}
       >
-        <div className="rounded-full overflow-hidden w-48 h-48 border-4 border-neutral100 border-solid hover:border-neutral300">
-          <img
-            src={specialist.avatar}
-            className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
-          />
-        </div>
+        <img
+          src={specialist.avatar}
+          className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
+        />
       </Link>
       <Link to={specialist.profilePath}>
         <h4 className="font-bold text-3xl text-neutral800 hover:text-neutral800 leading-8 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
