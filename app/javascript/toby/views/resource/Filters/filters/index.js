@@ -23,6 +23,8 @@ export function getValueComponentForFilter(resource, filter) {
   const attribute = resource.attributes.find(
     (f) => f.name === filter.attribute,
   );
+  if (!attribute) return null;
+
   const attributeFilter = attribute.filters.find((f) => f.name === filter.type);
   return FILTERS[attributeFilter.type];
 }
@@ -31,8 +33,11 @@ export default function Filter({ resource, filter, onChange }) {
   const attribute = resource.attributes.find(
     (f) => f.name === filter.attribute,
   );
+
+  if (!attribute) return null;
+
   const attributeFilter = attribute.filters.find((f) => f.name === filter.type);
-  let Component = FILTERS[attributeFilter.type];
+  let Component = FILTERS[attributeFilter?.type];
 
   if (!Component) {
     console.error("No filter handler found.", filter);
