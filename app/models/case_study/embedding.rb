@@ -23,7 +23,7 @@ module CaseStudy
           article_id: embedding.article_id
         }
       end
-      results.sort_by { |r| r[:similarity] }
+      results.sort_by { |r| r[:similarity] }.reverse
     end
 
     def vector

@@ -2,6 +2,9 @@
 
 module CaseStudy
   class Interest < ApplicationRecord
+    TRESHOLD_RESULT_LIMIT = 5
+
+    include TermData
     include Uid
     uid_prefix "cst"
     has_logidze
@@ -15,25 +18,9 @@ module CaseStudy
     def find_articles!
       return if interest_articles.any?
 
-      interest_articles.insert_all!(Embedding.ordered_articles_for(term_vector).last(5)) # rubocop:disable Rails/SkipsModelValidations
-    end
-
-    def term_vector
-      fetch_term_data!
-      Vector.elements(term_data) if term_data.present?
-    end
-
-    private
-
-    def fetch_term_data!
-      return if term_data.present? || term.blank?
-
-      query = [
-        term,
-        account.user&.company&.audience.presence
-      ].compact.join(" for ")
-      self.term_data = OpenAiInteractor.new.query_embedding_for(query)
-      save!
+      results = articles_by_relevancy.first(TRESHOLD_RESULT_LIMIT)
+      interest_articles.insert_all!(results) # rubocop:disable Rails/SkipsModelValidations
+      update!(treshold: results.last[:similarity])
     end
   end
 end
@@ -45,6 +32,7 @@ end
 #  id         :bigint           not null, primary key
 #  term       :citext
 #  term_data  :jsonb
+#  treshold   :decimal(, )
 #  uid        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

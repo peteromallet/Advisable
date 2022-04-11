@@ -60,7 +60,7 @@ module CaseStudy
 
     def similar(limit: 5)
       similar_ids = Rails.cache.fetch("case_study_article_similar_#{id}_#{limit}", expires_in: 1.day) do
-        Embedding.ordered_articles_for(embedding.vector).last(limit + 1).pluck(:article_id).reverse
+        Embedding.ordered_articles_for(embedding.vector).first(limit + 1).pluck(:article_id)
       end
       Article.where(id: similar_ids - [id]).in_order_of(:id, similar_ids)
     end
