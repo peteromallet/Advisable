@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Toggle } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import gql from "graphql-tag";

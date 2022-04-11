@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Checkbox } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import gql from "graphql-tag";
