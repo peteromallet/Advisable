@@ -24,7 +24,7 @@ function Wrapper({ children }) {
 }
 
 export default function Discover() {
-  useBackground("beige");
+  useBackground("white");
   const onboarding = useTutorial("onboarding");
   const { pathname } = useLocation();
 
