@@ -27,7 +27,13 @@ export default function Interest() {
       {results.map((result) => (
         <FeedItem key={result.id} article={result} />
       ))}
-      <EndlessScroll onLoadMore={handleLoadMore} />
+      {data.interest.articles.pageInfo.hasNextPage ? (
+        <EndlessScroll onLoadMore={handleLoadMore} />
+      ) : (
+        <div className="text-center text-neutral400 py-10">
+          You have reached the end of the feed
+        </div>
+      )}
     </div>
   );
 }
