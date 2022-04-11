@@ -4,6 +4,7 @@ import {
   Home,
   InboxIn,
 } from "@styled-icons/heroicons-solid";
+import SimpleBar from "simplebar-react";
 import React, { cloneElement } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
@@ -16,7 +17,6 @@ const sidebarClasses = composeStyles({
     h-viewport
     shadow-lg
     shrink-0
-    p-5
     sticky
     top-[var(--header-height)]
   `,
@@ -28,7 +28,6 @@ const sidebarItemClasses = composeStyles({
     gap-2
     py-1.5
     px-2
-    -mx-2
     mb-1
     group
     rounded-sm
@@ -66,27 +65,29 @@ export default function FeedSidebar() {
 
   return (
     <div className={sidebarClasses()}>
-      <SidebarItem to="/feed" icon={<Home />}>
-        Feed
-      </SidebarItem>
-      <SidebarItem to="/feed/favorites" icon={<Bookmark />}>
-        Favorites
-      </SidebarItem>
-      <SidebarItem to="/feed/shared" icon={<InboxIn />}>
-        Shared
-      </SidebarItem>
-      <h4 className="pt-8 pb-2 text-xs uppercase font-semibold text-neutral500">
-        Your Interests
-      </h4>
-      {interests.map((interest) => (
-        <SidebarItem
-          key={interest.id}
-          to={`/feed/${interest.id}`}
-          icon={<Collection />}
-        >
-          {interest.term}
+      <SimpleBar className="h-full p-4">
+        <SidebarItem to="/feed" icon={<Home />}>
+          Feed
         </SidebarItem>
-      ))}
+        <SidebarItem to="/feed/favorites" icon={<Bookmark />}>
+          Favorites
+        </SidebarItem>
+        <SidebarItem to="/feed/shared" icon={<InboxIn />}>
+          Shared
+        </SidebarItem>
+        <h4 className="pl-2 pt-8 pb-2 text-xs uppercase font-semibold text-neutral500">
+          Your Interests
+        </h4>
+        {interests.map((interest) => (
+          <SidebarItem
+            key={interest.id}
+            to={`/feed/${interest.id}`}
+            icon={<Collection />}
+          >
+            {interest.term}
+          </SidebarItem>
+        ))}
+      </SimpleBar>
     </div>
   );
 }
