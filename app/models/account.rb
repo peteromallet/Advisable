@@ -7,7 +7,7 @@ class Account < ApplicationRecord
   include SoftDeletable
   include Resizable
 
-  SUBSCRIPTIONS = ["All", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
+  SUBSCRIPTIONS = ["All", "Weekly Digest", "Announcements", "SMS Alerts", "Automated Invitations", "Personal Invitations", "Onboarding Emails", "Status Surveys"].freeze
 
   has_logidze
 

@@ -8,6 +8,7 @@ import Password from "./Password";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
 import AccountSettings from "../AccountSettings";
+import SpecialistNotificationSettings from "./Notifications";
 
 function SpecialistSettings() {
   const breakpointS = useBreakpoint("sUp");
@@ -37,6 +38,10 @@ function SpecialistSettings() {
             <Route path="/payment-settings" element={<PaymentSettings />} />
             <Route path="/password" element={<Password />} />
             <Route path="/account" element={<AccountSettings />} />
+            <Route
+              path="/notifications"
+              element={<SpecialistNotificationSettings />}
+            />
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
