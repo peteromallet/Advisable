@@ -56,7 +56,7 @@ test("User can signup", async () => {
           currentCompany: mockData.company({
             industry: mockData.industry(),
           }),
-          caseStudySearches: [],
+          interests: [],
         },
       ),
     ],

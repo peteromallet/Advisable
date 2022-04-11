@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "magic links", type: :system do
-  let(:account) { create(:account, confirmed_at: nil) }
+  let(:account) { create(:account, confirmed_at: nil, completed_tutorials: ["onboarding"]) }
   let(:magic_link) { create(:magic_link, account:, path: "/explore") }
 
   before { create(:user, account:) }

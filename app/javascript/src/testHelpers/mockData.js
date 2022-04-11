@@ -30,7 +30,7 @@ export const user = (fields = {}) => {
       confirmed: true,
       availability: [],
       companyName: "Test Corp",
-      completedTutorials: [],
+      completedTutorials: ["onboarding"],
       timeZone: "Europe/Dublin",
       features: [],
       avatar: null,

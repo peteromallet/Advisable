@@ -33,7 +33,9 @@ export default function StartApplication({ nextStep, forwards }) {
       return;
     }
 
-    navigate(nextStep.path);
+    navigate(nextStep.path, {
+      state: { signup: true },
+    });
   };
 
   return (

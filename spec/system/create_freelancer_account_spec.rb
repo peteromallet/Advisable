@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a freelancer account", type: :system do
   it "shows the user the account confirmation flow" do
-    user = create(:user, account: create(:account, password: nil, confirmed_at: nil))
+    user = create(:user, account: create(:account, password: nil, confirmed_at: nil, completed_tutorials: ["onboarding"]))
     allow_any_instance_of(User).to receive(:sync_to_airtable)
     visit "/signup/#{user.uid}"
     fill_in "email", with: "#{Time.now.to_i}@test.com"

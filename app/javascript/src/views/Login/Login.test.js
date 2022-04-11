@@ -59,7 +59,7 @@ test("User can login", async () => {
             currentCompany: mockData.company({
               industry: mockData.industry(),
             }),
-            caseStudySearches: [],
+            interests: [],
           },
         },
       },
@@ -100,7 +100,7 @@ test("User is redirected if already logged in", async () => {
             currentCompany: mockData.company({
               industry: mockData.industry(),
             }),
-            caseStudySearches: [],
+            interests: [],
           },
         },
       },

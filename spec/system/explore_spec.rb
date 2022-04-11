@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Discover", type: :system do
-  let(:account) { create(:account, permissions: ["team_manager"]) }
+  let(:account) { create(:account, permissions: ["team_manager"], completed_tutorials: ["onboarding"]) }
   let(:user) { create(:user, account:) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
   let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
