@@ -189,6 +189,16 @@ class UserMailer < ApplicationMailer
     payment_request_mail(payment_request, "Payment Request Due")
   end
 
+  def case_study_article_roundup(user, articles)
+    @user = user
+    @articles = articles
+    mail(
+      from: "Advisable <hello@advisable.com>",
+      to: @user.account.email,
+      subject: "Your custom marketing inspiration: 3 projects for #{user.company.name} to consider this week"
+    )
+  end
+
   private
 
   def payment_request_mail(payment_request, subject)
