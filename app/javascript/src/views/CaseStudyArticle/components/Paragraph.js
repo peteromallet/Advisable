@@ -6,7 +6,7 @@ import renderLineBreaks from "src/utilities/renderLineBreaks";
 export default function CaseStudyParagraph({ text, ...props }) {
   return (
     <motion.p
-      className="font-[350] text-xl leading-8 pt-px pb-[3px] mb-9"
+      className="font-[350] text-xl text-neutral900 leading-8 pt-px pb-[3px] mb-9"
       {...props}
     >
       <Linkify>{renderLineBreaks(text)}</Linkify>
