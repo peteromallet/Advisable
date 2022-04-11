@@ -16,22 +16,40 @@ const Header = ({ children }) => (
   <div className="pl-2 text-[15px] text-neutral700">{children}</div>
 );
 
-const Heading = ({ item }) => (
-  <a href={`#${item.id}`}>
-    <div className="group relative overflow-visible pl-2">
-      <SectionType>{item.section.type}</SectionType>
-      <SectionTypeHover>
+const Heading = ({ item }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    const el = document.getElementById(item.id);
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <a href={`#${item.id}`} onClick={handleClick}>
+      <div className="group relative overflow-visible pl-2">
         <SectionType>{item.section.type}</SectionType>
-        <Header>{item.text}</Header>
-      </SectionTypeHover>
-    </div>
-  </a>
-);
+        <SectionTypeHover>
+          <SectionType>{item.section.type}</SectionType>
+          <Header>{item.text}</Header>
+        </SectionTypeHover>
+      </div>
+    </a>
+  );
+};
 
 const Subheading = ({ item }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    const el = document.getElementById(item.id);
+    el.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="ml-2">
-      <a href={`#${item.id}`}>
+      <a href={`#${item.id}`} onClick={handleClick}>
         <div className="group relative overflow-visible py-2 pl-6 pr-2">
           <h6 className="line-clamp-1 leading-5 text-neutral600 text-[15px] font-[450]">
             {item.text}
