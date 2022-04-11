@@ -70,4 +70,14 @@ RSpec.describe "Discover", type: :system do
       expect(page).to have_content("404")
     end
   end
+
+  context "when the user is not onboarded" do
+    it "redirects to onboarding" do
+      user.account.update(completed_tutorials: [])
+      authenticate_as(user)
+      visit("/explore")
+      expect(page).to have_content("Let's build your feed")
+      expect(page).to have_current_path("/setup")
+    end
+  end
 end

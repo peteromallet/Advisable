@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Box, useBackground } from "@advisable/donut";
-import { Route, Routes, useLocation } from "react-router";
+import { Navigate, Route, Routes, useLocation } from "react-router";
 import Shortlist from "./views/Shortlist";
 import Shortlists from "./views/Shortlists";
 import ShortlistArticle from "./views/ShortlistArticle";
@@ -11,14 +11,20 @@ import ShortlistSkillCategory from "./views/ShortlistSkillCategory";
 import ShortlistGoals from "./views/ShortlistGoals";
 import ShortlistName from "./views/ShortlistName";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
+import useTutorial from "src/hooks/useTutorial";
 
 export default function Discover() {
   useBackground("beige");
+  const onboarding = useTutorial("onboarding");
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  if (!onboarding.isComplete) {
+    return <Navigate to="/setup" />;
+  }
 
   return (
     <ErrorBoundary>
