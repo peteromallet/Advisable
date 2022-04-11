@@ -5,7 +5,7 @@ import { useArticle } from "./queries";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import SidebarCard from "./components/SidebarCard";
+import SpecialistCard from "./components/SpecialistCard";
 import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
@@ -29,7 +29,7 @@ export default function ShortlistArticle() {
           onViewportLeave={() => setSpecialistBar(true)}
           onViewportEnter={() => setSpecialistBar(false)}
         >
-          <SidebarCard specialist={data.caseStudy.specialist} />
+          <SpecialistCard specialist={data.caseStudy.specialist} />
         </motion.div>
         <SpecialistBar
           specialist={data.caseStudy.specialist}
