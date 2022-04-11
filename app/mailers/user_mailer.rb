@@ -135,7 +135,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @account.email,
-      from: "hello@advisable.com",
+      from: "Advisable <hello@advisable.com>",
       subject: "Consultation Request Declined: #{@specialist.account.name}"
     ) do |format|
       format.html { render layout: false }
@@ -148,7 +148,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @account.email,
-      from: "hello@advisable.com",
+      from: "Advisable <hello@advisable.com>",
       subject: "Consultation Request Declined: #{@specialist.account.name}"
     ) do |format|
       format.html { render layout: false }
@@ -162,7 +162,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @account.email,
-      from: "hello@advisable.com",
+      from: "Advisable <hello@advisable.com>",
       subject: "Consultation Request Declined: #{@specialist.account.name}"
     ) do |format|
       format.html { render layout: false }
@@ -222,7 +222,7 @@ class UserMailer < ApplicationMailer
 
     mail(
       to: @agreement.user.account.email,
-      from: "hello@advisable.com",
+      from: "Advisable <hello@advisable.com>",
       subject:
     ) do |format|
       format.html { render layout: "email_v2" }
