@@ -71,7 +71,7 @@ class ZapierInteractorController < ApplicationController
   def import_case_study
     case_study = Airtable::CaseStudy.find(params[:airtable_id])
     article = case_study.article_record
-    CaseStudyImportJob.perform_later(article.airtable_id)
+    CaseStudyImportJob.perform_later(article)
     render json: {uid: article.uid, airtable_id: article.airtable_id}
   rescue Airrecord::Error => e
     if e.message.starts_with?("HTTP 404")

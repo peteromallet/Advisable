@@ -365,14 +365,14 @@ RSpec.describe ZapierInteractorController, type: :request do
   describe "POST /import_case_study" do
     let(:params) { {airtable_id: "asdf", key:} }
     let(:stub) { instance_double(Airtable::CaseStudy) }
-    let(:article) { build_stubbed(:case_study_article, airtable_id: "asdf") }
+    let(:article) { create(:case_study_article, airtable_id: "asdf") }
 
     it "imports case study" do
       allow(Airtable::CaseStudy).to receive(:find).with("asdf").and_return(stub)
       allow(stub).to receive(:article_record).and_return(article)
       post("/zapier_interactor/import_case_study", params:)
       expect(response).to have_http_status(:success)
-      expect(CaseStudyImportJob).to have_been_enqueued.with("asdf")
+      expect(CaseStudyImportJob).to have_been_enqueued.with(article)
       json = JSON[response.body]
       expect(json["airtable_id"]).to eq("asdf")
       expect(json["uid"]).to eq(article.uid)
