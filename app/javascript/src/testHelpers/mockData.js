@@ -497,6 +497,7 @@ export const account = (fields = {}) => {
       firstName: "John",
       lastName: "Doe",
       name: "John Doe",
+      subscriptions: [],
       avatar: null,
     },
     fields,
