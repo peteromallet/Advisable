@@ -90,6 +90,25 @@ class Company < ApplicationRecord
     address.comma_separated
   end
 
+  # Move a user from one company to another
+  # rubocop:disable Rails/SkipsModelValidations
+  def acquire(other_company)
+    reflections = self.class.reflections.select { |_k, r| r.is_a?(ActiveRecord::Reflection::HasManyReflection) }.keys.to_set
+    raise "Not all reflections are handled" if reflections != %w[agreements payment_requests payments users invoices].to_set
+
+    users = other_company.users
+    ActiveRecord::Base.transaction do
+      other_company.agreements.update_all(company_id: id)
+      other_company.payment_requests.update_all(company_id: id)
+      other_company.payments.update_all(company_id: id)
+      other_company.invoices.update_all(company_id: id)
+      users.update_all(company_id: id)
+    end
+
+    users.each(&:bg_sync_to_airtable)
+  end
+  # rubocop:enable Rails/SkipsModelValidations
+
   private
 
   def are_payments_setup
