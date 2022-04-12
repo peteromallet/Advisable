@@ -1,10 +1,20 @@
 fragment ArticleFields on CaseStudyArticle {
   id
+  slug
   title
   subtitle
+  specialist {
+    id
+    name
+    avatar
+  }
   company {
     id
     name
     favicon
+  }
+  images {
+    id
+    url
   }
 }

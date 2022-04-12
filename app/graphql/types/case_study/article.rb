@@ -55,6 +55,11 @@ module Types
         object.sections.by_position
       end
 
+      field :images, [Types::CaseStudy::Image], null: false
+      def images
+        object.contents.where(type: "CaseStudy::ImagesContent").flat_map(&:images)
+      end
+
       field :is_archived, Boolean, null: false do
         argument :search, ID, required: true
       end

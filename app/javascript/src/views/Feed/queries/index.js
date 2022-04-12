@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import FEED from "./feed.gql";
+import ARTICLE from "./article.gql";
 import INTEREST from "./interest.gql";
 import INTERESTS from "./interests.gql";
 
@@ -13,4 +14,8 @@ export function useInterest(opts) {
 
 export function useFeed() {
   return useQuery(FEED);
+}
+
+export function useArticle(opts) {
+  return useQuery(ARTICLE, opts);
 }

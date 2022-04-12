@@ -21,7 +21,7 @@ export default function Interest() {
 
   return (
     <div className="divide-y divide-solid divide-neutral200">
-      <h2 className="text-3xl font-semibold tracking-tight mb-5">
+      <h2 className="text-3xl font-semibold tracking-tight mb-8">
         {data.interest.term}
       </h2>
       {results.map((result) => (
