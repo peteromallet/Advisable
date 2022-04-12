@@ -13,6 +13,7 @@ module CaseStudy
     has_many :interest_articles, dependent: :destroy
     has_many :articles, through: :interest_articles
 
+    validates :term, presence: true
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
     def find_articles!
