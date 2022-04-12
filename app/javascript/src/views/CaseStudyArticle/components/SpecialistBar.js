@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import PassportAvatar from "src/components/PassportAvatar";
-import Button from "src/components/Button";
+import ConnectButton from "src/components/ConnectButton";
 
 const Availability = ({ unavailableUntil }) => (
   <div className="flex justify-items-center items-center">
@@ -60,9 +60,9 @@ export default function SpecialistBar({ specialist }) {
             </Link>
             <Availability unavailableUntil={specialist.unavailableUntil} />
           </div>
-          <Button variant="primary" className="ml-auto">
+          <ConnectButton specialist={specialist} className="ml-auto">
             Connect
-          </Button>
+          </ConnectButton>
         </div>
       </div>
     </div>

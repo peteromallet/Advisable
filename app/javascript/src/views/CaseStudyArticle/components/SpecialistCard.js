@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "@advisable/donut";
-import Button from "src/components/Button";
-import { ChatAlt } from "@styled-icons/heroicons-solid";
+import ConnectButton from "src/components/ConnectButton";
 import Timezone from "./Timezone";
 
 const Availability = ({ unavailableUntil }) =>
@@ -42,9 +41,9 @@ export default function SidebarCard({ specialist }) {
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
-      <Button prefix={<ChatAlt />} variant="primary" size="lg" className="mb-5">
+      <ConnectButton className="mb-5" specialist={specialist} size="lg">
         Connect
-      </Button>
+      </ConnectButton>
       <hr className="border-neutral200 pb-[3px] mb-2" />
       <div className="text-lg font-[450] text-blue900 leading-5 mb-1 pt-[3px] pb-px">
         {specialist.location}
