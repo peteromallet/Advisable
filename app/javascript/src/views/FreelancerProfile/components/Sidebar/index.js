@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import css from "@styled-system/css";
 import { matchPath } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { Box, Text, Link } from "@advisable/donut";
+import { Box, Text, Link, useBreakpoint } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
 import ProfilePictureArticle from "../ProfilePictureArticle";
 import CoverImage from "../CoverImage";
@@ -30,6 +30,7 @@ function Sidebar({ data, isOwner, ...props }) {
     },
     location.pathname,
   );
+  const mUp = useBreakpoint("mUp");
 
   const { specialist } = data;
 
@@ -124,9 +125,9 @@ function Sidebar({ data, isOwner, ...props }) {
               {!isOwner && (
                 <ConnectButton
                   specialist={specialist}
-                  variant="dark"
-                  width={["100%", "auto"]}
-                  size={["m", "m", "l"]}
+                  variant="secondary"
+                  className="w-full sm:w-auto"
+                  size={mUp ? "lg" : "md"}
                 />
               )}
             </Box>
