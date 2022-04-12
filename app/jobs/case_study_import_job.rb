@@ -3,7 +3,8 @@
 class CaseStudyImportJob < ApplicationJob
   queue_as :default
 
-  def perform(airtable_id)
-    Airtable::CaseStudy.find(airtable_id).import!
+  def perform(article)
+    Airtable::CaseStudy.find(article.airtable_id).import!
+    PositionArticleInInterestsJob.perform_later(article)
   end
 end

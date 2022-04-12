@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
     @results = []
     CaseStudy::Embedding.where(article: articles).includes(:article).each do |embedding|
       @results << {
-        similarity: (embedding.cosine_similarity_to(query_vector) * 100).round(3),
+        similarity: (embedding.cosine_similarity_with(query_vector) * 100).round(3),
         article: embedding.article
       }
     end

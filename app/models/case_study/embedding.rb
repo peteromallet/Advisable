@@ -19,7 +19,7 @@ module CaseStudy
       results = []
       joins(:article).merge(Article.searchable).find_each do |embedding|
         results << {
-          similarity: embedding.cosine_similarity_to(vector),
+          similarity: embedding.cosine_similarity_with(vector),
           article_id: embedding.article_id
         }
       end
@@ -30,7 +30,7 @@ module CaseStudy
       Vector.elements(data)
     end
 
-    def cosine_similarity_to(other_vector)
+    def cosine_similarity_with(other_vector)
       vector.dot(other_vector) / (vector.magnitude * other_vector.magnitude)
     end
   end
