@@ -24,15 +24,13 @@ module Toby
             rows << resource.attributes.map do |attribute|
               if attribute.respond_to?(:lazy_read_class)
                 lazy = attribute.lazy_read_class.new(attribute, {}, record)
-                lazy_resource = "Toby::Resources::#{lazy.lazy_model}".constantize
                 rec = lazy.resolve
                 if attribute.is_a?(Toby::Lookups::Lookup)
                   rec
                 elsif rec.is_a?(Array)
-                  rec.map { |r| lazy_resource.label(r, {}).resolve }
+                  rec.map { |r| resolve_lazy(lazy, r) }
                 elsif rec.present?
-                  label = lazy_resource.label(rec, {})
-                  label.respond_to?(:resolve) ? label.resolve : label
+                  resolve_lazy(lazy, rec)
                 end
               else
                 attribute.read(record)
@@ -45,6 +43,16 @@ module Toby
       end
 
       private
+
+      def resolve_lazy(lazy, record)
+        label = lazy_resource_for(lazy).label(record, {})
+        label.respond_to?(:resolve) ? label.resolve : label
+      end
+
+      def lazy_resource_for(lazy)
+        @lazy_resources ||= {}
+        @lazy_resources[lazy.attribute] ||= "Toby::Resources::#{lazy.lazy_model}".constantize
+      end
 
       # Handles simple stuff like Specialist =>Toby::Resources::Specialist
       # and also complex like CaseStudyArticle => Toby::Resources::CaseStudy::Article
