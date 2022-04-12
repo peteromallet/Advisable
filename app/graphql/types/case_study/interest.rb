@@ -16,6 +16,7 @@ module Types
       field :term, String, null: false
       field :articles, Article.connection_type, null: true
       def articles
+        object.find_articles!
         object.articles.for_feed
       end
 
@@ -34,6 +35,7 @@ module Types
         argument :refresh_results, Boolean, required: false
       end
       def results(**_args)
+        object.find_articles!
         object.articles.for_feed
       end
 
