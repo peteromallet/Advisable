@@ -33,7 +33,9 @@ export default function StartApplication({ nextStep, forwards }) {
       return;
     }
 
-    navigate(nextStep.path);
+    navigate(nextStep.path, {
+      state: { signup: true },
+    });
   };
 
   return (
@@ -89,7 +91,7 @@ export default function StartApplication({ nextStep, forwards }) {
               </Box>
               <Error>{status}</Error>
               <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
-                Get Started
+                Create Your Free Account
               </SubmitButton>
             </Form>
           )}

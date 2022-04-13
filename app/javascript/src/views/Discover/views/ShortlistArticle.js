@@ -7,8 +7,7 @@ import NotFound, { isNotFound } from "src/views/NotFound";
 import { useArticle } from "../queries";
 import RecommendationAvatar from "../components/RecommendationAvatar";
 import BackButton from "src/components/BackButton";
-import { useNavigate, useParams } from "react-router";
-import ArchiveButton from "../components/ArchiveButton";
+import { useParams } from "react-router";
 import MessageFreelancerButton from "../components/MessageButton";
 import { Link } from "react-router-dom";
 import Loading from "src/components/Loading";
@@ -16,15 +15,10 @@ import ConsultationStatus from "../components/ConsultationStatus";
 
 export default function ShortlistArticle() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { data, loading, error } = useArticle();
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
-
-  const handleArchive = () => {
-    navigate(`/explore/${id}`);
-  };
 
   return (
     <>
@@ -72,12 +66,6 @@ export default function ShortlistArticle() {
                 specialist={data.caseStudy.specialist}
               />
             </Box>
-            <ArchiveButton
-              width={{ _: "100%", s: "auto" }}
-              article={data.caseStudy}
-              search={data.caseStudySearch}
-              onArchive={handleArchive}
-            />
           </Box>
         </Box>
         <Box paddingLeft={{ _: 0, s: 12 }}>

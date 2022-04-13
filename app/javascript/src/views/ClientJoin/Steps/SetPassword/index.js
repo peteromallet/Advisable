@@ -25,7 +25,7 @@ export default function SetPassword({ forwards }) {
       return;
     }
 
-    navigate("/clients/apply", { replace: true });
+    navigate("/setup", { replace: true });
   };
 
   return (

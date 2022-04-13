@@ -1,0 +1,18 @@
+query OnboardingData {
+  currentCompany {
+    id
+    name
+    kind
+    intent
+    audience
+    businessType
+  }
+  interests {
+    id
+    term
+  }
+  industries {
+    id
+    name
+  }
+}

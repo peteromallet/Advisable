@@ -16,12 +16,20 @@ module CaseStudy
     validates :term, presence: true
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
+    after_create :populate_articles
+
     def find_articles!
       return if interest_articles.any?
 
       results = articles_by_relevancy.first(TRESHOLD_RESULT_LIMIT)
       interest_articles.insert_all!(results) # rubocop:disable Rails/SkipsModelValidations
       update!(treshold: results.last[:similarity])
+    end
+
+    private
+
+    def populate_articles
+      PopulateInterestArticlesJob.perform_later(self)
     end
   end
 end

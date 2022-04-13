@@ -18,9 +18,12 @@ function ClientJoin() {
   const largeScreen = useBreakpoint("xlUp");
   const viewer = useViewer();
 
-  // Redirect to root if client or specialist logged in
-  if (viewer && viewer.applicationStage !== "Application Started") {
-    console.log("REDIRECTING");
+  if (!viewer && !location.state?.signup) {
+    return <Navigate to={location.pathname} state={{ signup: true }} replace />;
+  }
+
+  // Redirect to root if already logged in and not part of signup flow
+  if (viewer && !location.state?.signup) {
     return <Navigate to="/" />;
   }
 

@@ -7,16 +7,9 @@ query Shortlists {
       name
     }
   }
-  caseStudySearches {
+  interests {
     id
     name
-    skills {
-      id
-      skill {
-        id
-        name
-      }
-    }
     results(first: 5) {
       nodes {
         id

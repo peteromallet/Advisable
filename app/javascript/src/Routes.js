@@ -5,6 +5,7 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import ApplicationRoutes from "./ApplicationRoutes";
+import UserOnboarding from "./views/UserOnboarding";
 const CaseStudyReview = lazy(() => import("./views/CaseStudyReview"));
 const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
@@ -46,6 +47,14 @@ const MainRoutes = () => {
           element={<CaseStudyReview />}
         />
         <Route path="/review/:id/*" element={<TestimonialFlow />} />
+        <Route
+          path="/setup/*"
+          element={
+            <RequireAuthentication clientOnly>
+              <UserOnboarding />
+            </RequireAuthentication>
+          }
+        />
         <Route path="*" element={<ApplicationRoutes />} />
       </Routes>
     </Suspense>

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import css from "@styled-system/css";
 import { Box, Text } from "@advisable/donut";
 import RecommendationAvatar from "./RecommendationAvatar";
-import ArchiveButton from "./ArchiveButton";
 import MessageFreelancerButton from "./MessageButton";
 import ConsultationStatus from "./ConsultationStatus";
 
@@ -35,12 +34,7 @@ const StyledRecommendation = styled.div(
   }),
 );
 
-export default function Recommendation({
-  recommendation,
-  search,
-  number,
-  onClick,
-}) {
+export default function Recommendation({ recommendation, number, onClick }) {
   const container = useRef(null);
 
   const handleClick = (e) => {
@@ -88,7 +82,6 @@ export default function Recommendation({
                 mr={3}
                 specialist={recommendation.specialist}
               />
-              <ArchiveButton article={recommendation} search={search} />
             </Box>
           </Box>
         </Box>

@@ -10,17 +10,10 @@ query Shortlist($id: ID!) {
       name
     }
   }
-  caseStudySearch(id: $id) {
+  interest(id: $id) {
     id
     name
-    skills {
-      id
-      skill {
-        id
-        name
-      }
-    }
-    results(first: 5) {
+    results(first: 100) {
       nodes {
         ...ArticleFields
       }

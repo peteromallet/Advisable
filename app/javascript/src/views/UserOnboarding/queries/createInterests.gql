@@ -1,0 +1,8 @@
+mutation CreateInterests($input: CreateCaseStudyInterestsInput!) {
+  createCaseStudyInterests(input: $input) {
+    interests {
+      id
+      term
+    }
+  }
+}

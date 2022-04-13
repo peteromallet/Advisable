@@ -18,38 +18,35 @@ RSpec.describe "Client signup", type: :system do
     fill_in("firstName", with: "Michael")
     fill_in("lastName", with: "Scott")
     fill_in("email", with: "michael+scott@dundermifflin.com")
-    click_on("Get Started")
+    click_on("Create Your Free Account")
     expect(page).to have_content("Welcome to Advisable!")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
     click_on("Continue")
 
     expect(page).to have_content("Welcome to Advisable")
-    click_on("Get Started")
+    click_link("Get Started")
 
-    expect(page).to have_content("Company Overview")
-    fill_in("companyName", with: "Dunder Mifflin")
-    find("button[aria-label='B2B']").click
-    industry = find_field("Select your company industry")
-    industry.send_keys("des", :down, :return)
+    # Company step
+    fill_in("name", with: "Dunder Mifflin")
+    select("I'm looking to hire someone", from: "intent")
     click_on("Continue")
 
-    expect(page).to have_content("Company Stage")
-    find("button[aria-label='Small Business']").click
+    # Industry step
+    find("*[data-testid=industry]", text: "Development").click
 
-    expect(page).to have_content("Goals")
-    find("label", text: "Increase Web Traffic").click
-    find("label", text: "Improve Conversion").click
+    # Customer
+    fill_in("audience", with: "I'm looking for a developer")
     click_on("Continue")
 
-    expect(page).to have_content("Requirements")
-    fill_in("title", with: "CEO")
-    fill_in("budget", with: "10000")
-    find("button[aria-label='Yes']").click
-    fill_in("specialistDescription", with: "We are looking for talents")
-    find("[data-testid='feedback-buttons'").find("button[aria-label='Yes'").click
+    # Interests
+    first(:button, "Creative PR Strategy").click
+    first(:button, "Improve SEO Rankings").click
     click_on("Continue")
 
-    expect(page).to have_content("We are reviewing your application")
+    expect(page).to have_content("Setting up your feed")
+    # We have an intentional 5 second delay on the 'setting up your feed' step.
+    sleep(5)
+    expect(page).to have_current_path("/explore")
   end
 end

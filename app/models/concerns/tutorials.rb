@@ -6,7 +6,7 @@ module Tutorials
   extend ActiveSupport::Concern
 
   TUTORIALS = {
-    "User" => [],
+    "User" => %w[onboarding],
     "Specialist" => %w[introductory_call]
   }.freeze
 
