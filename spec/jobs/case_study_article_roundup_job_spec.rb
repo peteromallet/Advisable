@@ -54,7 +54,7 @@ RSpec.describe CaseStudyArticleRoundupJob do
 
   context "when unsubscribed" do
     before do
-      interest.account.update!(unsubscribed_from: ["Case Study Article Roundup"])
+      interest.account.update!(unsubscribed_from: ["Weekly Digest"])
     end
 
     it "does not send email" do

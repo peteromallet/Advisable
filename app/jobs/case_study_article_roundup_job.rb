@@ -9,7 +9,7 @@ class CaseStudyArticleRoundupJob < ApplicationJob
   def perform
     account_ids = CaseStudy::Interest.all.distinct.pluck(:account_id)
     Account.where(id: account_ids).find_each do |account|
-      next if account.unsubscribed?("Case Study Article Roundup")
+      next if account.unsubscribed?("Weekly Digest")
 
       already_showcased = account.showcased_articles
       potential_article_ids = account.interest_articles.where.not(article_id: already_showcased).distinct.select(:article_id)
