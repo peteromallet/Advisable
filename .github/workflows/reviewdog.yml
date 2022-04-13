@@ -17,3 +17,14 @@ jobs:
           rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-rspec:gemfile rubocop-graphql:gemfile
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
+      - name: misspell
+        uses: reviewdog/action-misspell@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          locale: "US"
+      - name: brakeman
+        uses: reviewdog/action-brakeman@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
