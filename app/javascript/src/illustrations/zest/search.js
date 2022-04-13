@@ -1,8 +1,8 @@
 import React from "react";
 
 function SearchIllustration({
-  primaryColor = "#FFCE00",
-  secondaryColor = "#232323",
+  primaryColor = "var(--color-blue100)",
+  secondaryColor = "var(--color-blue900)",
   ...props
 }) {
   return (
