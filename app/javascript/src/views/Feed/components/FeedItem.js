@@ -3,7 +3,7 @@ import { useImage } from "react-image";
 import { Link } from "react-router-dom";
 import { PlusSm } from "@styled-icons/heroicons-solid";
 import LogoMark from "src/components/LogoMark";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
 
 function Img({ src: url, ...props }) {
   const { src } = useImage({ srcList: url });
@@ -32,7 +32,7 @@ function Favicon({ url }) {
   );
 }
 
-export default function FeedItem({ article }) {
+function FeedItem({ article }) {
   return (
     <div key={article.id} className="py-11 flex gap-11">
       <div>
@@ -78,3 +78,7 @@ export default function FeedItem({ article }) {
     </div>
   );
 }
+
+export default withErrorBoundary(FeedItem, {
+  fallback: <React.Fragment />,
+});
