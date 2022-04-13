@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 import { flexbox } from "styled-system";
 import { theme, Box, Link } from "@advisable/donut";
 
@@ -7,7 +6,7 @@ export const StyledHeader = styled.header`
   ${flexbox};
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 20;
   width: 100%;
   height: var(--header-height);
   display: flex;

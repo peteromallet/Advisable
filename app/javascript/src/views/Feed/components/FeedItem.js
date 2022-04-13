@@ -12,7 +12,7 @@ export default function FeedItem({ article }) {
               className="w-8 h-9 bg-neutral200 rounded-xs bg-cover -mr-1.5"
               style={{ backgroundImage: `url(${article.specialist.avatar})` }}
             />
-            <div className="w-5 h-5 bg-white rounded-full shadow grid place-items-center z-20">
+            <div className="w-5 h-5 bg-white rounded-full shadow grid place-items-center z-10">
               <PlusSm className="w-4 h-4 text-neutral800" />
             </div>
             <div className="w-8 h-9 bg-neutral200 rounded-xs -ml-1.5">
