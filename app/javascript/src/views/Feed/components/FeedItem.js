@@ -20,7 +20,7 @@ function Favicon({ url }) {
   }
 
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <ErrorBoundary fallback={<LogoMarkFallback />}>
         <Img
           src={url}

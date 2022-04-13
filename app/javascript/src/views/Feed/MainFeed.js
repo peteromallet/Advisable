@@ -12,8 +12,6 @@ export default function MainFeed() {
     fetchMore({ variables: { cursor: data.feed.pageInfo.endCursor } });
   }, [fetchMore, data]);
 
-  if (loading) return null;
-
   const edges = data?.feed?.edges || [];
   const results = edges.map((n) => n.node);
 
@@ -23,7 +21,8 @@ export default function MainFeed() {
       {results.map((result) => (
         <FeedItem key={result.id} article={result.article} />
       ))}
-      {data.feed.pageInfo.hasNextPage ? (
+      {loading && <>loading...</>}
+      {data && data.feed.pageInfo.hasNextPage ? (
         <EndlessScroll onLoadMore={handleLoadMore} />
       ) : (
         <div className="text-center text-neutral400 py-10">
