@@ -344,7 +344,6 @@ module Types
     def feed
       requires_client!
       interests = current_user.account.interests
-      interests.each(&:find_articles!) # ensure articles are there
 
       interest_article_ids = ::CaseStudy::InterestArticle.
         distinct_articles.
