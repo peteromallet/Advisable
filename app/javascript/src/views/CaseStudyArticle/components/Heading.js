@@ -2,7 +2,7 @@ import React from "react";
 
 const Heading = ({ id, section, ...props }) => (
   <div className="heading first:mt-0 mt-20" {...props}>
-    <h6 className="text-sm uppercase font-[550] leading-5 bg-clip-text text-transparent bg-gradient-to-r from-blue500 to-purple500">
+    <h6 className="inline text-sm uppercase font-[550] leading-5 bg-clip-text text-transparent bg-gradient-to-r from-blue500 to-purple500">
       <div id={id} className="relative top-[-180px]" />
       {section.type}
     </h6>
