@@ -34,7 +34,7 @@ function Favicon({ url }) {
 
 function FeedItem({ article }) {
   return (
-    <div key={article.id} className="py-11 flex gap-11">
+    <div className="py-11 flex gap-11">
       <div>
         <div className="mb-4 flex gap-3">
           <div className="flex items-center">

@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { useFeed } from "./queries";
 import FeedItem from "./components/FeedItem";
 import EndlessScroll from "./components/EndlessScroll";
+import FeedItemSkeleton from "./components/FeedItemSkeleton";
 
 export default function MainFeed() {
   const { data, loading, error, fetchMore } = useFeed();
@@ -22,7 +23,13 @@ export default function MainFeed() {
       {results.map((result) => (
         <FeedItem key={result.id} article={result.article} />
       ))}
-      {loading && <>loading...</>}
+      {loading && (
+        <>
+          <FeedItemSkeleton />
+          <FeedItemSkeleton />
+          <FeedItemSkeleton />
+        </>
+      )}
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
       {results.length > 0 && !pageInfo?.hasNextPage && (
         <div className="text-center text-neutral400 py-10">

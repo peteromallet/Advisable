@@ -13,7 +13,9 @@ export function useInterest(opts) {
 }
 
 export function useFeed() {
-  return useQuery(FEED);
+  return useQuery(FEED, {
+    notifyOnNetworkStatusChange: true,
+  });
 }
 
 export function useArticle(opts) {
