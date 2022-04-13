@@ -1,0 +1,12 @@
+query SetupResults {
+  interests {
+    id
+    results {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}

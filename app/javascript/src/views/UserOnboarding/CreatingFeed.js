@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useShortlists } from "../Discover/queries";
 import useInterval from "src/hooks/useInterval";
 import useTutorial from "src/hooks/useTutorial";
+import { useResults } from "./queries";
 
 function Card(props) {
   return (
@@ -27,24 +27,39 @@ export default function CreatingFeed() {
   const [seconds, setSeconds] = useState(0);
   const onboarding = useTutorial("onboarding");
 
-  const { data } = useShortlists();
+  const { data, stopPolling } = useResults({
+    pollInterval: 1000,
+    fetchPolicy: "network-only",
+  });
+
+  const resultsReady = useMemo(() => {
+    if (!data?.interests) return false;
+    const interests = data.interests;
+    return interests.every((interest) => interest.results.edges.length > 0);
+  }, [data]);
 
   useEffect(() => {
     onboarding.complete();
   }, []);
+
+  useEffect(() => {
+    if (resultsReady) stopPolling();
+  }, [resultsReady, stopPolling]);
 
   useInterval(() => {
     setSeconds(seconds + 1);
   }, [1000]);
 
   useEffect(() => {
-    if (seconds >= 5 && data && onboarding.isComplete) {
+    if (seconds < 5) return;
+    if (!onboarding.isComplete) return;
+    if (resultsReady || seconds >= 10) {
       navigate("/");
     }
-  }, [seconds, data, navigate, onboarding]);
+  }, [seconds, navigate, resultsReady, onboarding]);
 
   return (
-    <div className="w-full grid place-items-center">
+    <div className="h-screen lg:h-auto w-full grid place-items-center">
       <div className="-mt-20">
         <div className="mb-12 relative h-24 mx-auto w-20">
           <Card
