@@ -12,6 +12,7 @@ export default function MainFeed() {
     fetchMore({ variables: { cursor: data.feed.pageInfo.endCursor } });
   }, [fetchMore, data]);
 
+  const pageInfo = data?.feed?.pageInfo;
   const edges = data?.feed?.edges || [];
   const results = edges.map((n) => n.node);
 
@@ -22,9 +23,8 @@ export default function MainFeed() {
         <FeedItem key={result.id} article={result.article} />
       ))}
       {loading && <>loading...</>}
-      {data && data.feed.pageInfo.hasNextPage ? (
-        <EndlessScroll onLoadMore={handleLoadMore} />
-      ) : (
+      {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+      {results.length > 0 && !pageInfo?.hasNextPage && (
         <div className="text-center text-neutral400 py-10">
           You have reached the end of the feed
         </div>

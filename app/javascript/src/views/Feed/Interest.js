@@ -27,6 +27,7 @@ export default function Interest() {
     );
   }
 
+  const pageInfo = data?.interest?.articles?.pageInfo;
   const edges = data?.interest?.articles?.edges || [];
   const results = edges.map((e) => e.node);
 
@@ -39,9 +40,8 @@ export default function Interest() {
         <FeedItem key={result.id} article={result} />
       ))}
       {loading && <div>loading...</div>}
-      {data?.interest && data.interest.articles.pageInfo.hasNextPage ? (
-        <EndlessScroll onLoadMore={handleLoadMore} />
-      ) : (
+      {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+      {results.length > 0 && !pageInfo?.hasNextPage && (
         <div className="text-center text-neutral400 py-10">
           You have reached the end of the feed
         </div>
