@@ -1,6 +1,36 @@
-import React from "react";
+import React, { Suspense } from "react";
+import { useImage } from "react-image";
 import { Link } from "react-router-dom";
 import { PlusSm } from "@styled-icons/heroicons-solid";
+import LogoMark from "src/components/LogoMark";
+import { ErrorBoundary } from "react-error-boundary";
+
+function Img({ src: url, ...props }) {
+  const { src } = useImage({ srcList: url });
+  return <img src={src} {...props} />;
+}
+
+function LogoMarkFallback() {
+  return <LogoMark color="subtle" size="16" />;
+}
+
+function Favicon({ url }) {
+  if (!url) {
+    return <LogoMarkFallback />;
+  }
+
+  return (
+    <Suspense>
+      <ErrorBoundary fallback={<LogoMarkFallback />}>
+        <Img
+          src={url}
+          className="w-full h-full rounded-xs object-cover"
+          data-a={url}
+        />
+      </ErrorBoundary>
+    </Suspense>
+  );
+}
 
 export default function FeedItem({ article }) {
   return (
@@ -15,11 +45,8 @@ export default function FeedItem({ article }) {
             <div className="w-5 h-5 bg-white rounded-full shadow grid place-items-center z-10">
               <PlusSm className="w-4 h-4 text-neutral800" />
             </div>
-            <div className="w-8 h-9 bg-neutral200 rounded-xs -ml-1.5">
-              <img
-                src={article.company?.favicon}
-                className="w-full h-full rounded-xs object-cover"
-              />
+            <div className="w-8 h-9 bg-neutral200 rounded-xs -ml-1.5 grid place-items-center">
+              <Favicon url={article.company?.favicon} />
             </div>
           </div>
           <div className="leading-none">
@@ -37,19 +64,6 @@ export default function FeedItem({ article }) {
         >
           {article.title}
         </Link>
-        {/* {article.company && (
-          <div>
-            <div className="flex items-center gap-2 pt-2 pb-4">
-              <img
-                src={article.company.favicon}
-                className="w-5 h-5 rounded-xs"
-              />
-              <span className="font-medium text-sm">
-                {article.company.name}
-              </span>
-            </div>
-          </div>
-        )} */}
         <p className="text-neutral800 leading-relaxed">{article.subtitle}</p>
       </div>
 
