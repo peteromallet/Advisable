@@ -9,6 +9,7 @@ import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
 import Feed from "./views/Feed";
+import Article from "./views/Article";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -57,6 +58,8 @@ const ApplicationRoutes = () => {
               </RequireAuthentication>
             }
           />
+
+          <Route path="/articles/:slug" element={<Article />} />
 
           <Route
             path="/feed/*"

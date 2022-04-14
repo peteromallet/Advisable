@@ -4,6 +4,7 @@ import {
   Home,
   InboxIn,
 } from "@styled-icons/heroicons-solid";
+import { motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
 import React, { cloneElement } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
@@ -64,7 +65,12 @@ export default function FeedSidebar() {
   const interests = data?.interests || [];
 
   return (
-    <div className={sidebarClasses()}>
+    <motion.div
+      initial={{ x: -50, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className={sidebarClasses()}
+    >
       <SimpleBar className="h-full p-4">
         <SidebarItem to="/feed" icon={<Home />}>
           Feed
@@ -88,6 +94,6 @@ export default function FeedSidebar() {
           </SidebarItem>
         ))}
       </SimpleBar>
-    </div>
+    </motion.div>
   );
 }

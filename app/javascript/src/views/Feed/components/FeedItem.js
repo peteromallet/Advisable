@@ -59,7 +59,7 @@ function FeedItem({ article }) {
           </div>
         </div>
         <Link
-          to={`/feed/articles/${article.slug}`}
+          to={`/articles/${article.slug}`}
           className="block text-2xl font-semibold tracking-tight mb-3 text-blue900 hover:underline hover:cursor-pointer"
         >
           {article.title}

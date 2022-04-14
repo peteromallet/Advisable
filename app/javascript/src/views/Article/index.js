@@ -12,8 +12,8 @@ export default function Article() {
   if (loading) return <>loading...</>;
 
   return (
-    <>
+    <div className="w-[1020px] mx-auto">
       <CaseStudyContent caseStudy={data.caseStudy} />
-    </>
+    </div>
   );
 }

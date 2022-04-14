@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import FeedSidebar from "./FeedSidebar";
 import Interest from "./Interest";
 import MainFeed from "./MainFeed";
-import Article from "./Article";
 import { ErrorBoundary } from "react-error-boundary";
 
 function FeedViewFailed() {
@@ -21,13 +20,10 @@ export default function Feed() {
       <FeedSidebar />
       <div className="flex-1 p-8">
         <ErrorBoundary FallbackComponent={FeedViewFailed}>
-          <div className="max-w-[800px] mx-auto">
-            <Routes>
-              <Route index element={<MainFeed />} />
-              <Route path="articles/:slug" element={<Article />} />
-              <Route path=":interest" element={<Interest />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route index element={<MainFeed />} />
+            <Route path=":interest" element={<Interest />} />
+          </Routes>
         </ErrorBoundary>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useInterest } from "./queries";
 import FeedItem from "./components/FeedItem";
 import EndlessScroll from "./components/EndlessScroll";
 import SearchIllustration from "src/illustrations/zest/search";
+import FeedContainer from "./components/FeedContainer";
 
 export default function Interest() {
   const { interest: id } = useParams();
@@ -32,20 +33,22 @@ export default function Interest() {
   const results = edges.map((e) => e.node);
 
   return (
-    <div className="divide-y divide-solid divide-neutral200">
-      <h2 className="text-3xl font-semibold tracking-tight mb-8">
-        {data?.interest?.term}
-      </h2>
-      {results.map((result) => (
-        <FeedItem key={result.id} article={result} />
-      ))}
-      {loading && <div>loading...</div>}
-      {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
-      {results.length > 0 && !pageInfo?.hasNextPage && (
-        <div className="text-center text-neutral400 py-10">
-          You have reached the end of the feed
-        </div>
-      )}
-    </div>
+    <FeedContainer>
+      <div className="divide-y divide-solid divide-neutral200">
+        <h2 className="text-3xl font-semibold tracking-tight mb-8">
+          {data?.interest?.term}
+        </h2>
+        {results.map((result) => (
+          <FeedItem key={result.id} article={result} />
+        ))}
+        {loading && <div>loading...</div>}
+        {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+        {results.length > 0 && !pageInfo?.hasNextPage && (
+          <div className="text-center text-neutral400 py-10">
+            You have reached the end of the feed
+          </div>
+        )}
+      </div>
+    </FeedContainer>
   );
 }
