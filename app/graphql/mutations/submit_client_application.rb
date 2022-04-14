@@ -20,7 +20,6 @@ module Mutations
       end
 
       current_user.sync_to_airtable
-      ClientApplicationSubmittedNotificationJob.perform_later(current_user.id)
 
       {client_application: current_user}
     end
