@@ -13,7 +13,6 @@ const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
   import("./views/FreelancerApplication"),
 );
-const ClientApplication = lazy(() => import("./views/ClientApplication"));
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
@@ -72,15 +71,6 @@ const ApplicationRoutes = () => {
             element={
               <RequireAuthentication>
                 <Messages />
-              </RequireAuthentication>
-            }
-          />
-
-          <Route
-            path="/clients/apply/*"
-            element={
-              <RequireAuthentication>
-                <ClientApplication />
               </RequireAuthentication>
             }
           />
