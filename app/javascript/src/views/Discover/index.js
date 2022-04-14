@@ -38,9 +38,7 @@ export default function Discover() {
 
   return (
     <ErrorBoundary>
-      <Wrapper>
-        <AccountConfirmationPrompt />
-      </Wrapper>
+      <AccountConfirmationPrompt />
       <Routes>
         <Route
           path="/new/goals"
