@@ -24,7 +24,6 @@ const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
-const Discover = lazy(() => import("./views/Discover"));
 const NewPost = lazy(() => import("./views/NewPost"));
 const NewAgreement = lazy(() => import("./views/NewAgreement"));
 const PaymentRequests = lazy(() => import("./views/PaymentRequests"));
@@ -60,15 +59,6 @@ const ApplicationRoutes = () => {
           />
 
           <Route path="/articles/:slug" element={<Article />} />
-
-          <Route
-            path="/feed/*"
-            element={
-              <RequireAuthentication clientOnly>
-                <Feed />
-              </RequireAuthentication>
-            }
-          />
 
           <Route
             path="/post"
@@ -139,7 +129,7 @@ const ApplicationRoutes = () => {
             path="/explore/*"
             element={
               <RequireAuthentication clientOnly>
-                <Discover />
+                <Feed />
               </RequireAuthentication>
             }
           />

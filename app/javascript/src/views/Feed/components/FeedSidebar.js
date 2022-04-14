@@ -9,7 +9,7 @@ import SimpleBar from "simplebar-react";
 import React, { cloneElement } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
-import { useInterests } from "./queries";
+import { useInterests } from "../queries";
 
 const sidebarClasses = composeStyles({
   base: `
@@ -72,13 +72,13 @@ export default function FeedSidebar() {
       className={sidebarClasses()}
     >
       <SimpleBar className="h-full p-4">
-        <SidebarItem to="/feed" icon={<Home />}>
+        <SidebarItem to="/explore" icon={<Home />}>
           Feed
         </SidebarItem>
-        <SidebarItem to="/feed/favorites" icon={<Bookmark />}>
+        <SidebarItem to="/explore/favorites" icon={<Bookmark />}>
           Favorites
         </SidebarItem>
-        <SidebarItem to="/feed/shared" icon={<InboxIn />}>
+        <SidebarItem to="/explore/shared" icon={<InboxIn />}>
           Shared
         </SidebarItem>
         <h4 className="pl-2 pt-8 pb-2 text-xs uppercase font-semibold text-neutral500">
@@ -87,7 +87,7 @@ export default function FeedSidebar() {
         {interests.map((interest) => (
           <SidebarItem
             key={interest.id}
-            to={`/feed/${interest.id}`}
+            to={`/explore/${interest.id}`}
             icon={<Collection />}
           >
             {interest.term}

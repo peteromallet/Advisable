@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import FeedSidebar from "./FeedSidebar";
+import FeedSidebar from "./components/FeedSidebar";
 import Interest from "./Interest";
 import MainFeed from "./MainFeed";
 import { ErrorBoundary } from "react-error-boundary";
