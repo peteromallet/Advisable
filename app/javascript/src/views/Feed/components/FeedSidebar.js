@@ -1,15 +1,13 @@
-import {
-  Bookmark,
-  Collection,
-  Home,
-  InboxIn,
-} from "@styled-icons/heroicons-solid";
 import { motion } from "framer-motion";
 import SimpleBar from "simplebar-react";
-import React, { cloneElement } from "react";
+import React, { createElement } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import { useInterests } from "../queries";
+import HomeIcon from "./HomeIcon";
+import BookmarkIcon from "./BookmarkIcon";
+import SharedIcon from "./SharedIcon";
+import InterestIcon from "./InterestIcon";
 
 const sidebarClasses = composeStyles({
   base: `
@@ -33,19 +31,20 @@ const sidebarItemClasses = composeStyles({
     mb-1
     group
     rounded-sm
-    text-neutral600
+    text-neutral500
+    font-[450]
     hover:text-neutral900
     hover:bg-neutral50
   `,
   variants: {
-    active: `!text-neutral900 font-medium bg-neutral50`,
+    active: `!text-blue900 bg-neutral50`,
   },
 });
 
 const iconClasses = composeStyles({
-  base: `w-5 text-neutral600 group-hover:text-neutral900`,
+  base: `w-5 opacity-80 group-hover:opacity-100`,
   variants: {
-    active: `text-blue500 group-hover:text-blue500`,
+    active: `!opacity-100`,
   },
 });
 
@@ -55,7 +54,15 @@ function SidebarItem({ to, icon, children }) {
   return (
     <Link to={to} className={sidebarItemClasses({ active: match })}>
       {icon &&
-        cloneElement(icon, { className: iconClasses({ active: match }) })}
+        createElement(icon, {
+          primaryColor: match
+            ? "var(--color-blue600)"
+            : "var(--color-neutral900)",
+          secondaryColor: match
+            ? "var(--color-blue200)"
+            : "var(--color-neutral400)",
+          className: iconClasses({ active: match }),
+        })}
       <span className="truncate">{children}</span>
     </Link>
   );
@@ -78,14 +85,14 @@ function Interests() {
 
   return (
     <>
-      <h4 className="pl-2 pb-2 text-xs uppercase font-semibold text-neutral500">
+      <h4 className="pl-2 pb-2 text-xs uppercase font-semibold text-neutral400">
         Your Interests
       </h4>
       {interests.map((interest) => (
         <SidebarItem
           key={interest.id}
           to={`/explore/${interest.id}`}
-          icon={<Collection />}
+          icon={InterestIcon}
         >
           {interest.term}
         </SidebarItem>
@@ -104,13 +111,13 @@ export default function FeedSidebar() {
     >
       <SimpleBar className="h-full p-4">
         <div className="mb-8">
-          <SidebarItem to="/explore" icon={<Home />}>
+          <SidebarItem to="/explore" icon={HomeIcon}>
             Feed
           </SidebarItem>
-          <SidebarItem to="/explore/favorites" icon={<Bookmark />}>
+          <SidebarItem to="/explore/favorites" icon={BookmarkIcon}>
             Favorites
           </SidebarItem>
-          <SidebarItem to="/explore/shared" icon={<InboxIn />}>
+          <SidebarItem to="/explore/shared" icon={SharedIcon}>
             Shared
           </SidebarItem>
         </div>

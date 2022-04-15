@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { useImage } from "react-image";
 import { Link } from "react-router-dom";
-import { Collection, PlusSm } from "@styled-icons/heroicons-solid";
+import { PlusSm } from "@styled-icons/heroicons-solid";
 import LogoMark from "src/components/LogoMark";
+import InterestIcon from "./InterestIcon";
 import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
 
 function Img({ src: url, ...props }) {
@@ -82,9 +83,12 @@ function FeedItem({ article, interest }) {
         <div className="pt-6">
           <Link
             to={`/explore/${interest.id}`}
-            className="inline-flex items-center gap-2 text-neutral600 hover:text-neutral900"
+            className="inline-flex items-center gap-0.5 leading-none text-neutral600 hover:text-neutral900"
           >
-            <Collection className="w-5 h-5" />
+            <InterestIcon
+              primaryColor="var(--color-neutral600)"
+              className="w-5 h-5"
+            />
             {interest.term}
           </Link>
         </div>
