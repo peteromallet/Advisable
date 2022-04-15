@@ -13,6 +13,9 @@ module Mutations
 
     def resolve(tutorial:)
       current_user.account.complete_tutorial(tutorial)
+
+      ClientSignupNotificationJob.perform_later(current_user.id) if current_user.is_a?(User) && tutorial == "onboarding"
+
       {viewer: current_user}
     end
   end
