@@ -61,10 +61,40 @@ function SidebarItem({ to, icon, children }) {
   );
 }
 
-export default function FeedSidebar() {
+function Interests() {
   const { data, loading, error } = useInterests();
   const interests = data?.interests || [];
 
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-3 px-3">
+        <div className="h-2 w-[100px] rounded-md bg-neutral100 animate-pulse" />
+        <div className="h-4 w-full rounded-md bg-neutral100 animate-pulse" />
+        <div className="h-4 w-full rounded-md bg-neutral100 animate-pulse" />
+        <div className="h-4 w-full rounded-md bg-neutral100 animate-pulse" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <h4 className="pl-2 pb-2 text-xs uppercase font-semibold text-neutral500">
+        Your Interests
+      </h4>
+      {interests.map((interest) => (
+        <SidebarItem
+          key={interest.id}
+          to={`/explore/${interest.id}`}
+          icon={<Collection />}
+        >
+          {interest.term}
+        </SidebarItem>
+      ))}
+    </>
+  );
+}
+
+export default function FeedSidebar() {
   return (
     <motion.div
       initial={{ x: -50, opacity: 0 }}
@@ -73,27 +103,18 @@ export default function FeedSidebar() {
       className={sidebarClasses()}
     >
       <SimpleBar className="h-full p-4">
-        <SidebarItem to="/explore" icon={<Home />}>
-          Feed
-        </SidebarItem>
-        <SidebarItem to="/explore/favorites" icon={<Bookmark />}>
-          Favorites
-        </SidebarItem>
-        <SidebarItem to="/explore/shared" icon={<InboxIn />}>
-          Shared
-        </SidebarItem>
-        <h4 className="pl-2 pt-8 pb-2 text-xs uppercase font-semibold text-neutral500">
-          Your Interests
-        </h4>
-        {interests.map((interest) => (
-          <SidebarItem
-            key={interest.id}
-            to={`/explore/${interest.id}`}
-            icon={<Collection />}
-          >
-            {interest.term}
+        <div className="mb-8">
+          <SidebarItem to="/explore" icon={<Home />}>
+            Feed
           </SidebarItem>
-        ))}
+          <SidebarItem to="/explore/favorites" icon={<Bookmark />}>
+            Favorites
+          </SidebarItem>
+          <SidebarItem to="/explore/shared" icon={<InboxIn />}>
+            Shared
+          </SidebarItem>
+        </div>
+        <Interests />
       </SimpleBar>
     </motion.div>
   );

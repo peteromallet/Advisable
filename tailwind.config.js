@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./app/helpers/**/*.rb",
@@ -7,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         neutral50: "#F9F9F9",
         neutral100: "#EEEEF0",
