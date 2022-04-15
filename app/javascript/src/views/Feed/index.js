@@ -5,6 +5,7 @@ import Interest from "./Interest";
 import MainFeed from "./MainFeed";
 import { ErrorBoundary } from "react-error-boundary";
 import { useBackground } from "src/../../../donut/src";
+import BottomBar from "./components/BottomBar";
 
 function FeedViewFailed() {
   return (
@@ -21,6 +22,7 @@ export default function Feed() {
   return (
     <div className="flex">
       <FeedSidebar />
+      <BottomBar />
       <div className="flex-1 p-8">
         <ErrorBoundary FallbackComponent={FeedViewFailed}>
           <Routes>

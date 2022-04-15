@@ -20,6 +20,7 @@ const sidebarClasses = composeStyles({
     shrink-0
     sticky
     top-[var(--header-height)]
+    hidden md:block
   `,
 });
 
