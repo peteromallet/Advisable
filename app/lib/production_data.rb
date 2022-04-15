@@ -11,33 +11,30 @@ class ProductionData
   ].freeze
   TABLE_NAMES = CLASSES.map(&:table_name).freeze
 
-  attr_reader :source_dir
-
   def create_file!
     destroy_local_data
     PeopleData.new.seed!
     download_data_from_production
     populate_local_tables
     prune_data
+    LocalData.new.populate_interests!
     prepare_file
     upload_file
   end
 
   def populate_local_tables(source_dir: TestData::DATA_DIR)
-    @source_dir = source_dir
-
-    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, prefix: "") } if Account.none?
-    populate("companies")
-    populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"])
-    populate("embeddings")
-    populate("sections")
-    populate("contents")
-    populate("industries", prefix: "")
-    populate("industries")
-    populate("skills", prefix: "")
-    populate("skill_categories", prefix: "")
-    populate("skill_category_skills", prefix: "")
-    populate("skills", ignore_columns: ["search_id"])
+    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, prefix: "", source_dir:) } if Account.none?
+    populate("companies", source_dir:)
+    populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"], source_dir:)
+    populate("embeddings", source_dir:)
+    populate("sections", source_dir:)
+    populate("contents", source_dir:)
+    populate("industries", prefix: "", source_dir:)
+    populate("industries", source_dir:)
+    populate("skills", prefix: "", source_dir:)
+    populate("skill_categories", prefix: "", source_dir:)
+    populate("skill_category_skills", prefix: "", source_dir:)
+    populate("skills", ignore_columns: ["search_id"], source_dir:)
   end
 
   private
@@ -54,6 +51,7 @@ class ProductionData
     puts "Destroying existing local data…"
     Review.delete_all
     Label.delete_all
+    LocalData.new.destroy_existing_data!
     CLASSES.each(&:delete_all)
   end
 
@@ -91,7 +89,7 @@ class ProductionData
     obj.upload_file(TestData::ZIP_PATH)
   end
 
-  def populate(table, ignore_columns: [], map_columns: [], prefix: "case_study_")
+  def populate(table, ignore_columns: [], map_columns: [], prefix: "case_study_", source_dir: TestData::DATA_DIR)
     puts "Populating #{table}…"
     rows = CSV.read("#{source_dir}/#{prefix}#{table}.csv", headers: true)
     mapped_colums = {}

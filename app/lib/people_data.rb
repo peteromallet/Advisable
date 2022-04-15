@@ -40,6 +40,7 @@ class PeopleData
     Agreement.delete_all
     Event.delete_all
     Guild::Post.delete_all
+    AuthProvider.delete_all
     CLASSES.each(&:delete_all)
   end
 
@@ -126,7 +127,7 @@ class PeopleData
             permissions: %w[admin team_manager editor],
             features: [],
             confirmed_at: 1.hour.ago,
-            completed_tutorials: [],
+            completed_tutorials: %w[onboarding],
             updated_at: now,
             created_at: now
           },
