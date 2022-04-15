@@ -55,9 +55,10 @@ module Types
         object.sections.by_position
       end
 
-      field :images, [Types::CaseStudy::Image], null: false
-      def images
-        object.contents.where(type: "CaseStudy::ImagesContent").flat_map(&:images)
+      field :first_image, Types::CaseStudy::Image, null: true
+      def first_image
+        # TODO: Improve this query
+        object.contents.by_position.find_by(type: "CaseStudy::ImagesContent")&.images&.first
       end
 
       field :is_archived, Boolean, null: false do

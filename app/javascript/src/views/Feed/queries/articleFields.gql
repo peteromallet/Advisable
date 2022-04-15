@@ -13,7 +13,7 @@ fragment ArticleFields on CaseStudyArticle {
     name
     favicon
   }
-  images {
+  firstImage {
     id
     url
   }

@@ -65,11 +65,11 @@ function FeedItem({ article, interest }) {
           <p className="text-neutral900 leading-relaxed">{article.subtitle}</p>
         </div>
 
-        {article.images.length > 0 && (
+        {article.firstImage && (
           <div
             className="w-[180px] h-[120px] bg-neutral200 shrink-0 rounded-xs"
             style={{
-              background: `url(${article.images[0].url}) no-repeat center center / cover`,
+              background: `url(${article.firstImage.url}) no-repeat center center / cover`,
             }}
           />
         )}
