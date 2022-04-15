@@ -38,11 +38,6 @@ export const user = (fields = {}) => {
       paymentMethod: null,
       paymentsSetup: true,
       applicationStage: "Application Accepted",
-      clientApplication: {
-        id: uniqueId("app"),
-        status: "Application Accepted",
-        __typename: "ClientApplication",
-      },
       companyType: "Startup",
       projectPaymentMethod: "Bank Transfer",
       location: "Dublin, Ireland",
@@ -398,30 +393,6 @@ export const salesPerson = (fields = {}) => {
   );
 };
 
-export const clientApplication = (fields = {}) => {
-  return merge(
-    {
-      __typename: "ClientApplication",
-      id: uniqueId("client_application"),
-      firstName: "Test",
-      lastName: "Account",
-      isAdmin: false,
-      companyName: null,
-      industry: null,
-      companyType: null,
-      skills: [],
-      numberOfFreelancers: null,
-      budget: null,
-      localityImportance: null,
-      acceptedGuaranteeTerms: false,
-      talentQuality: null,
-      status: "Application Started",
-      rejectionReason: null,
-    },
-    fields,
-  );
-};
-
 export const invoice = (fields = {}) => {
   return {
     __typename: "Invoice",
@@ -525,7 +496,6 @@ export default {
   salesPerson,
   consultation,
   specialistSkill,
-  clientApplication,
   bankHolderAddress,
   applicationQuestion,
 };
