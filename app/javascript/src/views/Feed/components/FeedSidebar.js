@@ -13,10 +13,10 @@ import { useInterests } from "../queries";
 
 const sidebarClasses = composeStyles({
   base: `
-    w-[320px]
+    w-[300px]
     bg-white
     h-viewport
-    shadow-lg
+    shadow-xl
     shrink-0
     sticky
     top-[var(--header-height)]

@@ -4,6 +4,7 @@ import FeedSidebar from "./components/FeedSidebar";
 import Interest from "./Interest";
 import MainFeed from "./MainFeed";
 import { ErrorBoundary } from "react-error-boundary";
+import { useBackground } from "src/../../../donut/src";
 
 function FeedViewFailed() {
   return (
@@ -15,6 +16,8 @@ function FeedViewFailed() {
 }
 
 export default function Feed() {
+  useBackground("beige");
+
   return (
     <div className="flex">
       <FeedSidebar />
