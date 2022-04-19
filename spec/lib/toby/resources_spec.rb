@@ -11,6 +11,7 @@ RSpec.describe Toby::Resources do
           Toby::Resources::Specialist,
           Toby::Resources::CaseStudy::Article,
           Toby::Resources::CaseStudy::Search,
+          Toby::Resources::CaseStudy::Interest,
           Toby::Resources::CaseStudy::SearchFeedback,
           Toby::Resources::CaseStudy::Skill,
           Toby::Resources::SkillSimilarity,
@@ -45,6 +46,7 @@ RSpec.describe Toby::Resources do
           Toby::Resources::CaseStudy::SearchFeedback,
           Toby::Resources::CaseStudy::Article,
           Toby::Resources::CaseStudy::Search,
+          Toby::Resources::CaseStudy::Interest,
           Toby::Resources::CaseStudy::Skill
         ]
       )

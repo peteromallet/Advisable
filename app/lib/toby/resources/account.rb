@@ -11,6 +11,7 @@ module Toby
       attribute :email, Attributes::String
       attribute :user, Attributes::HasOne
       attribute :specialist, Attributes::HasOne
+      attribute :interests, Attributes::HasMany
       attribute :permissions, Attributes::TextArray
       attribute :unsubscribed_from, Attributes::TextArray
       attribute :confirmed_at, Attributes::DateTime
