@@ -28,7 +28,7 @@ export default function SidebarCard({ specialist }) {
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
       <ConnectButton
-        className="mb-5"
+        className="mb-5 mt-3"
         specialist={specialist}
         size={xlUp ? "lg" : "md"}
       >

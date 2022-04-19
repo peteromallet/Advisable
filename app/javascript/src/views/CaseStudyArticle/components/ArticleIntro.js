@@ -1,4 +1,5 @@
 import React from "react";
+import ConnectButton from "src/components/ConnectButton";
 import CompanyBox from "./CompanyBox";
 import Achievements from "./Achievements";
 import AdvisableComment from "./AdvisableComment";
@@ -31,6 +32,26 @@ const Title = ({ children }) => (
   </h1>
 );
 
+const SpecialistInfo = ({ specialist }) => (
+  <div
+    id="specialistInfo"
+    className="flex lg:hidden items-center flex-col mx-auto"
+  >
+    <div className="font-bold text-2xl text-center text-neutral800 hover:text-neutral800 leading-none pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+      {specialist.name}
+    </div>
+    <Availability unavailableUntil={specialist.unavailableUntil} />
+    <ConnectButton
+      className="mt-5 mb-8 w-[184px]"
+      specialist={specialist}
+      size="md"
+    >
+      Connect
+    </ConnectButton>
+    <hr className="w-20 pb-[3px] mb-7" />
+  </div>
+);
+
 export default function ArticleIntro({ caseStudy }) {
   return (
     <div>
@@ -38,14 +59,7 @@ export default function ArticleIntro({ caseStudy }) {
         company={caseStudy.company}
         specialist={caseStudy.specialist}
       />
-      <div id="specialistInfo" className="flex lg:hidden items-center flex-col">
-        <div className="font-bold text-2xl text-center text-neutral800 hover:text-neutral800 leading-none pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
-          {caseStudy.specialist.name}
-        </div>
-        <Availability
-          unavailableUntil={caseStudy.specialist.unavailableUntil}
-        />
-      </div>
+      <SpecialistInfo specialist={caseStudy.specialist} />
       <Title>{caseStudy.title}</Title>
       <CompanyBox caseStudy={caseStudy} />
       <AdvisableComment caseStudy={caseStudy} />
