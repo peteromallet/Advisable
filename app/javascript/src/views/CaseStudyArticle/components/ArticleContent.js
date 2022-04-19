@@ -26,7 +26,7 @@ export default function ArticleContent({ caseStudy }) {
   );
 
   return (
-    <div className="flex gap-20">
+    <>
       <ArticleSidebar elements={elements} />
       <div>
         {elements.map((element, index) => (
@@ -40,6 +40,6 @@ export default function ArticleContent({ caseStudy }) {
           />
         ))}
       </div>
-    </div>
+    </>
   );
 }

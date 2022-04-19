@@ -9,6 +9,27 @@ import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 
+const SectionWrapper = ({ children }) => (
+  <div
+    className={`
+          flex
+          items-start
+          mx-auto
+          px-6
+          sm:px-8
+          md:px-0
+          lg:gap-10
+          xl:gap-20
+          w-full
+          md:w-[696px]
+          lg:w-[960px]
+          xl:w-[1198px]
+        `}
+  >
+    {children}
+  </div>
+);
+
 export default function ShortlistArticle() {
   const { data, loading, error } = useArticle();
 
@@ -22,14 +43,16 @@ export default function ShortlistArticle() {
           <title>Advisable | {data.caseStudy?.title}</title>
         </Helmet>
       )}
-      <div className="w-[1198px] pt-10 pb-24 mx-auto flex gap-20 items-start">
-        <SpecialistCard specialist={data.caseStudy.specialist} />
-        <SpecialistBar specialist={data.caseStudy.specialist} />
-        <ArticleIntro caseStudy={data.caseStudy} />
-      </div>
-      <hr className="border-neutral200 pb-[3px]" />
-      <div className="w-[1198px] pb-10 pt-20 mx-auto">
-        <ArticleContent caseStudy={data.caseStudy} />
+      <div className="py-10">
+        <SectionWrapper>
+          <SpecialistCard specialist={data.caseStudy.specialist} />
+          <SpecialistBar specialist={data.caseStudy.specialist} />
+          <ArticleIntro caseStudy={data.caseStudy} />
+        </SectionWrapper>
+        <hr className="border-neutral200 pb-[3px] mt-24 mb-20" />
+        <SectionWrapper>
+          <ArticleContent caseStudy={data.caseStudy} />
+        </SectionWrapper>
       </div>
     </ErrorBoundary>
   );
