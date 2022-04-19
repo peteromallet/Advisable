@@ -9,11 +9,10 @@ import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 
-const SectionWrapper = ({ children }) => (
+const SectionWrapper = ({ children, className }) => (
   <div
     className={`
           flex
-          items-start
           mx-auto
           px-6
           sm:px-8
@@ -24,6 +23,7 @@ const SectionWrapper = ({ children }) => (
           md:w-[696px]
           lg:w-[960px]
           xl:w-[1198px]
+          ${className}
         `}
   >
     {children}
@@ -44,7 +44,7 @@ export default function ShortlistArticle() {
         </Helmet>
       )}
       <div className="py-10">
-        <SectionWrapper>
+        <SectionWrapper className="items-start">
           <SpecialistCard specialist={data.caseStudy.specialist} />
           <SpecialistBar specialist={data.caseStudy.specialist} />
           <ArticleIntro caseStudy={data.caseStudy} />
