@@ -4,6 +4,12 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
+const TimeText = ({ children }) => (
+  <div className="text-neutral600 text-sm xl:text-base leading-4 xl:leading-5 pt-[3px] xl:pt-0 pb-px xl:pb-0">
+    {children}
+  </div>
+);
+
 export default function Timezone({ timezone }) {
   const time = timezone && DateTime.now().setZone(timezone);
   const timezoneFormat = time?.toFormat("ZZZZ '(UTC'Z)");
@@ -23,11 +29,11 @@ export default function Timezone({ timezone }) {
 
   return (
     <div className="flex items-center gap-3 mb-3">
-      <div className="text-neutral600 leading-5">{timezoneFormat}</div>
-      <div className="w-px h-[16px] bg-neutral600" />
+      <TimeText>{timezoneFormat}</TimeText>
+      <div className="w-px h-3 xl:h-4 bg-neutral600" />
       <div className="flex gap-1 items-center">
         <Clock className="fill-neutral500 w-[16px]" />
-        <div className="text-neutral600 leading-5">{clock}</div>
+        <TimeText>{clock}</TimeText>
       </div>
     </div>
   );

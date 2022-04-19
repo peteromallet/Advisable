@@ -1,33 +1,32 @@
 import React from "react";
-import { Link } from "@advisable/donut";
+import { Link, useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import Timezone from "./Timezone";
 
-const Availability = ({ unavailableUntil }) =>
-  unavailableUntil ? (
+const Availability = ({ unavailableUntil }) => {
+  const colour = unavailableUntil ? "bg-neutral600" : "bg-blue500";
+  return (
     <div className="flex justify-items-center items-center mb-3">
-      <div className="h-2.5 w-2.5 bg-neutral600 rounded-full mr-2" />
-      <div className="text-neutral600 leading-5 text-lg font-[440]">
+      <div
+        className={`h-2 xl:h-2.5 w-2 xl:w-2.5 ${colour} rounded-full mr-1.5 xl:mr-2`}
+      />
+      <div className="text-neutral600 leading-4 xl:leading-5 text-[15px] xl:text-lg font-[440]">
         Unavailable for hire
       </div>
     </div>
-  ) : (
-    <div className="flex justify-items-center items-center mb-3">
-      <div className="h-2.5 w-2.5 bg-blue500 rounded-full mr-2" />
-      <div className="text-neutral600 leading-5 text-lg font-[440]">
-        Available for hire
-      </div>
-    </div>
   );
+};
 
 export default function SidebarCard({ specialist }) {
+  const xlUp = useBreakpoint("xlUp");
+
   return (
     <div
       id="specialistInfo"
-      className="min-w-[320px] w-[320px] rounded-[40px] bg-white drop-shadow-xl p-8 pt-10 flex flex-col"
+      className="hidden lg:flex min-w-[264px] xl:min-w-[320px] w-[264px] xl:w-[320px] rounded-[28px] xl:rounded-[40px] bg-white drop-shadow-xl p-6 xl:p-8 pt-8 xl:pt-10 flex-col"
     >
       <Link
-        className="mb-7 mx-auto rounded-full overflow-hidden w-48 h-48 border-4 border-neutral100 border-solid hover:border-neutral300"
+        className="mb-7 mx-auto rounded-full overflow-hidden w-40 xl:w-48 h-40 xl:h-48 border-4 border-neutral100 border-solid hover:border-neutral300"
         to={specialist.profilePath}
       >
         <img
@@ -36,21 +35,25 @@ export default function SidebarCard({ specialist }) {
         />
       </Link>
       <Link to={specialist.profilePath}>
-        <h4 className="font-bold text-3xl text-neutral800 hover:text-neutral800 leading-8 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+        <h4 className="font-bold xl:text-3xl text-2xl text-neutral800 hover:text-neutral800 xl:leading-8 leading-6 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
           {specialist.name}
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
-      <ConnectButton className="mb-5" specialist={specialist} size="lg">
+      <ConnectButton
+        className="mb-5"
+        specialist={specialist}
+        size={xlUp ? "lg" : "md"}
+      >
         Connect
       </ConnectButton>
       <hr className="border-neutral200 pb-[3px] mb-2" />
-      <div className="text-lg font-[450] text-blue900 leading-5 mb-1 pt-[3px] pb-px">
+      <div className="text-[15px] xl:text-lg font-[450] text-blue900 leading-4 xl:leading-5 xl:mb-1 pt-[3px] pb-px">
         {specialist.location}
       </div>
       <Timezone timezone={specialist.account.timezone} />
       <hr className="border-neutral200 mt-[3px] mb-3" />
-      <p className="text-[1.0625rem] text-neutral900 leading-6 py-0.5">
+      <p className="text-sm xl:text-[1.0625rem] text-neutral900 leading-5 xl:leading-6 pt-px pb-[3px] xl:py-0.5">
         {specialist.bio}
       </p>
     </div>
