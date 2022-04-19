@@ -6,6 +6,8 @@ module Toby
       model_name ::Company
       attribute :name, Attributes::String
       attribute :sales_person, Attributes::BelongsTo
+      attribute :industry, Attributes::BelongsTo
+      attribute :audience, Attributes::String
       attribute :billing_email, Attributes::String
       attribute :invoice_company_name, Attributes::String
       attribute :invoice_name, Attributes::String
