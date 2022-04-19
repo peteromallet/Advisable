@@ -2,7 +2,7 @@ import * as React from "react";
 import MessageCount from "./MessageCount";
 import NavigationLink from "./NavigationLink";
 import Logout from "./Logout";
-import { StyledNav } from "./styles";
+import { StyledNav, NavItem } from "./styles";
 
 const ClientNavigation = ({ closeNav, isMobile }) => {
   return (
@@ -23,10 +23,10 @@ const ClientNavigation = ({ closeNav, isMobile }) => {
 
       {isMobile && (
         <>
-          <NavigationLink as="a" href="/settings">
+          <NavItem as="a" href="/settings">
             Settings
-          </NavigationLink>
-          <NavigationLink as={Logout}>Logout</NavigationLink>
+          </NavItem>
+          <NavItem as={Logout}>Logout</NavItem>
         </>
       )}
     </StyledNav>
