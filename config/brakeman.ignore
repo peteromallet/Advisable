@@ -61,6 +61,45 @@
       "note": ""
     },
     {
+      "warning_type": "Format Validation",
+      "warning_code": 30,
+      "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
+      "check_name": "ValidationRegex",
+      "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
+      "file": "app/models/account.rb",
+      "line": 33,
+      "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
+      "code": null,
+      "render_path": null,
+      "location": {
+        "type": "model",
+        "model": "Account"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "25ff15bd13bfc5128d8ab9fe7ee791fc66ee0275b296d767ed37546073433df5",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/local_data.rb",
+      "line": 47,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocalData",
+        "method": "dump_data"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4be1afc6e04411b58d0717aadd1b4ad0a961e8c9ee1711b3dfcdb9dabce69313",
@@ -78,6 +117,26 @@
       },
       "user_input": "attribute.sql_name",
       "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "50be0e392e8ea5e7d49dd80d74f28d6973643c3538c9d2c5be8b89d93cc6c45c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/featurable.rb",
+      "line": 41,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "[Format Error]",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Featurable",
+        "method": "featurize"
+      },
+      "user_input": "column",
+      "confidence": "Medium",
       "note": ""
     },
     {
@@ -147,7 +206,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/production_data.rb",
-      "line": 50,
+      "line": 47,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -158,6 +217,26 @@
       },
       "user_input": "table",
       "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "8442cb3db768d9885735ade7557f6ad69155a7655513bd4c61b7c7d33ef2069d",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/controllers/auth_providers_controller.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "public_send(params[:provider].to_sym)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "AuthProvidersController",
+        "method": "create"
+      },
+      "user_input": "params[:provider].to_sym",
+      "confidence": "High",
       "note": ""
     },
     {
@@ -181,13 +260,33 @@
       "note": ""
     },
     {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "a046dfb1fbcbab5f95a11d02fa509f09d59fdd260c3fd0fae5528ef8a5e2248b",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/controllers/concerns/current_user.rb",
+      "line": 42,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CurrentUser",
+        "method": "redirect_without_magic_link_params"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
       "warning_type": "Command Injection",
       "warning_code": 14,
       "fingerprint": "a2c6d542eddd2b7f13f03fb11a04a0e5f3c6fc38481deb2cf23aa1a445e0ac1f",
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/production_data.rb",
-      "line": 79,
+      "line": 77,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -197,6 +296,26 @@
         "method": "prepare_file"
       },
       "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "afb0d022c556e86e16883ac52340f39e7754672f3e64b74518678337be48be86",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/graphql/mutations/update_profile.rb",
+      "line": 123,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "Label.where(\"#{type}_id\" => ids)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Mutations::UpdateProfile",
+        "method": "handle_subscription"
+      },
+      "user_input": "type",
       "confidence": "Medium",
       "note": ""
     },
@@ -281,6 +400,26 @@
       "note": ""
     },
     {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "cdff841e7067cd67384b040bce796c7a00db6d468f24f10d74efb58d0bfdacfb",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/concerns/current_user.rb",
+      "line": 42,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(params.permit!.except(:mlt, :mluid))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "CurrentUser",
+        "method": "redirect_without_magic_link_params"
+      },
+      "user_input": "params.permit!.except(:mlt, :mluid)",
+      "confidence": "High",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "dd7bd0cdc81c7edf62c2303c749094cac15a0092442b868b5073b8c874390c80",
@@ -299,8 +438,28 @@
       "user_input": "attribute.sql_name",
       "confidence": "Weak",
       "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "e2713b0d8b3b2089ea5a74c3210f9141dfc5d9acad63e44a4e16b9ed8cebc0ab",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/auth_providers_controller.rb",
+      "line": 41,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(request.env[\"omniauth.origin\"])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "AuthProvidersController",
+        "method": "linkedin"
+      },
+      "user_input": "request.env[\"omniauth.origin\"]",
+      "confidence": "High",
+      "note": ""
     }
   ],
-  "updated": "2022-04-07 15:15:51 +0200",
-  "brakeman_version": "5.2.1"
+  "updated": "2022-04-15 09:28:23 +0200",
+  "brakeman_version": "5.2.2"
 }
