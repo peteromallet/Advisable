@@ -3,6 +3,7 @@ import CompanyBox from "./CompanyBox";
 import Achievements from "./Achievements";
 import AdvisableComment from "./AdvisableComment";
 import SpecialistCompanyRelation from "./SpecialistCompanyRelation";
+import Availability from "./Availability";
 
 const Title = ({ children }) => (
   <h1
@@ -37,6 +38,14 @@ export default function ArticleIntro({ caseStudy }) {
         company={caseStudy.company}
         specialist={caseStudy.specialist}
       />
+      <div id="specialistInfo" className="flex lg:hidden items-center flex-col">
+        <div className="font-bold text-2xl text-center text-neutral800 hover:text-neutral800 leading-none pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+          {caseStudy.specialist.name}
+        </div>
+        <Availability
+          unavailableUntil={caseStudy.specialist.unavailableUntil}
+        />
+      </div>
       <Title>{caseStudy.title}</Title>
       <CompanyBox caseStudy={caseStudy} />
       <AdvisableComment caseStudy={caseStudy} />

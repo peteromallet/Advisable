@@ -23,16 +23,16 @@ export default function SpecialistBar({ specialist }) {
   const [open, setOpen] = useState(false);
 
   const callback = useCallback((entries) => {
-    const [entry] = entries;
-    setOpen(!entry.isIntersecting);
+    const isOpen = entries.every((e) => !e.isIntersecting);
+    setOpen(isOpen);
   }, []);
 
   useLayoutEffect(() => {
-    const sidebar = document.querySelector("#specialistInfo");
+    const specialistInfo = document.querySelectorAll("#specialistInfo");
     const observer = new IntersectionObserver(callback);
-    observer.observe(sidebar);
+    specialistInfo.forEach((block) => observer.observe(block));
 
-    return () => observer.unobserve(sidebar);
+    return () => specialistInfo.forEach((block) => observer.unobserve(block));
   }, [callback]);
 
   return (
@@ -41,7 +41,7 @@ export default function SpecialistBar({ specialist }) {
         top: open ? "68px" : "0",
         opacity: open ? 1 : 0,
       }}
-      className="fixed left-0 right-0 bg-white h-[72px] shadow transition-all"
+      className="fixed left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]"
     >
       <div className="max-w-[1198px] h-full mx-auto">
         <div className="flex gap-3 items-center h-full">
