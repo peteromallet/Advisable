@@ -70,12 +70,8 @@ module MailHelper
     app_host
   end
 
-  def manage_subscriptions_url(account)
-    if account.user.present?
-      "https://advisable.com/client-contact-unsubscribe/?cid=#{account.user.uid}"
-    else
-      "https://advisable.com/unsubscribe?Specialist%20ID=#{account.specialist.uid}"
-    end
+  def manage_subscriptions_url
+    "#{app_host}/settings/notifications"
   end
 
   def possesive(name)
