@@ -192,11 +192,14 @@ class UserMailer < ApplicationMailer
   def case_study_article_roundup(user, articles)
     @user = user
     @articles = articles
+    @account = user.account
     mail(
       from: "Advisable <hello@advisable.com>",
-      to: @user.account.email,
+      to: @account.email,
       subject: "Your custom marketing inspiration: 3 projects for #{user.company.name} to consider this week"
-    )
+    ) do |format|
+      format.html { render layout: "email_v2" }
+    end
   end
 
   private
