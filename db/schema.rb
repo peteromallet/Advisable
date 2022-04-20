@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_11_112105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
     t.datetime "disabled_at", precision: nil
     t.jsonb "features"
     t.string "timezone"
+    t.jsonb "showcased_articles"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
@@ -1298,7 +1299,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
   add_foreign_key "users", "companies"
   add_foreign_key "users", "countries"
   add_foreign_key "video_calls", "interviews"
-  create_function :logidze_logger, sql_definition: <<-SQL
+  create_function :logidze_logger, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_logger()
        RETURNS trigger
        LANGUAGE plpgsql
@@ -1427,7 +1428,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
         END;
       $function$
   SQL
-  create_function :logidze_version, sql_definition: <<-SQL
+  create_function :logidze_version, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_version(v bigint, data jsonb, ts timestamp with time zone)
        RETURNS jsonb
        LANGUAGE plpgsql
@@ -1450,7 +1451,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
         END;
       $function$
   SQL
-  create_function :logidze_snapshot, sql_definition: <<-SQL
+  create_function :logidze_snapshot, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_snapshot(item jsonb, ts_column text DEFAULT NULL::text, columns text[] DEFAULT NULL::text[], include_columns boolean DEFAULT false)
        RETURNS jsonb
        LANGUAGE plpgsql
@@ -1475,7 +1476,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
         END;
       $function$
   SQL
-  create_function :logidze_filter_keys, sql_definition: <<-SQL
+  create_function :logidze_filter_keys, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_filter_keys(obj jsonb, keys text[], include_columns boolean DEFAULT false)
        RETURNS jsonb
        LANGUAGE plpgsql
@@ -1503,7 +1504,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_085357) do
         END;
       $function$
   SQL
-  create_function :logidze_compact_history, sql_definition: <<-SQL
+  create_function :logidze_compact_history, sql_definition: <<-'SQL'
       CREATE OR REPLACE FUNCTION public.logidze_compact_history(log_data jsonb, cutoff integer DEFAULT 1)
        RETURNS jsonb
        LANGUAGE plpgsql

@@ -1,0 +1,27 @@
+= render "emails/container" do
+  = render "emails/spacing", height: "32px"
+  = render "emails/heading" do
+    | 3 projects for #{@user.company.name} to consider this week
+  table style="margin: 0 32px; border-top: 1px solid #EEEEF0"
+    - @articles.each do |article|
+      tr
+        td style="padding: 32px 0; border-bottom: 1px solid #EEEEF0;"
+          table style="width: 100%; padding: 0; margin: 0;" cellspacing="0"
+            tr
+              td style="font-family: Inter, arial; padding: 0; margin: 0; padding-bottom: 8px;"
+                div style="margin-right: 8px; display: inline-block; vertical-align: middle; width: 24px; height: 24px; border-radius: 50%; background-color: #DEE9FF; background-size: cover; background-position: center; background-image: url(#{article.specialist.account.resized_avatar_url})"
+                div style="display: inline-block; vertical-align: middle;"
+                  = article.specialist.account.name
+                  = article.confidential ? nil : " with #{article.company.name}"
+          a href="#{root_host}/explore/articles/#{article.uid}" style="text-decoration: none;"
+            h3 style="font-family: Inter, arial; font-size: 20px; line-height: 24px; margin: 0; margin-bottom: 12px; padding: 0; color: #1C1C25;"
+              | #{article.title}
+            p style="font-family: Inter, arial; font-size: 14px; line-height: 20px; color: #353541; margin: 0; "
+              | #{article.subtitle}
+
+  = render "emails/spacing", height: "40px"
+
+  = render "emails/button", href: "#{root_host}/explore"
+    | Discover more
+
+  = render "emails/spacing", height: "52px"

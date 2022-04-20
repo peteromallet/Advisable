@@ -20,6 +20,7 @@ class Account < ApplicationRecord
   has_many :interviewer_articles, inverse_of: :interviewer, foreign_key: :interviewer_id, class_name: "CaseStudy::Article", dependent: :nullify
   has_many :editor_articles, inverse_of: :editor, foreign_key: :editor_id, class_name: "CaseStudy::Article", dependent: :nullify
   has_many :interests, class_name: "CaseStudy::Interest", dependent: :destroy
+  has_many :interest_articles, class_name: "CaseStudy::InterestArticle", through: :interests
   has_many :favorited_articles, class_name: "CaseStudy::FavoritedArticle", dependent: :destroy
   has_many :messages, dependent: :nullify, foreign_key: :author_id, inverse_of: :author
   has_many :conversation_participants, dependent: :destroy
@@ -114,6 +115,10 @@ class Account < ApplicationRecord
     super || []
   end
 
+  def showcased_articles
+    super || []
+  end
+
   def unsubscribed?(subscription)
     unsubscribed_from.include?("All") || unsubscribed_from.include?(subscription)
   end
@@ -167,6 +172,7 @@ end
 #  remember_token      :string
 #  reset_digest        :string
 #  reset_sent_at       :datetime
+#  showcased_articles  :jsonb
 #  test_account        :boolean
 #  timezone            :string
 #  uid                 :string           not null

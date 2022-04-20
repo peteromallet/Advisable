@@ -71,6 +71,10 @@ class UserMailerPreview < ActionMailer::Preview
     end
   end
 
+  def case_study_article_roundup
+    UserMailer.case_study_article_roundup(random_user, [random_article, random_article, random_article])
+  end
+
   private
 
   def random_agreement
