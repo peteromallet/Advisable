@@ -37,8 +37,13 @@ Rails.application.routes.draw do
   get "/toby", to: "toby#index"
   get "/toby/*toby", to: "toby#index"
 
-  resources :admin, only: [:index], constraints: AdminConstraint.new do
-    get :finance, on: :collection
+  namespace :admin, constraints: AdminConstraint.new do
+    resources :dashboard, only: [:index] do
+      get :finance, on: :collection
+    end
+    resources :articles do
+      get :search, on: :collection
+    end
   end
 
   post "/graphql", to: "graphql#execute"
@@ -54,8 +59,6 @@ Rails.application.routes.draw do
   get "accounts/me"
   post "accounts/user"
   post "accounts/specialist"
-
-  get "articles/search"
 
   post "zapier_interactor/update_interview"
   post "zapier_interactor/update_user"
