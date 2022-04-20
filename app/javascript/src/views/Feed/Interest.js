@@ -36,7 +36,7 @@ export default function Interest() {
 
   return (
     <FeedContainer>
-      <div className="divide-y divide-solid divide-neutral200">
+      <div>
         <div className="mb-8">
           {initialLoad ? (
             <div className="m-2 w-[250px] h-[28px] bg-neutral100 animate-pulse rounded-md" />
@@ -46,16 +46,18 @@ export default function Interest() {
             </h2>
           )}
         </div>
-        {results.map((result) => (
-          <FeedItem key={result.id} article={result} />
-        ))}
-        {loading && (
-          <>
-            <FeedItemSkeleton />
-            <FeedItemSkeleton />
-            <FeedItemSkeleton />
-          </>
-        )}
+        <div className="space-y-6">
+          {results.map((result) => (
+            <FeedItem key={result.id} article={result} />
+          ))}
+          {loading && (
+            <>
+              <FeedItemSkeleton />
+              <FeedItemSkeleton />
+              <FeedItemSkeleton />
+            </>
+          )}
+        </div>
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">

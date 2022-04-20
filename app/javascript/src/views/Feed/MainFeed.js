@@ -20,24 +20,26 @@ export default function MainFeed() {
 
   return (
     <FeedContainer>
-      <div className="divide-y divide-solid divide-neutral200">
+      <div className="">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
-          Feed
+          Your feed
         </h2>
-        {results.map((result) => (
-          <FeedItem
-            key={result.id}
-            article={result.article}
-            interest={result.interest}
-          />
-        ))}
-        {loading && (
-          <>
-            <FeedItemSkeleton />
-            <FeedItemSkeleton />
-            <FeedItemSkeleton />
-          </>
-        )}
+        <div className="space-y-6">
+          {results.map((result) => (
+            <FeedItem
+              key={result.id}
+              article={result.article}
+              interest={result.interest}
+            />
+          ))}
+          {loading && (
+            <>
+              <FeedItemSkeleton />
+              <FeedItemSkeleton />
+              <FeedItemSkeleton />
+            </>
+          )}
+        </div>
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">

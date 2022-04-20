@@ -55,12 +55,6 @@ module Types
         object.sections.by_position
       end
 
-      field :first_image, Types::CaseStudy::Image, null: true
-      def first_image
-        # TODO: Improve this query
-        object.contents.by_position.find_by(type: "CaseStudy::ImagesContent")&.images&.first
-      end
-
       field :is_archived, Boolean, null: false do
         argument :search, ID, required: true
       end

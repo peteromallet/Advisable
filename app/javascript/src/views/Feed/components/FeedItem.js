@@ -23,11 +23,7 @@ function Favicon({ url }) {
   return (
     <Suspense fallback={null}>
       <ErrorBoundary fallback={<LogoMarkFallback />}>
-        <Img
-          src={url}
-          className="w-full h-full rounded-xs object-cover"
-          data-a={url}
-        />
+        <Img src={url} className="w-full max-h-full my-auto" data-a={url} />
       </ErrorBoundary>
     </Suspense>
   );
@@ -35,17 +31,17 @@ function Favicon({ url }) {
 
 function FeedItem({ article, interest }) {
   return (
-    <div className="py-7 md:py-11">
-      <div className="mb-5 flex gap-3">
+    <div className="bg-white rounded-lg border border-solid border-neutral100 shadow-sm p-8">
+      <div className="mb-5 flex gap-3 items-center">
         <div className="flex items-center">
           <div
-            className="w-8 h-9 bg-neutral200 rounded-xs bg-cover -mr-1.5"
+            className="w-[44px] h-[52px] bg-neutral200 rounded-sm bg-cover -mr-1.5"
             style={{ backgroundImage: `url(${article.specialist.avatar})` }}
           />
           <div className="w-5 h-5 bg-white rounded-full shadow grid place-items-center z-[5]">
             <PlusSm className="w-4 h-4 text-neutral800" />
           </div>
-          <div className="w-8 h-9 bg-neutral200 rounded-xs -ml-1.5 grid place-items-center">
+          <div className="w-[44px] h-[52px] bg-neutral200 rounded-xs -ml-1.5 grid place-items-center">
             <Favicon url={article.company?.favicon} />
           </div>
         </div>
@@ -68,22 +64,13 @@ function FeedItem({ article, interest }) {
             {article.subtitle}
           </p>
         </div>
-
-        {article.firstImage && (
-          <div
-            className="hidden lg:block w-[180px] h-[120px] bg-neutral200 shrink-0 rounded-md"
-            style={{
-              background: `url(${article.firstImage.url}) no-repeat center center / cover`,
-            }}
-          />
-        )}
       </Link>
 
       {interest && (
         <div className="pt-6">
           <Link
             to={`/explore/${interest.id}`}
-            className="inline-flex items-center gap-0.5 leading-none text-neutral600 hover:text-neutral900"
+            className="border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5 leading-none text-neutral600 hover:text-neutral900"
           >
             <InterestIcon
               primaryColor="var(--color-neutral600)"
