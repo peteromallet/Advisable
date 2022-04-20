@@ -13,7 +13,7 @@ const Title = ({ children }) => (
           font-extrabold
           tracking-tight
           mb-7
-          text-2xl 
+          text-3xl 
           leading-none
           pt-[3px]
           pb-px
