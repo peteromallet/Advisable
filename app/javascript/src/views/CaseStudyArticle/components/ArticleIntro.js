@@ -8,6 +8,7 @@ import Availability from "./Availability";
 
 const Title = ({ children }) => (
   <h1
+    id="caseStudyArticleTitle"
     className={`
         text-neutral800
           font-extrabold
@@ -54,7 +55,7 @@ const SpecialistInfo = ({ specialist }) => (
 
 export default function ArticleIntro({ caseStudy }) {
   return (
-    <div>
+    <div id="caseStudyIntro" className="pb-24">
       <SpecialistCompanyRelation
         company={caseStudy.company}
         specialist={caseStudy.specialist}
