@@ -60,77 +60,51 @@ function BankTransferPending({ paymentRequest }) {
       </Text>
 
       <Tabs label="bank transfer options">
-        <Tabs.Tab title="EUR">
+        <Tabs.Tab title="Inside US">
           <Stack paddingTop={3} spacing={6} divider="neutral100">
             <Row>
-              <Label>Reference number:</Label>
-              <Value>{payment.id}</Value>
-            </Row>
-            <Row>
-              <Label>Account name:</Label>
-              <Value>Hyper Mega Net</Value>
-            </Row>
-            <Row>
-              <Label>BIC Number</Label>
-              <Value>CPAYIE2D</Value>
-            </Row>
-            <Row>
-              <Label>IBAN</Label>
-              <Value>IE40 CPAY 9911 9900 7566 69</Value>
-            </Row>
-          </Stack>
-        </Tabs.Tab>
-        <Tabs.Tab title="USD">
-          <Stack paddingTop={3} spacing={6} divider="neutral100">
-            <Row>
-              <Label>Reference number:</Label>
-              <Value>{payment.id}</Value>
-            </Row>
-            <Row>
-              <Label>Account holder:</Label>
-              <Value>TransferWise FBO Advisable Hyper Mega Net Limited</Value>
-            </Row>
-            <Row>
-              <Label>Account number:</Label>
-              <Value>8310111553</Value>
-            </Row>
-            <Row>
-              <Label>Wire routing number:</Label>
-              <Value>026073008</Value>
-            </Row>
-            <Row>
-              <Label>ACH routing number</Label>
-              <Value>026073150</Value>
-            </Row>
-            <Row>
-              <Label>Bank code</Label>
-              <Value>CMFGUS33</Value>
-            </Row>
-            <Row>
-              <Label>Address</Label>
-              <Value>
-                TransferWise, 19 W 24th Street, New York, 10010, United States
-              </Value>
-            </Row>
-          </Stack>
-        </Tabs.Tab>
-        <Tabs.Tab title="GBP">
-          <Stack paddingTop={3} spacing={6} divider="neutral100">
-            <Row>
-              <Label>Reference number:</Label>
-              <Value>{payment.id}</Value>
-            </Row>
-            <Row>
-              <Label>Account name:</Label>
+              <Label>Account holder</Label>
               <Value>Advisable Hyper Mega Net Limited</Value>
             </Row>
             <Row>
-              <Label>Account number:</Label>
-              <Value>68022542</Value>
+              <Label>Account Number</Label>
+              <Value>9600000000071942</Value>
             </Row>
             <Row>
-              <Label>Sort code:</Label>
-              <Value>232221</Value>
+              <Label>ACH & Wire Routing Number</Label>
+              <Value>084009519</Value>
+            </Row>
+            <Row>
+              <Label>Reference number</Label>
+              <Value>{payment.id}</Value>
+            </Row>
+            <Row>
+              <Label>Address</Label>
+              <Value>19 W 24th Street, New York, 10010, United States</Value>
+            </Row>
+          </Stack>
+        </Tabs.Tab>
+        <Tabs.Tab title="Outside US">
+          <Stack paddingTop={3} spacing={6} divider="neutral100">
+            <Row>
+              <Label>Account holder:</Label>
+              <Value>Advisable Hyper Mega Net Limited</Value>
+            </Row>
+            <Row>
+              <Label>Account number</Label>
+              <Value>8310111553</Value>
+            </Row>
+            <Row>
+              <Label>Bank code (SWIFT / BIC)</Label>
+              <Value>CMFGUS33</Value>
+            </Row>
+            <Row>
+              <Label>Reference number</Label>
+              <Value>{payment.id}</Value>
+            </Row>
+            <Row>
+              <Label>Address</Label>
+              <Value>19 W 24th Street, New York, 10010, United States</Value>
             </Row>
           </Stack>
         </Tabs.Tab>
