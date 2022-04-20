@@ -43,13 +43,13 @@ export default function ShortlistArticle() {
           <title>Advisable | {data.caseStudy?.title}</title>
         </Helmet>
       )}
-      <div className="py-10">
+      <div className="pt-10 pb-64">
         <SectionWrapper className="items-start">
           <SpecialistCard specialist={data.caseStudy.specialist} />
           <SpecialistBar specialist={data.caseStudy.specialist} />
           <ArticleIntro caseStudy={data.caseStudy} />
         </SectionWrapper>
-        <hr className="border-neutral200 pb-[3px] mt-24 mb-20" />
+        <hr className="border-neutral200 pb-[3px] mb-20" />
         <SectionWrapper>
           <ArticleContent caseStudy={data.caseStudy} />
         </SectionWrapper>
