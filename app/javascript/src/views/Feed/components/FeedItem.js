@@ -21,15 +21,70 @@ function Favicon({ url }) {
   }
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LogoMarkFallback />}>
       <ErrorBoundary fallback={<LogoMarkFallback />}>
-        <Img src={url} className="w-full max-h-full my-auto" data-a={url} />
+        <Img
+          src={url}
+          className="w-[28px] max-h-full rounded-[8px]"
+          data-a={url}
+        />
       </ErrorBoundary>
     </Suspense>
   );
 }
 
 function FeedItem({ article, interest }) {
+  return (
+    <div className="bg-white rounded-[32px] shadow-feed p-10 flex gap-10">
+      <div className="flex-shrink-0 relative">
+        {article.company && (
+          <div className="w-[52px] h-[52px] bg-white shadow-lg absolute -top-[16px] -right-[16px] z-10 rounded-full grid place-items-center">
+            <Favicon url={article.company?.favicon} />
+          </div>
+        )}
+        <div
+          className="w-[140px] h-[160px] bg-neutral200 rounded-lg bg-cover"
+          style={{ backgroundImage: `url(${article.specialist.avatar})` }}
+        />
+      </div>
+      <div className="">
+        <div className="mb-1.5">
+          <span className="font-[480]">{article.specialist.name}</span>
+          {article.company && (
+            <span className="text-neutral600">
+              {` `} with {article.company.name}
+            </span>
+          )}
+        </div>
+        <Link to={`/articles/${article.slug}`} className="group">
+          <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
+            {article.title}
+          </h3>
+          <p className="font-inter text-sm md:text-[15px] md:leading-relaxed text-neutral-600">
+            {article.subtitle}
+          </p>
+        </Link>
+
+        {interest && (
+          <div className="pt-6">
+            <Link
+              to={`/explore/${interest.id}`}
+              className="text-sm border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5 leading-none text-neutral600 hover:text-neutral900"
+            >
+              <InterestIcon
+                primaryColor="var(--color-neutral600)"
+                className="w-5 h-5"
+              />
+              {interest.term}
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AFeedItem({ article, interest }) {
   return (
     <div className="bg-white rounded-lg border border-solid border-neutral100 shadow-sm p-8">
       <div className="mb-5 flex gap-3 items-center">
