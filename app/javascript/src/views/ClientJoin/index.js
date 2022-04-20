@@ -14,12 +14,15 @@ function ClientJoin() {
   const { routes, currentStepIndex, forwards } = useSteps(steps, {
     basePath: "/clients/join",
   });
+
+  const viewer = useViewer();
   const location = useLocation();
   const largeScreen = useBreakpoint("xlUp");
-  const viewer = useViewer();
-
+  // Because the user creates an account and then sets the password we create
+  // a 'signup' state inside of the router state to prevent redirecting until
+  // they have completed the signup flow.
   if (!viewer && !location.state?.signup) {
-    return <Navigate to={location.pathname} state={{ signup: true }} replace />;
+    return <Navigate to={location} state={{ signup: true }} replace />;
   }
 
   // Redirect to root if already logged in and not part of signup flow
