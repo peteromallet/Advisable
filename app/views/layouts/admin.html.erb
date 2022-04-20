@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= javascript_pack_tag "admin" %>
+    <%= stylesheet_pack_tag "admin" %>
+  </head>
+  <body>
+    <div class="min-h-full">
+      <nav class="bg-gray-800" data-controller="menu">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+              </div>
+              <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                  <%= active_link_to "Dashboard", admin_index_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+                  <%= active_link_to "Article Search", articles_search_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+                </div>
+              </div>
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-4 flex items-center md:ml-6">
+                <div class="ml-3 relative">
+                  <img class="h-8 w-8 rounded-full" src="<%= current_user.account.cached_avatar_url %>">
+                </div>
+              </div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+              <!-- Mobile menu button -->
+              <button type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" data-action="click->menu#toggle">
+                <span class="sr-only">Open main menu</span>
+                <!-- Heroicon name: outline/menu Menu open: "hidden", Menu closed: "block" -->
+                <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-menu-target="toggleable">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <!-- Heroicon name: outline/x Menu open: "block", Menu closed: "hidden" -->
+                <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-menu-target="toggleable">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="hidden md:hidden" id="mobile-menu" data-menu-target="toggleable">
+          <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <%= active_link_to "Dashboard", admin_index_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+            <%= active_link_to "Article Search", articles_search_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+          </div>
+          <div class="pt-4 pb-3 border-t border-gray-700">
+            <div class="flex items-center px-5">
+              <div class="flex-shrink-0">
+                <img class="h-10 w-10 rounded-full" src="<%= current_user.account.cached_avatar_url %>">
+              </div>
+              <div class="ml-3">
+                <div class="text-base font-medium leading-none text-white">
+                  <%= current_account.name %>
+                </div>
+                <div class="text-sm font-medium leading-none text-gray-400">
+                  <%= current_account.email %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <%= render "shared/flash" %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

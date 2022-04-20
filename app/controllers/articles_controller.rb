@@ -5,7 +5,7 @@ require "matrix"
 class ArticlesController < ApplicationController
   before_action :admin?
 
-  layout "tailwind"
+  layout "admin"
 
   def search
     @query = params[:query]

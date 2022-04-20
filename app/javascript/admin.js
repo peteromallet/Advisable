@@ -1,1 +1,2 @@
-import "./src/tailwind.css";
+import "./src/tailwind.css"
+import "controllers"

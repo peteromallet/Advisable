@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "~> 3.1.2"
 
+gem "active_link_to"
 gem "airrecord"
 gem "analytics-ruby", require: "segment/analytics"
 gem "aws-sdk-s3"

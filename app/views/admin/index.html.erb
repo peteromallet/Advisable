@@ -1,0 +1,17 @@
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
+    </div>
+  </header>
+  <main>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="mt-8 flex flex-col mx-auto space-y-4 text-white text-sm font-bold leading-6 max-w-xs">
+        <%= button_to "Sofia, Click Here", finance_admin_index_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-emerald-600 hover:bg-emerald-700" %>
+        <%= button_to "Sidekiq", sidekiq_web_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-red-600 hover:bg-red-700" %>
+        <%= button_to "PG Hero", pg_hero_path, method: :get, class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-purple-600 hover:bg-purple-700" %>
+        <% if current_account.respond_to?(:auth_providers) && !current_account.auth_providers.google_calendar.exists? %>
+          <%= button_to "Set Up Google Calendar for Robot", "/auth/google_oauth2_calendar", id: "sign_in", class: "w-full text-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white shadow-lg bg-blue-600 hover:bg-blue-700" %>
+        <% end %>
+      </div>
+    </div>
+  </main>

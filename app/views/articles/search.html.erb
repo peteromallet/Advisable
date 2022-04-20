@@ -1,21 +1,27 @@
-<div class="max-w-7xl mx-auto">
-  <div class="mt-4">
-    <%= form_with(url: {action: :search}, method: :get) do |f| %>
-      <%= f.search_field :query, value: params[:query] %>
-      <%= f.select :skill_category, SkillCategory.all.map { |sc| [sc.name, sc.id] }, selected: params[:skill_category], include_blank: true %>
-      <%= f.submit "Search", class: "cursor-pointer py-2 px-4 border border-transparent shadow-sm md:text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
-    <% end %>
-  </div>
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">Article Search</h1>
+    </div>
+  </header>
+  <main>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="mt-4">
+        <%= form_with(url: {action: :search}, method: :get) do |f| %>
+          <%= f.search_field :query, value: params[:query], class: "w-4/6" %>
+          <%= f.submit "Search", class: "w-1/6 cursor-pointer py-2 px-4 border border-transparent shadow-sm md:text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+        <% end %>
+      </div>
 
-  <% if @results.present? %>
-    <h2 class="text-lg mt-4">Results</h2>
-    <ol class="mt-4">
-      <% @results.each do |result| %>
-        <li>
-          <%= result[:similarity] %>
-          <%= link_to result[:article].title, "https://app.advisable.com/case_studies/#{result[:article].uid}", class: "underline hover:no-underline", target: "_blank" %>
-        </li>
+      <% if @results.present? %>
+        <h2 class="text-lg mt-4">Results</h2>
+        <ol class="mt-4">
+          <% @results.each do |result| %>
+            <li>
+              <%= result[:similarity] %>
+              <%= link_to result[:article].title, "https://app.advisable.com/case_studies/#{result[:article].uid}", class: "underline hover:no-underline", target: "_blank" %>
+            </li>
+          <% end %>
+        </ol>
       <% end %>
-    </ol>
-  <% end %>
-</div>
+    </div>
+  </main>
