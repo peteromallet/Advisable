@@ -1,0 +1,36 @@
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900">Articles</h1>
+  </div>
+</header>
+<main>
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-sm">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">
+                    Info
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <% @articles.each do |article| %>
+                  <tr>
+                    <td class="py-4 px-1 sm:px-4">
+                      <%= article.inspect %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= render partial: "admin/shared/pagination", locals: {pagy: @pagy} %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
