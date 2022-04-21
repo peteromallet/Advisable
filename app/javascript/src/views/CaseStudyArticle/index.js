@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
+import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -33,6 +34,7 @@ const SectionWrapper = ({ children, className, ...props }) => (
 );
 
 export default function ShortlistArticle() {
+  useBackground("beige");
   const { data, loading, error } = useArticle();
 
   if (loading) return <Loading />;
