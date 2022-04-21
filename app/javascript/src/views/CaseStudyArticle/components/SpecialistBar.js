@@ -39,7 +39,7 @@ export default function SpecialistBar({ specialist }) {
       }}
       className="fixed left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]"
     >
-      <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto">
+      <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto flex items-center justify-between">
         <div className="flex gap-3 items-center h-full">
           <Link to={specialist.profilePath}>
             <PassportAvatar
@@ -56,10 +56,10 @@ export default function SpecialistBar({ specialist }) {
             </Link>
             <Availability unavailableUntil={specialist.unavailableUntil} />
           </div>
-          <ConnectButton specialist={specialist} className="ml-auto">
-            Connect
-          </ConnectButton>
         </div>
+        <ConnectButton specialist={specialist} className="ml-auto">
+          Connect
+        </ConnectButton>
       </div>
     </div>
   );
