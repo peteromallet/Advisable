@@ -47,7 +47,7 @@ function Attribute({ label, value }) {
 
 function FeedItem({ article, interest }) {
   return (
-    <div className="bg-white rounded-[32px] shadow-feed p-8 flex gap-10 items-start">
+    <div className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col md:flex-row gap-10 items-start">
       <div>
         <div className="flex items-center gap-3 mb-4">
           <div
@@ -78,7 +78,7 @@ function FeedItem({ article, interest }) {
           <div className="pt-6">
             <Link
               to={`/explore/${interest.id}`}
-              className="border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5 leading-none text-neutral600 hover:text-neutral900"
+              className="border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5  text-sm leading-none text-neutral600 hover:text-neutral900"
             >
               <InterestIcon
                 primaryColor="var(--color-neutral600)"
@@ -89,7 +89,7 @@ function FeedItem({ article, interest }) {
           </div>
         )}
       </div>
-      <div className="bg-neutral-100 p-5 rounded-[24px] w-[240px] flex-shrink-0">
+      <div className="bg-neutral-100 p-5 rounded-[24px] w-full md:w-[240px] flex-shrink-0">
         <div className="space-y-5">
           {article.company && (
             <div className="flex items-center gap-2.5 border-b border-solid border-neutral200 pb-5">
