@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get "/toby/*toby", to: "toby#index"
 
   namespace :admin, constraints: AdminConstraint.new do
+    get "/", to: redirect("admin/dashboard")
     resources :dashboard, only: [:index] do
       get :finance, on: :collection
     end

@@ -1,6 +1,7 @@
 <header class="bg-white shadow">
   <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold text-gray-900">Articles</h1>
+    <%= link_to "New article", new_admin_article_path %>
   </div>
 </header>
 <main>
@@ -19,11 +20,7 @@
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <% @articles.each do |article| %>
-                  <tr>
-                    <td class="py-4 px-1 sm:px-4">
-                      <%= article.inspect %>
-                    </td>
-                  </tr>
+                  <%= render "admin/articles/article", article: article %>
                 <% end %>
               </tbody>
             </table>
