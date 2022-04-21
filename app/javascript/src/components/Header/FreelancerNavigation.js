@@ -1,7 +1,7 @@
 import React from "react";
 import NavigationLink from "./NavigationLink";
 import MessageCount from "./MessageCount";
-import { StyledNav } from "./styles";
+import { StyledNav, NavItem } from "./styles";
 import Logout from "./Logout";
 
 const FreelancerNavigation = ({ closeNav, isMobile }) => {
@@ -26,10 +26,10 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
 
       {isMobile && (
         <>
-          <NavigationLink as="a" href="/settings">
+          <NavItem as="a" href="/settings">
             Settings
-          </NavigationLink>
-          <NavigationLink as={Logout}>Logout</NavigationLink>
+          </NavItem>
+          <NavItem as={Logout}>Logout</NavItem>
         </>
       )}
     </StyledNav>

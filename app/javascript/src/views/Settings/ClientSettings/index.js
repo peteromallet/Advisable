@@ -15,7 +15,7 @@ import NotificationSettings from "./Notifications";
 // Renders the settings view for a client user type.
 const ClientSettings = () => {
   const breakpointS = useBreakpoint("sUp");
-  const isMobileView = useMatch({ path: "/", end: !breakpointS });
+  const isMobileView = useMatch({ path: "/settings", end: !breakpointS });
 
   return (
     <View>
