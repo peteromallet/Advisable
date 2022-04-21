@@ -13,8 +13,8 @@ class LocalData
 
   def populate_local_tables(source_dir:)
     production_data = ProductionData.new
-    production_data.__send__(:populate, "interests", source_dir:)
-    production_data.__send__(:populate, "interest_articles", source_dir:)
+    production_data.__send__(:populate, "case_study_interests", source_dir:)
+    production_data.__send__(:populate, "case_study_interest_articles", source_dir:)
   end
 
   def populate_interests!
