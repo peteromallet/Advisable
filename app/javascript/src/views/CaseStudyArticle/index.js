@@ -8,6 +8,7 @@ import SpecialistCard from "./components/SpecialistCard";
 import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
+import Footer from "src/components/Footer";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -55,6 +56,8 @@ export default function ShortlistArticle() {
           <ArticleContent caseStudy={data.caseStudy} />
         </SectionWrapper>
       </div>
+
+      <Footer />
     </ErrorBoundary>
   );
 }
