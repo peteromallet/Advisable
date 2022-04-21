@@ -38,7 +38,7 @@ export default function SpecialistCompanyRelation({ specialist, company }) {
   const isDesktop = useBreakpoint("lUp");
 
   return (
-    <div className="flex relative items-center mb-4 lg:mb-6 justify-center lg:justify-start">
+    <div className="flex relative items-center mb-4 justify-center lg:justify-start">
       <PassportAvatar
         src={specialist.avatar}
         size={isDesktop ? "sm" : "lg"}

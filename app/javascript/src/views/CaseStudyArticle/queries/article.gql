@@ -39,6 +39,9 @@ query Article($slug: ID!) {
           startsAt
         }
       }
+      conversation {
+        id
+      }
       account {
         id
         timezone
