@@ -15,10 +15,10 @@ const plugins = [
   new webpack.EnvironmentPlugin({
     RELEASED_AT: null,
     BUILD_TIME: null,
-    INTERCOM_APP_ID: null,
     SENTRY_FRONTEND_DSN: null,
     SENTRY_ENVIRONMENT: null,
     NODE_DEBUG: null,
+    CUSTOMERLY_ID: null,
   }),
 ];
 
