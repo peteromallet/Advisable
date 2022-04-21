@@ -46,7 +46,7 @@ export default function Interest() {
             </h2>
           )}
         </div>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {results.map((result) => (
             <FeedItem key={result.id} article={result} />
           ))}

@@ -24,7 +24,7 @@ export default function MainFeed() {
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Your feed
         </h2>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {results.map((result) => (
             <FeedItem
               key={result.id}

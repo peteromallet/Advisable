@@ -3,6 +3,14 @@ fragment ArticleFields on CaseStudyArticle {
   slug
   title
   subtitle
+  companyType
+  industries {
+    id
+    industry {
+      id
+      name
+    }
+  }
   specialist {
     id
     name
@@ -11,6 +19,8 @@ fragment ArticleFields on CaseStudyArticle {
   company {
     id
     name
+    website
     favicon
+    businessType
   }
 }
