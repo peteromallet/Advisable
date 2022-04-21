@@ -65,7 +65,7 @@ function FeedItem({ article, interest }) {
             )}
           </div>
         </div>
-        <Link to={`/articles/${article.slug}`} className="group">
+        <Link to={`/articles/${article.slug || article.id}`} className="group">
           <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
             {article.title}
           </h3>
