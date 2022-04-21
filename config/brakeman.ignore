@@ -67,7 +67,7 @@
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 33,
+      "line": 34,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -94,6 +94,26 @@
         "type": "method",
         "class": "LocalData",
         "method": "dump_data"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "482b5b663d88b9c4c918fa012a1b0bf1fe806bde0f6da53ec5ac632c90aa96ce",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/production_data.rb",
+      "line": 58,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{table}) TO #{source_dir}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ProductionData",
+        "method": "download_table"
       },
       "user_input": "table",
       "confidence": "Medium",
@@ -200,26 +220,6 @@
       "note": ""
     },
     {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "7e31eb5d1709412f9c703ca94901506b3c8d5a500a4a63d71f18545df4ef5fb7",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/lib/production_data.rb",
-      "line": 47,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ProductionData",
-        "method": "download_data_from_production"
-      },
-      "user_input": "table",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
       "fingerprint": "8442cb3db768d9885735ade7557f6ad69155a7655513bd4c61b7c7d33ef2069d",
@@ -286,7 +286,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/production_data.rb",
-      "line": 77,
+      "line": 88,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -460,6 +460,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-04-15 09:28:23 +0200",
+  "updated": "2022-04-21 10:28:15 +0200",
   "brakeman_version": "5.2.2"
 }
