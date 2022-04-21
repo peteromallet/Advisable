@@ -12,7 +12,7 @@ const Title = ({ children }) => (
     id="caseStudyArticleTitle"
     className={`
         text-neutral800
-          font-extrabold
+          font-bold
           tracking-tight
           mb-7
           text-3xl 

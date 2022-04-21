@@ -50,7 +50,7 @@ export default function SpecialistBar({ specialist }) {
           </Link>
           <div>
             <Link to={specialist.profilePath}>
-              <div className="text-lx font-[650] leading-5 mb-1 tracking-tight">
+              <div className="text-lg font-[620] mb-1 leading-none tracking-tight">
                 {specialist.name}
               </div>
             </Link>

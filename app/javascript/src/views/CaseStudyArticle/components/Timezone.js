@@ -28,7 +28,7 @@ export default function Timezone({ timezone }) {
   if (!timezone) return null;
 
   return (
-    <div className="flex items-center gap-3 mb-3">
+    <div className="flex items-center gap-3 pb-1">
       <TimeText>{timezoneFormat}</TimeText>
       <div className="w-px h-3 xl:h-4 bg-neutral600" />
       <div className="flex gap-1 items-center">

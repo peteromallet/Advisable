@@ -22,23 +22,25 @@ export default function SidebarCard({ specialist }) {
         />
       </Link>
       <Link to={specialist.profilePath}>
-        <h4 className="font-bold xl:text-3xl text-2xl text-neutral800 hover:text-neutral800 xl:leading-8 leading-6 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+        <h4 className="font-semibold tracking-tight xl:text-3xl text-2xl text-neutral800 hover:text-neutral800 xl:leading-8 leading-6 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
           {specialist.name}
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
       <ConnectButton
-        className="mb-5 mt-3"
+        className="mb-5 mt-4"
         specialist={specialist}
         size={xlUp ? "lg" : "md"}
       >
         Connect
       </ConnectButton>
-      <hr className="border-neutral200 pb-[3px] mb-2" />
-      <div className="text-[15px] xl:text-lg font-[450] text-blue900 leading-4 xl:leading-5 xl:mb-1 pt-[3px] pb-px">
-        {specialist.location}
+      <hr className="border-neutral200 pb-[3px]" />
+      <div className="py-2">
+        <div className="text-[15px] xl:text-lg font-[450] text-neutral900 truncate">
+          {specialist.location}
+        </div>
+        <Timezone timezone={specialist.account.timezone} />
       </div>
-      <Timezone timezone={specialist.account.timezone} />
       <hr className="border-neutral200 mt-[3px] mb-3" />
       <p className="text-sm xl:text-[1.0625rem] text-neutral900 leading-5 xl:leading-6 pt-px pb-[3px] xl:py-0.5">
         {specialist.bio}

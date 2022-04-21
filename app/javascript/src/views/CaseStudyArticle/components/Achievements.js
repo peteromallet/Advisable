@@ -18,7 +18,7 @@ export default function Achievements({ sections }) {
             <div className="text-[11px] leading-none xl:text-xs text-neutral400 font-[550] uppercase tracking-wider">
               {NUM_TO_WORD[index]} achievement
             </div>
-            <p className="text-base leading-5 py-0 sm:text-lg sm:leading-6 sm:pt-px sm:pb-[3px] xl:text-xl xl:leading-5 xl:pt-[3px] xl:pb-px text-neutral900 ">
+            <p className="text-base leading-5 py-0 sm:text-lg sm:leading-6 sm:pt-px sm:pb-[3px] xl:text-xl xl:leading-7 xl:pt-[3px] xl:pb-px text-neutral900 ">
               {achievement}
             </p>
           </div>
