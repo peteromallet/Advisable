@@ -8,7 +8,7 @@ export default function Achievements({ sections }) {
     .contents.find((c) => c.__typename === "Results").results;
 
   return (
-    <div>
+    <div className="mb-10">
       {achievements.map((achievement, index) => (
         <div
           key={`achievement-${index}`}

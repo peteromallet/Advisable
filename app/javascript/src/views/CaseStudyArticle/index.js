@@ -8,9 +8,8 @@ import SpecialistCard from "./components/SpecialistCard";
 import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
-import ScrollTip from "./components/ScrollTip";
 
-const SectionWrapper = ({ children, className }) => (
+const SectionWrapper = ({ children, className, ...props }) => (
   <div
     className={`
           flex
@@ -26,6 +25,7 @@ const SectionWrapper = ({ children, className }) => (
           xl:w-[1198px]
           ${className}
         `}
+    {...props}
   >
     {children}
   </div>
@@ -50,12 +50,11 @@ export default function ShortlistArticle() {
           <SpecialistBar specialist={data.caseStudy.specialist} />
           <ArticleIntro caseStudy={data.caseStudy} />
         </SectionWrapper>
-        <hr className="border-neutral200 pb-[3px] mb-20" />
-        <SectionWrapper>
+        <hr className="border-neutral200 pb-[3px] my-20" />
+        <SectionWrapper id="content">
           <ArticleContent caseStudy={data.caseStudy} />
         </SectionWrapper>
       </div>
-      <ScrollTip />
     </ErrorBoundary>
   );
 }

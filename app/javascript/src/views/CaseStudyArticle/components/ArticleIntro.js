@@ -5,6 +5,7 @@ import Achievements from "./Achievements";
 import AdvisableComment from "./AdvisableComment";
 import SpecialistCompanyRelation from "./SpecialistCompanyRelation";
 import Availability from "./Availability";
+import ScrollTip from "./ScrollTip";
 
 const Title = ({ children }) => (
   <h1
@@ -55,7 +56,7 @@ const SpecialistInfo = ({ specialist }) => (
 
 export default function ArticleIntro({ caseStudy }) {
   return (
-    <div id="caseStudyIntro" className="pb-24">
+    <div id="caseStudyIntro">
       <SpecialistCompanyRelation
         company={caseStudy.company}
         specialist={caseStudy.specialist}
@@ -65,6 +66,7 @@ export default function ArticleIntro({ caseStudy }) {
       <CompanyBox caseStudy={caseStudy} />
       <AdvisableComment caseStudy={caseStudy} />
       <Achievements sections={caseStudy.sections} />
+      <ScrollTip />
     </div>
   );
 }
