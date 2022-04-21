@@ -2,7 +2,8 @@ import React from "react";
 import queryString from "query-string";
 import { useLocation } from "react-router";
 import { ChatAlt } from "@styled-icons/heroicons-solid/ChatAlt";
-import { Modal, useModal, Button, DialogDisclosure } from "@advisable/donut";
+import { Modal, useModal, DialogDisclosure } from "@advisable/donut";
+import Button from "src/components/Button";
 import ConnectModal from "./ConnectModal";
 import { Link } from "react-router-dom";
 

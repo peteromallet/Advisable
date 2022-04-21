@@ -14,5 +14,5 @@ export default function MessageFreelancerButton({ specialist, ...props }) {
     return <MessageButton specialist={specialist} {...props} />;
   }
 
-  return <ConnectButton specialist={specialist} marginRight={2} />;
+  return <ConnectButton specialist={specialist} className="mr-2" />;
 }

@@ -46,12 +46,16 @@ module.exports = {
         lg: "1.5rem",
         xl: "2rem",
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
     // This snippet defines each color in the tailwind config as a CSS variable
     // on :root. This can be useful when you want to use a color outside of what
     // tailwind provides. e.g working with SVG's.

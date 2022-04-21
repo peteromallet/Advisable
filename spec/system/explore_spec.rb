@@ -51,17 +51,6 @@ RSpec.describe "Discover", type: :system do
     end
   end
 
-  describe "shortlist view" do
-    it "user can click in to view a case study and back again" do
-      authenticate_as(user)
-      visit("/explore/#{interest.uid}")
-      find("*[data-testid=title]", text: article1.title).click
-      expect(page).to have_current_path("/explore/#{interest.uid}/#{article1.uid}")
-      click_link("Back")
-      expect(page).to have_current_path("/explore/#{interest.uid}")
-    end
-  end
-
   context "when trying to view a search they dont have access to" do
     it "shows a 404 error" do
       interest = create(:case_study_interest)
