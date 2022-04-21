@@ -10,6 +10,7 @@ import ApplicationContext from "../../applicationContext";
 import useSentryUser from "src/hooks/useSentryUser";
 import useMixpanelUser from "src/hooks/useMixpanelUser";
 import useHotjarUser from "src/hooks/useHotjarUser";
+import useCustomerly from "src/hooks/useCustomerly";
 
 const ApplicationProvider = ({ children }) => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const ApplicationProvider = ({ children }) => {
   useSentryUser(data?.viewer);
   useHotjarUser(data?.viewer);
   useMixpanelUser(data?.viewer);
+  useCustomerly(data?.viewer);
   useIntercom(location, data?.viewer);
 
   const context = {

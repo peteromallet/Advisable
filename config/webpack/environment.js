@@ -19,6 +19,7 @@ const plugins = [
     SENTRY_FRONTEND_DSN: null,
     SENTRY_ENVIRONMENT: null,
     NODE_DEBUG: null,
+    CUSTOMERLY_ID: null,
   }),
 ];
 
