@@ -12,48 +12,36 @@ namespace :data do
     ProductionData.new.create_file!
   end
 
-  task migrate_cs_searches: :environment do
-    progressbar = ProgressBar.create(format: "Migrating searches: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: CaseStudy::Search.count)
+  task migrate_consultations: :environment do
+    migrate_requests
+    migrate_declined
+  end
+end
 
-    CaseStudy::Search.includes(skills: :skill).includes(:user).find_each do |search|
-      progressbar.increment
-
-      ActiveRecord::Base.transaction do
-        interest = interest_from_search(search)
-        next unless interest
-
-        copy_search_results(search, interest)
-        add_relevant_articles(search, interest)
-      end
+def migrate_requests
+  Message.where(kind: "ConsultationRequest").find_each do |message|
+    ActiveRecord::Base.transaction do
+      interview = message.consultation.interview
+      message.update!(kind: "InterviewRequest", interview:, consultation: nil)
     end
   end
 end
 
-def interest_from_search(search)
-  interest = CaseStudy::Interest.new(account_id: search.user.account_id)
-  goals = Array(search.goals).to_sentence
-  skills = search.skills.map(&:skill).map(&:name).to_sentence
-  interest.term = [goals, skills].filter_map(&:presence).join(" with ")
-  return unless interest.valid?
-
-  interest.term_vector
-  interest.save!
-  interest
-end
-
-def copy_search_results(search, interest)
-  treshold = 1.0
-  CaseStudy::Article.where(id: search.result_ids).find_each do |article|
-    similarity = article.embedding.cosine_similarity_with(interest.term_vector)
-    treshold = similarity if similarity < treshold
-    interest.interest_articles.create!(article:, similarity:)
+def migrate_declined
+  Message.where(kind: "ConsultationDeclined").find_each do |message|
+    ActiveRecord::Base.transaction do
+      interview = create_interview_from(message.consultation)
+      message.update!(kind: "InterviewDeclined", interview:, consultation: nil)
+    end
   end
-  interest.update!(treshold:)
 end
 
-def add_relevant_articles(search, interest)
-  articles = interest.articles_by_relevancy.
-    select { |a| a[:similarity] >= interest.treshold }.
-    reject { |a| search.result_ids.include?(a[:article_id]) }
-  interest.interest_articles.insert_all!(articles)
+def create_interview_from(consultation)
+  Interview.create!(
+    user: consultation.user,
+    specialist: consultation.specialist,
+    status: "Specialist Declined",
+    created_at: consultation.created_at,
+    updated_at: consultation.updated_at
+  )
 end
