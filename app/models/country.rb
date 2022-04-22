@@ -10,7 +10,7 @@ class Country < ApplicationRecord
 
   # We use Countries gem to load additional information about the country
   def data
-    @data ||= ISO3166::Country.find_country_by_name(name_stripped)
+    @data ||= ISO3166::Country.find_by_any_name(name_stripped)
   end
 
   def name_stripped
