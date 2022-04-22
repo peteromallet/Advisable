@@ -99,6 +99,7 @@ class AuthProvidersController < ApplicationController
 
     case oparams["mode"]
     when "user"
+      account.permissions = [:team_manager]
       User.create!(common_attrs.merge(company: Company.new, application_status: "Application Started"))
     when "specialist"
       referrer = Specialist.find_by(uid: oparams["referrer"])
