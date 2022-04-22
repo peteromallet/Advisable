@@ -24,7 +24,7 @@ module Mutations
 
       save_with_current_account!(agreement)
 
-      conversation = Conversation.by_accounts(agreement.user, current_account)
+      conversation = Conversation.by_accounts(agreement.user, current_user.account)
       conversation.new_message!(
         author: current_account,
         content: args[:message],

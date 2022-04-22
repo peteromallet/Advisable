@@ -22,7 +22,7 @@ module Mutations
       ApiError.invalid_request("PAYMENTS_NOT_SETUP", "Payments are not setup for this company.") unless agreement.company.payments_setup
 
       current_account_responsible_for { agreement.update!(status: "accepted") }
-      conversation = Conversation.by_accounts(agreement.specialist, current_account)
+      conversation = Conversation.by_accounts(agreement.specialist, current_user.account)
       conversation.new_message!(kind: "AgreementAccepted", agreement:, send_emails: false)
       SpecialistMailer.agreement_accepted(agreement).deliver_later
       Slack.bg_message(channel: "consultation_requests", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been accepted!")
