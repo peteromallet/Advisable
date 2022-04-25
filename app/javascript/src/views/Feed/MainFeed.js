@@ -5,6 +5,7 @@ import EndlessScroll from "./components/EndlessScroll";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import FeedContainer from "./components/FeedContainer";
 import EmptyFeed from "./components/EmptyFeed";
+import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
 
 export default function MainFeed() {
   const { data, loading, fetchMore } = useFeed();
@@ -29,6 +30,9 @@ export default function MainFeed() {
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Your feed
         </h2>
+        <div className="mb-8">
+          <AccountConfirmationPrompt />
+        </div>
         <div className="space-y-8">
           {results.map((result) => (
             <FeedItem
