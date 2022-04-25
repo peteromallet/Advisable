@@ -16,7 +16,7 @@ export default function ScrollTip() {
       onClick={handleClick}
     >
       <div className="h-11 w-11 p-3 bg-white shadow-lg rounded-full flex justify-center items-center transition-all group-hover:scale-[1.12]">
-        <ChevronDoubleDown className="group-hover:text-blue500" />
+        <ChevronDoubleDown className="w-5 h-5 group-hover:text-blue500" />
       </div>
       <div>
         <div className="text-xs text-neutral400 font-[550] leading-none pt-px uppercase">

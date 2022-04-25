@@ -45,7 +45,7 @@ export default function SpecialistCompanyRelation({ specialist, company }) {
         name={specialist.name}
       />
       <div className="flex items-center justify-center shadow p-px rounded-full bg-white w-[28px] lg:w-[22px] h-[28px] lg:h-[22px] -mx-1.5 lg:-mx-1 z-[1]">
-        <PlusSm />
+        <PlusSm className="w-4 h-4" />
       </div>
       <SuperEllipse
         r1={0.1}
