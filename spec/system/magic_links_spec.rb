@@ -10,7 +10,7 @@ RSpec.describe "magic links", type: :system do
 
   it "authenticates the user and uses the magic link" do
     visit "/explore?mlt=#{magic_link.token}&mluid=#{account.uid}&another=param"
-    expect(page).to have_content("You haven't created any shortlists")
+    expect(page).to have_content("No results")
     expect(page).to have_current_path("/explore?another=param")
     expect(account.reload.confirmed_at).not_to be_nil
   end

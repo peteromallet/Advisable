@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Link, useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import Timezone from "./Timezone";
@@ -8,9 +9,12 @@ export default function SidebarCard({ specialist }) {
   const xlUp = useBreakpoint("xlUp");
 
   return (
-    <div
+    <motion.div
       id="specialistInfo"
-      className="hidden lg:flex min-w-[264px] xl:min-w-[320px] w-[264px] xl:w-[320px] rounded-[28px] xl:rounded-[40px] bg-white drop-shadow-xl p-6 xl:p-8 pt-8 xl:pt-10 flex-col"
+      className="hidden lg:flex min-w-[264px] xl:min-w-[320px] w-[264px] xl:w-[320px] rounded-[28px] xl:rounded-[40px] bg-white shadow-articleCard p-6 xl:p-8 pt-8 xl:pt-10 flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
     >
       <Link
         className="mb-7 mx-auto rounded-full overflow-hidden w-40 xl:w-48 h-40 xl:h-48 border-4 border-neutral100 border-solid hover:border-neutral300"
@@ -28,7 +32,7 @@ export default function SidebarCard({ specialist }) {
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
       <ConnectButton
-        className="mb-5 mt-4"
+        className="w-full mb-5 mt-4"
         specialist={specialist}
         size={xlUp ? "lg" : "md"}
       >
@@ -45,6 +49,6 @@ export default function SidebarCard({ specialist }) {
       <p className="text-sm xl:text-[1.0625rem] text-neutral900 leading-5 xl:leading-6 pt-px pb-[3px] xl:py-0.5">
         {specialist.bio}
       </p>
-    </div>
+    </motion.div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
+import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -9,6 +10,7 @@ import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
+import useScrollToTop from "src/hooks/useScrollToTop";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -33,6 +35,8 @@ const SectionWrapper = ({ children, className, ...props }) => (
 );
 
 export default function ShortlistArticle() {
+  useScrollToTop();
+  useBackground("beige");
   const { data, loading, error } = useArticle();
 
   if (loading) return <Loading />;

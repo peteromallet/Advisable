@@ -1,0 +1,19 @@
+#import "./articleFields.gql"
+
+query InterestFeed($id: ID!, $cursor: String) {
+  interest(id: $id) {
+    id
+    term
+    articles(first: 15, after: $cursor) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { ShieldCheckmark } from "@styled-icons/ionicons-outline/ShieldCheckmark";
-import { Text, Link, Paragraph, Box, Circle } from "@advisable/donut";
+import { Text, Link } from "@advisable/donut";
 import useViewer from "../../hooks/useViewer";
 import { useNotifications } from "src/components/Notifications";
 import { RESEND_CONFIRMATION_EMAIL } from "./queries";
@@ -27,43 +26,30 @@ export default function AccountConfirmationPrompt() {
   }
 
   return (
-    <Box bg="neutral100" borderRadius="12px" padding="lg" marginBottom={11}>
-      <Box display="flex" alignItems="center">
-        <Box flexShrink="0">
-          <Circle size="40px" bg="cyan300" color="cyan900">
-            <ShieldCheckmark width="24px" />
-          </Circle>
-        </Box>
-        <Box paddingLeft="md">
-          <Text fontSize="lg" fontWeight="medium" paddingBottom="2xs">
-            Please confirm your account
-          </Text>
-          <Paragraph lineHeight="18px" color="neutral700">
-            You have not confirmed your account yet. Please click the
-            confirmation link inside of the email we have sent to{" "}
-            <Text as="span" color="neutral900">
-              {viewer.email}
-            </Text>
-            .
-          </Paragraph>
-        </Box>
-      </Box>
+    <div className="rounded-[32px] bg-neutral100 p-6 md:p-6">
+      <p className="text-lg font-medium leading-none mb-1">
+        Please confirm your account
+      </p>
+      <p className="text-neutral900">
+        Please click the confirmation link inside of the email we have sent to{" "}
+        <Text as="span" color="neutral900">
+          {viewer.email}
+        </Text>
+        .
+      </p>
       {!data?.resendConfirmationEmail ? (
-        <>
-          <Box height="1px" bg="neutral200" marginY="lg" />
-          <Text fontSize="sm">
-            Haven’t received an email?{" "}
-            <Link.External
-              href="#"
-              variant="dark"
-              fontSize="sm"
-              onClick={handleResend}
-            >
-              Resend confirmation email
-            </Link.External>
-          </Text>
-        </>
+        <p className="text-sm pt-2 mt-3 border-t border-solid border-neutral200">
+          Haven’t received an email?{" "}
+          <Link.External
+            href="#"
+            variant="dark"
+            fontSize="sm"
+            onClick={handleResend}
+          >
+            Resend confirmation email
+          </Link.External>
+        </p>
       ) : null}
-    </Box>
+    </div>
   );
 }

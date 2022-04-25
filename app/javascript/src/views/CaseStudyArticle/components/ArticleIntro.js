@@ -14,7 +14,7 @@ const Title = ({ children }) => (
         text-neutral800
           font-bold
           tracking-tight
-          mb-7
+          mb-8
           text-3xl 
           leading-none
           pt-[3px]
@@ -25,9 +25,8 @@ const Title = ({ children }) => (
           sm:pb-[3px]
           md:text-4xl
           md:leading-none
-          xl:text-5xl
-          xl:pt-0.5
-          xl:pb-0.5
+          xl:text-[44px]
+          xl:leading-[48px]
       `}
   >
     {children}

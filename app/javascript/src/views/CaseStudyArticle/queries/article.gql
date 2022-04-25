@@ -1,5 +1,5 @@
-query Article($articleId: ID!) {
-  caseStudy(id: $articleId) {
+query Article($slug: ID!) {
+  caseStudy(id: $slug) {
     id
     title
     subtitle
@@ -38,6 +38,9 @@ query Article($articleId: ID!) {
           status
           startsAt
         }
+      }
+      conversation {
+        id
       }
       account {
         id

@@ -7,7 +7,7 @@ export default function Availability({ unavailableUntil }) {
       <div
         className={`h-2 xl:h-2.5 w-2 xl:w-2.5 ${color} rounded-full mr-1.5 xl:mr-2`}
       />
-      <div className="text-neutral600 leading-4 xl:leading-5 text-[15px] xl:text-lg font-[440]">
+      <div className=" text-neutral600 leading-4 xl:leading-5 text-[15px] xl:text-lg font-[440]">
         {unavailableUntil ? "Unavailable for hire" : "Available for hire"}
       </div>
     </div>

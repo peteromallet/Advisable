@@ -8,6 +8,8 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
+import Feed from "./views/Feed";
+import Article from "./views/CaseStudyArticle";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -22,7 +24,6 @@ const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
 const GuildEvent = lazy(() => import("guild/views/Event"));
 const GuildEvents = lazy(() => import("guild/views/Events"));
-const Discover = lazy(() => import("./views/Discover"));
 const NewPost = lazy(() => import("./views/NewPost"));
 const NewAgreement = lazy(() => import("./views/NewAgreement"));
 const PaymentRequests = lazy(() => import("./views/PaymentRequests"));
@@ -56,6 +57,8 @@ const ApplicationRoutes = () => {
               </RequireAuthentication>
             }
           />
+
+          <Route path="/articles/:slug" element={<Article />} />
 
           <Route
             path="/post"
@@ -126,7 +129,7 @@ const ApplicationRoutes = () => {
             path="/explore/*"
             element={
               <RequireAuthentication clientOnly>
-                <Discover />
+                <Feed />
               </RequireAuthentication>
             }
           />
