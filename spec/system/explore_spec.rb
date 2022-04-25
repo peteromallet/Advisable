@@ -32,31 +32,22 @@ RSpec.describe "Discover", type: :system do
   end
 
   describe "/explore" do
-    it "lists the users shortlists and they can click into one" do
-      search = create(:case_study_interest, term: "Test shortlist", account:, article_ids: [article1.id])
+    it "lists the users interests and they can click into one" do
+      interest = create(:case_study_interest, term: "SEO", account:, article_ids: [article1.id])
       authenticate_as(user)
       visit("/explore")
-      expect(page).to have_content("Test shortlist")
-      click_link("Test shortlist")
-      expect(page).to have_current_path("/explore/#{search.uid}")
-    end
-
-    context "when user has no shortlists" do
-      it "shows an empty state to create a shortlist" do
-        interest.destroy
-        authenticate_as(user)
-        visit("/explore")
-        expect(page).to have_content("You haven't created any shortlists")
-      end
+      expect(page).to have_content("SEO")
+      click_link("SEO")
+      expect(page).to have_current_path("/explore/#{interest.uid}")
     end
   end
 
-  context "when trying to view a search they dont have access to" do
+  context "when trying to view an interest they dont have access to" do
     it "shows a 404 error" do
       interest = create(:case_study_interest)
       authenticate_as(user)
       visit("/explore/#{interest.uid}")
-      expect(page).to have_content("404")
+      expect(page).to have_content("Not Found")
     end
   end
 

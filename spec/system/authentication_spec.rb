@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Logging in", type: :system do
   it "redirects the user back to where they tried to go" do
-    user = create(:user, account: create(:account, password: "testing123"))
+    user = create(:user, account: create(:account, password: "testing123", completed_tutorials: ["onboarding"]))
     visit "/explore"
     fill_in "email", with: user.account.email
     fill_in "password", with: "testing123"

@@ -4,6 +4,7 @@ import FeedItem from "./components/FeedItem";
 import EndlessScroll from "./components/EndlessScroll";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import FeedContainer from "./components/FeedContainer";
+import EmptyFeed from "./components/EmptyFeed";
 
 export default function MainFeed() {
   const { data, loading, error, fetchMore } = useFeed();
@@ -17,6 +18,10 @@ export default function MainFeed() {
   const pageInfo = data?.feed?.pageInfo;
   const edges = data?.feed?.edges || [];
   const results = edges.map((n) => n.node);
+
+  if (!loading && results.length === 0) {
+    return <EmptyFeed />;
+  }
 
   return (
     <FeedContainer>
