@@ -1,0 +1,5 @@
+mutation DeleteInterest($input: DeleteCaseStudyInterestInput!) {
+  deleteCaseStudyInterest(input: $input) {
+    success
+  }
+}

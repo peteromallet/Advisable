@@ -1,0 +1,17 @@
+#import "./articleFields.gql"
+
+mutation CreateInterestSearch($input: CreateCaseStudyInterestPreviewInput!) {
+  createCaseStudyInterestPreview(input: $input) {
+    interestPreview {
+      id
+      term
+      articles {
+        edges {
+          node {
+            ...ArticleFields
+          }
+        }
+      }
+    }
+  }
+}

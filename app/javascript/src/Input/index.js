@@ -14,16 +14,15 @@ export const inputStyles = composeStyles({
   `,
   variants: {
     size: {
-      sm: `h-10 px-3`,
       md: `h-12 px-4`,
     },
+    rounded: `!rounded-full`,
     error: `error-border`,
     disabled: `opacity-50`,
     focused: `
       bg-neutral200
       !border-neutral900
     `,
-    rounded: `!rounded-full`,
   },
 });
 
@@ -52,11 +51,11 @@ const Input = forwardRef(function Input(
     error,
     prefix,
     suffix,
-    rounded,
     className,
     onFocus,
     onBlur,
     disabled,
+    rounded,
     ...props
   },
   ref,
@@ -80,8 +79,8 @@ const Input = forwardRef(function Input(
         size,
         focused,
         disabled,
-        rounded,
         className,
+        rounded,
       })}
     >
       {prefix && <div className={inputDecorationStyles()}>{prefix}</div>}

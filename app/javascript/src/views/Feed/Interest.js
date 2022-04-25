@@ -41,7 +41,7 @@ export default function Interest() {
           {initialLoad ? (
             <div className="m-2 w-[250px] h-[28px] bg-neutral100 animate-pulse rounded-md" />
           ) : (
-            <h2 className="text-3xl font-semibold tracking-tight">
+            <h2 className="text-3xl font-semibold tracking-tight capitalize">
               {data?.interest?.term}
             </h2>
           )}
