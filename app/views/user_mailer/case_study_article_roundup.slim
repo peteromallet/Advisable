@@ -13,7 +13,7 @@
                 div style="display: inline-block; vertical-align: middle;"
                   = article.specialist.account.name
                   = article.confidential ? nil : " with #{article.company.name}"
-          a href="#{root_host}/explore/articles/#{article.uid}" style="text-decoration: none;"
+          a href="#{app_host}/explore/articles/#{article.uid}" style="text-decoration: none;"
             h3 style="font-family: Inter, arial; font-size: 20px; line-height: 24px; margin: 0; margin-bottom: 12px; padding: 0; color: #1C1C25;"
               | #{article.title}
             p style="font-family: Inter, arial; font-size: 14px; line-height: 20px; color: #353541; margin: 0; "
@@ -21,7 +21,7 @@
 
   = render "emails/spacing", height: "40px"
 
-  = render "emails/button", href: "#{root_host}/explore"
+  = render "emails/button", href: "#{app_host}/explore"
     | Discover more
 
   = render "emails/spacing", height: "52px"
