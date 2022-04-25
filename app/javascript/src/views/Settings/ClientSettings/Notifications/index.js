@@ -9,11 +9,11 @@ export default function NotificationSettings() {
         Notifications & Alerts
       </h2>
       <div className="divide-y divide-neutral100 divide-solid">
-        {/* <NotificationSubscription
+        <NotificationSubscription
           title="Weekly digest"
           subscription="Weekly Digest"
           description="Get a weekly digest of new projects that match your interests"
-        /> */}
+        />
         <NotificationSubscription
           title="Announcements & product updates"
           subscription="Announcements"
