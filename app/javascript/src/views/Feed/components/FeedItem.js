@@ -58,11 +58,13 @@ function FeedItem({ article, interest }) {
             <div className="text-[17px] font-medium leading-none">
               {article.specialist.name}
             </div>
-            {article.company && (
-              <div className="text-neutral600 text-sm font-inter leading-none">
-                with {article.company.name}
-              </div>
-            )}
+            <div className="text-neutral600 text-sm font-inter leading-none">
+              {article.company ? (
+                <>with {article.company.name}</>
+              ) : (
+                <span className="text-neutral400">Confidential company</span>
+              )}
+            </div>
           </div>
         </div>
         <Link to={`/articles/${article.slug || article.id}`} className="group">
@@ -91,21 +93,21 @@ function FeedItem({ article, interest }) {
       </div>
       <div className="bg-neutral-100 p-5 rounded-[24px] w-full lg:w-[240px] flex-shrink-0">
         <div className="space-y-5">
-          {article.company && (
-            <div className="flex items-center gap-2.5 border-b border-solid border-neutral200 pb-5">
-              <div className="flex-shrink-0">
-                <Favicon url={article.company.favicon} />
-              </div>
-              <div className="flex flex-col min-w-0 w-full">
-                <div className="font-medium leading-none pb-1 min-w-0 truncate">
-                  {article.company.name}
-                </div>
-                <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
-                  {article.company.website}
-                </span>
-              </div>
+          <div className="flex items-center gap-2.5 border-b border-solid border-neutral200 pb-5">
+            <div className="flex-shrink-0">
+              <Favicon url={article.company?.favicon} />
             </div>
-          )}
+            <div className="flex flex-col min-w-0 w-full">
+              <div className="font-medium leading-none pb-1 min-w-0 truncate">
+                {article.company?.name || (
+                  <span className="text-neutral500">Company hidden</span>
+                )}
+              </div>
+              <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
+                {article.company?.website || "No website"}
+              </span>
+            </div>
+          </div>
           {article.industries.length > 0 && (
             <Attribute
               label="Industry"
