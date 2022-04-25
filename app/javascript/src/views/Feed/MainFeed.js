@@ -7,7 +7,7 @@ import FeedContainer from "./components/FeedContainer";
 import EmptyFeed from "./components/EmptyFeed";
 
 export default function MainFeed() {
-  const { data, loading, error, fetchMore } = useFeed();
+  const { data, loading, fetchMore } = useFeed();
 
   const handleLoadMore = useCallback(() => {
     if (!data) return;

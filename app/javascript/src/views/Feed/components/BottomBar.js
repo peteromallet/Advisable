@@ -67,12 +67,12 @@ export default function BottomBar() {
       <BottomBarItem to="/explore" icon={Home}>
         Feed
       </BottomBarItem>
-      <BottomBarItem to="/explore/favorites" icon={Bookmark}>
+      {/* <BottomBarItem to="/explore/favorites" icon={Bookmark}>
         Saved
-      </BottomBarItem>
-      <BottomBarItem to="/explore/sahred" icon={InboxIn}>
+      </BottomBarItem> */}
+      {/* <BottomBarItem to="/explore/sahred" icon={InboxIn}>
         Shared
-      </BottomBarItem>
+      </BottomBarItem> */}
     </div>
   );
 }

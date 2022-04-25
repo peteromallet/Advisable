@@ -114,12 +114,12 @@ export default function FeedSidebar() {
           <SidebarItem to="/explore" icon={HomeIcon}>
             Feed
           </SidebarItem>
-          <SidebarItem to="/explore/favorites" icon={BookmarkIcon}>
+          {/* <SidebarItem to="/explore/favorites" icon={BookmarkIcon}>
             Favorites
-          </SidebarItem>
-          <SidebarItem to="/explore/shared" icon={SharedIcon}>
+          </SidebarItem> */}
+          {/* <SidebarItem to="/explore/shared" icon={SharedIcon}>
             Shared
-          </SidebarItem>
+          </SidebarItem> */}
         </div>
         <Interests />
       </SimpleBar>
