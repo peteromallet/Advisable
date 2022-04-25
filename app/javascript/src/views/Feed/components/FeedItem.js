@@ -69,7 +69,7 @@ function FeedItem({ article, interest }) {
           <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
             {article.title}
           </h3>
-          <p className="font-inter text-sm md:text-[15px] md:leading-relaxed text-neutral-600">
+          <p className="line-clamp-3 font-inter text-sm md:text-[15px] md:leading-relaxed text-neutral-600">
             {article.subtitle}
           </p>
         </Link>
