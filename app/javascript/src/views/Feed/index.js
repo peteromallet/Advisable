@@ -29,7 +29,7 @@ export default function Feed() {
     <div className="flex">
       <FeedSidebar />
       <BottomBar />
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 w-full">
         <ErrorBoundary FallbackComponent={FeedViewFailed}>
           <Routes>
             <Route index element={<MainFeed />} />

@@ -97,11 +97,11 @@ function FeedItem({ article, interest }) {
                 <Favicon url={article.company.favicon} />
               </div>
               <div className="flex flex-col min-w-0 w-full">
-                <div className="font-medium leading-none pb-1 min-w-0">
-                  <span className="truncate">{article.company.name}</span>
+                <div className="font-medium leading-none pb-1 min-w-0 truncate">
+                  {article.company.name}
                 </div>
-                <span className="text-xs font-inter leading-none text-neutral500 min-w-0">
-                  <span className="truncate">{article.company.website}</span>
+                <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
+                  {article.company.website}
                 </span>
               </div>
             </div>
