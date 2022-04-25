@@ -42,7 +42,7 @@ const sidebarItemClasses = composeStyles({
 });
 
 const iconClasses = composeStyles({
-  base: `w-5 opacity-80 group-hover:opacity-100`,
+  base: `w-5 shrink-0 opacity-80 group-hover:opacity-100`,
   variants: {
     active: `!opacity-100`,
   },
@@ -69,7 +69,7 @@ function SidebarItem({ to, icon, children }) {
 }
 
 function Interests() {
-  const { data, loading, error } = useInterests();
+  const { data, loading } = useInterests();
   const interests = data?.interests || [];
 
   if (loading) {
