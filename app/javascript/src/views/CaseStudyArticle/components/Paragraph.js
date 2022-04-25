@@ -10,6 +10,8 @@ export default function CaseStudyParagraph({ text, ...props }) {
     >
       <Linkify
         options={{
+          target: "_blank",
+          rel: "nofollow",
           className: "text-blue600 hover:text-blue500 hover:underline",
         }}
       >
