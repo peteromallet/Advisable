@@ -8,6 +8,7 @@ query Article($slug: ID!) {
     editorUrl
     companyType
     comment
+    isFavorited
     skills {
       id
       primary
