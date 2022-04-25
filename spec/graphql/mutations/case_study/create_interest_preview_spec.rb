@@ -35,8 +35,27 @@ RSpec.describe Mutations::CaseStudy::CreateInterestPreview do
     expect(interest.results).to match_array([article1.id, article2.id])
   end
 
+  context "when embedding data is under treshold" do
+    let(:embedding2) { create(:case_study_embedding, data: [500, -800, 300]) }
+
+    it "does not include the article" do
+      request = AdvisableSchema.execute(query, context:)
+      uid = request.dig("data", "createCaseStudyInterestPreview", "interestPreview", "id")
+      interest = ::CaseStudy::InterestPreview.find_by!(uid:)
+      expect(interest.term).to eq("A Term")
+      expect(interest.account).to eq(user.account)
+      expect(interest.results).not_to include(article2.id)
+      expect(interest.results).to match_array([article1.id])
+    end
+  end
+
   context "when a preview already exists" do
     let(:terms) { ["A Term", "Another Term", "a term"] }
+
+    before do
+      create(:case_study_interest, term: "a tErm", account: user.account)
+      create(:case_study_interest, term: "Another Term") # different account
+    end
 
     it "refreshes results unique interests" do
       ::CaseStudy::InterestPreview.create!(term: "A Term", account: user.account, results: [article1.id])

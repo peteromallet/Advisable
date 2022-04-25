@@ -16,11 +16,7 @@ module CaseStudy
     def fetch_term_data!
       return if term_data.present? || term.blank?
 
-      query = [
-        term,
-        account.user&.company&.audience.presence
-      ].compact.join(" for ")
-      self.term_data = OpenAiInteractor.new.query_embedding_for(query)
+      self.term_data = OpenAiInteractor.new.query_embedding_for(term)
       save!
     end
   end

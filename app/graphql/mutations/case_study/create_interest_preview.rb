@@ -15,7 +15,7 @@ module Mutations
 
       def resolve(term:)
         interest_preview = ::CaseStudy::InterestPreview.find_or_create_by!(term:, account: current_user.account)
-        interest_preview.update_results!
+        interest_preview.find_results!
         {interest_preview:}
       end
     end

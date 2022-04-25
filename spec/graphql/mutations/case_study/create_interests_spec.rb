@@ -42,6 +42,19 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     expect(interest.interest_articles.first.similarity.round(2)).to eq(0.61)
   end
 
+  context "when embedding data is under treshold" do
+    let(:embedding2) { create(:case_study_embedding, data: [500, -800, 300]) }
+
+    it "does not include the article" do
+      request = AdvisableSchema.execute(query, context:)
+      uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
+      interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
+      expect(interest.interest_articles).to be_blank
+      interest.find_articles!
+      expect(interest.articles).to match_array([article1])
+    end
+  end
+
   context "when multiple interests" do
     let(:terms) { ["A Term", "Another Term", "a term"] }
 
