@@ -106,7 +106,7 @@ class UserMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
-      bcc: [@sales_person.email_with_name, ENV["CONSULTATIONS_BCC"]].compact,
+      bcc: [@sales_person.email_with_name, ENV.fetch("CONSULTATIONS_BCC", nil)].compact,
       subject: "Your call with #{interview.specialist.account.name} in 1 hour"
     ) do |format|
       format.html { render layout: false }
@@ -189,9 +189,9 @@ class UserMailer < ApplicationMailer
     payment_request_mail(payment_request, "Payment Request Due")
   end
 
-  def case_study_article_roundup(user, articles)
+  def case_study_article_roundup(user, article_ids)
     @user = user
-    @articles = articles
+    @articles = ::CaseStudy::Article.where(id: article_ids)
     @account = user.account
     mail(
       from: "Advisable <hello@advisable.com>",
