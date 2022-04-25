@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { useImage } from "react-image";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LogoMark from "src/components/LogoMark";
 import InterestIcon from "./InterestIcon";
 import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
@@ -46,6 +46,8 @@ function Attribute({ label, value }) {
 }
 
 function FeedItem({ article, interest }) {
+  const location = useLocation();
+
   return (
     <div className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start">
       <div>
@@ -67,7 +69,11 @@ function FeedItem({ article, interest }) {
             </div>
           </div>
         </div>
-        <Link to={`/articles/${article.slug || article.id}`} className="group">
+        <Link
+          to={`/articles/${article.slug || article.id}`}
+          className="group"
+          state={{ ...location.state, back: location.pathname }}
+        >
           <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
             {article.title}
           </h3>

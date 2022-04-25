@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PassportAvatar from "src/components/PassportAvatar";
 import ConnectButton from "src/components/ConnectButton";
+import BackButton from "src/components/BackButton";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -16,30 +17,13 @@ const Availability = ({ unavailableUntil }) => {
 };
 
 export default function SpecialistBar({ specialist }) {
-  const [open, setOpen] = useState(false);
-
-  const callback = useCallback((entries) => {
-    const isOpen = entries.every((e) => !e.isIntersecting);
-    setOpen(isOpen);
-  }, []);
-
-  useLayoutEffect(() => {
-    const specialistInfo = document.querySelectorAll("#specialistInfo");
-    const observer = new IntersectionObserver(callback);
-    specialistInfo.forEach((block) => observer.observe(block));
-
-    return () => specialistInfo.forEach((block) => observer.unobserve(block));
-  }, [callback]);
+  const location = useLocation();
+  const { back } = location.state || {};
 
   return (
-    <div
-      style={{
-        top: open ? "68px" : "0",
-        opacity: open ? 1 : 0,
-      }}
-      className="fixed left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]"
-    >
+    <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]">
       <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto flex items-center justify-between">
+        {back && <BackButton to={back} className="mr-4" />}
         <div className="flex gap-3 items-center h-full">
           <Link to={specialist.profilePath}>
             <PassportAvatar
