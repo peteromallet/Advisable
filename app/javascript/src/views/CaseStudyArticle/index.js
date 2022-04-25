@@ -60,7 +60,6 @@ export default function ShortlistArticle() {
           <ArticleContent caseStudy={data.caseStudy} />
         </SectionWrapper>
       </div>
-
       <Footer />
     </ErrorBoundary>
   );
