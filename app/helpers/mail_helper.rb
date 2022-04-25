@@ -92,14 +92,12 @@ module MailHelper
     "#{app_host}/interviews/#{interview.uid}"
   end
 
-  private
-
   def root_host
     "https://advisable.com"
   end
 
   def app_host
-    heroku_name = ENV["HEROKU_APP_NAME"]
+    heroku_name = ENV.fetch("HEROKU_APP_NAME", nil)
     if heroku_name.present? && heroku_name != "advisable"
       "https://#{heroku_name}.herokuapp.com"
     elsif Rails.env.production?
