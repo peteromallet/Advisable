@@ -2,6 +2,15 @@
 
 module CaseStudy
   module TermData
+    MAX_RESULTS = 10
+    SIMILARITY_THRESHOLD = 0.3
+
+    def articles_for_interest
+      articles_by_relevancy.
+        select { |a| a[:similarity] > SIMILARITY_THRESHOLD }.
+        first(MAX_RESULTS)
+    end
+
     def articles_by_relevancy
       Embedding.ordered_articles_for(term_vector)
     end

@@ -2,9 +2,6 @@
 
 module CaseStudy
   class InterestPreview < ApplicationRecord
-    MAX_RESULTS = 10
-    SIMILARITY_THRESHOLD = 0.3
-
     include TermData
     include Uid
     uid_prefix "csp"
@@ -14,10 +11,7 @@ module CaseStudy
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
     def find_results!
-      results = articles_by_relevancy.
-        select { |a| a[:similarity] > SIMILARITY_THRESHOLD }.
-        first(MAX_RESULTS).
-        pluck(:article_id)
+      results = articles_for_interest.pluck(:article_id)
       update!(results:)
     end
   end

@@ -2,9 +2,6 @@
 
 module CaseStudy
   class Interest < ApplicationRecord
-    MAX_RESULTS = 10
-    SIMILARITY_THRESHOLD = 0.3
-
     include TermData
     include Uid
     uid_prefix "cst"
@@ -22,9 +19,7 @@ module CaseStudy
     def find_articles!
       return if interest_articles.any?
 
-      results = articles_by_relevancy.
-        select { |a| a[:similarity] > SIMILARITY_THRESHOLD }.
-        first(MAX_RESULTS)
+      results = articles_for_interest
       interest_articles.insert_all!(results) # rubocop:disable Rails/SkipsModelValidations
       update!(treshold: results.last[:similarity])
     end
