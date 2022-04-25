@@ -72,7 +72,7 @@ function FeedItem({ article, interest }) {
         <Link
           to={`/articles/${article.slug || article.id}`}
           className="group"
-          state={{ ...location.state, back: location.pathname }}
+          state={{ ...location.state, back: true }}
         >
           <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
             {article.title}

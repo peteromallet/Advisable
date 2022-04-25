@@ -1,8 +1,9 @@
-import React, { useLayoutEffect, useState, useCallback } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import PassportAvatar from "src/components/PassportAvatar";
 import ConnectButton from "src/components/ConnectButton";
-import BackButton from "src/components/BackButton";
+import CircularButton from "src/components/CircularButton";
+import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -23,7 +24,13 @@ export default function SpecialistBar({ specialist }) {
   return (
     <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]">
       <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto flex items-center justify-between">
-        {back && <BackButton to={back} className="mr-4" />}
+        {back && (
+          <CircularButton
+            icon={ArrowSmLeft}
+            className="mr-4"
+            onClick={() => window.history.back()}
+          />
+        )}
         <div className="flex gap-3 items-center h-full">
           <Link to={specialist.profilePath}>
             <PassportAvatar

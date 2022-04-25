@@ -24,7 +24,7 @@ const lineVariants = {
   },
 };
 
-export default function BackButton({ to, label = "Back", ...props }) {
+export default function BackButton({ to, label = "Back", state, ...props }) {
   return (
     <StyledBackButton
       as={motion.div}
@@ -32,7 +32,7 @@ export default function BackButton({ to, label = "Back", ...props }) {
       whileHover="hover"
       {...props}
     >
-      <Link to={to} aria-label={label} />
+      <Link to={to} aria-label={label} state={state} />
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <motion.path
           d="M25 20H14"
