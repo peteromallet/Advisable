@@ -51,8 +51,17 @@ const iconClasses = composeStyles({
 function SidebarItem({ to, icon, children }) {
   const resolved = useResolvedPath(to);
   const match = useMatch({ path: resolved.pathname, end: true });
+
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <Link to={to} className={sidebarItemClasses({ active: match })}>
+    <Link
+      to={to}
+      onClick={handleClick}
+      className={sidebarItemClasses({ active: match })}
+    >
       {icon &&
         createElement(icon, {
           primaryColor: match
