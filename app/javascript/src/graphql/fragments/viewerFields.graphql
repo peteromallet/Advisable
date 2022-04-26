@@ -22,10 +22,6 @@ fragment ViewerFields on ViewerUnion {
         subscribed
       }
     }
-    clientApplication {
-      id
-      status
-    }
     country {
       id
       name
