@@ -90,13 +90,6 @@ module Types
 
     field :oauth_viewer, Types::OauthViewer, null: true
 
-    field :client_application, Types::ClientApplicationType, null: true
-
-    def client_application
-      requires_current_user!
-      current_user
-    end
-
     field :invoice, Types::InvoiceType, null: true do
       argument :id, ID, required: true
     end
