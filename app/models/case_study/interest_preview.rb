@@ -2,8 +2,6 @@
 
 module CaseStudy
   class InterestPreview < ApplicationRecord
-    MAX_RESULTS = 5
-
     include TermData
     include Uid
     uid_prefix "csp"
@@ -12,9 +10,9 @@ module CaseStudy
 
     validates :term, uniqueness: {case_sensitive: false, scope: :account_id}
 
-    def update_results!
-      articles = articles_by_relevancy.first(MAX_RESULTS)
-      update!(results: articles.pluck(:article_id))
+    def find_results!
+      results = articles_for_interest.pluck(:article_id)
+      update!(results:)
     end
   end
 end

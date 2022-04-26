@@ -2,8 +2,6 @@
 
 module CaseStudy
   class Interest < ApplicationRecord
-    TRESHOLD_RESULT_LIMIT = 5
-
     include TermData
     include Uid
     uid_prefix "cst"
@@ -21,7 +19,7 @@ module CaseStudy
     def find_articles!
       return if interest_articles.any?
 
-      results = articles_by_relevancy.first(TRESHOLD_RESULT_LIMIT)
+      results = articles_for_interest
       interest_articles.insert_all!(results) # rubocop:disable Rails/SkipsModelValidations
       update!(treshold: results.last[:similarity])
     end

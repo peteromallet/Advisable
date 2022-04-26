@@ -22,9 +22,9 @@ RSpec.describe CaseStudy::Interest, type: :model do
     let(:user) { create(:user, company:) }
     let(:interest) { create(:case_study_interest, account: user.account, term: "funny B2B content") }
 
-    it "adds it to term" do
+    it "does not add it to term" do
       expect(interest.term_data).to be_blank
-      expect_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).with("funny B2B content for Hipsters")
+      expect_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).with("funny B2B content")
       interest.term_vector
     end
   end
