@@ -3,6 +3,7 @@ import Images from "./Images";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import ArticleSidebar from "./ArticleSidebar";
+import SimilarArticles from "./SimilarArticles";
 
 const CONTENT_TYPES = {
   Images,
@@ -36,6 +37,10 @@ export default function ArticleContent({ caseStudy }) {
             data-content-block={index}
           />
         ))}
+        <SimilarArticles
+          data-content-block={elements.length}
+          articles={caseStudy.similar}
+        />
       </div>
     </>
   );

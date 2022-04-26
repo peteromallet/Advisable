@@ -13,6 +13,7 @@ export function useInterest(opts) {
 
 export function useFeed() {
   return useQuery(FEED, {
+    fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
 }

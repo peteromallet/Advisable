@@ -42,7 +42,7 @@ const sidebarItemClasses = composeStyles({
 });
 
 const iconClasses = composeStyles({
-  base: `w-5 opacity-80 group-hover:opacity-100`,
+  base: `w-5 shrink-0 opacity-80 group-hover:opacity-100`,
   variants: {
     active: `!opacity-100`,
   },
@@ -51,8 +51,17 @@ const iconClasses = composeStyles({
 function SidebarItem({ to, icon, children }) {
   const resolved = useResolvedPath(to);
   const match = useMatch({ path: resolved.pathname, end: true });
+
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <Link to={to} className={sidebarItemClasses({ active: match })}>
+    <Link
+      to={to}
+      onClick={handleClick}
+      className={sidebarItemClasses({ active: match })}
+    >
       {icon &&
         createElement(icon, {
           primaryColor: match
@@ -69,7 +78,7 @@ function SidebarItem({ to, icon, children }) {
 }
 
 function Interests() {
-  const { data, loading, error } = useInterests();
+  const { data, loading } = useInterests();
   const interests = data?.interests || [];
 
   if (loading) {

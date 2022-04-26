@@ -8,7 +8,7 @@ module Types
 
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
-      field :website, String, null: false
+      field :website, String, null: true
       field :logo, String, null: true, method: :resized_logo_url
       field :business_type, String, null: true
       field :description, String, null: true

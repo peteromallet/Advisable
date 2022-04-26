@@ -20,10 +20,6 @@ export default function MainFeed() {
   const edges = data?.feed?.edges || [];
   const results = edges.map((n) => n.node);
 
-  if (!loading && results.length === 0) {
-    return <EmptyFeed />;
-  }
-
   return (
     <FeedContainer>
       <div className="">
@@ -50,6 +46,9 @@ export default function MainFeed() {
           )}
         </div>
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+
+        {!loading && results.length === 0 && <EmptyFeed />}
+
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">
             You have reached the end of the feed

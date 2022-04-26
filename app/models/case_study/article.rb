@@ -58,7 +58,7 @@ module CaseStudy
       "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
     end
 
-    def similar(limit: 5)
+    def similar(limit: 3)
       similar_ids = Rails.cache.fetch("case_study_article_similar_#{id}_#{limit}", expires_in: 1.day) do
         Embedding.ordered_articles_for(embedding.vector).first(limit + 1).pluck(:article_id)
       end
