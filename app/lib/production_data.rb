@@ -23,18 +23,25 @@ class ProductionData
   end
 
   def populate_local_tables(source_dir: TestData::DATA_DIR)
-    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, prefix: "", source_dir:) } if Account.none?
-    populate("companies", source_dir:)
-    populate("articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"], source_dir:)
-    populate("embeddings", source_dir:)
-    populate("sections", source_dir:)
-    populate("contents", source_dir:)
-    populate("industries", prefix: "", source_dir:)
+    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, source_dir:) } if Account.none?
+    populate("case_study_companies", source_dir:)
+    populate("case_study_articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"], source_dir:)
+    populate("case_study_embeddings", source_dir:)
+    populate("case_study_sections", source_dir:)
+    populate("case_study_contents", source_dir:)
     populate("industries", source_dir:)
-    populate("skills", prefix: "", source_dir:)
-    populate("skill_categories", prefix: "", source_dir:)
-    populate("skill_category_skills", prefix: "", source_dir:)
-    populate("skills", ignore_columns: ["search_id"], source_dir:)
+    populate("case_study_industries", source_dir:)
+    populate("skills", source_dir:)
+    populate("skill_categories", source_dir:)
+    populate("skill_category_skills", source_dir:)
+    populate("case_study_skills", ignore_columns: ["search_id"], source_dir:)
+  end
+
+  def copy_table_from_production(table_name, ignore_columns: [], map_columns: [])
+    source_dir = "tmp/data/#{Time.zone.today.strftime("%Y-%m-%d")}"
+    FileUtils.mkdir_p(source_dir)
+    download_table(table_name, source_dir)
+    populate(table_name, ignore_columns:, map_columns:, source_dir:)
   end
 
   private
@@ -42,9 +49,13 @@ class ProductionData
   def download_data_from_production
     puts "Downloading from production…"
     FileUtils.mkdir_p(TestData::DATA_DIR)
-    TABLE_NAMES.
-      reject { |table| File.exist?("#{TestData::DATA_DIR}/#{table}.csv") }.
-      each { |table| `heroku pg:psql -c "\\copy (SELECT * FROM #{table}) TO #{TestData::DATA_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
+    TABLE_NAMES.each { |table| download_table(table, TestData::DATA_DIR) }
+  end
+
+  def download_table(table, source_dir)
+    return if File.exist?("#{source_dir}/#{table}.csv")
+
+    `heroku pg:psql -c "\\copy (SELECT * FROM #{table}) TO #{source_dir}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"`
   end
 
   def destroy_local_data
@@ -89,12 +100,17 @@ class ProductionData
     obj.upload_file(TestData::ZIP_PATH)
   end
 
-  def populate(table, ignore_columns: [], map_columns: [], prefix: "case_study_", source_dir: TestData::DATA_DIR)
+  def populate(table, ignore_columns: [], map_columns: [], source_dir: TestData::DATA_DIR)
     puts "Populating #{table}…"
-    rows = CSV.read("#{source_dir}/#{prefix}#{table}.csv", headers: true)
-    mapped_colums = {}
-    map_columns.each do |column|
-      mapped_colums[column] = column.sub(/_id$/, "").capitalize.constantize.pluck(:id)
+    klass = all_the_tables[table]
+    rows = CSV.read("#{source_dir}/#{table}.csv", headers: true)
+    if map_columns.any?
+      mapped_colums = {}
+      reflections = klass.reflect_on_all_associations(:belongs_to)
+      map_columns.each do |column|
+        reflection = reflections.find { |a| a.foreign_key == column }
+        mapped_colums[column] = reflection.klass.pluck(:id)
+      end
     end
     sql = rows.map do |row|
       row = row.to_h.except("log_data", *ignore_columns)
@@ -112,9 +128,15 @@ class ProductionData
       end
       row
     end
-    model_prefix = "#{prefix.camelize}::" if prefix.present?
-    model = "#{model_prefix}#{table.singularize.camelize}".constantize
-    model.upsert_all(sql)
+    klass.upsert_all(sql)
+  end
+
+  def all_the_tables
+    @all_the_tables ||= begin
+      Zeitwerk::Loader.eager_load_all
+      all_models = ObjectSpace.each_object(Class).select { |c| c < ApplicationRecord }.select(&:name)
+      all_models.index_by(&:table_name)
+    end
   end
 end
 # rubocop:enable Rails/SkipsModelValidations
