@@ -50,7 +50,7 @@ export default function ShortlistArticle() {
         </Helmet>
       )}
       <SpecialistBar specialist={data.caseStudy.specialist} />
-      <div className="pt-10 pb-64">
+      <div className="pt-10 pb-36">
         <SectionWrapper className="items-start">
           <SpecialistCard specialist={data.caseStudy.specialist} />
           <ArticleIntro caseStudy={data.caseStudy} />
