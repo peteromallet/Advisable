@@ -1,8 +1,0 @@
-query SkillCategories {
-  skillCategories {
-    id
-    slug
-    name
-    description
-  }
-}
