@@ -27,11 +27,13 @@ export default function Interests({ data }) {
     setInterests(interests.filter((i) => i !== interest));
 
     const savedInterest = data.interests.find((i) => i.term === interest);
-    deleteInterest({
-      variables: {
-        input: { id: savedInterest.id },
-      },
-    });
+    if (savedInterest) {
+      deleteInterest({
+        variables: {
+          input: { id: savedInterest.id },
+        },
+      });
+    }
   };
 
   const handleContinue = async () => {
