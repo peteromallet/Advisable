@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Mutations::ApprovePaymentRequest do
-  let(:company) { create(:company) }
+  let(:company) { create(:company, stripe_payment_method: "asdf1234") }
   let(:current_user) { create(:user, company:) }
   let(:payment_request) { create(:payment_request, amount: 30000, company:) }
 

@@ -77,6 +77,7 @@ RSpec.describe "Payment requests", type: :system do
       before { authenticate_as(user) }
 
       it "allows them to approve and pay the request" do
+        user.company.update!(stripe_payment_method: "asdf1234")
         allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_123asdf456", status: "succeeded"))
         visit("/payment_requests/#{payment_request.uid}")
         click_button("Approve & Pay")

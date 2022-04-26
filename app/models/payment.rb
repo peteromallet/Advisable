@@ -50,7 +50,7 @@ class Payment < ApplicationRecord
   def pdf_url(regenerate: false)
     self.pdf_key = nil if regenerate
     GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
-    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: pdf_key)
+    obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: pdf_key)
     obj.presigned_url(:get, expires_in: URL_EXPIRES_AT)
   end
 
@@ -70,6 +70,8 @@ class Payment < ApplicationRecord
     if company.project_payment_method == "Bank Transfer"
       update!(payment_method: "Bank Transfer")
       Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nPayment Request: #{payment_request&.uid || "none"}")
+    elsif company.stripe_payment_method.blank?
+      create_intent_without_payment_method!
     elsif payment_intent_id.blank?
       intent = Stripe::PaymentIntent.create(
         stripe_params.merge({confirm: true, off_session: true, payment_method: company.stripe_payment_method}),
@@ -98,7 +100,7 @@ class Payment < ApplicationRecord
       "Error: #{e.message}"
     ].compact.join("\n")
     Slack.message(channel: "payments", text:)
-    create_on_session_intent!
+    create_intent_without_payment_method!
     self
   end
 
@@ -118,7 +120,7 @@ class Payment < ApplicationRecord
 
   private
 
-  def create_on_session_intent!
+  def create_intent_without_payment_method!
     return if payment_intent_id.present?
 
     intent = Stripe::PaymentIntent.create(
