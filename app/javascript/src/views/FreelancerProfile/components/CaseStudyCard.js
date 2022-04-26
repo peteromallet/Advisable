@@ -6,7 +6,6 @@ import { useImage } from "react-image";
 import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
-import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
 import MeatballMenu, { StyledMeatballButton } from "./MeatballMenu";
@@ -185,24 +184,19 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
 
-  const isArticle = !!matchPath(
-    {
-      path: "/profile/:username/:slug",
-    },
-    location.pathname,
-  );
-
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box as={isArticle ? null : StyledLink} to={caseStudy.path} width="100%">
-        <StyledCaseStudyCard
-          data-testid="caseStudyCard"
-          type={isArticle ? "article" : "profile"}
-        >
+      <Box
+        as={StyledLink}
+        to={caseStudy.path}
+        state={{ back: true }}
+        width="100%"
+      >
+        <StyledCaseStudyCard data-testid="caseStudyCard">
           {Boolean(caseStudy.coverPhoto) && (
             <Sentry.ErrorBoundary>
               <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />

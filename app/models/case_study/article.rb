@@ -55,7 +55,7 @@ module CaseStudy
     end
 
     def path
-      "/profile/#{specialist.username_or_uid}/#{slug_or_uid}"
+      "/articles/#{slug_or_uid}"
     end
 
     def similar(limit: 3)

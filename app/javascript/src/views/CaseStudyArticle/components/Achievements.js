@@ -3,9 +3,12 @@ import React from "react";
 const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
 
 export default function Achievements({ sections }) {
-  const achievements = sections
-    .find((s) => s.type === "outcome")
-    .contents.find((c) => c.__typename === "Results").results;
+  const outcome = sections.find((s) => s.type === "outcome");
+  if (!outcome) return null;
+  const achievements = outcome.contents.find(
+    (c) => c.__typename === "Results",
+  ).results;
+  if (!achievements) return null;
 
   return (
     <div className="mb-10 space-y-7">

@@ -1,10 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { Routes, Route } from "react-router";
 import { Box, useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import Article from "./views/Article";
 import Profile from "./views/Profile";
 import { useProfileData } from "./queries";
 import ErrorBoundary from "src/components/ErrorBoundary";
@@ -36,13 +34,7 @@ export default function FreelancerProfile() {
         pb={20}
         pt={[3, 5, 5, 5, 7]}
       >
-        <Routes>
-          <Route
-            path="/:slug"
-            element={<Article isOwner={isOwner} profileData={data} />}
-          />
-          <Route path="*" element={<Profile isOwner={isOwner} data={data} />} />
-        </Routes>
+        <Profile isOwner={isOwner} data={data} />
       </Box>
     </ErrorBoundary>
   );

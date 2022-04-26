@@ -1,21 +1,15 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import css from "@styled-system/css";
-import { matchPath } from "react-router";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { Box, Text, Link, useBreakpoint } from "@advisable/donut";
+import { Box, Text, useBreakpoint } from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
-import ProfilePictureArticle from "../ProfilePictureArticle";
-import CoverImage from "../CoverImage";
 import {
   StyledStickySidebar,
-  StyledArticleAvatarWrapper,
   StyledAvatarWrapper,
   StyledNameWrapper,
   StyledBioWrapper,
   StyledShowMore,
 } from "./styles";
-import BackButton from "../BackButton";
 // CTA button
 import EditInfo from "../EditInfo";
 import ConnectButton from "src/components/ConnectButton";
@@ -24,12 +18,6 @@ import SocialProfilesIcons from "../SocialProfilesIcons";
 import { SPECIALIST_BIO_LENGTH } from "src/constants";
 
 function Sidebar({ data, isOwner, ...props }) {
-  const isArticle = !!matchPath(
-    {
-      path: "/profile/:username/:slug",
-    },
-    location.pathname,
-  );
   const mUp = useBreakpoint("mUp");
 
   const { specialist } = data;
@@ -43,24 +31,11 @@ function Sidebar({ data, isOwner, ...props }) {
   return (
     <Box position="relative">
       <StyledStickySidebar {...props}>
-        {isArticle ? (
-          <StyledArticleAvatarWrapper>
-            <Box position="relative">
-              <BackButton path={specialist.profilePath}>
-                Go to profile
-              </BackButton>
-              <CoverImage src={specialist.coverPhoto} size="collapse" />
-            </Box>
-            <ProfilePictureArticle specialist={specialist} />
-          </StyledArticleAvatarWrapper>
-        ) : (
-          <StyledAvatarWrapper>
-            <ProfilePicture isOwner={isOwner} specialist={specialist} />
-          </StyledAvatarWrapper>
-        )}
+        <StyledAvatarWrapper>
+          <ProfilePicture isOwner={isOwner} specialist={specialist} />
+        </StyledAvatarWrapper>
         <StyledNameWrapper>
           <Text
-            as={isArticle && Link}
             to={specialist.profilePath}
             fontSize={{ _: "2xl", m: "5xl" }}
             fontWeight={600}
@@ -68,15 +43,6 @@ function Sidebar({ data, isOwner, ...props }) {
             lineHeight={{ _: "24px", m: "32px" }}
             letterSpacing="-0.028em"
             marginBottom={{ xs: 0.5, m: 1.5 }}
-            css={
-              isArticle &&
-              css({
-                "&:hover": {
-                  color: "neutral900",
-                  textDecoration: "underline",
-                },
-              })
-            }
           >
             {specialist.name}
           </Text>
