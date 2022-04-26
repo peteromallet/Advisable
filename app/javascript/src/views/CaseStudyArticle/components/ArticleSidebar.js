@@ -79,11 +79,10 @@ export default function ArticleSidebar({ elements }) {
     .map((el, index) => ({ ...el, index }))
     .filter(({ __typename }) => __typename === "Heading");
 
-  const numOfItems = menuItems.length;
   let active = 0;
   let activeHeading = 0;
   let activeSubheading = 0;
-  for (let i = elements.length - 1; i > -1; i--) {
+  for (let i = scrollState.length - 1; i > -1; i--) {
     const item = menuItems[i];
     if (scrollState[i] && !active) {
       active = i;
@@ -122,6 +121,7 @@ export default function ArticleSidebar({ elements }) {
     });
 
     const blocks = document.querySelectorAll("*[data-content-block]");
+    setScrollState(Array(blocks.length));
     blocks.forEach((block) => observer.observe(block));
 
     return () => blocks.forEach((block) => observer.unobserve(block));
@@ -134,7 +134,7 @@ export default function ArticleSidebar({ elements }) {
           <div
             style={{
               height: `${
-                (100 / numOfItems) *
+                (100 / menuItems.length) *
                 (Math.max(activeHeading, activeSubheading) + 1)
               }%`,
             }}

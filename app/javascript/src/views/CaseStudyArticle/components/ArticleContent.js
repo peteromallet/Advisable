@@ -37,7 +37,10 @@ export default function ArticleContent({ caseStudy }) {
             data-content-block={index}
           />
         ))}
-        <SimilarArticles articles={caseStudy.similar} />
+        <SimilarArticles
+          data-content-block={elements.length}
+          articles={caseStudy.similar}
+        />
       </div>
     </>
   );

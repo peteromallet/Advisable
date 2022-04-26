@@ -1,9 +1,9 @@
 import React from "react";
 import FeedItem from "src/views/Feed/components/FeedItem";
 
-export default function SimilarArticles({ articles }) {
+export default function SimilarArticles({ articles, ...props }) {
   return (
-    <div className="pt-12 border-t border-solid border-neutral100">
+    <div className="pt-12 border-t border-solid border-neutral100" {...props}>
       <h4 className="mb-5 text-2xl font-medium tracking-tight">
         Similar projects
       </h4>
