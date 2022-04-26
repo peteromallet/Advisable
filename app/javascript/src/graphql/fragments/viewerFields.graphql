@@ -15,6 +15,10 @@ fragment ViewerFields on ViewerUnion {
     completedTutorials
     needsToSetAPassword
     avatar
+    company {
+      id
+      name
+    }
     account {
       id
       subscriptions {

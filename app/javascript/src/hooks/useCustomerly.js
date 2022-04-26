@@ -18,9 +18,12 @@ export default function useCustomerly(viewer) {
         user_id: viewer.id,
         name: viewer.name,
         email: viewer.email,
+        company: {
+          company_id: viewer.company?.id,
+          name: viewer?.company?.name,
+        },
         attributes: {
           account_type: "Client",
-          company: viewer.companyName,
         },
       });
     }
