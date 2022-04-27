@@ -107,32 +107,6 @@ const StyledBackgroundImg = styled.img`
 `;
 
 export const StyledCaseStudyCard = styled.div(
-  variant({
-    prop: "type",
-    variants: {
-      profile: {
-        transition: "transform 200ms, box-shadow 200ms",
-        "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: `
-          0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
-          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
-        `,
-          [StyledMeatballButton]: {
-            opacity: 1,
-          },
-        },
-      },
-      article: {
-        [StyledContentWrapper]: {
-          pointerEvents: "auto",
-        },
-        [StyledMeatballButton]: {
-          opacity: 1,
-        },
-      },
-    },
-  }),
   css({
     padding: [4, 8],
     paddingBottom: [6, 10],
@@ -141,6 +115,17 @@ export const StyledCaseStudyCard = styled.div(
     position: "relative",
     borderRadius: "20px",
     overflow: "hidden",
+    transition: "transform 200ms, box-shadow 200ms",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: `
+          0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
+          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
+        `,
+      [StyledMeatballButton]: {
+        opacity: 1,
+      },
+    },
   }),
 );
 
