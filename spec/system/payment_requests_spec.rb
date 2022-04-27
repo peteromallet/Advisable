@@ -212,7 +212,7 @@ RSpec.describe "Payment requests", type: :system do
 
       it "informs them it's been paid_out" do
         visit("/payment_requests/#{payment_request.uid}")
-        expect(page).to have_content("transferred to your account")
+        expect(page).to have_content("transferred the funds")
       end
     end
 

@@ -37,8 +37,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
       <Summary status={status} icon={<CreditCard />}>
         {viewer.isSpecialist ? (
           <>
-            This request is awaiting payment from {company.name}. Once paid, the
-            funds will be immediately released to you.
+            This request is awaiting payment from {company.name}. Once we have
+            received the payment, the funds will be released to you on our next
+            weekly payout, which is done on Tuesdays.
             <div className="pt-4">
               <CancelPaymentRequest paymentRequest={paymentRequest} />
             </div>
@@ -46,7 +47,7 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
         ) : (
           <>
             This request is awaiting payment from {company.name}. Once paid the
-            funds will be released immediately to {specialist.name}.
+            funds will be released to {specialist.name}.
             <div className="pt-6">
               <ApprovePaymentRequest paymentRequest={paymentRequest} />
             </div>
@@ -63,7 +64,8 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
           <>
             This request has been approved by {company.name} and we are waiting
             to receive their payment. Once we have received the payment, the
-            funds will be released to you immediately.
+            funds will be released to you on our next weekly payout, which is
+            done on Tuesdays.
           </>
         ) : (
           <CapturePayment paymentRequest={paymentRequest} />
@@ -79,7 +81,8 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
           <>
             This payment request is past due. We have reached out to{" "}
             {company.name} to collect payment. Once we have received the
-            payment, the funds will be released to you immediately.
+            payment, the funds will be released to you on our next weekly
+            payout, which is done on Tuesdays.
           </>
         ) : (
           <>
@@ -122,8 +125,8 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
     return (
       <Summary status={status} icon={<CheckCircle />}>
         This request has been paid by {company.name}. We have received the funds
-        and they will be paid out to your account within the next 3 working
-        days.
+        and they will be transferred out to your account on our next weekly
+        payout, which is done on Tuesdays.
         {viewer.isClient && (
           <div className="pt-4">
             <DownloadInvoice payment={payment} />
@@ -147,8 +150,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
       <Summary status={status} icon={<CheckCircle />}>
         {viewer.isSpecialist ? (
           <>
-            This request has been paid by {company.name} and transferred to your
-            account. You should receive the funds within 3 working days.
+            This request has been paid by {company.name}. We have transferred
+            the funds to your account and you should receive them within 3
+            working days.
           </>
         ) : (
           <>
