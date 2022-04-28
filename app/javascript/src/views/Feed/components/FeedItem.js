@@ -48,6 +48,8 @@ function Attribute({ label, value }) {
 function FeedItem({ article, interest }) {
   const location = useLocation();
 
+  const scrollToTop = () => window.scrollTo(0, 0);
+
   return (
     <div className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start">
       <div>
@@ -85,6 +87,7 @@ function FeedItem({ article, interest }) {
         {interest && (
           <div className="pt-6">
             <Link
+              onClick={scrollToTop}
               to={`/explore/${interest.id}`}
               className="border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5  text-sm leading-none text-neutral600 hover:text-neutral900"
             >
