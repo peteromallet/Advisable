@@ -6,6 +6,7 @@ RSpec.describe "Favorites", type: :system do
   let(:account) { create(:account, permissions: ["team_manager"], completed_tutorials: ["onboarding"]) }
   let(:user) { create(:user, account:) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
+  let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
   let(:favorited_article) { create(:case_study_favorited_article, article: article1, account: user.account) }
   let!(:interest) do
     create(:case_study_interest, {
