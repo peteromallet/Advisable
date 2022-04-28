@@ -6,7 +6,6 @@ import { useImage } from "react-image";
 import styled from "styled-components";
 import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
-import { matchPath } from "react-router";
 import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
 import MeatballMenu, { StyledMeatballButton } from "./MeatballMenu";
@@ -108,32 +107,6 @@ const StyledBackgroundImg = styled.img`
 `;
 
 export const StyledCaseStudyCard = styled.div(
-  variant({
-    prop: "type",
-    variants: {
-      profile: {
-        transition: "transform 200ms, box-shadow 200ms",
-        "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: `
-          0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
-          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
-        `,
-          [StyledMeatballButton]: {
-            opacity: 1,
-          },
-        },
-      },
-      article: {
-        [StyledContentWrapper]: {
-          pointerEvents: "auto",
-        },
-        [StyledMeatballButton]: {
-          opacity: 1,
-        },
-      },
-    },
-  }),
   css({
     padding: [4, 8],
     paddingBottom: [6, 10],
@@ -142,6 +115,17 @@ export const StyledCaseStudyCard = styled.div(
     position: "relative",
     borderRadius: "20px",
     overflow: "hidden",
+    transition: "transform 200ms, box-shadow 200ms",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: `
+          0 16px 40px -16px ${rgba(theme.colors.blue800, 0.08)},
+          0 4px 8px -2px ${rgba(theme.colors.neutral900, 0.04)}
+        `,
+      [StyledMeatballButton]: {
+        opacity: 1,
+      },
+    },
   }),
 );
 
@@ -185,24 +169,19 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
 
-  const isArticle = !!matchPath(
-    {
-      path: "/profile/:username/:slug",
-    },
-    location.pathname,
-  );
-
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
   ));
 
   return (
     <Suspense fallback={<LoadingSkeleton />}>
-      <Box as={isArticle ? null : StyledLink} to={caseStudy.path} width="100%">
-        <StyledCaseStudyCard
-          data-testid="caseStudyCard"
-          type={isArticle ? "article" : "profile"}
-        >
+      <Box
+        as={StyledLink}
+        to={caseStudy.path}
+        state={{ back: true }}
+        width="100%"
+      >
+        <StyledCaseStudyCard data-testid="caseStudyCard">
           {Boolean(caseStudy.coverPhoto) && (
             <Sentry.ErrorBoundary>
               <CaseStudyBackgroundImage url={caseStudy.coverPhoto} />

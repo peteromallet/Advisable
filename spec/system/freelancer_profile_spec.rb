@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Freelancer profile", type: :system do
+  before do
+    allow_any_instance_of(::CaseStudy::Article).to receive(:similar).and_return([])
+  end
+
   it "allows freelancer to update their bio" do
     specialist = create(:specialist, bio: "testing")
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)

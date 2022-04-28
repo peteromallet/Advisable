@@ -5,6 +5,9 @@ query Article($slug: ID!) {
     id
     title
     subtitle
+    editorUrl
+    companyType
+    comment
     skills {
       id
       primary
@@ -13,7 +16,6 @@ query Article($slug: ID!) {
         name
       }
     }
-    companyType
     company {
       id
       name
@@ -22,7 +24,6 @@ query Article($slug: ID!) {
       businessType
       website
     }
-    comment
     specialist {
       id
       bio

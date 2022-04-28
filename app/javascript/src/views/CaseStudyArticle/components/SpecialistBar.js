@@ -4,6 +4,7 @@ import PassportAvatar from "src/components/PassportAvatar";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
+import EditCaseStudyButton from "./EditCaseStudyButton";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -17,9 +18,10 @@ const Availability = ({ unavailableUntil }) => {
   );
 };
 
-export default function SpecialistBar({ specialist }) {
+export default function SpecialistBar({ article }) {
   const location = useLocation();
   const { back } = location.state || {};
+  const { specialist } = article;
 
   return (
     <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]">
@@ -50,9 +52,12 @@ export default function SpecialistBar({ specialist }) {
             </div>
           </div>
         </div>
-        <ConnectButton specialist={specialist} className="ml-auto">
-          Connect
-        </ConnectButton>
+        <div className="flex items-center gap-3">
+          <EditCaseStudyButton article={article} />
+          <ConnectButton specialist={specialist} className="ml-auto">
+            Connect
+          </ConnectButton>
+        </div>
       </div>
     </div>
   );
