@@ -10,7 +10,7 @@ export default function ClientHeader() {
     <div className="w-full flex items-center">
       <HeaderLogo />
       <div className="px-6 flex-1">
-        <div className="max-w-[320px]">
+        <div className="max-w-[400px]">
           <Searchbox />
         </div>
       </div>

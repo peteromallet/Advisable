@@ -1,16 +1,29 @@
 import { Search } from "@styled-icons/heroicons-solid";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Input from "src/components/Input";
+import composeStyles from "src/utilities/composeStyles";
 
-export default function Searchbox() {
+const searchBoxClasses = composeStyles({
+  base: `flex bg-neutral100 py-2 px-4 items-center gap-2 rounded-full`,
+  variants: {
+    focused: `bg-neutral200`,
+  },
+});
+
+export default function Searchbox({ className }) {
+  const inputRef = useRef();
   const navigate = useNavigate();
+  const [focused, setFocused] = useState(false);
   const [searchParams] = useSearchParams();
   const [value, setValue] = useState(searchParams.get("q") || "");
 
   useEffect(() => {
     setValue(searchParams.get("q") || "");
   }, [searchParams]);
+
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -23,14 +36,21 @@ export default function Searchbox() {
   };
 
   return (
-    <Input
-      size="sm"
-      prefix={<Search className="w-4 h-4" />}
-      placeholder="Search..."
-      rounded
-      value={value}
-      onKeyPress={handleKeyPress}
-      onChange={handleChange}
-    />
+    <div
+      onClick={handleClick}
+      className={searchBoxClasses({ className, focused })}
+    >
+      <Search className="w-5 h-5 shrink-0 text-neutral600" />
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder="Search..."
+        className="outline-none w-full bg-transparent"
+      />
+    </div>
   );
 }
