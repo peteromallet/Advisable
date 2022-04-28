@@ -24,7 +24,7 @@ const buttonClasses = composeStyles({
     items-center
     ring-2
     ring-inset
-    ring-neutral900
+    ring-neutral500
     hover:ring-blue800
     rounded-full
     h-10
@@ -39,7 +39,7 @@ const iconClasses = composeStyles({
     group-hover:stroke-blue800
   `,
   variants: {
-    active: `fill-neutral900 group-hover:fill-blue800`,
+    active: `fill-blue500 !stroke-blue500 group-hover:fill-blue500`,
   },
 });
 
@@ -67,14 +67,12 @@ export default function FavoriteArticleButton({ caseStudy, className }) {
     }
 
     notification.notify(
-      isFavorited
-        ? "Removed from Favorites list"
-        : "Included to Favorites list",
+      isFavorited ? "Removed from favorites" : "Added to favorites",
     );
   };
 
   return (
-    <Tooltip placement="bottom" content={!isFavorited && "Add to Favorite"}>
+    <Tooltip placement="bottom" content={!isFavorited && "Add to Favorites"}>
       <button
         onClick={handleClick}
         className={buttonClasses({ active: isFavorited, className })}
