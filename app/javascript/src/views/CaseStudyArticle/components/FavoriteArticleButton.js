@@ -28,7 +28,6 @@ const buttonClasses = composeStyles({
     rounded-full
     h-10
     w-10
-    ml-auto
   `,
 });
 
