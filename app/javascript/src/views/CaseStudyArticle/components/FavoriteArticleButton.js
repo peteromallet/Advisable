@@ -23,8 +23,8 @@ const buttonClasses = composeStyles({
     items-center
     ring-2
     ring-inset
-    ring-neutral700
-    hover:ring-neutral900
+    ring-neutral900
+    hover:ring-blue800
     rounded-full
     h-10
     w-10
@@ -35,11 +35,11 @@ const buttonClasses = composeStyles({
 const iconClasses = composeStyles({
   base: `
     fill-none
-    stroke-neutral800
-    group-hover:stroke-neutral900
+    stroke-neutral900
+    group-hover:stroke-blue800
   `,
   variants: {
-    active: `fill-neutral800 group-hover:fill-neutral900`,
+    active: `fill-neutral900 group-hover:fill-blue800`,
   },
 });
 
