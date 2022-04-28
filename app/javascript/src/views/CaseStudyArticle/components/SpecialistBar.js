@@ -5,6 +5,7 @@ import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
 import Avatar from "src/components/Avatar";
+import FavoriteArticleButton from "./FavoriteArticleButton";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -50,6 +51,7 @@ export default function SpecialistBar({ article }) {
         </div>
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
+          <FavoriteArticleButton caseStudy={article} />
           <ConnectButton specialist={specialist} className="ml-auto">
             Connect
           </ConnectButton>
