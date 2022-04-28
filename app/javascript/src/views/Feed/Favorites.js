@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
 import FeedItem from "./components/FeedItem";
 import EndlessScroll from "./components/EndlessScroll";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
@@ -37,9 +36,6 @@ export default function Favorites() {
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Favorites
         </h2>
-        <div className="mb-8">
-          <AccountConfirmationPrompt />
-        </div>
         <div className="space-y-8">
           {!loading && results.length === 0 && <EmptyState />}
           {results.map((result) => (
