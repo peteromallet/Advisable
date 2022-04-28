@@ -40,6 +40,26 @@ RSpec.describe "Interviews", type: :system do
     expect(page).to have_content(user.availability[0].getlocal.strftime("%H:%M"))
   end
 
+  it "specialist can decline an interview request via messages" do
+    interview = create(:interview, user:, status: "Call Requested")
+    conversation = Conversation.by_accounts(interview.user, interview.specialist)
+    message = conversation.new_message!(
+      author: user.account,
+      content: "Interview request message",
+      kind: "InterviewRequest",
+      interview:
+    )
+
+    authenticate_as(interview.specialist)
+    visit("/messages/#{conversation.uid}")
+    expect(page).to have_content(message.content)
+    click_on("Respond")
+    click_on("Decline")
+    fill_in("reason", with: "Not interested")
+    click_on("Decline request")
+    expect(page).to have_content(/declined .* call request/i)
+  end
+
   it "allows the client to request to reschedule a call" do
     interview = create(:interview, user:, status: "Call Scheduled")
     authenticate_as(interview.user)
