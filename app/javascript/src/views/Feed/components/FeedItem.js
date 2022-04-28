@@ -101,26 +101,26 @@ function FeedItem({ article, interest }) {
         )}
       </div>
       <div className="bg-neutral-100 p-5 rounded-[24px] w-full lg:w-[240px] flex-shrink-0">
-        <div className="space-y-5">
-          <div className="flex items-center gap-2.5 border-b border-solid border-neutral200 pb-5">
-            <div className="flex-shrink-0">
-              <Favicon url={article.company?.favicon} />
-            </div>
-            <div className="flex flex-col min-w-0 w-full">
-              <div className="font-medium leading-none pb-1 min-w-0 truncate">
-                {article.company?.name || (
-                  <span className="text-neutral500">Company hidden</span>
-                )}
-              </div>
-              <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
-                {article.company?.website || "No website"}
-              </span>
-            </div>
+        <div className="flex items-center gap-2.5">
+          <div className="flex-shrink-0">
+            <Favicon url={article.company?.favicon} />
           </div>
+          <div className="flex flex-col min-w-0 w-full">
+            <div className="font-medium leading-none pb-1 min-w-0 truncate">
+              {article.company?.name || (
+                <span className="text-neutral500">Company hidden</span>
+              )}
+            </div>
+            <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
+              {article.company?.website || "Website hidden"}
+            </span>
+          </div>
+        </div>
+        <div className="hidden md:block border-t border-solid border-neutral200 mt-5 pt-5 space-y-5">
           {article.industries.length > 0 && (
             <Attribute
               label="Industry"
-              value={article.industries.map((i) => i.industry.name).join(", ")}
+              value={article.industries[0].industry.name}
             />
           )}
 
