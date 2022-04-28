@@ -6,6 +6,7 @@ import EndlessScroll from "./components/EndlessScroll";
 import SearchIllustration from "src/illustrations/zest/search";
 import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
+import InterestEmpty from "./components/InterestEmpty";
 
 export default function Interest() {
   const { interest: id } = useParams();
@@ -33,6 +34,7 @@ export default function Interest() {
   const pageInfo = data?.interest?.articles?.pageInfo;
   const edges = data?.interest?.articles?.edges || [];
   const results = edges.map((e) => e.node);
+  const hasResults = results.length > 0;
 
   return (
     <FeedContainer>
@@ -58,6 +60,9 @@ export default function Interest() {
             </>
           )}
         </div>
+
+        {!loading && !hasResults && <InterestEmpty />}
+
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">
