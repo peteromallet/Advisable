@@ -8,6 +8,7 @@ import HomeIcon from "./HomeIcon";
 import BookmarkIcon from "./BookmarkIcon";
 import SharedIcon from "./SharedIcon";
 import InterestIcon from "./InterestIcon";
+import SearchIcon from "./SearchIcon";
 
 const sidebarClasses = composeStyles({
   base: `
@@ -122,6 +123,9 @@ export default function FeedSidebar() {
         <div className="mb-8">
           <SidebarItem to="/explore" icon={HomeIcon}>
             Feed
+          </SidebarItem>
+          <SidebarItem to="/explore/search" icon={SearchIcon}>
+            Search
           </SidebarItem>
           <SidebarItem to="/explore/favorites" icon={BookmarkIcon}>
             Favorites

@@ -1,53 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "react-router-dom";
-import FeedItem from "./components/FeedItem";
+import Searchbox from "src/components/Searchbox";
 import FeedContainer from "./components/FeedContainer";
-import FeedItemSkeleton from "./components/FeedItemSkeleton";
-import { useCreateSearch } from "./queries";
-import AddInterestPreviewButton from "./components/AddInterestPreviewButton";
+import SearchResults from "./SearchResults";
 
 export default function Search() {
   const [searchParams] = useSearchParams();
-  const [createSearch, { data, loading }] = useCreateSearch();
   const query = searchParams.get("q");
 
-  useEffect(() => {
-    createSearch({
-      variables: {
-        input: {
-          term: query,
-        },
-      },
-    });
-  }, [createSearch, query]);
-
-  const isLoading = loading && !data;
-  const interestPreview = data?.createCaseStudyInterestPreview?.interestPreview;
-  const edges = interestPreview?.articles?.edges || [];
-  const results = edges.map((e) => e.node);
+  if (query) {
+    return <SearchResults />;
+  }
 
   return (
     <FeedContainer>
-      <div>
-        <div className="mb-8 flex justify-between items-center">
-          <h2 className="text-3xl font-semibold tracking-tight capitalize">
-            {query}
-          </h2>
-          <AddInterestPreviewButton interestPreview={interestPreview} />
-        </div>
-        <div className="space-y-6">
-          {results.map((result) => (
-            <FeedItem key={result.id} article={result} />
-          ))}
-          {isLoading && (
-            <>
-              <FeedItemSkeleton />
-              <FeedItemSkeleton />
-              <FeedItemSkeleton />
-            </>
-          )}
-        </div>
-      </div>
+      <h1 className="text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+        Search for projects
+      </h1>
+      <p className="text-neutral800 mb-8 text-lg">
+        Discover how other companies solved their problems and achieved their
+        goals.
+      </p>
+      <Searchbox size="lg" autoFocus />
     </FeedContainer>
   );
 }

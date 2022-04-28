@@ -4,13 +4,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 
 const searchBoxClasses = composeStyles({
-  base: `flex bg-neutral100 py-2 px-4 items-center gap-2 rounded-full`,
+  base: `flex bg-neutral100 items-center gap-2 rounded-full`,
   variants: {
     focused: `bg-neutral200`,
+    size: {
+      md: `py-2 px-4`,
+      lg: `py-4 px-6`,
+    },
   },
 });
 
-export default function Searchbox({ className }) {
+export default function Searchbox({ className, size = "md", ...props }) {
   const inputRef = useRef();
   const navigate = useNavigate();
   const [focused, setFocused] = useState(false);
@@ -38,7 +42,7 @@ export default function Searchbox({ className }) {
   return (
     <div
       onClick={handleClick}
-      className={searchBoxClasses({ className, focused })}
+      className={searchBoxClasses({ className, size, focused })}
     >
       <Search className="w-5 h-5 shrink-0 text-neutral600" />
       <input
@@ -48,8 +52,9 @@ export default function Searchbox({ className }) {
         onKeyPress={handleKeyPress}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        placeholder="Search..."
+        placeholder="Search projects..."
         className="outline-none w-full bg-transparent"
+        {...props}
       />
     </div>
   );
