@@ -9,6 +9,7 @@ import PaymentRequestStatusSummary from "./PaymentRequestStatusSummary";
 import { Loading } from "src/components";
 import NotFound, { isNotFound } from "../NotFound";
 import AccessDenied, { isNotAuthorized } from "../AccessDenied";
+import DisputePaymentRequest from "./DisputePaymentRequest";
 
 export default function ClientPaymentRequest() {
   const { data, loading, error } = usePaymentRequest();
@@ -43,6 +44,8 @@ export default function ClientPaymentRequest() {
           <div className="h-px bg-neutral100 my-8" />
 
           <AdvisableProtection />
+
+          <DisputePaymentRequest paymentRequest={data.paymentRequest} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 24 }}

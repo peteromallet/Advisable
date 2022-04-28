@@ -90,6 +90,14 @@ RSpec.describe "Payment requests", type: :system do
         click_button("Approve & Pay")
         expect(page).to have_content("Cardholder Name")
       end
+
+      it "allows them to dispute the payment request" do
+        visit("/payment_requests/#{payment_request.uid}")
+        click_on("Dispute request")
+        fill_in("reason", with: "Because")
+        click_on("Submit")
+        expect(page).to have_content("This request was disputed")
+      end
     end
   end
 
