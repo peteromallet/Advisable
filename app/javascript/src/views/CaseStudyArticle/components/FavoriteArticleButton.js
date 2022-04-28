@@ -3,6 +3,7 @@ import composeStyles from "src/utilities/composeStyles";
 import { Tooltip } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import { useFavoriteArticle, useUnfavoriteArticle } from "../queries";
+import { useApolloClient } from "@apollo/client";
 
 function BookmarkIcon({ width = "20", ...props }) {
   return (
@@ -43,12 +44,20 @@ const iconClasses = composeStyles({
 });
 
 export default function FavoriteArticleButton({ caseStudy, className }) {
-  const { isFavorited, id } = caseStudy;
-  const [favorite] = useFavoriteArticle(id);
-  const [unfavorite] = useUnfavoriteArticle(id);
+  const { isFavorited } = caseStudy;
+  const client = useApolloClient();
+  const [favorite] = useFavoriteArticle(caseStudy);
+  const [unfavorite] = useUnfavoriteArticle(caseStudy);
   const notification = useNotifications();
 
   const handleClick = async () => {
+    client.cache.modify({
+      id: client.cache.identify(caseStudy),
+      fields: {
+        isFavorited: () => !isFavorited,
+      },
+    });
+
     const action = isFavorited ? unfavorite : favorite;
     const res = await action();
 
@@ -66,12 +75,13 @@ export default function FavoriteArticleButton({ caseStudy, className }) {
 
   return (
     <Tooltip placement="bottom" content={!isFavorited && "Add to Favorite"}>
-      <div
-        className={`${buttonClasses({ active: isFavorited })} ${className}`}
+      <button
         onClick={handleClick}
+        className={buttonClasses({ active: isFavorited, className })}
+        aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
       >
         <BookmarkIcon className={iconClasses({ active: isFavorited })} />
-      </div>
+      </button>
     </Tooltip>
   );
 }
