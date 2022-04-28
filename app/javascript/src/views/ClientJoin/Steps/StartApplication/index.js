@@ -10,9 +10,11 @@ import MotionCard from "../MotionCard";
 import { useCreateClientAccount } from "../queries";
 import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
 import Divider from "src/components/Divider";
+import { useSearchParams } from "react-router-dom";
 
 export default function StartApplication({ nextStep, forwards }) {
   const viewer = useViewer();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [createClientAccount] = useCreateClientAccount();
 
@@ -25,7 +27,15 @@ export default function StartApplication({ nextStep, forwards }) {
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
     const res = await createClientAccount({
-      variables: { input: { ...values } },
+      variables: {
+        input: {
+          ...values,
+          rid: searchParams.get("rid"),
+          utmCampaign: searchParams.get("utm_campaign"),
+          utmSource: searchParams.get("utm_source"),
+          utmMedium: searchParams.get("utm_medium"),
+        },
+      },
     });
 
     if (res.errors) {
