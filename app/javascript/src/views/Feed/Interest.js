@@ -61,7 +61,7 @@ export default function Interest() {
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">
-            You have reached the end of the feed
+            You have reached the end of this topic
           </div>
         )}
       </div>
