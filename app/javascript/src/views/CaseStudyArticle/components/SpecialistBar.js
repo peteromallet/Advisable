@@ -30,6 +30,7 @@ export default function SpecialistBar({ article }) {
         <div className="flex items-center">
           {back && (
             <CircularButton
+              aria-label="Go back"
               icon={ArrowSmLeft}
               className="mr-4"
               onClick={() => window.history.back()}
