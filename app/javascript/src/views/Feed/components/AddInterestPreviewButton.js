@@ -15,7 +15,9 @@ export default function AddInterestPreviewButton() {
 
   const subscribedInterest = useMemo(() => {
     const interests = interestsData?.interests || [];
-    return interests.find((i) => i.term === searchParams.get("q"));
+    return interests.find(
+      (i) => i.term.toLowerCase() === searchParams.get("q").toLowerCase(),
+    );
   }, [interestsData, searchParams]);
 
   const [removeInterest, removeInterestState] =

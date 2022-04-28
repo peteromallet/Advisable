@@ -55,7 +55,7 @@ module.exports = {
         height: "height",
       },
       boxShadow: {
-        feed: "0px 4px 16px 0px rgba(0, 0, 0, 0.04), 0px 1px 3px rgba(0, 0, 0, 0.04)",
+        feed: "0 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 16px 0px rgba(0, 0, 0, 0.04)",
         articleCard:
           "0px 12px 40px -12px rgba(0, 0, 0, 0.12), 0px 2px 8px rgba(0, 0, 0, 0.04)",
       },

@@ -32,6 +32,7 @@ const sidebarItemClasses = composeStyles({
     mb-1
     group
     rounded-sm
+    capitalize
     text-neutral500
     font-[450]
     hover:text-neutral900

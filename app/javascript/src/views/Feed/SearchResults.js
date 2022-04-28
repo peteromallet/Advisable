@@ -5,6 +5,7 @@ import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import { useCreateSearch } from "./queries";
 import AddInterestPreviewButton from "./components/AddInterestPreviewButton";
+import NoResults from "./components/NoResults";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -25,6 +26,7 @@ export default function SearchResults() {
   const interestPreview = data?.createCaseStudyInterestPreview?.interestPreview;
   const edges = interestPreview?.articles?.edges || [];
   const results = edges.map((e) => e.node);
+  const hasResults = results.length > 0;
 
   return (
     <FeedContainer>
@@ -35,6 +37,7 @@ export default function SearchResults() {
           </h2>
           <AddInterestPreviewButton interestPreview={interestPreview} />
         </div>
+        {!isLoading && !hasResults && <NoResults />}
         <div className="space-y-6">
           {results.map((result) => (
             <FeedItem key={result.id} article={result} />
