@@ -7,7 +7,6 @@ import { useInterests } from "../queries";
 import HomeIcon from "./HomeIcon";
 import BookmarkIcon from "./BookmarkIcon";
 import SharedIcon from "./SharedIcon";
-import Searchbox from "./Searchbox";
 import InterestIcon from "./InterestIcon";
 
 const sidebarClasses = composeStyles({
@@ -120,7 +119,6 @@ export default function FeedSidebar() {
       className={sidebarClasses()}
     >
       <SimpleBar className="h-full p-4">
-        <Searchbox />
         <div className="mb-8">
           <SidebarItem to="/explore" icon={HomeIcon}>
             Feed

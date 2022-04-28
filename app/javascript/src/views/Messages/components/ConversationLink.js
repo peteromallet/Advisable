@@ -12,7 +12,7 @@ import {
 } from "@advisable/donut";
 import commaSeparated from "src/utilities/commaSeparated";
 
-const StyledAvatars = styled.div`
+export const StyledAvatars = styled.div`
   width: 52px;
   height: 52px;
   flex-shrink: 0;

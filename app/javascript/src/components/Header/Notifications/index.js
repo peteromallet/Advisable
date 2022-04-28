@@ -5,16 +5,13 @@ import SimpleBar from "simplebar-react";
 import Loading from "src/components/Loading";
 import useViewer from "src/hooks/useViewer";
 import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
-import {
-  StyledNotificationsButton,
-  NotificationItem,
-  StyledNotificationBadge,
-} from "./styles";
+import { NotificationItem } from "./styles";
 import { relativeDate } from "@guild/utils";
 import { Bell } from "@styled-icons/heroicons-outline";
 import NotificationIllustration from "src/illustrations/zest/notification";
 import Popover, { usePopoverState } from "../Popover";
 import { useNotifications, useUpdateLastRead } from "./queries";
+import HeaderButton from "../HeaderButton";
 
 const Notification = ({
   createdAt,
@@ -105,7 +102,11 @@ const Notifications = ({ closeNotifications }) => {
             />
           ) : (
             <Box paddingY={4} textAlign="center">
-              <NotificationIllustration width="120px" />
+              <NotificationIllustration
+                width="120px"
+                className="mx-auto"
+                color="var(--color-neutral100)"
+              />
               <Text marginTop={4} size="m" fontWeight="500" color="neutral900">
                 You have no notifications
               </Text>
@@ -133,12 +134,11 @@ export default function NotificationsMenu() {
       label="Notifications"
       onOpen={handleOpen}
       disclosure={
-        <StyledNotificationsButton
+        <HeaderButton
+          icon={Bell}
           data-testid={hasUnread ? "unreadNotifications" : "notifications"}
-        >
-          {hasUnread && <StyledNotificationBadge />}
-          <Bell size={24} />
-        </StyledNotificationsButton>
+          prompt={hasUnread}
+        />
       }
     >
       {popover.visible && <Notifications />}
