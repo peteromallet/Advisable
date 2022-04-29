@@ -8,8 +8,8 @@ class SpecialistsController < ApplicationController
   end
 
   def case_study
-    prefetch_query("app/javascript/src/views/FreelancerProfile/queries/getCaseStudy.gql", variables: {
-      id: params[:slug]
+    prefetch_query("app/javascript/src/views/CaseStudyArticle/queries/article.gql", variables: {
+      slug: params[:slug]
     })
     @case_study = ::CaseStudy::Article.find_by_slug_or_id(params[:slug])
   end

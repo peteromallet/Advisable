@@ -4,7 +4,7 @@
 
   <meta property="og:site_name" content="Advisable" />
   <meta property="og:title" content="<%= @case_study.title %>" />
-  <meta property="og:url" content="<%= specialist_case_study_url(@case_study.specialist.username_or_uid, @case_study.slug_or_uid) %>" />
+  <meta property="og:url" content="<%= specialist_case_study_url(@case_study.slug_or_uid) %>" />
   <meta property="og:type" content="article" />
   <meta property="og:description" content="<%= @case_study.subtitle %>" />
   <% if @case_study.cover_photo.attached? %>
