@@ -1,6 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import Searchbox from "src/components/Searchbox";
+import Searchbox from "./components/Searchbox";
 import FeedContainer from "./components/FeedContainer";
 import TrendingArticles from "./components/TrendingArticles";
 import SearchResults from "./SearchResults";

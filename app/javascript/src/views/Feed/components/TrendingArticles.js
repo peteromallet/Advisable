@@ -6,7 +6,7 @@ import useTrending from "../queries";
 function CaseStudyCard({ article }) {
   return (
     <Link to={article.path} state={{ back: true }}>
-      <div className="w-full max-w-[320px] h-[320px] rounded-md bg-white shadow-lg p-5">
+      <div className="w-full max-w-[320px] h-[320px] rounded-lg bg-white shadow-lg p-6">
         <SpecialistCompanyRelation
           company={article.company}
           specialist={article.specialist}

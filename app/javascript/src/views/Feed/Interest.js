@@ -23,7 +23,11 @@ export default function Interest() {
   if (!loading && !data.interest) {
     return (
       <div className="w-[300px] mx-auto text-center">
-        <SearchIllustration primaryColor="var(--color-pink-100)" />
+        <SearchIllustration
+          width="200px"
+          className="mx-auto"
+          primaryColor="var(--color-pink-100)"
+        />
         <h5 className="font-semibold">Not Found</h5>
         <p>Oops, The page you were looking for could not be found</p>
       </div>
