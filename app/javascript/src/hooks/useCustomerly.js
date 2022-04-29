@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import usePrevious from "src/utilities/usePrevious";
+import useMediaQuery from "src/utilities/useMediaQuery";
 
 function customerlyLoadOrUpdate(payload) {
   if (window.customerly.settings) {
@@ -11,6 +12,8 @@ function customerlyLoadOrUpdate(payload) {
 
 export default function useCustomerly(viewer) {
   const previousID = usePrevious(viewer?.id);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   useEffect(() => {
     if (!window.customerly) return;
 
@@ -22,7 +25,7 @@ export default function useCustomerly(viewer) {
 
     if (viewer?.__typename === "User" && !viewer?.isAdmin) {
       customerlyLoadOrUpdate({
-        visible: true,
+        visible: isDesktop,
         user_id: viewer.id,
         name: viewer.name,
         email: viewer.email,
@@ -51,5 +54,5 @@ export default function useCustomerly(viewer) {
     if (!viewer) {
       customerlyLoadOrUpdate({ visible: false });
     }
-  }, [viewer, previousID]);
+  }, [viewer, previousID, isDesktop]);
 }
