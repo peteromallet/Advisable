@@ -12,6 +12,7 @@ export default function Interest() {
   const { interest: id } = useParams();
   const { data, loading, fetchMore } = useInterest({
     variables: { id },
+    fetchPolicy: "cache-and-network",
   });
 
   const handleLoadMore = useCallback(() => {
