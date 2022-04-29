@@ -73,7 +73,7 @@ Rails.application.routes.draw do
   get "/clients/signup", to: redirect(LogAndRedirect.new("/clients/join"))
   get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
   get "/guild/posts/:id", to: redirect(LogAndRedirect.new("/posts/%{id}"))
-  get "/freelancers/:username/:article", to: redirect(LogAndRedirect.new("/profile/%{username}/%{article}"))
+  get "/profile/:username/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
   get "/freelancers/:username", to: redirect(LogAndRedirect.new("/profile/%{username}")), constraints: UsernameConstraint.new
   get "/clients/apply(*path)", to: redirect(LogAndRedirect.new("/setup"))
 
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   # match every other route to the frontend codebase
   root "application#frontend"
   get "/case_studies/:id", to: "application#case_study"
-  get "/profile/:username/:slug", to: "specialists#case_study", as: :specialist_case_study, constraints: UsernameConstraint.new
+  get "/articles/:slug", to: "specialists#case_study", as: :specialist_case_study
   get "/profile/:username", to: "specialists#profile", as: :freelancer_profile, constraints: UsernameConstraint.new
   get "*path", to: "application#frontend", constraints: ->(req) { req.path.exclude?("rails/") }
 end
