@@ -16,6 +16,11 @@ RSpec.describe "Favorites", type: :system do
     })
   end
 
+  before do
+    similar = create(:case_study_article)
+    allow_any_instance_of(::CaseStudy::Article).to receive(:similar).and_return([similar])
+  end
+
   it "favorites empty state" do
     authenticate_as(user)
     visit "/explore/favorites"
