@@ -77,6 +77,22 @@ module CaseStudy
         sections.by_type("overview").map { |s| s.contents.map(&:to_text) }
       ].flatten.compact.join(" ").gsub(/\s+/, " ").strip
     end
+
+    # TODO: Miha check this madness and potentially improve it?
+    # return the last 50 articles weighting their scores by how recently
+    # they were published
+    def self.trending
+      articles = order(published_at: :desc).first(50)
+      oldest = articles.last.published_at
+      delta = Time.zone.now - oldest
+
+      weighted = articles.map do |article|
+        weighting = 1 + ((article.published_at - oldest) / delta)
+        OpenStruct.new(article:, score: (article.score || 0) * weighting)
+      end
+
+      weighted.sort_by(&:score).reverse.map(&:article)
+    end
   end
 end
 

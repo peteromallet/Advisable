@@ -6,6 +6,7 @@ import INTEREST from "./interest.gql";
 import INTERESTS from "./interests.gql";
 import DELETE_INTEREST from "./deleteInterest.gql";
 import CREATE_INTERESTS from "./createInterests.gql";
+import TRENDING from "./trending.gql";
 
 export function useInterests() {
   return useQuery(INTERESTS);
@@ -76,4 +77,8 @@ export function useDeleteInterest(subscribedInterest) {
       });
     },
   });
+}
+
+export default function useTrending() {
+  return useQuery(TRENDING);
 }
