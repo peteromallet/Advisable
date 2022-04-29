@@ -25,8 +25,8 @@ export function useFavoriteArticle(article) {
         query: FAVORITES,
         data: {
           favoritedArticles: {
-            edges: [...favoritedArticles.edges, { node: article }],
             ...favoritedArticles,
+            edges: [...favoritedArticles.edges, { node: article }],
           },
         },
       });
