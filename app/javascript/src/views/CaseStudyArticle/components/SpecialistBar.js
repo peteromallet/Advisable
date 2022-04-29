@@ -52,7 +52,7 @@ export default function SpecialistBar({ article }) {
         </div>
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
-          <FavoriteArticleButton caseStudy={article} />
+          <FavoriteArticleButton article={article} />
           <ConnectButton specialist={specialist} className="ml-auto">
             Connect
           </ConnectButton>

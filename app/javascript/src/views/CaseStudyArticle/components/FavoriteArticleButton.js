@@ -1,9 +1,9 @@
 import React from "react";
-import composeStyles from "src/utilities/composeStyles";
+import { useApolloClient } from "@apollo/client";
 import { Tooltip } from "@advisable/donut";
+import composeStyles from "src/utilities/composeStyles";
 import { useNotifications } from "src/components/Notifications";
 import { useFavoriteArticle, useUnfavoriteArticle } from "../queries";
-import { useApolloClient } from "@apollo/client";
 
 function BookmarkIcon({ width = "20", ...props }) {
   return (
@@ -43,16 +43,16 @@ const iconClasses = composeStyles({
   },
 });
 
-export default function FavoriteArticleButton({ caseStudy, className }) {
-  const { isFavorited } = caseStudy;
+export default function FavoriteArticleButton({ article, className }) {
+  const { isFavorited } = article;
   const client = useApolloClient();
-  const [favorite] = useFavoriteArticle(caseStudy);
-  const [unfavorite] = useUnfavoriteArticle(caseStudy);
+  const [favorite] = useFavoriteArticle(article);
+  const [unfavorite] = useUnfavoriteArticle(article);
   const notification = useNotifications();
 
   const handleClick = async () => {
     client.cache.modify({
-      id: client.cache.identify(caseStudy),
+      id: client.cache.identify(article),
       fields: {
         isFavorited: () => !isFavorited,
       },
