@@ -20,10 +20,12 @@ export default function SidebarCard({ specialist }) {
         className="mb-7 mx-auto rounded-full overflow-hidden w-40 xl:w-48 h-40 xl:h-48 border-4 border-neutral100 border-solid hover:border-neutral300"
         to={specialist.profilePath}
       >
-        <img
-          src={specialist.avatar}
-          className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
-        />
+        {specialist.avatar && (
+          <img
+            src={specialist.avatar}
+            className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
+          />
+        )}
       </Link>
       <Link to={specialist.profilePath}>
         <h4 className="font-semibold tracking-tight xl:text-3xl text-2xl text-neutral800 hover:text-neutral800 xl:leading-8 leading-6 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">

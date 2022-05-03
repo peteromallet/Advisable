@@ -3,11 +3,20 @@
 query Article($slug: ID!) {
   caseStudy(id: $slug) {
     id
+    slug
     title
     subtitle
     editorUrl
     companyType
     comment
+    isFavorited
+    industries {
+      id
+      industry {
+        id
+        name
+      }
+    }
     skills {
       id
       primary

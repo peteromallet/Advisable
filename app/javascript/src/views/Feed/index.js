@@ -7,6 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useBackground } from "src/../../../donut/src";
 import BottomBar from "./components/BottomBar";
 import useTutorial from "src/hooks/useTutorial";
+import Favorites from "./Favorites";
 
 function FeedViewFailed() {
   return (
@@ -34,6 +35,7 @@ export default function Feed() {
           <Routes>
             <Route index element={<MainFeed />} />
             <Route path=":interest" element={<Interest />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
         </ErrorBoundary>
       </div>

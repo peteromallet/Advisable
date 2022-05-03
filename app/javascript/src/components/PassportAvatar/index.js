@@ -8,7 +8,7 @@ import {
   StyledAvatarImg,
 } from "./styles";
 
-function PassportAvatar({ src, name, size, stroke, color, ...props }) {
+function PassportAvatarImage({ src, name, size, stroke, color, ...props }) {
   const { error } = useLoadImage(src);
 
   let initials = name[0];
@@ -44,6 +44,12 @@ function PassportAvatar({ src, name, size, stroke, color, ...props }) {
       ) : null}
     </StyledPassportAvatar>
   );
+}
+
+function PassportAvatar({ src, ...props }) {
+  if (!src) return null;
+
+  return <PassportAvatarImage src={src} {...props} />;
 }
 
 PassportAvatar.defaultProps = {
