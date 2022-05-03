@@ -46,13 +46,11 @@ export default function NotificationSubscription({
     setChecked(subscription.subscribed);
   }, [subscription]);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const nextChecked = e.target.checked;
     setChecked(nextChecked);
 
-    notify("Your settings have been updated.");
-
-    subscribe({
+    await subscribe({
       variables: {
         input: {
           subscription: value,
@@ -60,10 +58,12 @@ export default function NotificationSubscription({
         },
       },
     });
+
+    notify("Your settings have been updated.");
   };
 
   return (
-    <div className="py-4 flex items-center">
+    <div className="py-4 flex items-center" data-test-id={value}>
       <div className={labelsClasses({ disabled: !all.subscribed })}>
         <h5 className="font-medium text-lg leading-none mb-1">{title}</h5>
         <p className="text-neutral700 text-sm md:text-base">{description}</p>
