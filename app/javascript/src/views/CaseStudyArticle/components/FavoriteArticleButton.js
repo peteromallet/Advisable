@@ -52,7 +52,7 @@ export default function FavoriteArticleButton({ article, className }) {
   const [unfavorite] = useUnfavoriteArticle(article);
   const notification = useNotifications();
 
-  if (viewer.__typename !== "User") return null;
+  if (viewer?.__typename !== "User") return null;
 
   const handleClick = async () => {
     client.cache.modify({
