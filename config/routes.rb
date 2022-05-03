@@ -74,6 +74,7 @@ Rails.application.routes.draw do
   get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
   get "/guild/posts/:id", to: redirect(LogAndRedirect.new("/posts/%{id}"))
   get "/profile/:username/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
+  get "/explore/articles/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
   get "/freelancers/:username", to: redirect(LogAndRedirect.new("/profile/%{username}")), constraints: UsernameConstraint.new
   get "/clients/apply(*path)", to: redirect(LogAndRedirect.new("/setup"))
 
