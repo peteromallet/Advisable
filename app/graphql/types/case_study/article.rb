@@ -65,6 +65,8 @@ module Types
 
       field :is_favorited, Boolean, null: false
       def is_favorited
+        return false if current_user.nil?
+
         # this only runs single query even when we have many articles so don't use exists? or similar
         current_user.account.favorited_articles.any? { |fa| fa.article_id == object.id }
       end
