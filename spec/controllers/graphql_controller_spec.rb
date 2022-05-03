@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe GraphqlController, type: :request do
-  let(:api_key) { ENV["API_ACCESS_KEY"] }
+  let(:api_key) { ENV.fetch("API_ACCESS_KEY", nil) }
   let(:headers) { {"Api-Key" => api_key} }
   let(:params) { {query:} }
   let(:query) do
