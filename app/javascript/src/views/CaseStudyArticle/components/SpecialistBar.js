@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import PassportAvatar from "src/components/PassportAvatar";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
