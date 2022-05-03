@@ -5,6 +5,7 @@ import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
+import Avatar from "src/components/Avatar";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -36,11 +37,7 @@ export default function SpecialistBar({ article }) {
           )}
           <div className="flex gap-3 items-center h-full">
             <Link to={specialist.profilePath}>
-              <PassportAvatar
-                size="xs"
-                src={specialist.avatar}
-                name={specialist.name}
-              />
+              <Avatar src={specialist.avatar} name={specialist.name} />
             </Link>
             <div>
               <Link to={specialist.profilePath}>

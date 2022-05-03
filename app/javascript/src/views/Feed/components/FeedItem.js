@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import LogoMark from "src/components/LogoMark";
 import InterestIcon from "./InterestIcon";
 import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
+import Avatar from "src/components/Avatar";
 
 function Img({ src: url, ...props }) {
   const { src } = useImage({ srcList: url });
@@ -54,9 +55,9 @@ function FeedItem({ article, interest }) {
     <div className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start">
       <div>
         <div className="flex items-center gap-3 mb-4">
-          <div
-            className="w-[36px] h-[36px] bg-neutral200 rounded-full bg-cover"
-            style={{ backgroundImage: `url(${article.specialist.avatar})` }}
+          <Avatar
+            src={article.specialist.avatar}
+            name={article.specialist.name}
           />
           <div className="flex flex-col gap-1">
             <div className="text-[17px] font-medium leading-none">
