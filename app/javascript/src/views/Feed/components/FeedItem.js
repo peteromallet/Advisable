@@ -1,37 +1,9 @@
-import React, { Suspense } from "react";
-import { useImage } from "react-image";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import LogoMark from "src/components/LogoMark";
 import InterestIcon from "./InterestIcon";
-import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
+import { withErrorBoundary } from "react-error-boundary";
 import Avatar from "src/components/Avatar";
-
-function Img({ src: url, ...props }) {
-  const { src } = useImage({ srcList: url });
-  return <img src={src} {...props} />;
-}
-
-function LogoMarkFallback() {
-  return <LogoMark color="subtle" size="16" />;
-}
-
-function Favicon({ url }) {
-  if (!url) {
-    return <LogoMarkFallback />;
-  }
-
-  return (
-    <Suspense fallback={<LogoMarkFallback />}>
-      <ErrorBoundary fallback={<LogoMarkFallback />}>
-        <Img
-          src={url}
-          className="max-h-[40px] max-w-[52px] rounded-[8px]"
-          data-a={url}
-        />
-      </ErrorBoundary>
-    </Suspense>
-  );
-}
+import Favicon from "src/components/Favicon";
 
 function Attribute({ label, value }) {
   return (
@@ -104,7 +76,7 @@ function FeedItem({ article, interest }) {
       <div className="bg-neutral-100 p-5 rounded-[24px] w-full lg:w-[240px] flex-shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="flex-shrink-0">
-            <Favicon url={article.company?.favicon} />
+            <Favicon src={article.company?.favicon} />
           </div>
           <div className="flex flex-col min-w-0 w-full">
             <div className="font-medium leading-none pb-1 min-w-0 truncate">

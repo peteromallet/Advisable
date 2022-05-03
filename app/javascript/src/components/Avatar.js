@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useImage } from "react-image";
 import composeStyles from "src/utilities/composeStyles";
@@ -19,6 +19,11 @@ const avatarStyles = composeStyles({
         w-[40px]
         h-[40px]
         text-sm
+      `,
+      lg: `
+        w-[52px]
+        h-[52px]
+        text-base
       `,
     },
   },
