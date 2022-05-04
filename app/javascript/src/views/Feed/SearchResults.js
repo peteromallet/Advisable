@@ -46,7 +46,6 @@ export default function SearchResults() {
             <>
               <FeedItemSkeleton />
               <FeedItemSkeleton />
-              <FeedItemSkeleton />
             </>
           )}
         </div>

@@ -49,7 +49,6 @@ export default function Favorites() {
             <>
               <FeedItemSkeleton />
               <FeedItemSkeleton />
-              <FeedItemSkeleton />
             </>
           )}
         </div>

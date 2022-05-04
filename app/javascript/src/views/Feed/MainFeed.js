@@ -39,7 +39,6 @@ export default function MainFeed() {
             <>
               <FeedItemSkeleton />
               <FeedItemSkeleton />
-              <FeedItemSkeleton />
             </>
           )}
           {!loading && results.length === 0 && <EmptyFeed />}
