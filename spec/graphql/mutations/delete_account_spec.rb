@@ -17,7 +17,7 @@ RSpec.describe Mutations::DeleteAccount do
     GRAPHQL
   end
 
-  it "marks the specialist's account for deletion and deletes magic links" do
+  it "marks the specialist's account for deletion" do
     AdvisableSchema.execute(query, context:)
     expect(AirtableSyncJob).to have_been_enqueued.with(user, anything)
     expect(account.deleted_at).not_to be_nil
@@ -26,7 +26,7 @@ RSpec.describe Mutations::DeleteAccount do
   context "when user" do
     let(:user) { create(:user) }
 
-    it "marks account for deletion and deletes magic links" do
+    it "marks account for deletion" do
       AdvisableSchema.execute(query, context:)
       expect(AirtableSyncJob).to have_been_enqueued.with(user, anything)
       expect(account.deleted_at).not_to be_nil
