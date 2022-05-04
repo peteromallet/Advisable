@@ -5,6 +5,7 @@ import {
   User,
   CreditCard,
   Calendar,
+  LockClosed,
   Bell,
 } from "@styled-icons/heroicons-outline";
 import NavigationMenu from "src/components/NavigationMenu";
@@ -40,6 +41,9 @@ const SpecialistSettingsNavigation = () => {
         </NavigationMenu.Item>
         <NavigationMenu.Item to="/settings/notifications" icon={<Bell />}>
           Notifications
+        </NavigationMenu.Item>
+        <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
+          Account
         </NavigationMenu.Item>
       </NavigationMenu>
     </>

@@ -11,7 +11,7 @@ RSpec.describe "Specialist settings", type: :system do
     account = create(:account, password: "testing123")
     specialist = create(:specialist, account:)
     authenticate_as specialist
-    visit "/settings/account"
+    visit "/settings/password"
     fill_in "currentPassword", with: "testing123"
     fill_in "password", with: "changed123"
     fill_in "passwordConfirmation", with: "changed123"

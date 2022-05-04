@@ -7,6 +7,7 @@ import {
   User,
   CreditCard,
   Document,
+  LockClosed,
   UserGroup,
   Bell,
 } from "@styled-icons/heroicons-outline";
@@ -52,6 +53,9 @@ const ClientSettingsNavigation = () => {
         ) : null}
         <NavigationMenu.Item to="/settings/notifications" icon={<Bell />}>
           Notifications
+        </NavigationMenu.Item>
+        <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
+          Password
         </NavigationMenu.Item>
       </NavigationMenu>
     </>

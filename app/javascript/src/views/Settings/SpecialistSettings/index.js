@@ -4,6 +4,7 @@ import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import Navigation from "./SpecialistSettingsNavigation";
 import General from "./General";
+import Password from "../Password";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
 import AccountSettings from "../AccountSettings";
@@ -35,6 +36,7 @@ function SpecialistSettings() {
             <Route path="/general" element={<General />} />
             <Route path="/availability" element={<Availability />} />
             <Route path="/payment-settings" element={<PaymentSettings />} />
+            <Route path="/password" element={<Password />} />
             <Route path="/account" element={<AccountSettings />} />
             <Route
               path="/notifications"
