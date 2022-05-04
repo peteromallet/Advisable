@@ -3,7 +3,7 @@ import { Card, Heading, Button, useModal } from "@advisable/donut";
 import GeneralInfoForm from "./GeneralInfoForm";
 import { useAccountDetails } from "./queries";
 import { Loading } from "src/components";
-import DeleteAccountModal from "../components/DeleteAccountModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 import ChangePasswordForm from "src/components/ChangePasswordForm";
 
 export default function AccountSettings() {
