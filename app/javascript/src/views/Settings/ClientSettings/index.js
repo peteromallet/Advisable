@@ -7,7 +7,6 @@ import PaymentSettings from "./PaymentSettings";
 import Team from "./Team";
 import Invoices from "./Invoices";
 import OldInvoices from "./StripeInvoices";
-import Password from "./Password";
 import Invoice from "./StripeInvoices/Invoice";
 import AccountSettings from "../AccountSettings";
 import NotificationSettings from "./Notifications";
@@ -40,7 +39,6 @@ const ClientSettings = () => {
             <Route path="/invoices/old/:invoice_id" element={<Invoice />} />
             <Route path="/invoices/old" element={<OldInvoices />} />
             <Route path="/invoices/*" element={<Invoices />} />
-            <Route path="/password" element={<Password />} />
             <Route path="/account" element={<AccountSettings />} />
             <Route path="/notifications" element={<NotificationSettings />} />
             {/* If the user is not on a small screen, then redirect them to the
