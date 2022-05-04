@@ -7,6 +7,7 @@ import INTERESTS from "./interests.gql";
 import DELETE_INTEREST from "./deleteInterest.gql";
 import CREATE_INTERESTS from "./createInterests.gql";
 import TRENDING from "./trending.gql";
+import { useLocation } from "react-router-dom";
 
 export function useInterests() {
   return useQuery(INTERESTS);
@@ -17,8 +18,10 @@ export function useInterest(opts) {
 }
 
 export function useFeed() {
+  const location = useLocation();
+  const fetchPolicy = location.state?.fetchPolicy;
   return useQuery(FEED, {
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: fetchPolicy || "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
 }

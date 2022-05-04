@@ -7,6 +7,7 @@ import SearchIllustration from "src/illustrations/zest/search";
 import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import InterestEmpty from "./components/InterestEmpty";
+import RemoveInterest from "./components/RemoveInterest";
 
 export default function Interest() {
   const { interest: id } = useParams();
@@ -44,13 +45,16 @@ export default function Interest() {
   return (
     <FeedContainer>
       <div>
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
           {initialLoad ? (
             <div className="m-2 w-[250px] h-[28px] bg-neutral100 animate-pulse rounded-md" />
           ) : (
-            <h2 className="text-3xl font-semibold tracking-tight capitalize">
-              {data?.interest?.term}
-            </h2>
+            <>
+              <h2 className="text-3xl font-semibold tracking-tight capitalize">
+                {data?.interest?.term}
+              </h2>
+              <RemoveInterest interest={data?.interest} />
+            </>
           )}
         </div>
         <div className="space-y-6">
