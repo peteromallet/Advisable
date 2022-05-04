@@ -7,7 +7,7 @@ RSpec.describe "User settings" do
     account = create(:account, password: "testing123")
     user = create(:user, account:)
     authenticate_as user
-    visit "/settings/password"
+    visit "/settings/account"
     fill_in "currentPassword", with: "testing123"
     fill_in "password", with: "changed123"
     fill_in "passwordConfirmation", with: "changed123"
