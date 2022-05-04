@@ -48,7 +48,7 @@ export default function AddInterestPreviewButton() {
       variant="outlined"
       prefix={subscribedInterest ? <Check /> : <PlusSm />}
     >
-      {subscribedInterest ? "Subscribed" : "Add to interests"}
+      {subscribedInterest ? "Added" : "Add to interests"}
     </Button>
   );
 }
