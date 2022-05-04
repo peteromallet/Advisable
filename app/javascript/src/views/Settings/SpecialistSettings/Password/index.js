@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Card, Text, Button, useModal } from "@advisable/donut";
+import DeleteAccountModal from "../../components/DeleteAccountModal";
 import ChangePasswordForm from "components/ChangePasswordForm";
-import DeleteAccountModal from "./DeleteAccountModal";
 
 export default function Password() {
   const modal = useModal();

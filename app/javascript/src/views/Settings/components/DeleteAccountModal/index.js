@@ -3,8 +3,8 @@ import { gql, useMutation } from "@apollo/client";
 import { Modal, Text, Input, Button } from "@advisable/donut";
 
 const DELETE_ACCOUNT = gql`
-  mutation deleteSpecialist {
-    deleteSpecialist(input: {}) {
+  mutation deleteAccount {
+    deleteAccount(input: {}) {
       status
     }
   }
