@@ -42,10 +42,9 @@ export default function MainFeed() {
               <FeedItemSkeleton />
             </>
           )}
+          {!loading && results.length === 0 && <EmptyFeed />}
         </div>
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
-
-        {!loading && results.length === 0 && <EmptyFeed />}
 
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">
