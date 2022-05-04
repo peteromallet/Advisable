@@ -1,7 +1,7 @@
 = render "emails/container" do
   = render "emails/spacing", height: "32px"
   = render "emails/heading" do
-    | 3 projects for #{@user.company.name} to consider this week
+    | Here are 3 recommendations to explore based on the topics you follow:
   table style="margin: 0 32px; border-top: 1px solid #EEEEF0"
     - @articles.each do |article|
       tr
