@@ -35,6 +35,7 @@ export default function Searchbox({ className, size = "md", ...props }) {
 
   const handleKeyPress = (e) => {
     if (e.code === "Enter") {
+      window.scrollTo(0, 0);
       navigate(`/explore/search?q=${value}`);
     }
   };
