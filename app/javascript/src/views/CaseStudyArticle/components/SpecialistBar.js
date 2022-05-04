@@ -14,7 +14,7 @@ const Availability = ({ unavailableUntil }) => {
   return (
     <div className="flex justify-items-center items-center">
       <div className={`h-[6px] w-[6px] ${color} rounded-full mr-1`} />
-      <div className="text-xs font-[430] text-neutral600 leading-3">
+      <div className="text-xs font-[430] text-neutral600 leading-3 line-clamp-1 pr-2">
         {unavailableUntil ? "Unavailable for hire" : "Available for hire"}
       </div>
     </div>
@@ -46,7 +46,7 @@ export default function SpecialistBar({ article }) {
             </Link>
             <div>
               <Link to={specialist.profilePath}>
-                <div className="text-lg font-[620] mb-1 leading-none tracking-tight">
+                <div className="text-base sm:text-lg leading-none sm:leading-none text-neutral900 font-[620] mb-1 tracking-tight line-clamp-1 pr-3">
                   {specialist.name}
                 </div>
               </Link>
