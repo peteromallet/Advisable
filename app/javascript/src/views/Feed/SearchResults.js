@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import FeedItem from "./components/FeedItem";
 import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
@@ -24,6 +24,7 @@ export default function SearchResults() {
 
   const isLoading = loading && !data;
   const interestPreview = data?.createCaseStudyInterestPreview?.interestPreview;
+  const pageInfo = data?.feed?.pageInfo;
   const edges = interestPreview?.articles?.edges || [];
   const results = edges.map((e) => e.node);
   const hasResults = results.length > 0;
@@ -47,6 +48,20 @@ export default function SearchResults() {
               <FeedItemSkeleton />
               <FeedItemSkeleton />
             </>
+          )}
+
+          {hasResults && (
+            <div className="text-center py-10">
+              <div className="text-neutral400">
+                You have reached the end of this topic
+              </div>
+              <Link
+                to="/explore/search"
+                className="text-blue-600 hover:text-blue-900"
+              >
+                Search again
+              </Link>
+            </div>
           )}
         </div>
       </div>
