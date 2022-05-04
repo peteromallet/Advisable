@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 export default function RemoveInterest({ interest }) {
   const modal = useModal();
   const navigate = useNavigate();
-  const [deleteInterest] = useDeleteInterest(interest);
+  const [deleteInterest, { loading }] = useDeleteInterest(interest);
 
-  const handleRemove = () => {
-    deleteInterest();
+  const handleRemove = async () => {
+    await deleteInterest();
     navigate("/explore", {
       state: { fetchPolicy: "network-only" },
     });
@@ -38,7 +38,9 @@ export default function RemoveInterest({ interest }) {
         </div>
       </Modal>
       <DialogDisclosure {...modal}>
-        {(disclosure) => <CircularButton icon={Trash} {...disclosure} />}
+        {(disclosure) => (
+          <CircularButton icon={Trash} disabled={loading} {...disclosure} />
+        )}
       </DialogDisclosure>
     </>
   );
