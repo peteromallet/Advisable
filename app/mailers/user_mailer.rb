@@ -194,9 +194,9 @@ class UserMailer < ApplicationMailer
     @articles = ::CaseStudy::Article.where(id: article_ids)
     @account = user.account
     mail(
-      from: "Advisable <hello@advisable.com>",
+      from: "Advisable Weekly Digest <hello@advisable.com>",
       to: @account.email,
-      subject: "Your custom marketing inspiration: 3 projects for #{user.company.name} to consider this week"
+      subject: "3 inspiring projects for #{user.company.name} to consider this week!"
     ) do |format|
       format.html { render layout: "email_v2" }
     end
