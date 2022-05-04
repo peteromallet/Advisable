@@ -1,9 +1,11 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import Searchbox from "./components/Searchbox";
 import FeedContainer from "./components/FeedContainer";
 import TrendingArticles from "./components/TrendingArticles";
 import SearchResults from "./SearchResults";
+import DiamondGrid from "./components/DiamondGrid";
 
 export default function Search() {
   const [searchParams] = useSearchParams();
@@ -14,20 +16,37 @@ export default function Search() {
   }
 
   return (
-    <FeedContainer>
-      <div className="pt-8">
-        <h1 className="text-3xl font-semibold tracking-tight mb-2">
-          Search for projects
-        </h1>
-        <p className="text-neutral800 mb-8 text-lg">
-          Discover how leading marketers did their most impactful work, learn
-          from their case studies and collaborate with the people behind them.
-        </p>
-        <Searchbox size="lg" autoFocus />
-        <div className="pt-16 pb-12">
+    <>
+      <div className="bg-gradient-to-br from-blue-800 to-violet-600 md:pt-20 pb-6 md:pb-[100px] relative overflow-hidden">
+        <FeedContainer>
+          <DiamondGrid
+            className="absolute -right-[120px] -top-[110px] z-none"
+            grid={[
+              [null, null, "outlined", "outlined", null],
+              [null, "solid", "solid", "solid", null],
+              ["outlined", "solid", "outlined", "solid", "outlined"],
+              [null, "outlined", "solid", "solid", null],
+              [null, "outlined", "solid", null, null],
+            ]}
+          />
+          <div className="relative z-10">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-white leading-none">
+              Discover new projects
+            </h1>
+            <p className="text-slate-100 mb-10 text-base md:text-xl max-w-[720px]">
+              Discover how leading marketers did their most impactful work,
+              learn from their case studies and collaborate with the people
+              behind them.
+            </p>
+            <Searchbox size="lg" autoFocus />
+          </div>
+        </FeedContainer>
+      </div>
+      <FeedContainer>
+        <div className="pt-4 md:pt-16 pb-12">
           <TrendingArticles />
         </div>
-      </div>
-    </FeedContainer>
+      </FeedContainer>
+    </>
   );
 }

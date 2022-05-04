@@ -9,6 +9,7 @@ import BottomBar from "./components/BottomBar";
 import useTutorial from "src/hooks/useTutorial";
 import Favorites from "./Favorites";
 import Search from "./Search";
+import "./feed.css";
 
 function FeedViewFailed() {
   return (
@@ -31,7 +32,7 @@ export default function Feed() {
     <div className="flex">
       <FeedSidebar />
       <BottomBar />
-      <div className="flex-1 p-8 w-full">
+      <div className="flex-1 w-full">
         <ErrorBoundary FallbackComponent={FeedViewFailed}>
           <Routes>
             <Route index element={<MainFeed />} />

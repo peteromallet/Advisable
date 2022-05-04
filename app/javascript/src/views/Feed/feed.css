@@ -1,0 +1,27 @@
+:root {
+  --diamond-size: 120px;
+}
+
+.diamond-grid {
+  gap: 20px;
+  display: inline-grid;
+  transform: rotate(-45deg);
+}
+
+.diamond-grid-item {
+  width: var(--diamond-size);
+  height: var(--diamond-size);
+  border-radius: 20px;
+  box-shadow: -2px 2px 40px rgba(0, 0, 0, 0.04);
+  background: linear-gradient(
+    225deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+}
+
+.diamond-grid-item.diamond-grid-item--outlined {
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}

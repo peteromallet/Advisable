@@ -6,7 +6,7 @@ import useTrending from "../queries";
 function CaseStudyCard({ article }) {
   return (
     <Link to={article.path} state={{ back: true }}>
-      <div className="w-full max-w-[320px] h-[320px] rounded-lg bg-white shadow-lg p-6">
+      <div className="w-full h-[320px] rounded-lg bg-white shadow-lg p-6 transition-all hover:-translate-y-1 hover:shadow-xl">
         <SpecialistCompanyRelation
           company={article.company}
           specialist={article.specialist}
@@ -28,8 +28,10 @@ export default function TrendingArticles() {
 
   return (
     <>
-      <h4 className="text-lg font-medium mb-4">Trending projects</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h4 className="text-xl font-medium mb-4 tracking-tight">
+        Trending projects
+      </h4>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (
           <CaseStudyCard key={article.id} article={article} />
         ))}

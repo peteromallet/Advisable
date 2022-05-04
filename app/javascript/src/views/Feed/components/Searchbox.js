@@ -12,17 +12,37 @@ const searchBoxClasses = composeStyles({
     rounded-full
     p-2
     pl-5
-    border-2
+    border-[3px]
     border-solid
-    border-neutral200
+    border-white
+    shadow-xl
   `,
   variants: {
-    focused: `border-blue600`,
+    focused: `!border-blue200`,
   },
 });
 
 const buttonClasses = composeStyles({
-  base: `bg-blue500 hover:bg-blue700 px-5 py-3 leading-none text-white rounded-full font-medium flex items-center`,
+  base: `
+    px-5
+    py-3
+    leading-none
+    text-white
+    rounded-full
+    font-medium
+    flex
+    items-center
+    gap-2
+
+    bg-blue500
+    bg-gradient-to-br
+    from-blue500
+    to-purple500
+    hover:from-blue600
+    hover:to-purple600
+    active:from-blue700
+    active:to-purple700
+  `,
 });
 
 export default function Searchbox({ className, ...props }) {
@@ -65,12 +85,12 @@ export default function Searchbox({ className, ...props }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search projects..."
-        className="outline-none w-full bg-transparent text-lg"
+        className="outline-none w-full bg-transparent text-lg font-medium placeholder:font-normal placeholder:text-neutral500"
         {...props}
       />
       <button className={buttonClasses()}>
-        Search
-        <ArrowSmRight className="w-5 h-5 ml-2" />
+        <span className="hidden md:block">Search</span>
+        <ArrowSmRight className="w-5 h-5" />
       </button>
     </form>
   );

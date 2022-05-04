@@ -15,7 +15,7 @@ const sidebarClasses = composeStyles({
     w-[300px]
     bg-white
     h-viewport
-    shadow-xl
+    shadow
     shrink-0
     sticky
     top-[var(--header-height)]
