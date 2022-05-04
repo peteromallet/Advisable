@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import useViewer from "src/hooks/useViewer";
 import { useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
@@ -21,6 +22,7 @@ const Availability = ({ unavailableUntil }) => {
 };
 
 export default function SpecialistBar({ article }) {
+  const viewer = useViewer();
   const location = useLocation();
   const sUp = useBreakpoint("sUp");
   const { back } = location.state || {};
@@ -55,13 +57,15 @@ export default function SpecialistBar({ article }) {
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
           <FavoriteArticleButton article={article} />
-          <ConnectButton
-            specialist={specialist}
-            circular={!sUp}
-            className="ml-auto"
-          >
-            Connect
-          </ConnectButton>
+          {article.specialist.id !== viewer?.id && (
+            <ConnectButton
+              specialist={specialist}
+              circular={!sUp}
+              className="ml-auto"
+            >
+              Connect
+            </ConnectButton>
+          )}
         </div>
       </div>
     </div>
