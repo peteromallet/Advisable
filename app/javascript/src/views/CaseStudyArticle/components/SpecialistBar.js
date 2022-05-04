@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
@@ -21,6 +22,7 @@ const Availability = ({ unavailableUntil }) => {
 
 export default function SpecialistBar({ article }) {
   const location = useLocation();
+  const sUp = useBreakpoint("sUp");
   const { back } = location.state || {};
   const { specialist } = article;
 
@@ -32,7 +34,7 @@ export default function SpecialistBar({ article }) {
             <CircularButton
               aria-label="Go back"
               icon={ArrowSmLeft}
-              className="mr-4"
+              className="mr-4 hidden sm:block"
               onClick={() => window.history.back()}
             />
           )}
@@ -53,7 +55,11 @@ export default function SpecialistBar({ article }) {
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
           <FavoriteArticleButton article={article} />
-          <ConnectButton specialist={specialist} className="ml-auto">
+          <ConnectButton
+            specialist={specialist}
+            circular={!sUp}
+            className="ml-auto"
+          >
             Connect
           </ConnectButton>
         </div>
