@@ -42,11 +42,21 @@ const promptClasses = composeStyles({
   `,
 });
 
+function HeaderButtonBadge(props) {
+  return (
+    <div
+      {...props}
+      className={promptClasses()}
+      data-testid="unreadNotifications"
+    />
+  );
+}
+
 function HeaderButton({ icon, count, prompt, className, ...props }, ref) {
   return (
     <button ref={ref} className={classes({ className })} {...props}>
-      {count ? <div className={promptClasses()}>{count}</div> : null}
-      {prompt && <div className={promptClasses()} />}
+      {count ? <HeaderButtonBadge>{count}</HeaderButtonBadge> : null}
+      {prompt && <HeaderButtonBadge />}
       {createElement(icon, { className: "w-5 h-5" })}
     </button>
   );

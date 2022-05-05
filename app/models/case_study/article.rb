@@ -80,6 +80,8 @@ module CaseStudy
 
     def self.trending
       articles = order(published_at: :desc).first(50)
+      return [] if articles.empty?
+
       oldest = articles.last.published_at
       delta = Time.zone.now - oldest
 
