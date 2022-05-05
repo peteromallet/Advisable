@@ -1,8 +1,9 @@
 import React, { createElement } from "react";
 import { useResolvedPath, useMatch } from "react-router-dom";
-import { Bookmark, Home, InboxIn } from "@styled-icons/heroicons-solid";
 import { Link } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
+import BookmarkIcon from "./BookmarkIcon";
+import HomeIcon from "./HomeIcon";
 
 const bottomBarClasses = composeStyles({
   base: `
@@ -64,12 +65,12 @@ function BottomBarItem({ to, icon, children }) {
 export default function BottomBar() {
   return (
     <div className={bottomBarClasses()}>
-      <BottomBarItem to="/explore" icon={Home}>
+      <BottomBarItem to="/explore" icon={HomeIcon}>
         Feed
       </BottomBarItem>
-      {/* <BottomBarItem to="/explore/favorites" icon={Bookmark}>
-        Saved
-      </BottomBarItem> */}
+      <BottomBarItem to="/explore/favorites" icon={BookmarkIcon}>
+        Favorites
+      </BottomBarItem>
       {/* <BottomBarItem to="/explore/sahred" icon={InboxIn}>
         Shared
       </BottomBarItem> */}
