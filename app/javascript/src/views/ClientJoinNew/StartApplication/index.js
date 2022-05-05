@@ -1,50 +1,10 @@
 import React from "react";
-import { Form, Formik } from "formik";
-import { useNavigate } from "react-router";
-import { Box, Text, Input, Error, Link, Heading } from "@advisable/donut";
-import SubmitButton from "src/components/SubmitButton";
-import FormField from "src/components/FormField";
-import useViewer from "src/hooks/useViewer";
-import validationSchema from "./validationSchema";
-import { useCreateClientAccount } from "../queries";
+import { Box, Text, Link, Heading } from "@advisable/donut";
+import Button from "src/components/Button";
 import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
 import Divider from "src/components/Divider";
-import { useSearchParams } from "react-router-dom";
 
 export default function StartApplication() {
-  const viewer = useViewer();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [createClientAccount] = useCreateClientAccount();
-
-  const initialValues = {
-    firstName: viewer?.firstName || "",
-    lastName: viewer?.lastName || "",
-    email: viewer?.email || "",
-  };
-
-  const handleSubmit = async (values, { setStatus }) => {
-    setStatus(null);
-    const res = await createClientAccount({
-      variables: {
-        input: {
-          ...values,
-          rid: searchParams.get("rid"),
-          utmCampaign: searchParams.get("utm_campaign"),
-          utmSource: searchParams.get("utm_source"),
-          utmMedium: searchParams.get("utm_medium"),
-        },
-      },
-    });
-
-    if (res.errors) {
-      setStatus(res.errors[0]?.message);
-      return;
-    }
-
-    navigate("/");
-  };
-
   return (
     <>
       <Box textAlign="center" marginBottom={8}>
@@ -62,46 +22,14 @@ export default function StartApplication() {
         Signup with Google
       </LoginWithGoogle>
       <Divider py={6}>Or</Divider>
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-        validationSchema={validationSchema}
+      <Button
+        to="/freelancers/join"
+        size="lg"
+        variant="secondary"
+        className="w-full"
       >
-        {({ status }) => (
-          <Form>
-            <Box display="flex" flexDirection={["column", "row"]}>
-              <Box mb={4} mr={[0, 2]} width="100%">
-                <FormField
-                  as={Input}
-                  name="firstName"
-                  size={["sm", "md"]}
-                  placeholder="First name"
-                />
-              </Box>
-              <Box mb={4} ml={[0, 2]} width="100%">
-                <FormField
-                  as={Input}
-                  name="lastName"
-                  size={["sm", "md"]}
-                  placeholder="Last name"
-                />
-              </Box>
-            </Box>
-            <Box mb={4}>
-              <FormField
-                as={Input}
-                name="email"
-                size={["sm", "md"]}
-                placeholder="Email address"
-              />
-            </Box>
-            <Error>{status}</Error>
-            <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
-              Create Your Free Account
-            </SubmitButton>
-          </Form>
-        )}
-      </Formik>
+        Signup with email
+      </Button>
       <Divider py={8} />
       <Box textAlign="center">
         <Text
