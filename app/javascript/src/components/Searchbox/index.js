@@ -1,20 +1,76 @@
-import { Search } from "@styled-icons/heroicons-solid";
+import { motion } from "framer-motion";
+import { ArrowSmRight, Search } from "@styled-icons/heroicons-solid";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 
-const searchBoxClasses = composeStyles({
-  base: `flex bg-neutral100 items-center gap-2 rounded-full`,
+const iconClasses = composeStyles({
+  base: `
+    w-5
+    h-5
+    ml-3 
+    shrink-0
+    text-neutral-400
+  `,
   variants: {
-    focused: `bg-neutral200`,
-    size: {
-      md: `py-2 px-4`,
-      lg: `py-4 px-6`,
-    },
+    focused: `!text-blue900`,
   },
 });
 
-export default function Searchbox({ className, size = "md", ...props }) {
+const searchBoxClasses = composeStyles({
+  base: `
+    p-1
+    flex
+    bg-white
+    border
+    border-solid
+    border-neutral-300
+    shadow
+    items-center
+    gap-2
+    rounded-full
+    cursor-text
+
+    hover:border-neutral-400
+  `,
+  variants: {
+    focused: `
+      ring-1
+      ring-solid
+      ring-blue-700
+      !border-blue-700
+    `,
+  },
+});
+
+const buttonClasses = composeStyles({
+  base: `
+    w-8
+    h-8
+    grid
+    shrink-0
+    rounded-full
+    place-items-center
+    
+    invisible
+    opacity-0
+    transition-all
+
+    bg-blue500
+    bg-gradient-to-br
+    from-blue500
+    to-purple500
+    hover:from-blue600
+    hover:to-purple600
+    active:from-blue700
+    active:to-purple700
+  `,
+  variants: {
+    focused: `!visible opacity-100`,
+  },
+});
+
+export default function Searchbox({ className, ...props }) {
   const inputRef = useRef();
   const navigate = useNavigate();
   const [focused, setFocused] = useState(false);
@@ -33,30 +89,38 @@ export default function Searchbox({ className, size = "md", ...props }) {
     setValue(e.target.value);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.code === "Enter") {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (value) {
+      inputRef.current.blur();
       window.scrollTo(0, 0);
       navigate(`/explore/search?q=${value}`);
     }
   };
 
   return (
-    <div
+    <motion.form
       onClick={handleClick}
-      className={searchBoxClasses({ className, size, focused })}
+      onSubmit={handleSubmit}
+      className={searchBoxClasses({ className, focused })}
+      initial={{ width: focused ? "100%" : "70%" }}
+      animate={{ width: focused ? "100%" : "70%" }}
+      // transition={{ duration: 0.3 }}
     >
-      <Search className="w-5 h-5 shrink-0 text-neutral600" />
+      <Search className={iconClasses({ focused })} />
       <input
         ref={inputRef}
         value={value}
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search projects..."
-        className="outline-none w-full bg-transparent"
+        className="outline-none w-full bg-transparent placeholder:text-neutral-400"
         {...props}
       />
-    </div>
+      <button className={buttonClasses({ focused })}>
+        <ArrowSmRight className="w-4 h-4 text-white" />
+      </button>
+    </motion.form>
   );
 }
