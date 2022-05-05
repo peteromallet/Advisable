@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
 import { useBackground } from "@advisable/donut";
@@ -11,6 +11,8 @@ import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
 import useScrollToTop from "src/hooks/useScrollToTop";
+import { customerlyEvent } from "src/utilities/customerly";
+import { useLocation } from "react-router-dom";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -37,7 +39,13 @@ const SectionWrapper = ({ children, className, ...props }) => (
 export default function ShortlistArticle() {
   useScrollToTop();
   useBackground("beige");
+  const location = useLocation();
   const { data, loading, error } = useArticle();
+
+  // Track the page view
+  useEffect(() => {
+    customerlyEvent("viewed_case_study");
+  }, [location]);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
