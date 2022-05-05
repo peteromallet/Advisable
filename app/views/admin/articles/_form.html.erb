@@ -11,8 +11,44 @@
     </div>
   <% end %>
 
+  <%= form.label :specialist %>
+  <%= form.select :specialist_id, options_for_select(@specialists, article.specialist_id) %>
+
+  <%= form.label :interviewer %>
+  <%= form.select :interviewer_id, options_for_select(@interviewers, article.interviewer_id), include_blank: true %>
+
   <%= form.label :title %>
   <%= form.text_field :title %>
 
-  <div><%= form.submit %></div>
+  <%= form.label :subtitle %>
+  <%= form.text_field :subtitle %>
+
+  <%= form.label :company_type %>
+  <%= form.select :company_type, ["Government", "Growth-Stage Startup", "Individual Entrepreneur", "Major Corporation", "Medium-Sized Business", "Small Business", "Startup"], {include_hidden: false, include_blank: true}, {multiple: true} %>
+
+  <%= form.label :comment %>
+  <%= form.text_field :comment %>
+
+  <%= form.label :editor_note %>
+  <%= form.text_field :editor_note %>
+
+  <%= form.label :goals %>
+  <%= form.text_field :goals %>
+
+  <%= form.label :score %>
+  <%= form.number_field :score %>
+
+  <%= form.label :confidential %>
+  <%= form.check_box :confidential %>
+
+  <%= form.label :targeting %>
+  <%= form.text_field :targeting %>
+
+  <%= form.label :published_at %>
+  <%= form.datetime_select :published_at %>
+
+  <%= form.label :hide_from_search %>
+  <%= form.check_box :hide_from_search %>
+
+  <%= form.submit %>
 <% end %>

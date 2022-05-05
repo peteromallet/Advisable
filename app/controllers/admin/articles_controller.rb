@@ -5,6 +5,7 @@ require "matrix"
 module Admin
   class ArticlesController < AdminController
     before_action :set_article, only: %i[show edit update destroy]
+    before_action :form_vars, only: %i[new edit]
 
     include Pagy::Backend
 
@@ -75,8 +76,13 @@ module Admin
       @article = CaseStudy::Article.find(params[:id])
     end
 
+    def form_vars
+      @specialists = Specialist.includes(:account).map { |s| [s.account.name, s.id] }
+      @interviewers = Account.where(email: SalesPerson.select(:email)).map { |a| [a.name, a.id] }
+    end
+
     def article_params
-      params.require(:case_study_article).permit(:title)
+      params.require(:case_study_article).permit(:specialist_id, :interviewer_id, :title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [])
     end
   end
 end
