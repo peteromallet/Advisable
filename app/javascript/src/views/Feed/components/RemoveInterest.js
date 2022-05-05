@@ -39,7 +39,12 @@ export default function RemoveInterest({ interest }) {
       </Modal>
       <DialogDisclosure {...modal}>
         {(disclosure) => (
-          <CircularButton icon={Trash} disabled={loading} {...disclosure} />
+          <CircularButton
+            aria-label="Remove interest"
+            icon={Trash}
+            disabled={loading}
+            {...disclosure}
+          />
         )}
       </DialogDisclosure>
     </>

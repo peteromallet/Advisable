@@ -14,12 +14,15 @@ export default function Interest() {
   const { data, loading, fetchMore } = useInterest({
     variables: { id },
     fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
   });
 
   const handleLoadMore = useCallback(() => {
     if (!data) return;
-    if (!data.feed.pageInfo.hasNextPage) return;
-    fetchMore({ variables: { cursor: data.feed.pageInfo.endCursor } });
+    const { pageInfo } = data.interest.articles;
+    if (!pageInfo.hasNextPage) return;
+
+    fetchMore({ variables: { cursor: pageInfo.endCursor } });
   }, [fetchMore, data]);
 
   if (!loading && !data.interest) {

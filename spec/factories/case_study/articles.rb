@@ -6,7 +6,7 @@ FactoryBot.define do
     score { 1 }
     company { association :case_study_company }
     confidential { false }
-    title { Faker::Lorem.sentence }
+    sequence(:title) { |s| "#{Faker::Lorem.sentence} #{s}" }
     subtitle { Faker::Lorem.paragraph(sentence_count: 4) }
     comment { "MyString" }
     excerpt { "MyString" }

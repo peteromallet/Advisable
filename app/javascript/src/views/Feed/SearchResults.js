@@ -24,7 +24,6 @@ export default function SearchResults() {
 
   const isLoading = loading && !data;
   const interestPreview = data?.createCaseStudyInterestPreview?.interestPreview;
-  const pageInfo = data?.feed?.pageInfo;
   const edges = interestPreview?.articles?.edges || [];
   const results = edges.map((e) => e.node);
   const hasResults = results.length > 0;

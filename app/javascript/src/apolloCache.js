@@ -62,6 +62,11 @@ const createCache = () => {
           },
         },
       },
+      CaseStudyInterest: {
+        fields: {
+          articles: relayStylePagination(),
+        },
+      },
       Conversation: {
         fields: {
           messages: relayStylePagination(),

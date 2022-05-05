@@ -13,7 +13,7 @@ export default function ClientHeader() {
         <HeaderLogo />
         <div className="px-6 flex-1">
           <div className="hidden md:block max-w-[400px]">
-            <Searchbox />
+            <Searchbox name="headerSearch" />
           </div>
         </div>
         <div className="flex items-center gap-3">
