@@ -50,7 +50,7 @@ module Admin
       @article = CaseStudy::Article.new(article_params)
 
       if @article.save
-        redirect_to @article, notice: "Article was successfully created."
+        redirect_to admin_article_path(@article), notice: "Article was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -58,7 +58,7 @@ module Admin
 
     def update
       if @article.update(article_params)
-        redirect_to @article, notice: "Article was successfully updated."
+        redirect_to admin_article_path(@article), notice: "Article was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -76,7 +76,7 @@ module Admin
     end
 
     def article_params
-      params.fetch(:article, {})
+      params.require(:case_study_article).permit(:title)
     end
   end
 end

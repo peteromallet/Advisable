@@ -11,7 +11,8 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+
+  <div><%= form.submit %></div>
 <% end %>
