@@ -1,7 +1,29 @@
 import React from "react";
 import Favicon from "src/components/Favicon";
+import composeStyles from "src/utilities/composeStyles";
 
-const Divider = () => <div className="w-px h-8 bg-neutral200 last:hidden" />;
+const wrapperStyles = composeStyles({
+  base: `
+    flex
+    flex-col
+    sm:flex-row
+    ring-1
+    ring-inset
+    ring-neutral200
+    sm:items-center
+    gap-5
+    sm:gap-7
+    mb-5
+    rounded-[20px]
+    pl-6
+    pr-8
+    py-4
+  `,
+});
+
+const Divider = () => (
+  <div className="w-px h-8 hidden sm:block bg-neutral200 last:hidden" />
+);
 
 const Item = ({ children, label, hidden, ...props }) => {
   if (!children || hidden === true) return null;
@@ -34,7 +56,7 @@ export default function CompanyBox({ caseStudy }) {
   const companyType = caseStudy.companyType?.[0];
 
   return (
-    <div className="flex ring-1 ring-inset ring-neutral200 items-center gap-7 mb-5 rounded-[20px] pl-6 pr-8 py-4">
+    <div className={wrapperStyles({ wrapperStyles })}>
       <Item className="flex gap-2 items-center">
         {favicon && <Favicon src={favicon} />}
         <div className="text-xl font-[450] text-neutral900">{name}</div>

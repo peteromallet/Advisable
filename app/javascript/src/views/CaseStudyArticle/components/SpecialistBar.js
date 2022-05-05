@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import useViewer from "src/hooks/useViewer";
+import { useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
@@ -12,7 +14,7 @@ const Availability = ({ unavailableUntil }) => {
   return (
     <div className="flex justify-items-center items-center">
       <div className={`h-[6px] w-[6px] ${color} rounded-full mr-1`} />
-      <div className="text-xs font-[430] text-neutral600 leading-3">
+      <div className="text-xs font-[430] text-neutral600 leading-3 line-clamp-1 pr-2">
         {unavailableUntil ? "Unavailable for hire" : "Available for hire"}
       </div>
     </div>
@@ -20,7 +22,9 @@ const Availability = ({ unavailableUntil }) => {
 };
 
 export default function SpecialistBar({ article }) {
+  const viewer = useViewer();
   const location = useLocation();
+  const sUp = useBreakpoint("sUp");
   const { back } = location.state || {};
   const { specialist } = article;
 
@@ -32,7 +36,7 @@ export default function SpecialistBar({ article }) {
             <CircularButton
               aria-label="Go back"
               icon={ArrowSmLeft}
-              className="mr-4"
+              className="mr-4 hidden sm:block"
               onClick={() => window.history.back()}
             />
           )}
@@ -42,7 +46,7 @@ export default function SpecialistBar({ article }) {
             </Link>
             <div>
               <Link to={specialist.profilePath}>
-                <div className="text-lg font-[620] mb-1 leading-none tracking-tight">
+                <div className="text-base sm:text-lg leading-none sm:leading-none text-neutral900 font-[620] mb-1 tracking-tight line-clamp-1 pr-3">
                   {specialist.name}
                 </div>
               </Link>
@@ -53,9 +57,15 @@ export default function SpecialistBar({ article }) {
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
           <FavoriteArticleButton article={article} />
-          <ConnectButton specialist={specialist} className="ml-auto">
-            Connect
-          </ConnectButton>
+          {article.specialist.id !== viewer?.id && (
+            <ConnectButton
+              specialist={specialist}
+              circular={!sUp}
+              className="ml-auto"
+            >
+              Connect
+            </ConnectButton>
+          )}
         </div>
       </div>
     </div>
