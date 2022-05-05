@@ -4,7 +4,7 @@ import { Container, useBreakpoint } from "@advisable/donut";
 import View from "src/components/View";
 import Navigation from "./SpecialistSettingsNavigation";
 import General from "./General";
-import Password from "./Password";
+import Password from "../Password";
 import PaymentSettings from "./PaymentSettings";
 import Availability from "./Availability";
 import AccountSettings from "../AccountSettings";

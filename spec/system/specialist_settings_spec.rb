@@ -26,7 +26,7 @@ RSpec.describe "Specialist settings", type: :system do
     authenticate_as specialist
     visit "/settings/account"
     fill_in "email", with: "update@test.com", fill_options: {clear: :backspace}
-    click_on "Save changes"
+    click_on "Update settings"
     expect(page).to have_content("Your account has been updated")
     expect(specialist.reload.account.email).to eq("update@test.com")
   end

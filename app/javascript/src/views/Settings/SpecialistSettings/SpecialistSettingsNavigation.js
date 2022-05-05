@@ -43,7 +43,7 @@ const SpecialistSettingsNavigation = () => {
           Notifications
         </NavigationMenu.Item>
         <NavigationMenu.Item to="/settings/password" icon={<LockClosed />}>
-          Account
+          Password
         </NavigationMenu.Item>
       </NavigationMenu>
     </>

@@ -35,11 +35,11 @@ const ClientSettingsNavigation = () => {
         Settings
       </Text>
       <NavigationMenu title="Settings">
+        <NavigationMenu.Item to="/settings/account" icon={<User />}>
+          Account
+        </NavigationMenu.Item>
         {viewer.isTeamManager ? (
           <>
-            <NavigationMenu.Item to="/settings/account" icon={<User />}>
-              Account
-            </NavigationMenu.Item>
             <NavigationMenu.Item to="/settings/payments" icon={<CreditCard />}>
               Payments
             </NavigationMenu.Item>

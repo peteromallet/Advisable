@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Mutations
-  class DeleteSpecialist < Mutations::BaseMutation
+  class DeleteAccount < Mutations::BaseMutation
     field :status, String, null: true
 
     def authorized?
-      requires_specialist!
+      requires_current_user!
     end
 
     def resolve

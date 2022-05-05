@@ -7,7 +7,7 @@ import PaymentSettings from "./PaymentSettings";
 import Team from "./Team";
 import Invoices from "./Invoices";
 import OldInvoices from "./StripeInvoices";
-import Password from "./Password";
+import Password from "../Password";
 import Invoice from "./StripeInvoices/Invoice";
 import AccountSettings from "../AccountSettings";
 import NotificationSettings from "./Notifications";

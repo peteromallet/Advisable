@@ -57,9 +57,11 @@ export default function ChangePasswordForm() {
           type="password"
           label="Confirm password"
           name="passwordConfirmation"
-          marginBottom={6}
+          marginBottom={8}
         />
-        <SubmitButton disableUntilValid>Update password</SubmitButton>
+        <SubmitButton size="l" disableUntilValid>
+          Update password
+        </SubmitButton>
       </Box>
     </Formik>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Text } from "@advisable/donut";
+import { Box, Card, Text } from "@advisable/donut";
 import ChangePasswordForm from "components/ChangePasswordForm";
 
 export default function Password() {
@@ -14,7 +14,10 @@ export default function Password() {
       >
         Change your password
       </Text>
-      <ChangePasswordForm />
+
+      <Box mb={12}>
+        <ChangePasswordForm />
+      </Box>
     </Card>
   );
 }
