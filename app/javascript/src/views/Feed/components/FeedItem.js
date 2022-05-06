@@ -18,6 +18,18 @@ function Attribute({ label, value }) {
   );
 }
 
+const Availability = ({ unavailableUntil }) => {
+  const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
+  return (
+    <div className="flex justify-items-center items-center">
+      <div className={`h-[6px] w-[6px] ${color} rounded-full mr-1`} />
+      <div className="text-sm font-inter text-neutral600 leading-none line-clamp-1 pr-2">
+        {unavailableUntil ? "Unavailable for hire" : "Available to hire"}
+      </div>
+    </div>
+  );
+};
+
 function FeedItem({ article, interest }) {
   const location = useLocation();
 
@@ -32,16 +44,12 @@ function FeedItem({ article, interest }) {
             name={article.specialist.name}
           />
           <div className="flex flex-col gap-1">
-            <div className="text-[17px] font-medium leading-none">
+            <div className="text-[18px] font-medium leading-none">
               {article.specialist.name}
             </div>
-            <div className="text-neutral600 text-sm font-inter leading-none">
-              {article.company ? (
-                <>with {article.company.name}</>
-              ) : (
-                <span className="text-neutral400">Confidential company</span>
-              )}
-            </div>
+            <Availability
+              unavailableUntil={article.specialist.unavailableUntil}
+            />
           </div>
         </div>
         <Link
