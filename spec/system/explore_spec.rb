@@ -16,6 +16,10 @@ RSpec.describe "Discover", type: :system do
     })
   end
 
+  before do
+    allow_any_instance_of(CaseStudy::TermData).to receive(:articles_for_interest).and_return([])
+  end
+
   context "when not authenticated" do
     it "/explore redirects to the login page" do
       visit "/explore"
