@@ -12,7 +12,8 @@ import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import { customerlyEvent } from "src/utilities/customerly";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { trackEvent } from "src/utilities/segment";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -39,13 +40,13 @@ const SectionWrapper = ({ children, className, ...props }) => (
 export default function ShortlistArticle() {
   useScrollToTop();
   useBackground("beige");
-  const location = useLocation();
+  const { slug } = useParams();
   const { data, loading, error } = useArticle();
 
   // Track the page view
   useEffect(() => {
     customerlyEvent("viewed_case_study");
-  }, [location]);
+  }, [slug]);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
