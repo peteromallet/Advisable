@@ -4,7 +4,7 @@ import { Link, Button } from "@advisable/donut";
 import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
 import Divider from "src/components/Divider";
 
-export default function StartApplication() {
+export default function GeneralForm() {
   return (
     <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }} key="2">
       <LoginWithGoogle size="xl" mode="user" navigate="/setup">

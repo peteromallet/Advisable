@@ -5,11 +5,11 @@ import { useLocation } from "react-router";
 import { Link, Heading } from "@advisable/donut";
 import useMediaQuery from "src/utilities/useMediaQuery";
 import LogoMark from "src/components/LogoMark";
+import Divider from "src/components/Divider";
 import Logo from "src/components/Logo";
 import ArticleCardsComposition from "src/components/ArticleCardsComposition";
-import StartApplication from "./StartApplication";
+import GeneralForm from "./GeneralForm";
 import EmailForm from "./EmailForm";
-import Divider from "src/components/Divider";
 
 export default function ClientJoin() {
   const location = useLocation();
@@ -43,7 +43,7 @@ export default function ClientJoin() {
                 </Link>
               </div>
             </div>
-            {email ? <EmailForm /> : <StartApplication />}
+            {email ? <EmailForm /> : <GeneralForm />}
             <Divider py={8} />
             <div className="text-center">
               <div className="text-base mb-2 text-neutral700 font-[480] tracking-tight">
