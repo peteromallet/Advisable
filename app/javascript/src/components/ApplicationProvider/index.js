@@ -9,6 +9,7 @@ import useSentryUser from "src/hooks/useSentryUser";
 import useMixpanelUser from "src/hooks/useMixpanelUser";
 import useHotjarUser from "src/hooks/useHotjarUser";
 import useCustomerly from "src/hooks/useCustomerly";
+import useSegmentIdentity from "src/hooks/useSegmentIdentity";
 
 const ApplicationProvider = ({ children }) => {
   const { data, loading } = useQuery(VIEWER);
@@ -16,6 +17,7 @@ const ApplicationProvider = ({ children }) => {
   useHotjarUser(data?.viewer);
   useMixpanelUser(data?.viewer);
   useCustomerly(data?.viewer);
+  useSegmentIdentity(data?.viewer);
 
   const context = {
     viewer: data?.viewer,
