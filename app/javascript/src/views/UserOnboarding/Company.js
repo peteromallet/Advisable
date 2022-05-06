@@ -33,7 +33,7 @@ export default function Company({ data }) {
       variables: { input: values },
     });
 
-    trackEvent("Setup - Submitted Company");
+    trackEvent("Setup - Submitted Company", values);
     navigate("../industry");
   };
 

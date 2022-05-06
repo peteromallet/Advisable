@@ -11,6 +11,7 @@ import InterestInput from "./InterestInput";
 import SUGGESTED_INTERESTS from "./suggestedInterests";
 import Arrow from "./Arrow";
 import useMediaQuery from "src/utilities/useMediaQuery";
+import { trackEvent } from "src/utilities/segment";
 
 export default function Interests({ data }) {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function Interests({ data }) {
       },
     });
 
+    trackEvent("Setup - Submitted Interests", { interests });
     navigate("../complete");
   };
 
