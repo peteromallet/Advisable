@@ -1,13 +1,21 @@
 import React from "react";
 import { motion } from "framer-motion";
+import queryString from "query-string";
+import { useLocation } from "react-router";
+import { Link, Heading } from "@advisable/donut";
 import useMediaQuery from "src/utilities/useMediaQuery";
 import LogoMark from "src/components/LogoMark";
 import Logo from "src/components/Logo";
 import ArticleCardsComposition from "src/components/ArticleCardsComposition";
 import StartApplication from "./StartApplication";
+import EmailForm from "./EmailForm";
+import Divider from "src/components/Divider";
 
 export default function ClientJoin() {
+  const location = useLocation();
+  const { email } = queryString.parse(location.search);
   const isDesktop = useMediaQuery("(min-width: 720px)");
+
   return (
     <div className="onboarding flex flex-col lg:min-h-screen">
       <header className="onboarding_heading px-5 flex items-center">
@@ -24,7 +32,27 @@ export default function ClientJoin() {
         >
           <ArticleCardsComposition />
           <div className="pt-6 pb-14 px-12">
-            <StartApplication />
+            <div className="text-center mb-8">
+              <Heading size="4xl" marginBottom={3}>
+                Start discovering SaaS projects
+              </Heading>
+              <div className="text-lg text-neutral700">
+                Already have an account?{" "}
+                <Link to="/login" variant="underlined">
+                  Login
+                </Link>
+              </div>
+            </div>
+            {email ? <EmailForm /> : <StartApplication />}
+            <Divider py={8} />
+            <div className="text-center">
+              <div className="text-base mb-2 text-neutral700 font-[480] tracking-tight">
+                Looking to create a freelancer account?
+              </div>
+              <Link to="/freelancers/join" fontSize="m" variant="underlined">
+                Signup as a freelancer
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>
