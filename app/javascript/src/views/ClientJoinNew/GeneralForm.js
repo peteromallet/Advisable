@@ -6,7 +6,7 @@ import Divider from "src/components/Divider";
 
 export default function GeneralForm() {
   return (
-    <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }} key="2">
+    <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <LoginWithGoogle size="xl" mode="user" navigate="/setup">
         Signup with Google
       </LoginWithGoogle>

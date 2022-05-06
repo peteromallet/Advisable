@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { Box, Input, Error } from "@advisable/donut";
+import { Input, Error } from "@advisable/donut";
 import { object, string, ref } from "yup";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
@@ -73,7 +73,6 @@ export default function EmailForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      key="1"
     >
       <Formik
         onSubmit={handleSubmit}
@@ -82,20 +81,22 @@ export default function EmailForm() {
       >
         {({ status }) => (
           <Form>
-            <div className="flex flex-col sm:flex-row">
-              <div className="mb-4 mr-0 sm:mr-2 w-full">
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              <div className="w-full">
                 <FormField
                   as={Input}
                   name="firstName"
                   size={["sm", "md"]}
+                  className="w-full"
                   placeholder="First name"
                 />
               </div>
-              <div className="mb-4 ml-0 sm:ml-2 w-full">
+              <div className="w-full">
                 <FormField
                   as={Input}
                   name="lastName"
                   size={["sm", "md"]}
+                  className="w-full"
                   placeholder="Last name"
                 />
               </div>
@@ -108,8 +109,8 @@ export default function EmailForm() {
                 placeholder="Email address"
               />
             </div>
-            <div className="flex flex-col sm:flex-row">
-              <div className="mb-4 mr-0 sm:mr-2 w-full">
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              <div className="w-full">
                 <FormField
                   type="password"
                   name="password"
@@ -117,7 +118,7 @@ export default function EmailForm() {
                   placeholder="Password"
                 />
               </div>
-              <div className="mb-4 ml-0 sm:ml-2 w-full">
+              <div className="w-full">
                 <FormField
                   type="password"
                   size={["sm", "md"]}
