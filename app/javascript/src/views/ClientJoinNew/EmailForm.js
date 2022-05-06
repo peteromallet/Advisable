@@ -82,49 +82,49 @@ export default function EmailForm() {
       >
         {({ status }) => (
           <Form>
-            <div className="flex flex-column sm:flex-row">
-              <Box mb={4} mr={[0, 2]} width="100%">
+            <div className="flex flex-col sm:flex-row">
+              <div className="mb-4 mr-0 sm:mr-2 w-full">
                 <FormField
                   as={Input}
                   name="firstName"
                   size={["sm", "md"]}
                   placeholder="First name"
                 />
-              </Box>
-              <Box mb={4} ml={[0, 2]} width="100%">
+              </div>
+              <div className="mb-4 ml-0 sm:ml-2 w-full">
                 <FormField
                   as={Input}
                   name="lastName"
                   size={["sm", "md"]}
                   placeholder="Last name"
                 />
-              </Box>
+              </div>
             </div>
-            <Box mb={4}>
+            <div className="mb-4">
               <FormField
                 as={Input}
                 name="email"
                 size={["sm", "md"]}
                 placeholder="Email address"
               />
-            </Box>
-            <div className="flex flex-column sm:flex-row">
-              <Box mb={4} mr={[0, 2]} width="100%">
+            </div>
+            <div className="flex flex-col sm:flex-row">
+              <div className="mb-4 mr-0 sm:mr-2 w-full">
                 <FormField
                   type="password"
                   name="password"
                   size={["sm", "md"]}
                   placeholder="Password"
                 />
-              </Box>
-              <Box mb={4} ml={[0, 2]} width="100%">
+              </div>
+              <div className="mb-4 ml-0 sm:ml-2 w-full">
                 <FormField
                   type="password"
                   size={["sm", "md"]}
                   name="passwordConfirmation"
                   placeholder="Confirm password"
                 />
-              </Box>
+              </div>
             </div>
             <Error>{status}</Error>
             <SubmitButton size={["m", "l"]} variant="gradient" width="100%">

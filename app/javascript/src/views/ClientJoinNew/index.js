@@ -31,7 +31,7 @@ export default function ClientJoin() {
           className="max-w-[640px] mx-auto bg-white shadow-xl rounded-xl"
         >
           <ArticleCardsComposition />
-          <div className="pt-6 pb-14 px-12">
+          <div className="pt-3 pb-12 px-6 sm:pt-6 sm:pb-14 sm:px-12">
             <div className="text-center mb-8">
               <Heading size="4xl" marginBottom={3}>
                 Start discovering SaaS projects
