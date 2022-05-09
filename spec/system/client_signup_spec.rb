@@ -25,10 +25,8 @@ RSpec.describe "Client signup", type: :system do
       fill_in("passwordConfirmation", with: "testing123")
       click_on("Create Your Free Account")
 
-      expect(page).to have_content("Let's build your feed")
-      click_link("Get Started")
-
       # Company step
+      expect(page).to have_content("Tell us about your company")
       fill_in("name", with: "Dunder Mifflin")
       select("I'm looking to hire someone", from: "intent")
       click_on("Continue")
