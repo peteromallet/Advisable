@@ -75,6 +75,7 @@ export default function EmailForm() {
             <div className="flex flex-col sm:flex-row gap-4 mb-4">
               <div className="w-full">
                 <FormField
+                  autoFocus
                   as={Input}
                   name="firstName"
                   size={["sm", "md"]}
