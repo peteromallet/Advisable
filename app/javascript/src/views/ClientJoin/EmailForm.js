@@ -56,7 +56,7 @@ export default function EmailForm() {
       return;
     }
 
-    navigate("/");
+    navigate("/setup/company");
   };
 
   return (

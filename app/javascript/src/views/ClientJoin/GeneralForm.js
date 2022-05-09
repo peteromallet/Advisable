@@ -9,7 +9,7 @@ export default function GeneralForm() {
   const [searchParams, setSearchParams] = useSearchParams();
   return (
     <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <LoginWithGoogle size="xl" mode="user" navigate="/setup">
+      <LoginWithGoogle size="xl" mode="user" navigate="/setup/company">
         Signup with Google
       </LoginWithGoogle>
       <Divider py={6}>Or</Divider>
