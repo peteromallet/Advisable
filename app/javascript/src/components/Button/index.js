@@ -33,9 +33,9 @@ export const buttonStyles = composeStyles({
       outlined: `
         border-2
         text-neutral900
-        border-neutral900
-        hover:border-neutral800 
-        active:border-neutral600
+        border-neutral800
+        hover:!border-blue600
+        active:!border-blue800
       `,
     },
     size: {

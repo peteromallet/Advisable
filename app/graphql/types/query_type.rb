@@ -205,9 +205,12 @@ module Types
       ::CaseStudy::Article.find_by_slug_or_id!(id)
     end
 
-    field :top_case_studies, [Types::CaseStudy::Article], null: true
-    def top_case_studies
-      ::CaseStudy::Article.active.where(published_at: 1.week.ago..).by_score.limit(3)
+    field :top_case_studies, [Types::CaseStudy::Article], null: true do
+      argument :limit, Integer, required: false, default_value: 3
+    end
+
+    def top_case_studies(limit:)
+      ::CaseStudy::Article.trending.first(limit)
     end
 
     field :case_studies_by_categories, Types::CaseStudy::Article.connection_type do

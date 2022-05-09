@@ -6,23 +6,33 @@ import EndlessScroll from "./components/EndlessScroll";
 import SearchIllustration from "src/illustrations/zest/search";
 import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
+import InterestEmpty from "./components/InterestEmpty";
+import RemoveInterest from "./components/RemoveInterest";
 
 export default function Interest() {
   const { interest: id } = useParams();
   const { data, loading, fetchMore } = useInterest({
     variables: { id },
+    fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
   });
 
   const handleLoadMore = useCallback(() => {
     if (!data) return;
-    if (!data.feed.pageInfo.hasNextPage) return;
-    fetchMore({ variables: { cursor: data.feed.pageInfo.endCursor } });
+    const { pageInfo } = data.interest.articles;
+    if (!pageInfo.hasNextPage) return;
+
+    fetchMore({ variables: { cursor: pageInfo.endCursor } });
   }, [fetchMore, data]);
 
   if (!loading && !data.interest) {
     return (
       <div className="w-[300px] mx-auto text-center">
-        <SearchIllustration primaryColor="var(--color-pink-100)" />
+        <SearchIllustration
+          width="200px"
+          className="mx-auto"
+          primaryColor="var(--color-pink-100)"
+        />
         <h5 className="font-semibold">Not Found</h5>
         <p>Oops, The page you were looking for could not be found</p>
       </div>
@@ -33,20 +43,24 @@ export default function Interest() {
   const pageInfo = data?.interest?.articles?.pageInfo;
   const edges = data?.interest?.articles?.edges || [];
   const results = edges.map((e) => e.node);
+  const hasResults = results.length > 0;
 
   return (
     <FeedContainer>
       <div>
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
           {initialLoad ? (
             <div className="m-2 w-[250px] h-[28px] bg-neutral100 animate-pulse rounded-md" />
           ) : (
-            <h2 className="text-3xl font-semibold tracking-tight">
-              {data?.interest?.term}
-            </h2>
+            <>
+              <h2 className="text-3xl font-semibold tracking-tight capitalize">
+                {data?.interest?.term}
+              </h2>
+              <RemoveInterest interest={data?.interest} />
+            </>
           )}
         </div>
-        <div className="space-y-8">
+        <div className="space-y-6">
           {results.map((result) => (
             <FeedItem key={result.id} article={result} />
           ))}
@@ -58,6 +72,9 @@ export default function Interest() {
             </>
           )}
         </div>
+
+        {!loading && !hasResults && <InterestEmpty />}
+
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">

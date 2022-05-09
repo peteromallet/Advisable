@@ -14,6 +14,7 @@ export const inputStyles = composeStyles({
   `,
   variants: {
     size: {
+      sm: `h-10 px-3`,
       md: `h-12 px-4`,
     },
     error: `error-border`,

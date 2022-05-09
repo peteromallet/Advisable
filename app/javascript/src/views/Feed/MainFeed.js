@@ -26,10 +26,8 @@ export default function MainFeed() {
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Your feed
         </h2>
-        <div className="mb-8">
+        <div className="space-y-6">
           <AccountConfirmationPrompt />
-        </div>
-        <div className="space-y-8">
           {results.map((result) => (
             <FeedItem
               key={result.id}
@@ -41,13 +39,11 @@ export default function MainFeed() {
             <>
               <FeedItemSkeleton />
               <FeedItemSkeleton />
-              <FeedItemSkeleton />
             </>
           )}
+          {!loading && results.length === 0 && <EmptyFeed />}
         </div>
         {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
-
-        {!loading && results.length === 0 && <EmptyFeed />}
 
         {results.length > 0 && !pageInfo?.hasNextPage && (
           <div className="text-center text-neutral400 py-10">

@@ -8,6 +8,9 @@ import { useBackground } from "src/../../../donut/src";
 import BottomBar from "./components/BottomBar";
 import useTutorial from "src/hooks/useTutorial";
 import Favorites from "./Favorites";
+import Search from "./Search";
+import "./feed.css";
+import Footer from "src/components/Footer";
 
 function FeedViewFailed() {
   return (
@@ -30,14 +33,18 @@ export default function Feed() {
     <div className="flex">
       <FeedSidebar />
       <BottomBar />
-      <div className="flex-1 p-8 w-full">
-        <ErrorBoundary FallbackComponent={FeedViewFailed}>
-          <Routes>
-            <Route index element={<MainFeed />} />
-            <Route path=":interest" element={<Interest />} />
-            <Route path="/favorites" element={<Favorites />} />
-          </Routes>
-        </ErrorBoundary>
+      <div className="flex-1 w-full flex flex-col">
+        <div className="flex-1 w-full">
+          <ErrorBoundary FallbackComponent={FeedViewFailed}>
+            <Routes>
+              <Route index element={<MainFeed />} />
+              <Route path="search" element={<Search />} />
+              <Route path=":interest" element={<Interest />} />
+              <Route path="/favorites" element={<Favorites />} />
+            </Routes>
+          </ErrorBoundary>
+        </div>
+        <Footer />
       </div>
     </div>
   );

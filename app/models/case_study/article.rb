@@ -77,6 +77,21 @@ module CaseStudy
         sections.by_type("overview").map { |s| s.contents.map(&:to_text) }
       ].flatten.compact.join(" ").gsub(/\s+/, " ").strip
     end
+
+    def self.trending
+      articles = order(published_at: :desc).first(50)
+      return [] if articles.empty?
+
+      oldest = articles.last.published_at
+      delta = Time.zone.now - oldest
+
+      weighted = articles.map do |article|
+        weighting = 1 + ((article.published_at - oldest) / delta)
+        {article:, score: (article.score || 0) * weighting}
+      end
+
+      weighted.sort_by { |a| a[:score] }.reverse.pluck(:article)
+    end
   end
 end
 

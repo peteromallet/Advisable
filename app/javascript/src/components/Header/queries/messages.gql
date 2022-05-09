@@ -1,0 +1,23 @@
+query HeaderConversations {
+  conversations {
+    edges {
+      node {
+        id
+        unreadCount
+        participants {
+          id
+          name
+          avatar
+          isViewer
+          lastName
+          firstName
+        }
+        lastMessage {
+          id
+          content
+          createdAt
+        }
+      }
+    }
+  }
+}

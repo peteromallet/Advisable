@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import BookmarkIcon from "./BookmarkIcon";
 import HomeIcon from "./HomeIcon";
+import SearchIcon from "./SearchIcon";
 
 const bottomBarClasses = composeStyles({
   base: `
@@ -70,6 +71,9 @@ export default function BottomBar() {
       </BottomBarItem>
       <BottomBarItem to="/explore/favorites" icon={BookmarkIcon}>
         Favorites
+      </BottomBarItem>
+      <BottomBarItem to="/explore/search" icon={SearchIcon}>
+        Search
       </BottomBarItem>
       {/* <BottomBarItem to="/explore/sahred" icon={InboxIn}>
         Shared

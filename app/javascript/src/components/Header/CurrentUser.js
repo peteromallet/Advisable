@@ -43,6 +43,17 @@ export default function CurrentUser() {
             Profile
           </StyledDropdownLink>
         )}
+        {viewer.isClient && (
+          <>
+            <StyledDropdownLink
+              as={Link}
+              to="/payment_requests"
+              onClick={popover.hide}
+            >
+              Payments
+            </StyledDropdownLink>
+          </>
+        )}
         <StyledDropdownLink as={Link} to="/settings" onClick={popover.hide}>
           Settings
         </StyledDropdownLink>

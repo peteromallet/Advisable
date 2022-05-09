@@ -1,0 +1,17 @@
+query TrendingArticles {
+  topCaseStudies(limit: 6) {
+    id
+    title
+    path
+    company {
+      id
+      name
+      favicon
+    }
+    specialist {
+      id
+      name
+      avatar
+    }
+  }
+}
