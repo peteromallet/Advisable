@@ -1,87 +1,60 @@
 import React from "react";
-import { AnimatePresence } from "framer-motion";
-import { Navigate, Routes, useLocation } from "react-router-dom";
-import useViewer from "src/hooks/useViewer";
-import useSteps from "src/hooks/useSteps";
-import steps from "./Steps";
-import OrbitsBackground from "./OrbitsBackground";
-import { Box, useBreakpoint } from "@advisable/donut";
-import OrbitsContent from "./OrbitsContent";
-import Footer from "./Footer";
-import Header from "./Header";
+import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
+import { Link, Heading } from "@advisable/donut";
+import useMediaQuery from "src/utilities/useMediaQuery";
+import LogoMark from "src/components/LogoMark";
+import Divider from "src/components/Divider";
+import Logo from "src/components/Logo";
+import ArticleCardsComposition from "src/components/ArticleCardsComposition";
+import GeneralForm from "./GeneralForm";
+import EmailForm from "./EmailForm";
 
-function ClientJoin() {
-  const { routes, currentStepIndex, forwards } = useSteps(steps, {
-    basePath: "/clients/join",
-  });
-
-  const viewer = useViewer();
-  const location = useLocation();
-  const largeScreen = useBreakpoint("xlUp");
-  // Because the user creates an account and then sets the password we create
-  // a 'signup' state inside of the router state to prevent redirecting until
-  // they have completed the signup flow.
-  if (!viewer && !location.state?.signup) {
-    return <Navigate to={location} state={{ signup: true }} replace />;
-  }
-
-  // Redirect to root if already logged in and not part of signup flow
-  if (viewer && !location.state?.signup) {
-    return <Navigate to="/" />;
-  }
+export default function ClientJoin() {
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email") == "true";
+  const isDesktop = useMediaQuery("(min-width: 720px)");
 
   return (
-    <Box minHeight="100vh" height="100%" position="relative">
-      <OrbitsBackground step={currentStepIndex} />
-      <Box
-        px={{ _: 5, xl: 16 }}
-        position="relative"
-        minHeight="100vh"
-        height="100%"
-        // grid props
-        display="grid"
-        alignContent={{ _: "start", xl: "stretch" }}
-        justifyContent="center"
-        gridColumnGap="3.33%"
-        gridRowGap={{ _: 9, xl: 0 }}
-        gridTemplateColumns={{ _: "auto", xl: "auto 640px" }}
-        gridTemplateRows={{
-          _: "48px auto auto 56px",
-          xl: "72px auto 72px",
-        }}
-        gridTemplateAreas={{
-          _: `
-            "header"
-            "orbits-content"
-            "card"
-            "footer"
-          `,
-          xl: `
-            "header header"
-            "orbits-content card"
-            "footer footer"
-          `,
-        }}
-      >
-        <Header />
-        <OrbitsContent
-          step={currentStepIndex}
-          custom={{ forwards, largeScreen }}
-        />
-        <AnimatePresence
-          exitBeforeEnter
-          initial={false}
-          custom={{ forwards, largeScreen }}
+    <div className="onboarding flex flex-col lg:min-h-screen">
+      <header className="onboarding_heading px-5 flex items-center">
+        <div className="flex-1 flex justify-start mr-auto">
+          {isDesktop ? <Logo /> : <LogoMark />}
+        </div>
+      </header>
+      <div className="w-full px-4 pb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-[640px] mx-auto bg-white shadow-xl rounded-xl"
         >
-          <Routes location={location} key={location.pathname}>
-            {routes}
-          </Routes>
-        </AnimatePresence>
-        {largeScreen ? <Footer /> : null}
-      </Box>
-      {!largeScreen ? <Footer /> : null}
-    </Box>
+          <ArticleCardsComposition />
+          <div className="pt-3 pb-12 px-6 sm:pt-6 sm:pb-14 sm:px-12">
+            <div className="text-center mb-8">
+              <Heading size="4xl" marginBottom={3}>
+                Start discovering SaaS projects
+              </Heading>
+              <div className="text-lg text-neutral700">
+                Already have an account?{" "}
+                <Link to="/login" variant="underlined">
+                  Login
+                </Link>
+              </div>
+            </div>
+            {email ? <EmailForm /> : <GeneralForm />}
+            <Divider py={8} />
+            <div className="text-center">
+              <div className="text-base mb-2 text-neutral700 font-[480] tracking-tight">
+                Looking to create a freelancer account?
+              </div>
+              <Link to="/freelancers/join" fontSize="m" variant="underlined">
+                Signup as a freelancer
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 }
-
-export default ClientJoin;

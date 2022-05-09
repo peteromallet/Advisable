@@ -11,7 +11,7 @@ const ResetPassword = lazy(() => import("./views/ResetPassword"));
 const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const TestimonialFlow = lazy(() => import("./views/TestimonialFlow"));
 const Availability = lazy(() => import("./views/Availability"));
-const ClientJoin = lazy(() => import("./views/ClientJoinNew"));
+const ClientJoin = lazy(() => import("./views/ClientJoin"));
 const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
