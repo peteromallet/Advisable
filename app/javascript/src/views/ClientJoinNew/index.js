@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import queryString from "query-string";
-import { useLocation } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { Link, Heading } from "@advisable/donut";
 import useMediaQuery from "src/utilities/useMediaQuery";
 import LogoMark from "src/components/LogoMark";
@@ -12,8 +11,8 @@ import GeneralForm from "./GeneralForm";
 import EmailForm from "./EmailForm";
 
 export default function ClientJoin() {
-  const location = useLocation();
-  const { email } = queryString.parse(location.search);
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email") == "true";
   const isDesktop = useMediaQuery("(min-width: 720px)");
 
   return (
