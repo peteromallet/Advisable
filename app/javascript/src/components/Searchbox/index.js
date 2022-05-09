@@ -111,6 +111,7 @@ export default function Searchbox({ className, ...props }) {
       <input
         ref={inputRef}
         value={value}
+        autoComplete="off"
         onChange={handleChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
