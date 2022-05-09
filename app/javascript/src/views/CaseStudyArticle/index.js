@@ -13,7 +13,7 @@ import Footer from "src/components/Footer";
 import useScrollToTop from "src/hooks/useScrollToTop";
 import { customerlyEvent } from "src/utilities/customerly";
 import { useParams } from "react-router-dom";
-import { trackEvent } from "src/utilities/segment";
+import ArticleEvents from "./components/ArticleEvents";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -58,6 +58,7 @@ export default function ShortlistArticle() {
           <title>Advisable | {data.caseStudy?.title}</title>
         </Helmet>
       )}
+      {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
       <SpecialistBar article={data.caseStudy} />
       <div className="pt-10 pb-36">
         <SectionWrapper className="items-start">

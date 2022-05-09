@@ -4,7 +4,6 @@ import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import ArticleSidebar from "./ArticleSidebar";
 import SimilarArticles from "./SimilarArticles";
-import ArticleReadTracking from "./ArticleReadTracking";
 
 const CONTENT_TYPES = {
   Images,
@@ -38,7 +37,6 @@ export default function ArticleContent({ caseStudy }) {
             data-content-block={index}
           />
         ))}
-        <ArticleReadTracking article={caseStudy} />
         <SimilarArticles
           data-content-block={elements.length}
           articles={caseStudy.similar}
