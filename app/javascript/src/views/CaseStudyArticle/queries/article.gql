@@ -42,15 +42,6 @@ query Article($slug: ID!) {
       profilePath
       unavailableUntil
       location
-      consultation {
-        id
-        status
-        interview {
-          id
-          status
-          startsAt
-        }
-      }
       conversation {
         id
       }
