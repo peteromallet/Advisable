@@ -45,13 +45,28 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
   context "when embedding data is under treshold" do
     let(:embedding2) { create(:case_study_embedding, data: [500, -800, 300]) }
 
-    it "does not include the article" do
-      request = AdvisableSchema.execute(query, context:)
-      uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
-      interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
-      expect(interest.interest_articles).to be_blank
-      interest.find_articles!
-      expect(interest.articles).to match_array([article1])
+    context "when fewer than MIN_RESULTS are found" do
+      it "still includes the article" do
+        request = AdvisableSchema.execute(query, context:)
+        uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
+        interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
+        expect(interest.interest_articles).to be_blank
+        interest.find_articles!
+        expect(interest.articles).to include(article2)
+      end
+    end
+
+    context "when more than MIN_RESULTS are found" do
+      before { CaseStudy::TermData::MIN_RESULTS.times { create(:case_study_embedding) } }
+
+      it "does not include the article" do
+        request = AdvisableSchema.execute(query, context:)
+        uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
+        interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
+        expect(interest.interest_articles).to be_blank
+        interest.find_articles!
+        expect(interest.articles).not_to include(article2)
+      end
     end
   end
 
