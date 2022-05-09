@@ -7,6 +7,7 @@ import {
   useInterests,
 } from "../queries";
 import { useSearchParams } from "react-router-dom";
+import { trackEvent } from "src/utilities/segment";
 
 export default function AddInterestPreviewButton() {
   const [searchParams] = useSearchParams();
@@ -36,6 +37,10 @@ export default function AddInterestPreviewButton() {
             terms: [searchParams.get("q")],
           },
         },
+      });
+
+      trackEvent("Added Interest", {
+        interest: searchParams.get("q"),
       });
     }
   };
