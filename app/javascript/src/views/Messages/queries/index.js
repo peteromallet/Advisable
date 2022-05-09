@@ -12,8 +12,6 @@ import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
 import ACCEPT_AGREEMENT from "./acceptAgreement.gql";
 import DECLINE_AGREEMENT from "./declineAgreement.gql";
-import ACCEPT_CONSULTATION from "./acceptConsultation.gql";
-import DECLINE_CONSULTATION from "./declineConsultationRequest.gql";
 import SETUP_PAYMENTS_DATA from "./setupPaymentsData.gql";
 import UPDATE_INVOICE_SETTINGS from "./updateInvoiceSettings.gql";
 import DECLINE_INTERVIEW from "./declineInterview.gql";
@@ -136,14 +134,6 @@ export function useReceivedMessage() {
       updateConversationsList(client, message.conversation);
     },
   });
-}
-
-export function useDeclineConsultationRequest() {
-  return useMutation(DECLINE_CONSULTATION);
-}
-
-export function useAcceptConsultationRequest() {
-  return useMutation(ACCEPT_CONSULTATION);
 }
 
 function appendToMessages(messages, message) {
