@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import { useCreateClientAccount, useUpdatePassword } from "./queries";
+import { useCreateClientAccount } from "./queries";
 
 const validationSchema = object().shape({
   firstName: string().required("Please enter your first name"),
@@ -25,7 +25,6 @@ const validationSchema = object().shape({
 
 export default function EmailForm() {
   const [createClientAccount] = useCreateClientAccount();
-  const [setPassword] = useUpdatePassword();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const initialValues = {
@@ -38,12 +37,13 @@ export default function EmailForm() {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const createAccountResponse = await createClientAccount({
+    const res = await createClientAccount({
       variables: {
         input: {
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.email,
+          password: values.password,
           rid: searchParams.get("rid"),
           utmCampaign: searchParams.get("utm_campaign"),
           utmSource: searchParams.get("utm_source"),
@@ -51,16 +51,7 @@ export default function EmailForm() {
         },
       },
     });
-    const setPasswordResponse = await setPassword({
-      variables: {
-        input: {
-          password: values.password,
-          passwordConfirmation: values.passwordConfirmation,
-        },
-      },
-    });
-
-    if (createAccountResponse.errors || setPasswordResponse.errors) {
+    if (res.errors) {
       setStatus("Something went wront. Please try again.");
       return;
     }

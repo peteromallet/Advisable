@@ -27,28 +27,3 @@ export const useCreateClientAccount = () =>
       }
     },
   });
-
-export const UPDATE_PASSWORD = gql`
-  ${viewerFields}
-
-  mutation updatePassword($input: UpdatePasswordInput!) {
-    updatePassword(input: $input) {
-      viewer {
-        ...ViewerFields
-      }
-    }
-  }
-`;
-
-export function useUpdatePassword() {
-  return useMutation(UPDATE_PASSWORD, {
-    update(cache, { data }) {
-      cache.writeQuery({
-        query: VIEWER,
-        data: {
-          viewer: data.updatePassword.viewer,
-        },
-      });
-    },
-  });
-}
