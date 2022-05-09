@@ -23,7 +23,7 @@ export default function ClientJoin() {
           {isDesktop ? <Logo /> : <LogoMark />}
         </div>
       </header>
-      <div className="w-full">
+      <div className="w-full px-4 pb-4">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
