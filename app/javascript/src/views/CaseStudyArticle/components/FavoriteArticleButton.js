@@ -5,7 +5,6 @@ import useViewer from "src/hooks/useViewer";
 import composeStyles from "src/utilities/composeStyles";
 import { useNotifications } from "src/components/Notifications";
 import { useFavoriteArticle, useUnfavoriteArticle } from "../queries";
-import { trackEvent } from "src/utilities/segment";
 
 function BookmarkIcon({ width = "20", ...props }) {
   return (
@@ -62,13 +61,6 @@ export default function FavoriteArticleButton({ article, className }) {
         isFavorited: () => !isFavorited,
       },
     });
-
-    if (!isFavorited) {
-      trackEvent("Favorited Article", {
-        id: article.id,
-        slug: article.slug,
-      });
-    }
 
     const action = isFavorited ? unfavorite : favorite;
     const res = await action();

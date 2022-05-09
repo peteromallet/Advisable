@@ -33,7 +33,6 @@ import SubmitButton from "src/components/SubmitButton";
 import css from "@styled-system/css";
 import { Loading } from "src/components";
 import InvoiceSettingsFields from "src/components/InvoiceSettingsFields";
-import { trackEvent } from "src/utilities/segment";
 
 const declineValidationSchema = object().shape({
   message: string().required(),
@@ -49,10 +48,6 @@ function AgreementPending({ agreement, onAccept, setStep }) {
           agreement: agreement.id,
         },
       },
-    });
-
-    trackEvent("Hired Freelancer", {
-      agreement: agreement.id,
     });
 
     const errorCode = response.errors?.[0]?.extensions?.code;

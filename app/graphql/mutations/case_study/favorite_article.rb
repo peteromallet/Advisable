@@ -16,6 +16,10 @@ module Mutations
       def resolve(article:)
         article = ::CaseStudy::Article.find_by!(uid: article)
         ::CaseStudy::FavoritedArticle.find_or_create_by!(account: current_user.account, article:)
+        ::Analytics.track(current_user, "Favorited Article", {
+          article: article.uid
+        })
+
         {article:}
       end
     end

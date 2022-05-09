@@ -1,19 +1,17 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useEffect, useLayoutEffect } from "react";
-import { useParams } from "react-router-dom";
 import { trackEvent } from "src/utilities/segment";
 
-const TIME_TO_READ = 5 || 180000; // 3 minutes
+const TIME_TO_READ = 180000; // 3 minutes
 
 export default function ArticleEvents({ article }) {
-  const { slug } = useParams();
   const timer = useRef(null);
   const timeSpentRef = useRef(null);
   const readEventTriggeredRef = useRef(false);
   const [focused, setFocused] = useState(true);
 
   const id = useMemo(() => article?.id, [article]);
-  const payload = useMemo(() => ({ id, slug }), [id, slug]);
+  const payload = useMemo(() => ({ article: id }), [id]);
 
   // Reset timer, readEventTriggered and fire view event.
   useEffect(() => {

@@ -6,7 +6,6 @@ import FormField from "../FormField";
 import SubmitButton from "../SubmitButton";
 import { useRequestInterview } from "./queries";
 import { object, string } from "yup";
-import { trackEvent } from "src/utilities/segment";
 
 const validationSchema = object({
   message: string().required("Please include a message"),
@@ -46,9 +45,6 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
       },
     });
 
-    trackEvent("Requested Consultation", {
-      specialist: specialist.id,
-    });
     onSubmit();
   };
 

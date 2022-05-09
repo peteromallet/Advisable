@@ -6,16 +6,11 @@ import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import { useCreateSearch } from "./queries";
 import AddInterestPreviewButton from "./components/AddInterestPreviewButton";
 import NoResults from "./components/NoResults";
-import { trackEvent } from "src/utilities/segment";
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
   const [createSearch, { data, loading }] = useCreateSearch();
   const query = searchParams.get("q");
-
-  useEffect(() => {
-    trackEvent("Search", { query });
-  }, [query]);
 
   useEffect(() => {
     createSearch({
