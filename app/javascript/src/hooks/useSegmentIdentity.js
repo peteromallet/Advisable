@@ -28,6 +28,7 @@ export default function useSegmentIdentity(viewer) {
       const traits = {
         name: viewer.name,
         email: viewer.email,
+        accountType: viewer.__typename === "User" ? "Client" : "Freelancer",
       };
 
       if (viewer.__typename === "User") {
