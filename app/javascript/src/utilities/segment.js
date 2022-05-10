@@ -3,3 +3,9 @@ export function trackEvent(name, payload) {
 
   window.analytics.track(name, payload);
 }
+
+export function resetAnalytics() {
+  if (!window.analytics) return;
+
+  window.analytics.reset();
+}
