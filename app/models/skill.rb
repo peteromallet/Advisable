@@ -8,7 +8,6 @@ class Skill < ApplicationRecord
   has_many :specialists, through: :specialist_skills
   has_many :user_skills, dependent: :destroy
   has_many :users, through: :user_skills
-  has_many :consultations, dependent: :destroy
   has_many :case_study_skills, class_name: "CaseStudy::Skill", dependent: :destroy
   has_many :skill_category_skills, dependent: :destroy
   has_many :skill_categories, through: :skill_category_skills
@@ -27,7 +26,6 @@ class Skill < ApplicationRecord
     ActiveRecord::Base.transaction do
       duplicate.specialist_skills.update_all(skill_id: id)
       duplicate.user_skills.update_all(skill_id: id)
-      duplicate.consultations.update_all(skill_id: id)
 
       if duplicate.label&.labelings&.any?
         if label

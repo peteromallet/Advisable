@@ -14,10 +14,6 @@ class ZapierInteractorController < ApplicationController
     find_and_update(Interview, params.permit(:status))
   end
 
-  def update_consultation
-    find_and_update(Consultation, params.permit(:status))
-  end
-
   def update_user
     find_and_update(User) do |user|
       user.update!(parse_params(params.permit(ALLOWED_USER_FIELDS)))

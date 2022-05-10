@@ -33,10 +33,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.payment_receipt(Payment.order("RANDOM()").first)
   end
 
-  def consultation_declined
-    UserMailer.consultation_declined(Consultation.order("RANDOM()").first, Message.order("RANDOM()").first)
-  end
-
   def interview_declined
     UserMailer.interview_declined(Interview.order("RANDOM()").first, Message.order("RANDOM()").first)
   end

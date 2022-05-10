@@ -80,14 +80,6 @@ module Types
       Money::Currency.all.sort_by(&:name)
     end
 
-    field :consultation, Types::ConsultationType, null: true, deprecation_reason: "Should not be used anymore due to new messages flows" do
-      argument :id, ID, required: true
-    end
-
-    def consultation(id:)
-      ::Consultation.find_by!(uid: id)
-    end
-
     field :oauth_viewer, Types::OauthViewer, null: true
 
     field :invoice, Types::InvoiceType, null: true do

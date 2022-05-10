@@ -24,16 +24,6 @@ RSpec.describe InterviewRequestAutoDeclineJob do
     expect(conversation.messages.where(kind: "InterviewAutoDeclined")).to exist
   end
 
-  context "when there's a consultation" do
-    it "does not send reminder" do
-      create(:consultation, interview:)
-      described_class.perform_now
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", any_args)
-      # expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", any_args)
-      expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
-    end
-  end
-
   context "when less than 4 days ago" do
     let(:created_at) { 3.days.ago }
 

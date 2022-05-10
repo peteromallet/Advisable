@@ -48,16 +48,6 @@ module MailHelper
     "#{app_host}/settings/availability"
   end
 
-  # TODO: We can remove this fallback when we remove the consultation request
-  # view.
-  def consultation_request_url(consultation)
-    if consultation.messages.any?
-      "#{app_host}/messages/#{consultation.messages.first.conversation.uid}"
-    else
-      "#{app_host}/consultation_request/#{consultation.uid}"
-    end
-  end
-
   def interview_request_url(conversation)
     "#{app_host}/messages/#{conversation.uid}"
   end

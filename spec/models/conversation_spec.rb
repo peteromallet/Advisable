@@ -6,7 +6,7 @@ RSpec.describe Conversation, type: :model do
   let(:conversation) { create(:conversation) }
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:consultation) { create(:consultation) }
+  let(:interview) { create(:interview) }
   let(:pdf) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/test.pdf")), filename: "test.pdf").signed_id }
   let(:image) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/01.jpg")), filename: "01.jpg").signed_id }
 
@@ -91,18 +91,18 @@ RSpec.describe Conversation, type: :model do
     end
 
     it "can take extra attributes" do
-      message = conversation.new_message!(author: user.account, content: "Test", uid: "msg_123456789012345", metadata: {foo: :bar}, consultation:)
+      message = conversation.new_message!(author: user.account, content: "Test", uid: "msg_123456789012345", metadata: {foo: :bar}, interview:)
       expect(message.uid).to eq("msg_123456789012345")
       expect(message.metadata).to eq({"foo" => "bar"})
-      expect(message.consultation).to eq(consultation)
+      expect(message.interview).to eq(interview)
     end
 
     it "can create a message without scheduling email notifications" do
       expect_any_instance_of(Message).not_to receive(:schedule_email_notifications)
       expect_any_instance_of(Message).to receive(:update_participants)
-      message = conversation.new_message!(author: user.account, content: "Test", metadata: {foo: :bar}, consultation:, send_emails: false)
+      message = conversation.new_message!(author: user.account, content: "Test", metadata: {foo: :bar}, interview:, send_emails: false)
       expect(message.metadata).to eq({"foo" => "bar"})
-      expect(message.consultation).to eq(consultation)
+      expect(message.interview).to eq(interview)
     end
 
     it "can attach attachments" do
