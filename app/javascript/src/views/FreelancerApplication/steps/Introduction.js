@@ -24,7 +24,6 @@ import { UPDATE_PROFILE } from "../queries";
 import { boolean, object, string } from "yup";
 import DefaultAvatarIcon from "../components/DefaultAvatarIcon";
 import { SPECIALIST_BIO_LENGTH } from "src/constants";
-import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   avatar: string().nullable(),
@@ -61,7 +60,6 @@ export default function Introduction({ specialist, countries }) {
       return;
     }
 
-    track("Introduction (Specialist Application)");
     navigate("/freelancers/apply/overview");
   };
 

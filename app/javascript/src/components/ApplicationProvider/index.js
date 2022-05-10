@@ -6,7 +6,6 @@ import Loading from "../Loading";
 import VIEWER from "../../graphql/queries/getViewer.graphql";
 import ApplicationContext from "../../applicationContext";
 import useSentryUser from "src/hooks/useSentryUser";
-import useMixpanelUser from "src/hooks/useMixpanelUser";
 import useHotjarUser from "src/hooks/useHotjarUser";
 import useCustomerly from "src/hooks/useCustomerly";
 import useSegmentIdentity from "src/hooks/useSegmentIdentity";
@@ -15,7 +14,6 @@ const ApplicationProvider = ({ children }) => {
   const { data, loading } = useQuery(VIEWER);
   useSentryUser(data?.viewer);
   useHotjarUser(data?.viewer);
-  useMixpanelUser(data?.viewer);
   useCustomerly(data?.viewer);
   useSegmentIdentity(data?.viewer);
 
