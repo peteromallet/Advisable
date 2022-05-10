@@ -11,7 +11,6 @@ import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
 import useScrollToTop from "src/hooks/useScrollToTop";
-import { customerlyEvent } from "src/utilities/customerly";
 import { useParams } from "react-router-dom";
 import ArticleEvents from "./components/ArticleEvents";
 
@@ -40,13 +39,7 @@ const SectionWrapper = ({ children, className, ...props }) => (
 export default function ShortlistArticle() {
   useScrollToTop();
   useBackground("beige");
-  const { slug } = useParams();
   const { data, loading, error } = useArticle();
-
-  // Track the page view
-  useEffect(() => {
-    customerlyEvent("viewed_case_study");
-  }, [slug]);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
