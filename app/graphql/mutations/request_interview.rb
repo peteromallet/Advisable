@@ -19,9 +19,7 @@ module Mutations
       conversation.new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
       Slack.bg_message(channel: "consultation_requests", text: "We have a new interview request for #{specialist.account.name} from #{current_user.name_with_company}.")
       SpecialistMailer.interview_request(interview).deliver_later
-      ::Analytics.track(current_user, "Requested Consultation", {
-        specialist: specialist.uid
-      })
+      ::Analytics.track(current_user, "Requested Consultation", {specialist: specialist.uid})
 
       {interview:}
     end
