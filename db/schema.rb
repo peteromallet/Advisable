@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_11_112105) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_10_115315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -1158,6 +1158,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_112105) do
     t.string "trustpilot_review_status"
     t.datetime "invited_to_interview_at", precision: nil
     t.datetime "submitted_at", precision: nil
+    t.string "campaign_content"
     t.index ["account_id"], name: "index_users_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_users_on_airtable_id"
     t.index ["company_id"], name: "index_users_on_company_id"

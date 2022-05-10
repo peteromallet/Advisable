@@ -46,6 +46,7 @@ export default function EmailForm() {
           password: values.password,
           rid: searchParams.get("rid"),
           utmCampaign: searchParams.get("utm_campaign"),
+          utmContent: searchParams.get("utm_content"),
           utmSource: searchParams.get("utm_source"),
           utmMedium: searchParams.get("utm_medium"),
         },
