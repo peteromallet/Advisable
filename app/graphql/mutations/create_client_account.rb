@@ -10,6 +10,7 @@ module Mutations
     argument :password, String, required: false
     argument :rid, String, required: false
     argument :utm_campaign, String, required: false
+    argument :utm_content, String, required: false
     argument :utm_medium, String, required: false
     argument :utm_source, String, required: false
 
@@ -26,6 +27,7 @@ module Mutations
           campaign_name: args[:utm_campaign],
           campaign_source: args[:utm_source],
           campaign_medium: args[:utm_medium],
+          campaign_content: args[:utm_content],
           application_status: "Application Accepted"
         )
 

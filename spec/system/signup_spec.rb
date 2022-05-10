@@ -14,7 +14,7 @@ RSpec.describe "Signing up as a new user", type: :system do
     fill_in "password", with: "testing123"
     fill_in "passwordConfirmation", with: "testing123"
     click_on "Signup"
-    expect(page).to have_content("Let's build your feed")
+    expect(page).to have_content("Tell us about your company")
   end
 
   it "shows an error when signup fails" do

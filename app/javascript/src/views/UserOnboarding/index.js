@@ -6,7 +6,6 @@ import {
   matchPath,
   resolvePath,
 } from "react-router-dom";
-import Welcome from "./Welcome";
 import Company from "./Company";
 import Industry from "./Industry";
 import Audience from "./Audience";
@@ -76,7 +75,6 @@ export default function UserOnboarding() {
       </header>
       <div className="onboarding_content flex flex-1 py-2 pb-5 md:py-10 px-5 lg:pb-0">
         <Routes>
-          <Route index element={<Welcome data={data} />} />
           {STEPS.map((step) => (
             <Route
               key={step.title}

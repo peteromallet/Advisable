@@ -26,7 +26,7 @@ export default function Feed() {
   const onboarding = useTutorial("onboarding");
 
   if (!onboarding.isComplete) {
-    return <Navigate to="/setup" />;
+    return <Navigate to="/setup/company" />;
   }
 
   return (

@@ -16,19 +16,17 @@ RSpec.describe "Client signup", type: :system do
   it "Client can create an account and gets redirected to projects" do
     Sidekiq::Testing.inline! do
       visit("/clients/join")
+      expect(page).to have_content("Start discovering SaaS projects")
+      click_on("Signup with email")
       fill_in("firstName", with: "Michael")
       fill_in("lastName", with: "Scott")
       fill_in("email", with: "michael+scott@dundermifflin.com")
-      click_on("Create Your Free Account")
-      expect(page).to have_content("Welcome to Advisable!")
       fill_in("password", with: "testing123")
       fill_in("passwordConfirmation", with: "testing123")
-      click_on("Continue")
-
-      expect(page).to have_content("Welcome to Advisable")
-      click_link("Get Started")
+      click_on("Create Your Free Account")
 
       # Company step
+      expect(page).to have_content("Tell us about your company")
       fill_in("name", with: "Dunder Mifflin")
       select("I'm looking to hire someone", from: "intent")
       click_on("Continue")

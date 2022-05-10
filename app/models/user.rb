@@ -115,6 +115,7 @@ end
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
 #  availability                      :text
+#  campaign_content                  :string
 #  campaign_medium                   :string
 #  campaign_name                     :string
 #  campaign_source                   :string
