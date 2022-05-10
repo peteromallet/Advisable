@@ -60,8 +60,8 @@ RSpec.describe "Discover", type: :system do
       user.account.update(completed_tutorials: [])
       authenticate_as(user)
       visit("/explore")
-      expect(page).to have_content("Let's build your feed")
-      expect(page).to have_current_path("/setup")
+      expect(page).to have_content("Tell us about your company")
+      expect(page).to have_current_path("/setup/company")
     end
   end
 

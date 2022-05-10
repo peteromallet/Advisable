@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Deleting account", type: :system do
   let(:specialist) { create(:specialist, account: create(:account, password: "testing123")) }
-  let(:user) { create(:user, account: create(:account, password: "testing123")) }
+  let(:user) { create(:user, account: create(:account, password: "testing123", completed_tutorials: ["onboarding"])) }
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
