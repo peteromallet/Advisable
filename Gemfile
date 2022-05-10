@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 3.1.2"
 
 gem "airrecord"
+gem "analytics-ruby", "~> 2.4.0", require: "segment/analytics"
 gem "app_profiler"
 gem "aws-sdk-s3"
 gem "barnes"
@@ -56,7 +57,6 @@ gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
 gem "twilio-ruby"
-gem "analytics-ruby", "~> 2.4.0", :require => "segment/analytics"
 
 group :development, :test do
   gem "database_cleaner-active_record"
