@@ -24,7 +24,7 @@ end
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
 
-  if Rails.env.development? || ENV["STAGING"]
+  if Rails.env.development? || ENV.fetch("STAGING", nil)
     mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: "/playground", graphql_path: "/graphql"
     mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: "/toby_playground", graphql_path: "/toby_graphql"
   end
@@ -67,16 +67,7 @@ Rails.application.routes.draw do
   post "zapier_interactor/create_message"
 
   # redirections for old routes
-  get "/projects/:project/interviews/:id/availability", to: redirect(LogAndRedirect.new("/interviews/%{id}"))
-  get "/request_consultation/:id", to: redirect(LogAndRedirect.new("/profile/%{id}"))
-  get "/guild/events/:id", to: redirect(LogAndRedirect.new("/events/%{id}"))
-  get "/clients/signup", to: redirect(LogAndRedirect.new("/clients/join"))
-  get "/freelancers/signup", to: redirect(LogAndRedirect.new("/freelancers/join"))
-  get "/guild/posts/:id", to: redirect(LogAndRedirect.new("/posts/%{id}"))
   get "/profile/:username/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
-  get "/explore/articles/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
-  get "/freelancers/:username", to: redirect(LogAndRedirect.new("/profile/%{username}")), constraints: UsernameConstraint.new
-  get "/clients/apply(*path)", to: redirect(LogAndRedirect.new("/setup"))
 
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
