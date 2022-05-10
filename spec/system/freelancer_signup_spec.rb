@@ -20,7 +20,7 @@ RSpec.describe "Freelancer signup", type: :system do
     fill_in("firstName", with: "Dwight")
     fill_in("lastName", with: "Schrute")
     fill_in("email", with: "dwight@theoffice.com")
-    click_on("Get Started")
+    click_on("Start Application")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
     click_on("Continue")
