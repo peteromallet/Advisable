@@ -8,11 +8,7 @@ export default function useSegmentIdentity(viewer) {
 
   useEffect(() => {
     if (!window.analytics) return;
-    const timer = setTimeout(() => {
-      window.analytics.page();
-    }, 300);
-
-    return () => clearTimeout(timer);
+    window.analytics.page();
   }, [location]);
 
   useEffect(() => {
