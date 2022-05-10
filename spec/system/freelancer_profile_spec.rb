@@ -45,7 +45,7 @@ RSpec.describe "Freelancer profile", type: :system do
     section = create(:case_study_section, article:, type: "background")
     create(:case_study_content, section:, type: "CaseStudy::ParagraphContent", content: {text: "This is the content"})
     authenticate_as(specialist)
-    visit("/freelancers/#{specialist.uid}")
+    visit("/profile/#{specialist.uid}")
     expect(page).to have_content("A test case study")
     first("*[data-testid='caseStudyCard']").hover
     first(:button, "Case study menu").hover
