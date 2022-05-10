@@ -66,7 +66,7 @@ function FormsContent() {
   return (
     <>
       <Box mb={{ xl: 20 }}>
-        <Title>Advisable helps</Title>
+        <Title>Attract inbound</Title>
         <Title
           css={`
             background-image: linear-gradient(135deg, #c518ce, #0c3fec);
@@ -74,16 +74,16 @@ function FormsContent() {
             -webkit-text-fill-color: transparent;
           `}
         >
-          top freelancers
+          clients with
         </Title>
-        <Title mb={{ _: 4, l: 5 }}>succeed</Title>
+        <Title mb={{ _: 4, l: 5 }}>your work</Title>
         <Text
           fontSize={{ _: "m", l: "l" }}
           color="neutral800"
           lineHeight={{ _: "m", l: "l" }}
         >
-          We build case studies of your work and get them discovered by clients
-          who need you.
+          We build case studies of your projects and get them discovered by
+          clients who need you.
         </Text>
       </Box>
       <Logos />
