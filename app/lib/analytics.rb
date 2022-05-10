@@ -12,7 +12,7 @@ class Analytics
     })
   end
 
-  def track(user, event, properties)
+  def track(user, event, properties = {})
     return unless self.class.enabled?
 
     client.track(user_id: user.account.uid, event:, properties:)
@@ -22,7 +22,7 @@ class Analytics
     ENV.fetch("SEGMENT", nil).present?
   end
 
-  def self.track(user, event, payload)
-    new.track(user, event, payload)
+  def self.track(user, event, properties = {})
+    new.track(user, event, properties)
   end
 end
