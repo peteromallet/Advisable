@@ -126,7 +126,7 @@ export default function StartApplication({ nextStep, forwards }) {
                   ? isMobile
                     ? "Request Details"
                     : "Request more details"
-                  : "Get Started"}
+                  : "Start Application"}
               </SubmitButton>
             </Form>
           )}
