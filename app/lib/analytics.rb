@@ -7,7 +7,7 @@ class Analytics
     return unless self.class.enabled?
 
     @client = Segment::Analytics.new({
-      write_key: ENV.fetch("SEGMENT", nil),
+      write_key: ENV.fetch("SEGMENT_BACKEND", nil),
       on_error: proc { |_, msg| print(msg) }
     })
   end
@@ -19,7 +19,7 @@ class Analytics
   end
 
   def self.enabled?
-    ENV.fetch("SEGMENT", nil).present?
+    ENV.fetch("SEGMENT_BACKEND", nil).present?
   end
 
   def self.track(user, event, properties = {})
