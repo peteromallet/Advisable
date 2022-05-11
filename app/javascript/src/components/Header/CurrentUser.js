@@ -16,7 +16,11 @@ export default function CurrentUser() {
       state={popover}
       label="User menu"
       disclosure={
-        <CurrentUserToggle>
+        <CurrentUserToggle
+          role="button"
+          aria-label="Account dropdown"
+          data-testid="account-dropdown"
+        >
           <Avatar
             size="xs"
             name={viewer.name}
@@ -67,7 +71,7 @@ export default function CurrentUser() {
             Toby
           </StyledDropdownLink>
         )}
-        <Logout as={StyledDropdownLink}>Logout</Logout>
+        <Logout>Logout</Logout>
       </Box>
     </Popover>
   );

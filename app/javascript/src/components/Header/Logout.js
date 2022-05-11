@@ -1,7 +1,7 @@
 import React from "react";
-import { Box } from "@advisable/donut";
 import { gql, useMutation } from "@apollo/client";
 import { resetAnalytics } from "src/utilities/segment";
+import { StyledDropdownLink } from "./styles";
 
 const LOGOUT = gql`
   mutation Logout {
@@ -20,5 +20,7 @@ export default function Logout(props) {
     window.location = "/login";
   };
 
-  return <Box {...props} onClick={handleLogout} />;
+  return (
+    <StyledDropdownLink as="a" href="#" {...props} onClick={handleLogout} />
+  );
 }
