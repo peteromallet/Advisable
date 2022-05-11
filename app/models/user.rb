@@ -21,7 +21,6 @@ class User < ApplicationRecord
   has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
   has_many :client_calls, dependent: :destroy
-  has_many :searches, class_name: "CaseStudy::Search", dependent: :destroy
   has_many :sent_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_by_id, inverse_of: :shared_by, dependent: :nullify
   has_many :received_articles, class_name: "CaseStudy::SharedArticle", foreign_key: :shared_with_id, inverse_of: :shared_with, dependent: :destroy
 

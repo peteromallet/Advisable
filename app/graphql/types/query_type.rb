@@ -230,20 +230,6 @@ module Types
       current_user.received_articles
     end
 
-    field :case_study_search, Types::CaseStudy::Search, null: true do
-      argument :id, ID, required: true
-    end
-    def case_study_search(id:)
-      requires_client!
-      ::CaseStudy::Search.find_by!(uid: id)
-    end
-
-    field :case_study_searches, [Types::CaseStudy::Search], null: true, max_page_size: 20
-    def case_study_searches
-      requires_client!
-      current_user.searches.order(created_at: :asc)
-    end
-
     field :case_study_skills, [Types::Skill], null: true
 
     def case_study_skills

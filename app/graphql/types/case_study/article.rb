@@ -55,14 +55,6 @@ module Types
         object.sections.by_position
       end
 
-      field :is_archived, Boolean, null: false do
-        argument :search, ID, required: true
-      end
-      def is_archived(search:)
-        search = CaseStudy::Search.find_by!(uid: search)
-        search.archived.include?(object.id)
-      end
-
       field :is_favorited, Boolean, null: false
       def is_favorited
         return false if current_user.nil?

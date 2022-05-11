@@ -18,13 +18,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.invited_to_interview(User.first, User.last, random_interview)
   end
 
-  def case_study_searches_refreshed
-    ApplicationRecord.uncached do
-      searches = {random_search.id => [random_article.id], random_search.id => [random_article.id, random_article.id]}
-      UserMailer.case_study_searches_refreshed(random_user, searches)
-    end
-  end
-
   def case_study_shared
     ApplicationRecord.uncached do
       shared_article = CaseStudy::SharedArticle.last
@@ -84,10 +77,6 @@ class UserMailerPreview < ActionMailer::Preview
 
   def random_user
     User.order("RANDOM()").first
-  end
-
-  def random_search
-    CaseStudy::Search.order("RANDOM()").first
   end
 
   def random_article
