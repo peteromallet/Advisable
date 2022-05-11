@@ -52,6 +52,17 @@ RSpec.describe Mutations::CreatePaymentRequest do
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_request", "deliver_now", {args: [payment_request]})
   end
 
+  it "creates a message in the conversation" do
+    response = AdvisableSchema.execute(query, context:)
+    id = response.dig("data", "createPaymentRequest", "paymentRequest", "id")
+    payment_request = PaymentRequest.find_by!(uid: id)
+    messages = Message.where(payment_request:)
+    expect(messages.count).to eq(1)
+    message = messages.first
+    expect(message.kind).to eq("PaymentRequestCreated")
+    expect(message.conversation.participants.pluck(:account_id)).to match_array([specialist.account_id, user.account_id])
+  end
+
   context "with memo" do
     let(:extra) { %(memo: "This is a memo") }
 
@@ -65,7 +76,7 @@ RSpec.describe Mutations::CreatePaymentRequest do
   end
 
   context "when there is no agreement" do
-    let(:agreement) { instance_double("Agreement", uid: "1234") }
+    let(:agreement) { instance_double(Agreement, uid: "1234") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)

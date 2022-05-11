@@ -573,12 +573,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_072830) do
     t.jsonb "metadata"
     t.bigint "agreement_id"
     t.bigint "interview_id"
+    t.bigint "payment_request_id"
     t.index ["agreement_id"], name: "index_messages_on_agreement_id"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["guild_post_id"], name: "index_messages_on_guild_post_id"
     t.index ["idempotency_key"], name: "index_messages_on_idempotency_key"
     t.index ["interview_id"], name: "index_messages_on_interview_id"
+    t.index ["payment_request_id"], name: "index_messages_on_payment_request_id"
     t.index ["uid"], name: "index_messages_on_uid", unique: true
   end
 
@@ -993,6 +995,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_072830) do
   add_foreign_key "messages", "agreements"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "guild_posts"
+  add_foreign_key "messages", "payment_requests"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "payment_requests", "agreements"

@@ -54,7 +54,7 @@ class Payment < ApplicationRecord
 
   def mark_paid!
     if payment_request
-      payment_request.update!(status: "paid")
+      payment_request.mark_paid!
     else
       UserMailer.payment_receipt(self).deliver_later
     end
