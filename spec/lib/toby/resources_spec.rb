@@ -10,9 +10,7 @@ RSpec.describe Toby::Resources do
           Toby::Resources::SalesPerson,
           Toby::Resources::Specialist,
           Toby::Resources::CaseStudy::Article,
-          Toby::Resources::CaseStudy::Search,
           Toby::Resources::CaseStudy::Interest,
-          Toby::Resources::CaseStudy::SearchFeedback,
           Toby::Resources::CaseStudy::Skill,
           Toby::Resources::SkillSimilarity,
           Toby::Resources::Industry,
@@ -43,9 +41,7 @@ RSpec.describe Toby::Resources do
     it "gets all the descendants of a resource" do
       expect(described_class.get_descendants_of(Toby::Resources::CaseStudy)).to match_array(
         [
-          Toby::Resources::CaseStudy::SearchFeedback,
           Toby::Resources::CaseStudy::Article,
-          Toby::Resources::CaseStudy::Search,
           Toby::Resources::CaseStudy::Interest,
           Toby::Resources::CaseStudy::Skill
         ]

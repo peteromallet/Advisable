@@ -36,17 +36,6 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def case_study_searches_refreshed(user, updated_searches)
-    @user = user
-    @account = @user.account
-    @searches = updated_searches.map do |search, articles|
-      [CaseStudy::Search.find(search), CaseStudy::Article.where(id: articles)]
-    end
-    mail(to: @account.email, subject: "You Have New Recommendations") do |f|
-      f.html { render(layout: "email_v2") }
-    end
-  end
-
   def case_study_shared(shared_article)
     @user = shared_article.shared_with
     @shared_article = shared_article
