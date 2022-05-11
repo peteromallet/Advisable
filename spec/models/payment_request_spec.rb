@@ -17,6 +17,25 @@ RSpec.describe PaymentRequest, type: :model do
     end
   end
 
+  describe "#mark_paid!" do
+    let(:payment_request) { create(:payment_request) }
+
+    it "updates the status" do
+      expect(payment_request.status).to eq("pending")
+      payment_request.mark_paid!
+      expect(payment_request.reload.status).to eq("paid")
+    end
+
+    it "creates a message in the conversation" do
+      payment_request.mark_paid!
+      messages = Message.where(payment_request:)
+      expect(messages.count).to eq(1)
+      message = messages.first
+      expect(message.kind).to eq("PaymentRequestCompleted")
+      expect(message.conversation.participants.pluck(:account_id)).to match_array([payment_request.specialist.account_id, payment_request.agreement.user.account_id])
+    end
+  end
+
   describe "#financialize!" do
     before { allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_123asdf456", status: "succeeded")) }
 

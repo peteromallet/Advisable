@@ -34,6 +34,16 @@ RSpec.describe Payment, type: :model do
       payment.mark_paid!
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "payment_receipt", "deliver_now", args: [payment]).once
     end
+
+    context "with payment request" do
+      let(:payment_request) { create(:payment_request) }
+      let(:payment) { create(:payment, payment_request:) }
+
+      it "calls #mark_paid on the payment request" do
+        expect(payment_request).to receive(:mark_paid!).once
+        payment.mark_paid!
+      end
+    end
   end
 
   describe "#charge!" do
