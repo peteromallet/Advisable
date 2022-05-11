@@ -30,4 +30,18 @@ RSpec.describe "Specialist settings", type: :system do
     expect(page).to have_content("Your account has been updated")
     expect(specialist.reload.account.email).to eq("update@test.com")
   end
+
+  it "specialist can set their availability" do
+    specialist = create(:specialist, unavailable_until: nil)
+    authenticate_as(specialist)
+    visit("/settings/availability")
+    click_on("Set Available Date")
+    click_on("Next Month")
+    first(".DayPicker-Day[aria-disabled='false']").click
+    expect(page).to have_content(/You have currently set yourself as unavailable/i)
+    expect(specialist.reload.unavailable_until).to be_truthy
+    click_on("Set Available")
+    expect(page).not_to have_content(/You have currently set yourself as unavailable/i)
+    expect(specialist.reload.unavailable_until).to be_nil
+  end
 end
