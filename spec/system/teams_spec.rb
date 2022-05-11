@@ -41,4 +41,15 @@ RSpec.describe "Teams", type: :system do
     expect(page).to have_content("#{non_manager.account.name} has been demoted")
     expect(non_manager.account.reload.permissions).not_to include("team_manager")
   end
+
+  it "manager can remove another user" do
+    authenticate_as(manager)
+    visit("/settings/team")
+    expect(manager.company.users.active).to include(non_manager)
+    expect(page).to have_content(non_manager.account.name)
+    click_on("Remove #{non_manager.account.name}")
+    click_on("Remove") # confirmation model
+    expect(page).not_to have_content(non_manager.account.name)
+    expect(manager.company.reload.users.active).not_to include(non_manager)
+  end
 end

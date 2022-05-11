@@ -10,7 +10,13 @@ export default function RemoveTeamMember({ member }) {
 
   return (
     <>
-      <DialogDisclosure {...modal} as={Button} size="xs" variant="subtle">
+      <DialogDisclosure
+        {...modal}
+        as={Button}
+        size="xs"
+        variant="subtle"
+        aria-label={`Remove ${member.name}`}
+      >
         <Trash />
       </DialogDisclosure>
       <Modal modal={modal} padding={8} label={`Want to remove ${member.name}?`}>
