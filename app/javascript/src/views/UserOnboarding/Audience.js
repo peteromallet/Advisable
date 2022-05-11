@@ -11,6 +11,7 @@ import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import { useUpdateCompany } from "./queries";
+import { trackEvent } from "src/utilities/segment";
 
 const validationSchema = object().shape({
   audience: string()
@@ -33,6 +34,7 @@ export default function Audience({ data }) {
       },
     });
 
+    trackEvent("Setup - Submitted Audience", { audience: values.audience });
     navigate("/setup/interests");
   };
 

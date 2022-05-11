@@ -80,6 +80,7 @@ GEM
       faraday (>= 1.0, < 3.0)
       faraday-net_http_persistent
       net-http-persistent
+    analytics-ruby (2.4.0)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
@@ -585,6 +586,7 @@ PLATFORMS
 
 DEPENDENCIES
   airrecord
+  analytics-ruby (~> 2.4.0)
   annotate
   app_profiler
   aws-sdk-s3

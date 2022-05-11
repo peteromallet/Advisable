@@ -8,6 +8,7 @@ import { object, string } from "yup";
 import FormField from "src/components/FormField";
 import { useUpdateCompany } from "./queries";
 import { useNavigate } from "react-router-dom";
+import { trackEvent } from "src/utilities/segment";
 
 const validationSchema = object().shape({
   name: string().required("Please provide your company name"),
@@ -32,6 +33,7 @@ export default function Company({ data }) {
       variables: { input: values },
     });
 
+    trackEvent("Setup - Submitted Company", values);
     navigate("../industry");
   };
 

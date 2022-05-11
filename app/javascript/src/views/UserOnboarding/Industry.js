@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "src/components/Input";
 import { ChevronRight, Search } from "@styled-icons/heroicons-solid";
 import { useUpdateCompany } from "./queries";
+import { trackEvent } from "src/utilities/segment";
 
 export default function Industry({ data }) {
   const [update] = useUpdateCompany();
@@ -25,6 +26,7 @@ export default function Industry({ data }) {
       },
     });
 
+    trackEvent("Setup - Submitted Industry", { industry: industry.name });
     navigate("../audience");
   };
 

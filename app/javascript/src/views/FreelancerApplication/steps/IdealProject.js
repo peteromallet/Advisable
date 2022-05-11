@@ -12,7 +12,6 @@ import AnimatedCard from "../components/AnimatedCard";
 import { useMutation } from "@apollo/client";
 import { COMPLETE_SETUP, UPDATE_PROFILE } from "../queries";
 import { useNavigate } from "react-router-dom";
-import { track } from "src/utilities/mixpanel";
 
 export const validationSchema = object().shape({
   idealProject: string()
@@ -45,7 +44,6 @@ export default function IdealProject({ specialist }) {
       await complete({ variables: { input: {} } });
     }
 
-    track("Ideal Project (Specialist Application)");
     navigate("/");
   };
 

@@ -12,7 +12,6 @@ import StepNumber from "../components/StepNumber";
 import AnimatedCard from "../components/AnimatedCard";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PROFILE } from "../queries";
-import { track } from "src/utilities/mixpanel";
 
 const CHAR_LIMIT = 400;
 
@@ -49,7 +48,6 @@ export default function PreviousWork({ specialist }) {
       return;
     }
 
-    track("Previous Work (Specialist Application)");
     navigate("/freelancers/apply/preferences");
   };
 

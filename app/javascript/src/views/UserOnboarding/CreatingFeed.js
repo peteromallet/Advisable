@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useInterval from "src/hooks/useInterval";
 import useTutorial from "src/hooks/useTutorial";
 import { useResults } from "./queries";
-import { updateCustomerlyAttribute } from "src/utilities/customerly";
+import { trackEvent } from "src/utilities/segment";
 
 function Card(props) {
   return (
@@ -55,7 +55,7 @@ export default function CreatingFeed() {
     if (seconds < 5) return;
     if (!onboarding.isComplete) return;
     if (resultsReady || seconds >= 10) {
-      updateCustomerlyAttribute("onboarded", new Date().getTime() / 1000);
+      trackEvent("Setup - Completed");
       navigate("/");
     }
   }, [seconds, navigate, resultsReady, onboarding]);
