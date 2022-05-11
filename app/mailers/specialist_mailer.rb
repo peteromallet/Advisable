@@ -27,7 +27,7 @@ class SpecialistMailer < ApplicationMailer
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
-      subject: "More times added: Introductory call for #{interview.application.project.nice_name} Project"
+      subject: "More times added: Introductory call with #{interview.user.name_with_company}"
     ) do |format|
       format.html { render layout: false }
     end
@@ -83,7 +83,7 @@ class SpecialistMailer < ApplicationMailer
       from: "Advisable <hello@advisable.com>",
       to: @account.email,
       bcc: @sales_person.email_with_name,
-      subject: "What are your next steps for the #{@interview.application.project.nice_name} project with #{@interview.user.name_with_company}?"
+      subject: "What are your next steps with #{@interview.user.name_with_company}?"
     ) do |format|
       format.html { render(layout: "email_v2") }
     end
