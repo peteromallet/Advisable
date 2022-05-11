@@ -10,6 +10,7 @@ import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
 import Feed from "./views/Feed";
 import Article from "./views/CaseStudyArticle";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -40,156 +41,165 @@ const ApplicationRoutes = () => {
   return (
     <>
       <Header />
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          {isClient && (
-            <Route path="/" exact element={<Navigate exact to="/explore" />} />
-          )}
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            {isClient && (
+              <Route
+                path="/"
+                exact
+                element={<Navigate exact to="/explore" />}
+              />
+            )}
 
-          <Route path="/set_password" element={<Navigate to="/" />} />
+            <Route path="/set_password" element={<Navigate to="/" />} />
 
-          <Route
-            path="/"
-            exact
-            element={
-              <RequireAuthentication>
-                <FreelancerDashboard />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/"
+              exact
+              element={
+                <RequireAuthentication>
+                  <FreelancerDashboard />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route path="/articles/:slug" element={<Article />} />
+            <Route path="/articles/:slug" element={<Article />} />
 
-          <Route
-            path="/post"
-            element={
-              <RequireAuthentication specialistOnly>
-                <NewPost />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/post"
+              element={
+                <RequireAuthentication specialistOnly>
+                  <NewPost />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/messages/*"
-            element={
-              <RequireAuthentication>
-                <Messages />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/messages/*"
+              element={
+                <RequireAuthentication>
+                  <Messages />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/freelancers/apply/*"
-            element={
-              <RequireAuthentication>
-                <FreelancerApplication />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/freelancers/apply/*"
+              element={
+                <RequireAuthentication>
+                  <FreelancerApplication />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route path="/profile/:username/*" element={<FreelancerProfile />} />
+            <Route
+              path="/profile/:username/*"
+              element={<FreelancerProfile />}
+            />
 
-          <Route
-            path="/profile"
-            element={
-              <RequireAuthentication>
-                <RedirectToFreelancerProfile />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/profile"
+              element={
+                <RequireAuthentication>
+                  <RedirectToFreelancerProfile />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/interview_request/:interviewID/*"
-            element={
-              <RequireAuthentication specialistOnly>
-                <InterviewRequest />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/interview_request/:interviewID/*"
+              element={
+                <RequireAuthentication specialistOnly>
+                  <InterviewRequest />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/interviews/:id/*"
-            element={
-              <RequireAuthentication>
-                <Interview />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/interviews/:id/*"
+              element={
+                <RequireAuthentication>
+                  <Interview />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/settings/*"
-            element={
-              <RequireAuthentication>
-                <Settings />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/settings/*"
+              element={
+                <RequireAuthentication>
+                  <Settings />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/explore/*"
-            element={
-              <RequireAuthentication clientOnly>
-                <Feed />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/explore/*"
+              element={
+                <RequireAuthentication clientOnly>
+                  <Feed />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/payments/:id"
-            element={
-              <RequireAuthentication clientOnly>
-                <Payment />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/payments/:id"
+              element={
+                <RequireAuthentication clientOnly>
+                  <Payment />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route path="/posts/:id/edit" element={<EditPost />} />
+            <Route path="/posts/:id/edit" element={<EditPost />} />
 
-          <Route path="/posts/:postId" element={<GuildPost />} />
+            <Route path="/posts/:postId" element={<GuildPost />} />
 
-          <Route
-            exact
-            path="/guild/topics"
-            element={
-              <RequireAuthentication specialistOnly>
-                <GuildFollows />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              exact
+              path="/guild/topics"
+              element={
+                <RequireAuthentication specialistOnly>
+                  <GuildFollows />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route exact path="/events/:eventId" element={<GuildEvent />} />
+            <Route exact path="/events/:eventId" element={<GuildEvent />} />
 
-          <Route
-            exact
-            path="/events"
-            element={
-              <RequireAuthentication>
-                <GuildEvents />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              exact
+              path="/events"
+              element={
+                <RequireAuthentication>
+                  <GuildEvents />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/new_agreement/:userId/*"
-            element={
-              <RequireAuthentication specialistOnly>
-                <NewAgreement />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/new_agreement/:userId/*"
+              element={
+                <RequireAuthentication specialistOnly>
+                  <NewAgreement />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route
-            path="/payment_requests/*"
-            element={
-              <RequireAuthentication>
-                <PaymentRequests />
-              </RequireAuthentication>
-            }
-          />
+            <Route
+              path="/payment_requests/*"
+              element={
+                <RequireAuthentication>
+                  <PaymentRequests />
+                </RequireAuthentication>
+              }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 };
