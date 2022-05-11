@@ -52,7 +52,7 @@ const iconClasses = composeStyles({
 
 function SidebarItem({ to, icon, children }) {
   const resolved = useResolvedPath(to);
-  const match = useMatch({ path: resolved.pathname, end: true });
+  const match = useMatch({ path: resolved?.pathname, end: true });
 
   const handleClick = () => {
     window.scrollTo(0, 0);
