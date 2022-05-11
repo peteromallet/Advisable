@@ -113,7 +113,7 @@ class SpecialistMailer < ApplicationMailer
       from: @sales_person.email_with_name,
       to: @consultation.specialist.account.email,
       bcc: @sales_person.email_with_name,
-      subject: "Consultation request from #{@consultation.user.name_with_company}"
+      subject: "New client request - #{@consultation.user.name_with_company} wants to arrange a call"
     ) do |format|
       format.html { render layout: false }
     end
