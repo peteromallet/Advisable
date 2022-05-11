@@ -25,6 +25,8 @@ export default function ComboboxTags({ value, removeOption }) {
         >
           <Box marginTop="-1px">{v.label}</Box>
           <Box
+            as="button"
+            aria-label={`Remove ${v.label}`}
             width="32px"
             height="32px"
             display="inline-flex"
