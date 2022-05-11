@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Payment < ApplicationRecord
-  self.ignored_columns += %i[task_id]
-
   include Uid
 
   has_logidze
@@ -177,7 +175,6 @@ end
 #  index_payments_on_company_id          (company_id)
 #  index_payments_on_payment_request_id  (payment_request_id)
 #  index_payments_on_specialist_id       (specialist_id)
-#  index_payments_on_task_id             (task_id)
 #  index_payments_on_uid                 (uid) UNIQUE
 #
 # Foreign Keys
@@ -185,5 +182,4 @@ end
 #  fk_rails_...  (company_id => companies.id)
 #  fk_rails_...  (payment_request_id => payment_requests.id)
 #  fk_rails_...  (specialist_id => specialists.id)
-#  fk_rails_...  (task_id => tasks.id)
 #

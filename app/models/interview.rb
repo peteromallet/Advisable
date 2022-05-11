@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns += %i[application_id]
-
   extend Memoist
   include Uid
 
@@ -68,15 +66,13 @@ end
 #
 # Indexes
 #
-#  index_interviews_on_application_id  (application_id)
-#  index_interviews_on_article_id      (article_id)
-#  index_interviews_on_specialist_id   (specialist_id)
-#  index_interviews_on_uid             (uid) UNIQUE
-#  index_interviews_on_user_id         (user_id)
+#  index_interviews_on_article_id     (article_id)
+#  index_interviews_on_specialist_id  (specialist_id)
+#  index_interviews_on_uid            (uid) UNIQUE
+#  index_interviews_on_user_id        (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (application_id => applications.id)
 #  fk_rails_...  (article_id => case_study_articles.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)

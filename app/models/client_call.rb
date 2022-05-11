@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ClientCall < ApplicationRecord
-  self.ignored_columns += %i[project_id]
-
   include ::Airtable::Syncable
   belongs_to :sales_person, optional: true
   belongs_to :user, optional: true
@@ -31,13 +29,11 @@ end
 # Indexes
 #
 #  index_client_calls_on_airtable_id      (airtable_id)
-#  index_client_calls_on_project_id       (project_id)
 #  index_client_calls_on_sales_person_id  (sales_person_id)
 #  index_client_calls_on_user_id          (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (project_id => projects.id)
 #  fk_rails_...  (sales_person_id => sales_people.id)
 #  fk_rails_...  (user_id => users.id)
 #

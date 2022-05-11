@@ -400,7 +400,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   create_table "client_calls", force: :cascade do |t|
     t.string "airtable_id"
     t.integer "duration"
-    t.bigint "project_id"
     t.datetime "call_time", precision: nil
     t.string "phone_number"
     t.string "email"
@@ -414,7 +413,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.datetime "updated_at", null: false
     t.integer "call_attempt_count"
     t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
-    t.index ["project_id"], name: "index_client_calls_on_project_id"
     t.index ["sales_person_id"], name: "index_client_calls_on_sales_person_id"
     t.index ["user_id"], name: "index_client_calls_on_user_id"
   end
@@ -595,7 +593,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   end
 
   create_table "interviews", force: :cascade do |t|
-    t.bigint "application_id"
     t.datetime "starts_at", precision: nil
     t.string "status"
     t.string "time_zone"
@@ -616,7 +613,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.bigint "specialist_id", null: false
     t.string "reason"
     t.bigint "article_id"
-    t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
@@ -738,7 +734,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.string "status"
     t.uuid "company_id", null: false
     t.bigint "specialist_id", null: false
-    t.bigint "task_id"
     t.string "payment_intent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -751,14 +746,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["payment_request_id"], name: "index_payments_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
-    t.index ["task_id"], name: "index_payments_on_task_id"
     t.index ["uid"], name: "index_payments_on_uid", unique: true
   end
 
   create_table "payouts", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "specialist_id", null: false
-    t.bigint "task_id"
     t.integer "amount"
     t.integer "sourcing_fee"
     t.string "status"
@@ -769,7 +762,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.bigint "payment_request_id"
     t.index ["payment_request_id"], name: "index_payouts_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
-    t.index ["task_id"], name: "index_payouts_on_task_id"
     t.index ["uid"], name: "index_payouts_on_uid", unique: true
   end
 
@@ -1226,7 +1218,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_skills", "skills"
-  add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
   add_foreign_key "companies", "industries"
@@ -1245,7 +1236,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
-  add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "case_study_articles", column: "article_id"
   add_foreign_key "interviews", "specialists"
   add_foreign_key "interviews", "users"
@@ -1267,10 +1257,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "payments", "companies"
   add_foreign_key "payments", "payment_requests"
   add_foreign_key "payments", "specialists"
-  add_foreign_key "payments", "tasks"
   add_foreign_key "payouts", "payment_requests"
   add_foreign_key "payouts", "specialists"
-  add_foreign_key "payouts", "tasks"
   add_foreign_key "problematic_flags", "applications"
   add_foreign_key "problematic_flags", "users"
   add_foreign_key "project_industries", "industries"
