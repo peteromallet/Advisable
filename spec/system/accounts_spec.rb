@@ -3,10 +3,14 @@
 require "rails_helper"
 
 RSpec.describe "Accounts", type: :system do
+  let(:account) { create(:account, password: "testing123", completed_tutorials: ["onboarding"]) }
+
   it "User can logout" do
-    user = create(:user)
-    authenticate_as(user)
-    visit("/explore")
+    create(:user, account:)
+    visit("/login")
+    fill_in("email", with: account.email)
+    fill_in("password", with: "testing123")
+    click_on("Login")
     expect(page).to have_content("Your feed")
     first("*[data-testid=account-dropdown]").click
     click_link("Logout")
@@ -14,9 +18,11 @@ RSpec.describe "Accounts", type: :system do
   end
 
   it "Freelancer can logout" do
-    specialist = create(:specialist)
-    authenticate_as(specialist)
-    visit("/")
+    create(:specialist, account:)
+    visit("/login")
+    fill_in("email", with: account.email)
+    fill_in("password", with: "testing123")
+    click_on("Login")
     expect(page).to have_content("Welcome back")
     first("*[data-testid=account-dropdown]").click
     click_link("Logout")
