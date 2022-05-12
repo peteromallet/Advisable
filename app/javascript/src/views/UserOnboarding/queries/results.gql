@@ -1,7 +1,7 @@
 query SetupResults {
   interests {
     id
-    results {
+    articles {
       edges {
         node {
           id

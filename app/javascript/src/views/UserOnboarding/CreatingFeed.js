@@ -36,7 +36,7 @@ export default function CreatingFeed() {
   const resultsReady = useMemo(() => {
     if (!data?.interests) return false;
     const interests = data.interests;
-    return interests.every((interest) => interest.results.edges.length > 0);
+    return interests.every((interest) => interest.articles.edges.length > 0);
   }, [data]);
 
   useEffect(() => {
