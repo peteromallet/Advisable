@@ -9,7 +9,7 @@ import { createPopper } from "@popperjs/core";
 const StyledStepCard = styled(motion.div)`
   background: white;
   position: relative;
-  border-radius: 12px;
+  border-radius: 20px;
   box-shadow: 0 4px 8px ${rgba(theme.colors.neutral900, 0.08)},
     0 24px 40px ${rgba(theme.colors.neutral900, 0.24)};
 `;
@@ -52,6 +52,35 @@ const StyledStep = styled.div`
     }
   }
 
+  &[data-popper-placement^="bottom"] {
+    ${StyledStepCard}::before {
+      content: "";
+      left: 50%;
+      top: -8px;
+      width: 0;
+      height: 0;
+      margin-left: -8px;
+      position: absolute;
+      border-bottom: 8px solid white;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+    }
+  }
+
+  &[data-popper-placement^="left"] {
+    ${StyledStepCard}::before {
+      content: "";
+      top: 20px;
+      right: -8px;
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-left: 8px solid white;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+  }
+
   &[data-popper-placement="right-start"] ${StyledStepCard}::before {
     top: 20px;
   }
@@ -67,7 +96,7 @@ const StyledBackdrop = styled.div`
   z-index: 10000;
   position: fixed;
   overflow: hidden;
-  color: ${rgba("#F8F8F9", 0.75)};
+  color: rgba(255, 255, 255, 0.8);
 `;
 
 const isInViewport = (el) => {
@@ -82,13 +111,16 @@ const isInViewport = (el) => {
 
 const scrollIfNeeded = (el) => {
   if (!isInViewport(el)) {
-    el.scrollIntoView({ block: "center", inline: "center" });
+    const top = el.getBoundingClientRect().top - 100;
+    window.scrollTo({ top, behavior: "smooth" });
   }
 };
 
 export function useWalkthrough(steps, opts = {}) {
   const [visible, setVisible] = React.useState(opts.visible || false);
-  const [currentStepIndex, setCurrentStepIndex] = React.useState(0);
+  const [currentStepIndex, setCurrentStepIndex] = React.useState(
+    opts.initialStep || 0,
+  );
 
   const currentStep = steps[currentStepIndex];
 
@@ -289,7 +321,7 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
           {
             name: "offset",
             options: {
-              offset: [0, 16],
+              offset: currentStep.offset || [0, 20],
             },
           },
         ],
@@ -297,7 +329,7 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
 
       return () => popper.destroy();
     }
-  }, [anchor, highlight, currentStep.placement]);
+  }, [anchor, highlight, currentStep]);
 
   React.useLayoutEffect(() => {
     if (visible && anchor) return scrollIfNeeded(anchor);

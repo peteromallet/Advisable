@@ -22,7 +22,7 @@ export default function MainFeed() {
 
   return (
     <FeedContainer>
-      <div className="">
+      <div className="" data-walkthrough="feed">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Your feed
         </h2>

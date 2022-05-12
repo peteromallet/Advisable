@@ -50,7 +50,7 @@ const iconClasses = composeStyles({
   },
 });
 
-function SidebarItem({ to, icon, children }) {
+function SidebarItem({ to, icon, children, ...props }) {
   const resolved = useResolvedPath(to);
   const match = useMatch({ path: resolved?.pathname, end: true });
 
@@ -60,6 +60,7 @@ function SidebarItem({ to, icon, children }) {
 
   return (
     <Link
+      {...props}
       to={to}
       onClick={handleClick}
       className={sidebarItemClasses({ active: match })}
@@ -135,7 +136,9 @@ export default function FeedSidebar() {
             Shared
           </SidebarItem> */}
         </div>
-        <Interests />
+        <div data-walkthrough="interests">
+          <Interests />
+        </div>
       </SimpleBar>
     </motion.div>
   );

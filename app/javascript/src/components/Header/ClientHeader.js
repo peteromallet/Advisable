@@ -12,7 +12,10 @@ export default function ClientHeader() {
       <div className="w-full flex items-center">
         <HeaderLogo />
         <div className="px-6 flex-1">
-          <div className="hidden md:block max-w-[500px]">
+          <div
+            data-walkthrough="search"
+            className="hidden md:block max-w-[500px]"
+          >
             <Searchbox name="headerSearch" />
           </div>
         </div>

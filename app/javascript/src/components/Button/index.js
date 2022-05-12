@@ -3,7 +3,7 @@ import composeStyles from "src/utilities/composeStyles";
 
 export const buttonStyles = composeStyles({
   base: `
-    flex
+    inline-flex
     relative
     items-center
     justify-center
