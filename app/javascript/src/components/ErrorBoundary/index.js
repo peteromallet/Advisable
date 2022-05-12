@@ -14,7 +14,7 @@ export function PageError({ eventId, title = "Oops..", children }) {
       minHeight="calc(100vh - 120px)"
     >
       <Box maxWidth="400px" textAlign="center">
-        <DisconnectIllustration width="240px" />
+        <DisconnectIllustration width="240px" className="inline-block" />
         <Text
           mb="s"
           as="h1"
