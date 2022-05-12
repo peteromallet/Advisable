@@ -1,5 +1,5 @@
 import React from "react";
-import { useBackground, useBreakpoint } from "@advisable/donut";
+import { useBackground } from "@advisable/donut";
 import { Routes, Route, Navigate } from "react-router-dom";
 import FeedSidebar from "./components/FeedSidebar";
 import Interest from "./Interest";
@@ -11,7 +11,6 @@ import Favorites from "./Favorites";
 import Search from "./Search";
 import "./feed.css";
 import Footer from "src/components/Footer";
-import FeedTour from "./components/FeedTour";
 
 function FeedViewFailed() {
   return (
@@ -24,7 +23,6 @@ function FeedViewFailed() {
 
 export default function Feed() {
   useBackground("beige");
-  const isDesktop = useBreakpoint("mUp");
   const onboarding = useTutorial("onboarding");
 
   if (!onboarding.isComplete) {
@@ -33,7 +31,6 @@ export default function Feed() {
 
   return (
     <div className="flex">
-      {isDesktop && <FeedTour />}
       <FeedSidebar />
       <BottomBar />
       <div className="flex-1 w-full flex flex-col">
