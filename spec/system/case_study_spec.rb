@@ -15,6 +15,10 @@ RSpec.describe "Case sutdy view", type: :system do
   let!(:p3) { create(:case_study_paragraph_content, section: outcome) }
   let!(:results) { create(:case_study_results_content, section: outcome) }
 
+  before do
+    allow_any_instance_of(CaseStudy::Article).to receive(:similar).and_return([])
+  end
+
   it "renders the case study" do
     visit("/articles/#{article.slug}")
     expect(page).to have_content(article.title)
