@@ -62,7 +62,7 @@ const Follows = () => {
         <Heading size="3xl" fontWeight={500} marginBottom={4}>
           Your Topics
         </Heading>
-        <Card padding="l" mb={12}>
+        <Card padding="l" mb={12} data-testid="your-topics">
           <Combobox
             multiple
             loadOptions={handleSearch}

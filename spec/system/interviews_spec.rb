@@ -13,6 +13,12 @@ RSpec.describe "Interviews", type: :system do
       ])
   end
 
+  let(:next_work_day) do
+    # rubocop:disable Rails/TimeZone
+    Time.now.next_weekday.beginning_of_day
+    # rubocop:enable Rails/TimeZone
+  end
+
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
     allow_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview)
@@ -65,13 +71,12 @@ RSpec.describe "Interviews", type: :system do
     authenticate_as(interview.user)
     visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
-    date = Time.zone.now.next_weekday.beginning_of_day
-    find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{date.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{date.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{date.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{date.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{date.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
     click_on "Request To Reschedule"
     expect(page).to have_content("You have requested to reschedule your call")
   end
@@ -103,13 +108,12 @@ RSpec.describe "Interviews", type: :system do
       interview = create(:interview, user:, status: "Specialist Requested Reschedule")
       authenticate_as interview.user
       visit "/interviews/#{interview.uid}"
-      date = Time.zone.now.next_weekday.beginning_of_day
-      find("[aria-label='#{date.strftime('%-d %b %Y, 10:00')}']").click
-      find("[aria-label='#{date.strftime('%-d %b %Y, 10:30')}']").click
-      find("[aria-label='#{date.strftime('%-d %b %Y, 11:00')}']").click
-      find("[aria-label='#{date.strftime('%-d %b %Y, 11:30')}']").click
-      find("[aria-label='#{date.strftime('%-d %b %Y, 12:00')}']").click
-      find("[aria-label='#{date.strftime('%-d %b %Y, 12:30')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
       click_on "Update Availability"
       expect(page).to have_content("We have sent your availability")
     end
@@ -149,5 +153,19 @@ RSpec.describe "Interviews", type: :system do
     fill_in("email", with: "jim@dundermifflin.com")
     click_on("Invite")
     expect(page).to have_content("Invite sent")
+  end
+
+  it "resends the interview request" do
+    interview = create(:interview, status: "Need More Time Options")
+    authenticate_as interview.user
+    visit "/interviews/#{interview.uid}"
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    click_on "Update Availability"
+    expect(page).to have_content("We have sent your updated availability")
   end
 end

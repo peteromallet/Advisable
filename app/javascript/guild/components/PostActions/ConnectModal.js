@@ -77,7 +77,8 @@ function ConnectionType({ post, modal }) {
           >
             <StyledConnectionType
               onClick={() => setConnectionType("MESSAGE")}
-              aria-label={`Send ${firstName} an instant message`}
+              aria-label={`Send ${firstName} a message`}
+              data-testid={`Send ${firstName} a message`}
             >
               <Circle bg="blue400" color="white" mb={5}>
                 <Chat size={24} />
@@ -89,7 +90,11 @@ function ConnectionType({ post, modal }) {
                 Send {firstName} an instant message
               </Text>
             </StyledConnectionType>
-            <StyledConnectionType onClick={() => setConnectionType("VIDEO")}>
+            <StyledConnectionType
+              onClick={() => setConnectionType("VIDEO")}
+              aria-label={`Request call with ${firstName}e`}
+              data-testid={`Request call with ${firstName}`}
+            >
               <Circle bg="cyan500" color="white" mb={5}>
                 <VideoCamera size={24} />
               </Circle>

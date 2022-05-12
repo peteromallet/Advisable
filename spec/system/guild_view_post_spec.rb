@@ -36,5 +36,26 @@ RSpec.describe "Guild view post", type: :system do
       visit(post_path)
       expect(page).to have_content(guild_post.title)
     end
+
+    it "allows the freelancer to connect with the author" do
+      visit(post_path)
+      expect(page).to have_content(guild_post.title)
+      first(:button, "Connect with #{guild_post.specialist.account.first_name}").click
+      find_by_test_id("Send #{guild_post.specialist.account.first_name} a message").click
+      fill_in("message", with: "Testing")
+      click_on("Send")
+      expect(page).to have_content(/your message has been sent/i)
+    end
+
+    it "allows the freelancer to request a call with the author" do
+      visit(post_path)
+      expect(page).to have_content(guild_post.title)
+      first(:button, "Connect with #{guild_post.specialist.account.first_name}").click
+      find_by_test_id("Request call with #{guild_post.specialist.account.first_name}").click
+      fill_in("message", with: "Testing")
+      fill_in("guildCalendlyLink", with: "https://calendly.com/test")
+      click_on("Send")
+      expect(page).to have_content(/your message has been sent/i)
+    end
   end
 end

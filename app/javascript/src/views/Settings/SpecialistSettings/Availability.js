@@ -18,32 +18,23 @@ const GET_UNAVAILABLE_DATE = gql`
   }
 `;
 
-function Unavailable({ timestamp, viewer }) {
+function Unavailable({ timestamp }) {
   const [setUnavailable] = useSetUnavailableUntil();
   const date = DateTime.fromISO(timestamp).toFormat("dd MMMM yyyy");
 
   const handleClear = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
 
-      setUnavailable({
+      await setUnavailable({
         variables: {
           input: {
             clear: true,
           },
         },
-        optimisticResponse: {
-          setUnavailableUntil: {
-            __typename: "SetUnavailableUntilPayload",
-            specialist: {
-              ...viewer,
-              unavailableUntil: null,
-            },
-          },
-        },
       });
     },
-    [setUnavailable, viewer],
+    [setUnavailable],
   );
 
   return (
@@ -58,34 +49,25 @@ function Unavailable({ timestamp, viewer }) {
   );
 }
 
-function Available({ viewer }) {
+function Available() {
   const [setUnavailable] = useSetUnavailableUntil();
   const popover = usePopoverState({ placement: "bottom-start" });
 
   const handleDaySelection = useCallback(
-    (date, modifiers) => {
+    async (date, modifiers) => {
       if (modifiers.disabled) return;
 
       popover.hide();
 
-      setUnavailable({
+      await setUnavailable({
         variables: {
           input: {
             date: DateTime.fromJSDate(date).toISODate(),
           },
         },
-        optimisticResponse: {
-          setUnavailableUntil: {
-            __typename: "SetUnavailableUntilPayload",
-            specialist: {
-              ...viewer,
-              unavailableUntil: date.toISOString(),
-            },
-          },
-        },
       });
     },
-    [setUnavailable, popover, viewer],
+    [setUnavailable, popover],
   );
 
   const isDayDisabled = (day) => {
@@ -148,14 +130,14 @@ export default function Availability() {
         Availability
       </Text>
       <Text fontSize="l" lineHeight="1.2" color="neutral800" mb={6}>
-        If you are unavailable for work at the moment you can
-        set a date when you will be available again below and we won&apos;t
-        recommend you for new projects or consultation requests until then.
+        If you are unavailable for work at the moment you can set a date when
+        you will be available again below and we won&apos;t recommend you for
+        new projects or consultation requests until then.
       </Text>
       {isAvailable ? (
-        <Available viewer={data?.viewer} />
+        <Available />
       ) : (
-        <Unavailable timestamp={unavailableUntil} viewer={data?.viewer} />
+        <Unavailable timestamp={unavailableUntil} />
       )}
     </Card>
   );
