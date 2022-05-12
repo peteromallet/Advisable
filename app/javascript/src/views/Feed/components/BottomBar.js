@@ -53,7 +53,7 @@ const labelClasses = composeStyles({
 
 function BottomBarItem({ to, icon, children }) {
   const resolved = useResolvedPath(to);
-  const match = useMatch({ path: resolved.pathname, end: true });
+  const match = useMatch({ path: resolved?.pathname, end: true });
 
   return (
     <Link to={to} className={itemClasses({ active: match })}>

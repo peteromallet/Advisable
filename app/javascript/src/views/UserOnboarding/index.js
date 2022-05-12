@@ -50,7 +50,7 @@ export default function UserOnboarding() {
   const matchingStepIndex = useMemo(() => {
     return STEPS.findIndex((step) => {
       const resolved = resolvePath(step.path, "/setup");
-      return matchPath(resolved.pathname, location.pathname);
+      return matchPath(resolved?.pathname, location.pathname);
     });
   }, [location]);
 
