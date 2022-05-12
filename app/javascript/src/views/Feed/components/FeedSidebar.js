@@ -98,7 +98,7 @@ function Interests() {
   return (
     <>
       <h4 className="pl-2 pb-2 text-xs uppercase font-semibold text-neutral400">
-        Your Interests
+        Your topics
       </h4>
       {interests.map((interest) => (
         <SidebarItem
