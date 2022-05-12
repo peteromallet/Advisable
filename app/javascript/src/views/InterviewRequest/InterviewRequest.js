@@ -10,8 +10,7 @@ import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import NotFound, { isNotFound } from "src/views/NotFound";
-
-const CONFIRM_PATH = ":datetime([0-9]{4}-[0-9]{2}-[0-9]{2}T.*)";
+import AccessDenied, { isNotAuthorized } from "../AccessDenied";
 
 export default function InterviewRequestView() {
   const { interviewID } = useParams();
@@ -21,6 +20,7 @@ export default function InterviewRequestView() {
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
+  if (isNotAuthorized(error)) return <AccessDenied />;
 
   const interview = data?.interview;
   return (

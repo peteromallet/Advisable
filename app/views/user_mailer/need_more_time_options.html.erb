@@ -12,7 +12,7 @@
   <%= @interview.specialist.account.first_name %> gave the following note on their availability: "<%= @interview.availability_note %>"
 </p>
 <p>
-  Would you be able to select some alternative times for your interview <a href="<%= ApplicationMailer.default_url_options[:host] %>/interview_request/<%= @interview.uid %>/availability">here</a>?
+  Would you be able to select some alternative times for your interview <a href="<%= ApplicationMailer.default_url_options[:host] %>/interviews/<%= @interview.uid %>/availability">here</a>?
 </p>
 <p>
   Once you do, we'll reach out to <%= @interview.specialist.account.first_name %> and ask them to pick another time.
