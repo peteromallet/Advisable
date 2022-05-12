@@ -72,7 +72,6 @@ class UserMailerPreview < ActionMailer::Preview
 
   def random_agreement
     Agreement.order("RANDOM()").first
-    Agreement.last
   end
 
   def random_user
@@ -80,7 +79,7 @@ class UserMailerPreview < ActionMailer::Preview
   end
 
   def random_article
-    CaseStudy::Article.order("RANDOM()").first
+    CaseStudy::Article.all.sample
   end
 
   def random_interview
