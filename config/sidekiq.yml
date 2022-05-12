@@ -29,4 +29,4 @@ production:
   AccountDeleteJob:
     cron: "0 0 06 * * *" # Every day at 6 AM
   CaseStudyArticleRoundupJob:
-    cron: "0 0 10 * * 1" # At 10:00 on Monday
+    cron: "0 0 15 * * 1" # At 3pm on Monday
