@@ -14,7 +14,7 @@ RSpec.describe "Confirming an account as a user" do
   end
 
   it "allows the user to resend the confirmation email" do
-    user = create(:user, account: create(:account, confirmed_at: nil, completed_tutorials: ["onboarding"]))
+    user = create(:user, account: create(:account, confirmed_at: nil, completed_tutorials: %w[onboarding feed]))
     authenticate_as(user)
     visit("/explore")
     expect(page).to have_content(/please confirm your account/i)
