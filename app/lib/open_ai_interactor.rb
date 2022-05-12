@@ -12,7 +12,7 @@ class OpenAiInteractor
   def document_embedding_for(text)
     embedding_for("text-search-babbage-doc-001", text)
   rescue OpenAiInteractorError => e
-    raise e unless e.message.include?("reduce your prompt or completion length")
+    raise e unless e.message.include?("reduce your prompt")
 
     # Cut the last 5% of words from the text and try again
     text_array = text.split
