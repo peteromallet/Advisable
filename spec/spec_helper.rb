@@ -46,6 +46,7 @@ Dir["./spec/support/**/*.rb"].each { |f| require f }
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.include(SelectorsHelper)
+  config.include(WaitUntilHelper)
   config.include(AuthenticationHelper)
 
   config.verbose_retry = true

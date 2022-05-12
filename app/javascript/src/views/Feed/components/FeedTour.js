@@ -120,7 +120,7 @@ const steps = [
             That's it!
           </h2>
           <p className="font-inter text-sm text-neutral800 mb-6">
-            You ready to start exploring projects and connecting with the
+            You're ready to start exploring projects and connecting with the
             freelancers behind them.
           </p>
           <Button onClick={nextStep}>Let's go</Button>
