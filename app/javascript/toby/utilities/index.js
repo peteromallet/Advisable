@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import pluralize from "pluralize";
 import { gql, useQuery } from "@apollo/client";
-import { useLazyQuery, useApolloClient } from "@apollo/client";
+import { useApolloClient } from "@apollo/client";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
-import { useSchema } from "../components/schema";
+import { useToby } from "../components/TobyProvider";
 
 export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
@@ -53,10 +53,11 @@ export function useSearchResource(resource) {
 }
 
 export function useFetchResources(resource, filters, sortBy, sortOrder) {
-  const schemaData = useSchema();
+  const toby = useToby();
+
   const query = useMemo(
-    () => generateCollectionQuery(schemaData, resource),
-    [schemaData, resource],
+    () => generateCollectionQuery(toby, resource),
+    [toby, resource],
   );
 
   return useQuery(query, {

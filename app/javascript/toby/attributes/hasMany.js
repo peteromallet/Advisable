@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import { useSchema } from "../components/schema";
 import { useSearchResource, getNestedResource } from "../utilities";
 import { Stack, Combobox } from "@advisable/donut";
 import LinkToRecord from "../components/LinkToRecord";
+import { useToby } from "../components/TobyProvider";
 
 export default {
   render: function RenderHasMany({ record, attribute }) {
@@ -30,7 +30,7 @@ export default {
     return record[attribute.name].map((n) => n.id) || [];
   },
   input: function HasManyInput({ resource, record, attribute }) {
-    const schema = useSchema();
+    const toby = useToby();
     const [, , { setValue }] = useField(attribute.name);
     const [selections, setSelections] = useState(
       record[attribute.name].map((v) => ({
@@ -40,7 +40,7 @@ export default {
     );
 
     const associatedResource = getNestedResource(
-      schema,
+      toby,
       resource,
       attribute.name,
     );

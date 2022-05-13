@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import { useSchema } from "../components/schema";
 import { useSearchResource, getNestedResource } from "../utilities";
 import { Combobox } from "@advisable/donut";
 import LinkToRecord from "../components/LinkToRecord";
+import { useToby } from "../components/TobyProvider";
 
 export default {
   render: function RenderBelongsTo({ record, attribute }) {
@@ -23,7 +23,7 @@ export default {
     return record[attribute.name]?._label || "";
   },
   input: function BelongsToAttributeInput({ resource, attribute, record }) {
-    const schema = useSchema();
+    const toby = useToby();
     const [, , { setValue }] = useField(attribute.name);
     const [selection, setSelection] = useState(
       record[attribute.name]
@@ -35,7 +35,7 @@ export default {
     );
 
     const associatedResource = getNestedResource(
-      schema,
+      toby,
       resource,
       attribute.name,
     );

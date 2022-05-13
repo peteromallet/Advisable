@@ -5,8 +5,8 @@ import { DotsHorizontal } from "@styled-icons/heroicons-solid";
 import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import Loader from "src/components/Loader";
 import { useNotifications } from "src/components/Notifications";
-import { useSchema } from "../../../components/schema";
 import { generateActionMutation } from "../../../utilities";
+import { useToby } from "../../../components/TobyProvider";
 
 function Action({ action, mutation, record, menu, ...props }) {
   const { notify } = useNotifications();
@@ -38,10 +38,10 @@ function Action({ action, mutation, record, menu, ...props }) {
 
 export default function ActionsMenu({ resource, record }) {
   const menu = useMenuState();
-  const schemaData = useSchema();
+  const toby = useToby();
   const mutation = useMemo(() => {
-    return generateActionMutation(schemaData, resource);
-  }, [schemaData, resource]);
+    return generateActionMutation(toby, resource);
+  }, [toby, resource]);
 
   if (record._actions.length === 0) return null;
 

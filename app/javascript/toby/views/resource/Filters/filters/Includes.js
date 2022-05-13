@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Combobox } from "@advisable/donut";
-import { useSchema } from "../../../../components/schema";
 import {
   getNestedResource,
   useSearchResource,
@@ -8,21 +7,22 @@ import {
 } from "../../../../utilities";
 import OneOf from "./OneOf";
 import { useApolloClient } from "@apollo/client";
+import { useToby } from "../../../../components/TobyProvider";
 
 function HasManyThroughIncludes({ resource, attribute, onChange, value }) {
-  const schema = useSchema();
+  const toby = useToby();
   const client = useApolloClient();
   const [loaded, setLoaded] = useState(value?.length === 0 ? true : false);
   const [selections, setSelections] = useState([]);
   const associatedResource = useMemo(
-    () => getNestedResource(schema, resource, attribute.name),
-    [schema, resource, attribute],
+    () => getNestedResource(toby, resource, attribute.name),
+    [toby, resource, attribute],
   );
 
   useEffect(() => {
     if (loaded) return;
 
-    const query = generateCollectionQuery(schema, associatedResource);
+    const query = generateCollectionQuery(toby, associatedResource);
     const loadRecords = async () => {
       const r = await client.query({
         query,
@@ -48,7 +48,7 @@ function HasManyThroughIncludes({ resource, attribute, onChange, value }) {
     };
 
     loadRecords();
-  }, [loaded, client, schema, associatedResource, value]);
+  }, [loaded, client, toby, associatedResource, value]);
 
   const search = useSearchResource(associatedResource);
 

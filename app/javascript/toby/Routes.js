@@ -2,10 +2,10 @@ import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Resource from "./views/resource";
 import { resourcePath, pluralizeType } from "./utilities";
-import { useResources } from "./components/resources";
+import { useToby } from "./components/TobyProvider";
 
 export default function TobyRoutes() {
-  const resources = useResources();
+  const { resources } = useToby();
 
   return (
     <Routes>

@@ -4,7 +4,7 @@ import { useMenuState, MenuButton, Menu } from "reakit/Menu";
 import { Menu as MenuIcon } from "@styled-icons/heroicons-solid/Menu";
 import { Table } from "@styled-icons/heroicons-solid/Table";
 import { pluralizeType } from "../../utilities";
-import { useResources } from "../resources";
+import { useToby } from "../TobyProvider";
 import {
   StyledNavigation,
   StyledCurrentResource,
@@ -13,7 +13,7 @@ import {
 } from "../../styles";
 
 export default function Navigation({ resource }) {
-  const resources = useResources();
+  const { resources } = useToby();
   const menu = useMenuState();
 
   return (
