@@ -24,8 +24,9 @@ production:
     every: 10 minutes
   InterviewRequestReminderJob:
     every: 10 minutes
-  InterviewRequestAutoDeclineJob:
-    every: 10 minutes
+  # temp disabled based on: https://advisable.slack.com/archives/CT7JQ8RMX/p1652368647257499
+  # InterviewRequestAutoDeclineJob:
+  #   every: 10 minutes
   AccountDeleteJob:
     cron: "0 0 06 * * *" # Every day at 6 AM
   CaseStudyArticleRoundupJob:

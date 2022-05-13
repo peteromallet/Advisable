@@ -30,6 +30,10 @@ class Interview < ApplicationRecord
 
   validates :status, inclusion: {in: VALID_STATUSES}
 
+  def pending?
+    SCHEDULABLE_STATUSES.include?(status)
+  end
+
   def create_system_message!
     conversation = Conversation.by_accounts([specialist.account, user.account])
     conversation.new_message!(kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
