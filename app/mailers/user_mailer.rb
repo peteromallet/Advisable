@@ -181,11 +181,12 @@ class UserMailer < ApplicationMailer
   def case_study_article_roundup(user, article_ids)
     @user = user
     @articles = ::CaseStudy::Article.where(id: article_ids)
+    highest_article = @articles.order(:score).last
     @account = user.account
     mail(
       from: "Advisable Weekly Digest <hello@advisable.com>",
       to: @account.email,
-      subject: "3 inspiring projects for #{user.company.name} to consider this week!"
+      subject: highest_article.title
     ) do |format|
       format.html { render layout: "email_v2" }
     end
