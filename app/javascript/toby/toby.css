@@ -50,3 +50,39 @@
     }
   }
 }
+
+.toby-copy-button {
+  border: none;
+  background: white;
+  border-radius: 8px;
+  color: var(--color-neutral800);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toby-row {
+  @apply flex border-b border-solid border-neutral-200 hover:cursor-pointer hover:bg-neutral-50;
+}
+
+.toby-cell {
+  height: 40px;
+  display: flex;
+  padding: 0 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  align-items: center;
+  border-right: 1px solid var(--color-neutral-200);
+  @apply font-inter text-sm;
+
+  .toby-copy-button {
+    right: 8px;
+    z-index: 2;
+    display: none;
+    position: absolute;
+  }
+
+  &:hover .toby-copy-button {
+    display: block;
+  }
+}

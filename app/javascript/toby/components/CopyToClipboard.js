@@ -1,5 +1,4 @@
 import React from "react";
-import { StyledCellCopyButton } from "../styles";
 import { ClipboardCopy } from "@styled-icons/heroicons-solid";
 import { handlerForAttribute } from "../attributes";
 
@@ -13,8 +12,8 @@ export default function CopyToClipboard({ attribute, record }) {
   };
 
   return (
-    <StyledCellCopyButton onClick={handleClick}>
+    <button className="toby-copy-button" onClick={handleClick}>
       <ClipboardCopy size={20} />
-    </StyledCellCopyButton>
+    </button>
   );
 }
