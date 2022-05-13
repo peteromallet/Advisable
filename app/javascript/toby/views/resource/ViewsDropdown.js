@@ -9,9 +9,7 @@ import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import queryString from "query-string";
 import { Table } from "@styled-icons/heroicons-solid/Table";
 import { PlusCircle } from "@styled-icons/heroicons-solid/PlusCircle";
-import HeaderButton, {
-  StyledHeaderButtonGroup,
-} from "../../components/HeaderButton";
+import HeaderButton, { HeaderButtonGroup } from "../../components/HeaderButton";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCreateView, useDeleteView, useRenameView } from "../../queries";
 
@@ -210,7 +208,9 @@ function ViewOptions({ resource, view }) {
         <MenuItem {...menu} as={RenameView} view={view} />
         <MenuItem {...menu} as={DeleteView} resource={resource} view={view} />
       </StyledDropdown>
-      <HeaderButton icon={DotsVertical} {...menu} as={MenuButton} />
+      <MenuButton {...menu}>
+        {(menuButton) => <HeaderButton icon={DotsVertical} {...menuButton} />}
+      </MenuButton>
     </>
   );
 }
@@ -248,12 +248,16 @@ export default function ViewsDropdown({
 
   return (
     <>
-      <StyledHeaderButtonGroup>
-        <HeaderButton {...menu} as={MenuButton} icon={Table}>
-          {currentView?.name || "Main View"}
-        </HeaderButton>
+      <HeaderButtonGroup>
+        <MenuButton {...menu}>
+          {(menuButton) => (
+            <HeaderButton {...menuButton} icon={Table}>
+              {currentView?.name || "Main View"}
+            </HeaderButton>
+          )}
+        </MenuButton>
         {currentView && <ViewOptions resource={resource} view={currentView} />}
-      </StyledHeaderButtonGroup>
+      </HeaderButtonGroup>
       <StyledDropdown as={Menu} {...menu} aria-label="Views">
         <StyledMenuItem
           as={MenuItem}

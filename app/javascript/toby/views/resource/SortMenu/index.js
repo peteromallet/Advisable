@@ -38,9 +38,13 @@ export default function SortMenu({
 
   return (
     <>
-      <HeaderButton {...menu} as={MenuButton} icon={SwitchVertical}>
-        Sort
-      </HeaderButton>
+      <MenuButton {...menu}>
+        {(menuButton) => (
+          <HeaderButton {...menuButton} icon={SwitchVertical}>
+            Sort
+          </HeaderButton>
+        )}
+      </MenuButton>
       <StyledDropdown as={Menu} {...menu}>
         {sortable.length > 0 ? (
           <>

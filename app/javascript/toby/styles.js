@@ -145,7 +145,7 @@ export const StyledNavigation = styled.div`
 `;
 
 export const StyledCurrentResource = styled.div`
-  padding: 16px;
+  padding: 12px 16px;
   font-size: 24px;
   cursor: pointer;
   font-weight: 500;
