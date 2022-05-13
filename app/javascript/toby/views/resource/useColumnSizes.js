@@ -25,6 +25,10 @@ export default function useColumnSizes(resource) {
     return getSizesForResource(resource);
   });
 
+  useEffect(() => {
+    setSizes(getSizesForResource(resource));
+  }, [resource]);
+
   const resizeColumn = useCallback((name, size) => {
     setSizes((existing) => {
       return { ...existing, [name]: size };
@@ -65,7 +69,7 @@ export default function useColumnSizes(resource) {
 
   useEffect(() => {
     storeSizes(resource, sizes);
-  }, [resource, sizes]);
+  }, [sizes]);
 
   useEffect(() => {
     const mouseMoveThrottled = throttle(mouseMove, 50);
