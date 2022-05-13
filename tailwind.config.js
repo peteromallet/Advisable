@@ -66,6 +66,7 @@ module.exports = {
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),
+    require("tailwindcss-labeled-groups")(["0", "1" /* RENAME ME! */]),
     // This snippet defines each color in the tailwind config as a CSS variable
     // on :root. This can be useful when you want to use a color outside of what
     // tailwind provides. e.g working with SVG's.

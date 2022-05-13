@@ -132,6 +132,7 @@
     "pixelmatch": "^5.2.1",
     "prettier": "^2.6.1",
     "speedscope": "^1.13.0",
+    "tailwindcss-labeled-groups": "^0.0.2",
     "waait": "^1.0.5",
     "webpack-dev-server": "^4.7.4",
     "webpackbar": "^5.0.2"

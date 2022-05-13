@@ -3,6 +3,7 @@ fragment ArticleFields on CaseStudyArticle {
   slug
   title
   subtitle
+  isFavorited
   companyType
   industries {
     id

@@ -4,6 +4,7 @@ import InterestIcon from "./InterestIcon";
 import { withErrorBoundary } from "react-error-boundary";
 import Avatar from "src/components/Avatar";
 import Favicon from "src/components/Favicon";
+import FavoriteArticleButton from "./FavoriteArticleButton";
 
 function Attribute({ label, value }) {
   return (
@@ -32,12 +33,13 @@ const Availability = ({ unavailableUntil }) => {
 
 function FeedItem({ article, interest }) {
   const location = useLocation();
+  const { isFavorited } = article;
 
   const scrollToTop = () => window.scrollTo(0, 0);
 
   return (
     <div
-      className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
+      className="group-0 bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
       data-walkthrough="feed-item"
     >
       <div>
@@ -57,6 +59,10 @@ function FeedItem({ article, interest }) {
               unavailableUntil={article.specialist.unavailableUntil}
             />
           </div>
+          <FavoriteArticleButton
+            article={article}
+            className={`${!isFavorited && "hidden"} group-0-hover:flex ml-auto`}
+          />
         </div>
         <Link
           to={`/articles/${article.slug || article.id}`}
