@@ -2,28 +2,36 @@ import { makeVar, useReactiveVar } from "@apollo/client";
 import React, { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 import { RefreshCw } from "@styled-icons/feather/RefreshCw";
-import { Link, Circle, Box, Text, Button } from "@advisable/donut";
+import { Circle, Box, Text, Button } from "@advisable/donut";
 import { PageError } from "src/components/ErrorBoundary";
 
 export const csrfError = makeVar(false);
 
-const CHUNK_LOAD_EXPIRY = 60000; // 1 min
+const ERROR_EXPIRATION_TIME = 60000; // 1 min
 
-function markChunkLoadErrorTime() {
-  localStorage.setItem(
-    "chunkLoadError",
-    new Date().getTime() + CHUNK_LOAD_EXPIRY,
-  );
+function markErrorTime(key) {
+  localStorage.setItem(key, new Date().getTime() + ERROR_EXPIRATION_TIME);
 }
 
-function handleChunkLoadWithrefresh() {
-  const timestamp = window.localStorage.getItem("chunkLoadError");
+function handleErrorWithRefresh(key) {
+  const timestamp = window.localStorage.getItem(key);
   if (!timestamp) return true;
   const isExpired = new Date().getTime() > timestamp;
   return isExpired;
 }
 
 function PromptToRefresh() {
+  const shouldRefresh = handleErrorWithRefresh("refresh");
+
+  useEffect(() => {
+    if (shouldRefresh) {
+      markErrorTime("refresh");
+      window.location.reload();
+    }
+  }, [shouldRefresh]);
+
+  if (shouldRefresh) return null;
+
   return (
     <PageError>
       <Text marginBottom={3}>
@@ -31,7 +39,10 @@ function PromptToRefresh() {
       </Text>
       <Text>
         If the error persists please{" "}
-        <Link mailto="hello@advisable.com">contact us</Link>.
+        <a className="text-blue500" mailto="hello@advisable.com">
+          contact us
+        </a>
+        .
       </Text>
     </PageError>
   );
@@ -52,17 +63,17 @@ function PromptToRefresh() {
 // and ask the user to upgrade by refreshing their browser, this will request
 // the most recent assets.
 function UpdateAvailable() {
-  const shouldHandleRedirect = handleChunkLoadWithrefresh();
+  const shouldRefresh = handleErrorWithRefresh("chunkLoadError");
 
   // Catch chunk load errors
   useEffect(() => {
-    if (shouldHandleRedirect) {
-      markChunkLoadErrorTime();
+    if (shouldRefresh) {
+      markErrorTime("chunkLoadError");
       window.location.reload();
     }
-  }, [shouldHandleRedirect]);
+  }, [shouldRefresh]);
 
-  if (shouldHandleRedirect) return null;
+  if (shouldRefresh) return null;
 
   return (
     <Box maxWidth={340} mx="auto" my="xxl" textAlign="center">
