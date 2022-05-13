@@ -34,13 +34,13 @@ export default function SidebarCard({ specialist }) {
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
       <ConnectButton
-        className="w-full mb-5 mt-4"
+        className="w-full mt-4"
         specialist={specialist}
         size={xlUp ? "lg" : "md"}
       >
         Connect
       </ConnectButton>
-      <hr className="border-neutral200 pb-[3px]" />
+      <hr className="border-neutral200 mt-5 pb-[3px]" />
       <div className="py-2">
         <div className="text-[15px] xl:text-lg font-[450] text-neutral900 truncate">
           {specialist.location}

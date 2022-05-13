@@ -17,6 +17,10 @@ export default function ConnectButton({
   const { prompt } = queryString.parse(location.search);
   const dialog = useModal({ visible: prompt === "true" });
 
+  if (specialist.unavailableUntil) {
+    return null;
+  }
+
   if (specialist.conversation) {
     return (
       <Link to={`/messages/${specialist.conversation.id}`}>
