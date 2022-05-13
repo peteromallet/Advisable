@@ -2,14 +2,12 @@ import React from "react";
 import UserMessage from "./UserMessage";
 import SystemMessage from "./SystemMessage";
 import GuildPostMessage from "./GuildPostMessage";
-import ConsultationRequestMessage from "./ConsultationRequestMessage";
 import { Avatar, Box, Text } from "@advisable/donut";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
 import { DateTime } from "luxon";
 import MessageAttachment from "./MessageAttachment";
 import { motion } from "framer-motion";
 import InterviewScheduledMessage from "./SystemMessage/InterviewScheduled";
-import ConsultationDeclinedMessage from "./SystemMessage/ConsultationDeclined";
 import AgreementCreatedMessage from "./AgreementCreatedMessage";
 import AgreementAcceptedMessage from "./SystemMessage/AgreementAcceptedMessage";
 import AgreementDeclinedMessage from "./SystemMessage/AgreementDeclinedMessage";
@@ -21,9 +19,7 @@ const COMPONENTS = {
   UserMessage,
   SystemMessage,
   GuildPostMessage,
-  ConsultationRequestMessage,
   InterviewScheduledMessage,
-  ConsultationDeclinedMessage,
   AgreementCreatedMessage,
   AgreementAcceptedMessage,
   AgreementDeclinedMessage,

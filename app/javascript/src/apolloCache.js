@@ -21,8 +21,6 @@ const createCache = () => {
         "UserMessage",
         "SystemMessage",
         "GuildPostMessage",
-        "ConsultationRequestMessage",
-        "ConsultationDeclinedMessage",
         "InterviewRequestMessage",
         "InterviewDeclinedMessage",
         "InterviewAutoDeclinedMessage",

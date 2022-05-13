@@ -84,7 +84,7 @@ module Types
       end
     end
 
-    field :consultation, Types::ConsultationType, null: true
+    field :consultation, Types::ConsultationType, null: true, deprecation_reason: "Use interview field instead"
     def consultation
       return unless current_user.is_a?(::User)
 

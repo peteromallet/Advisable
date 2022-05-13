@@ -1,7 +1,7 @@
 import React from "react";
 import possessive from "src/utilities/possesive";
 
-export default function ConsultationDeclinedMessage({ message }) {
+export default function InterviewDeclinedMessage({ message }) {
   const { user, specialist } = message.interview || {};
 
   return (
