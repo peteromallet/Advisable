@@ -22,6 +22,17 @@ module Toby
       attribute :specialist_requested_reschedule_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
+
+      action :decline, label: "Decline", if: ->(interview) { interview.pending? }
+
+      def self.decline(object, _context)
+        return unless object.pending?
+
+        object.update(status: "Specialist Declined")
+        return if object.messages.none?
+
+        object.messages.first.conversation.new_message!(kind: "InterviewDeclined", interview: object, send_emails: false)
+      end
     end
   end
 end
