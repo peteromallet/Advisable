@@ -41,6 +41,7 @@ function FeedItem({ article, interest }) {
     <div
       className="group-0 bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
       data-walkthrough="feed-item"
+      data-testid="feed-item"
     >
       <div>
         <div
