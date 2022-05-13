@@ -74,9 +74,9 @@ function FeedItem({ article, interest }) {
             >
               <InterestIcon
                 primaryColor="var(--color-neutral600)"
-                className="w-5 h-5"
+                className="w-5 min-w-[20px] h-5"
               />
-              {interest.term}
+              <p className="line-clamp-1">{interest.term}</p>
             </Link>
           </div>
         )}
