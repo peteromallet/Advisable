@@ -33,13 +33,12 @@ const Availability = ({ unavailableUntil }) => {
 
 function FeedItem({ article, interest }) {
   const location = useLocation();
-  const { isFavorited } = article;
 
   const scrollToTop = () => window.scrollTo(0, 0);
 
   return (
     <div
-      className="group-0 bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
+      className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
       data-walkthrough="feed-item"
       data-testid="feed-item"
     >
@@ -61,8 +60,9 @@ function FeedItem({ article, interest }) {
             />
           </div>
           <FavoriteArticleButton
+            size="sm"
             article={article}
-            className={`${!isFavorited && "hidden"} group-0-hover:flex ml-auto`}
+            className={`flex lg:hidden ml-auto`}
           />
         </div>
         <Link
@@ -78,12 +78,12 @@ function FeedItem({ article, interest }) {
           </p>
         </Link>
 
-        {interest && (
-          <div className="pt-6">
+        <div className="flex flex-nowrap pt-6  items-center">
+          {interest && (
             <Link
               onClick={scrollToTop}
               to={`/explore/${interest.id}`}
-              className="border border-solid border-neutral200 rounded-full h-8 px-3 inline-flex items-center gap-0.5  text-sm leading-none text-neutral600 hover:text-neutral900"
+              className="border border-solid border-neutral200 rounded-full h-8 px-3 mr-2 inline-flex items-center gap-0.5 text-sm leading-none text-neutral600 hover:text-neutral900"
             >
               <InterestIcon
                 primaryColor="var(--color-neutral600)"
@@ -91,8 +91,13 @@ function FeedItem({ article, interest }) {
               />
               <p className="line-clamp-1">{interest.term}</p>
             </Link>
-          </div>
-        )}
+          )}
+          <FavoriteArticleButton
+            size="sm"
+            article={article}
+            className={`hidden lg:flex ml-auto `}
+          />
+        </div>
       </div>
       <div className="bg-neutral-100 p-5 rounded-[24px] w-full lg:w-[240px] flex-shrink-0">
         <div className="flex items-center gap-2.5">

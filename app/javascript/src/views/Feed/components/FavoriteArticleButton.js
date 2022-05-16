@@ -29,9 +29,13 @@ const buttonClasses = composeStyles({
     hover:ring-2
     hover:ring-neutral300
     rounded-full
-    h-10
-    w-10
   `,
+  variants: {
+    size: {
+      sm: `h-8 w-8`,
+      md: `h-10 w-10`,
+    },
+  },
 });
 
 const iconClasses = composeStyles({
@@ -41,11 +45,15 @@ const iconClasses = composeStyles({
     group-hover:stroke-neutral900
   `,
   variants: {
+    size: {
+      sm: `h-[16px] w-[16px]`,
+      md: `h-[20px] w-[20px]`,
+    },
     active: `fill-blue500 !stroke-blue500 group-hover:fill-blue500`,
   },
 });
 
-export default function FavoriteArticleButton({ article, className }) {
+function FavoriteArticleButton({ article, size, className }) {
   const viewer = useViewer();
   const { isFavorited } = article;
   const client = useApolloClient();
@@ -80,11 +88,17 @@ export default function FavoriteArticleButton({ article, className }) {
     <Tooltip placement="bottom" content={!isFavorited && "Add to Favorites"}>
       <button
         onClick={handleClick}
-        className={buttonClasses({ active: isFavorited, className })}
+        className={buttonClasses({ active: isFavorited, className, size })}
         aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
       >
-        <BookmarkIcon className={iconClasses({ active: isFavorited })} />
+        <BookmarkIcon className={iconClasses({ active: isFavorited, size })} />
       </button>
     </Tooltip>
   );
 }
+
+FavoriteArticleButton.defaultProps = {
+  size: "md",
+};
+
+export default FavoriteArticleButton;
