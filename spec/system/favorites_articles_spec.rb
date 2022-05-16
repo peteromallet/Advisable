@@ -33,7 +33,7 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
-    click_button("Add to Favorites")
+    page.find_button("Add to Favorites", match: :first).click
     expect(page).to have_content("Added to favorites")
     click_button("Go back")
     expect(page).to have_content("Your feed")
@@ -61,8 +61,7 @@ RSpec.describe "Favorites", type: :system do
     authenticate_as(user)
     visit "/explore"
     expect(page).to have_content(article1.title)
-    first("*[data-testid='feed-item']").hover
-    click_button("Add to Favorites")
+    page.find_button("Add to Favorites", match: :first).click
     expect(page).to have_content("Added to favorites")
     click_on("Favorites")
     expect(page).to have_content("Favorites")

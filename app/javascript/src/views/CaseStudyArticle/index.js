@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
 import { useBackground } from "@advisable/donut";
@@ -11,7 +11,6 @@ import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
 import useScrollToTop from "src/hooks/useScrollToTop";
-import { useParams } from "react-router-dom";
 import ArticleEvents from "./components/ArticleEvents";
 
 const SectionWrapper = ({ children, className, ...props }) => (

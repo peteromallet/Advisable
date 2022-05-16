@@ -40,7 +40,6 @@ function FeedItem({ article, interest }) {
     <div
       className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
       data-walkthrough="feed-item"
-      data-testid="feed-item"
     >
       <div>
         <div
@@ -78,7 +77,7 @@ function FeedItem({ article, interest }) {
           </p>
         </Link>
 
-        <div className="flex flex-nowrap pt-6  items-center">
+        <div className="flex flex-nowrap pt-6 items-center">
           {interest && (
             <Link
               onClick={scrollToTop}
