@@ -32,8 +32,8 @@ const buttonClasses = composeStyles({
   `,
   variants: {
     size: {
-      sm: `h-8 w-8`,
-      md: `h-10 w-10`,
+      sm: `h-8 min-w-[32px]`,
+      md: `h-10 min-w-[40px]`,
     },
   },
 });
