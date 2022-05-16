@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :user do
-    account { create(:account, completed_tutorials: ["onboarding"]) }
+    account { create(:account, completed_tutorials: %w[onboarding feed]) }
     country
     company
     title { "CTO" }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Accounts", type: :system do
-  let(:account) { create(:account, password: "testing123", completed_tutorials: ["onboarding"]) }
+  let(:account) { create(:account, password: "testing123", completed_tutorials: %w[onboarding feed]) }
 
   it "User can logout" do
     create(:user, account:)

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Discover", type: :system do
-  let(:account) { create(:account, permissions: ["team_manager"], completed_tutorials: ["onboarding"]) }
+  let(:account) { create(:account, permissions: ["team_manager"], completed_tutorials: %w[onboarding feed]) }
   let(:user) { create(:user, account:) }
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
   let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
@@ -142,5 +142,28 @@ RSpec.describe "Discover", type: :system do
     expect(page).to have_content(/No matches/i)
     click_button("New search")
     expect(page).to have_content("Discover new projects")
+  end
+
+  it "brings the user through a walkthrough" do
+    user.account.update(completed_tutorials: ["onboarding"])
+    authenticate_as(user)
+    visit("/explore")
+    expect(page).to have_content("Welcome to Advisable")
+    click_on("Next")
+    expect(page).to have_content(/relevant to the topics that you follow./i)
+    click_on("Next")
+    expect(page).to have_content(/Explore the projects you like/i)
+    click_on("Next")
+    expect(page).to have_content(/Reach out to the people behind them/i)
+    click_on("Next")
+    expect(page).to have_content(/You can click into each one to see only projects related to that topic./i)
+    click_on("Next")
+    expect(page).to have_content(/search for more/i)
+    click_on("Next")
+    expect(page).to have_content(/ready to start exploring projects/i)
+    click_on("Let's go")
+    wait_until do
+      expect(user.reload.account.completed_tutorials).to include("feed")
+    end
   end
 end

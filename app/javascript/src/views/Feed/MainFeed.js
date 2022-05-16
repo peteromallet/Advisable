@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useBreakpoint } from "@advisable/donut";
 import { useFeed } from "./queries";
 import FeedItem from "./components/FeedItem";
 import EndlessScroll from "./components/EndlessScroll";
@@ -6,8 +7,10 @@ import FeedItemSkeleton from "./components/FeedItemSkeleton";
 import FeedContainer from "./components/FeedContainer";
 import EmptyFeed from "./components/EmptyFeed";
 import AccountConfirmationPrompt from "src/components/AccountConfirmationPrompt";
+import FeedTour from "./components/FeedTour";
 
 export default function MainFeed() {
+  const isDesktop = useBreakpoint("mUp");
   const { data, loading, fetchMore } = useFeed();
 
   const handleLoadMore = useCallback(() => {
@@ -22,7 +25,8 @@ export default function MainFeed() {
 
   return (
     <FeedContainer>
-      <div className="">
+      {isDesktop && <FeedTour />}
+      <div className="" data-walkthrough="feed">
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
           Your feed
         </h2>

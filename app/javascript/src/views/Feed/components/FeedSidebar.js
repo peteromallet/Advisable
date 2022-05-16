@@ -50,7 +50,7 @@ const iconClasses = composeStyles({
   },
 });
 
-function SidebarItem({ to, icon, children }) {
+function SidebarItem({ to, icon, children, ...props }) {
   const resolved = useResolvedPath(to);
   const match = useMatch({ path: resolved?.pathname, end: true });
 
@@ -60,6 +60,7 @@ function SidebarItem({ to, icon, children }) {
 
   return (
     <Link
+      {...props}
       to={to}
       onClick={handleClick}
       className={sidebarItemClasses({ active: match })}
@@ -97,7 +98,7 @@ function Interests() {
   return (
     <>
       <h4 className="pl-2 pb-2 text-xs uppercase font-semibold text-neutral400">
-        Your Interests
+        Your topics
       </h4>
       {interests.map((interest) => (
         <SidebarItem
@@ -135,7 +136,9 @@ export default function FeedSidebar() {
             Shared
           </SidebarItem> */}
         </div>
-        <Interests />
+        <div data-walkthrough="interests">
+          <Interests />
+        </div>
       </SimpleBar>
     </motion.div>
   );

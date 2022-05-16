@@ -1,74 +1,10 @@
 import React from "react";
-import { rgba } from "polished";
 import { motion } from "framer-motion";
-import styled from "styled-components";
 import { Portal } from "reakit/Portal";
-import { theme } from "@advisable/donut";
 import { createPopper } from "@popperjs/core";
-
-const StyledStepCard = styled(motion.div)`
-  background: white;
-  position: relative;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px ${rgba(theme.colors.neutral900, 0.08)},
-    0 24px 40px ${rgba(theme.colors.neutral900, 0.24)};
-`;
-
-const StyledStep = styled.div`
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  position: fixed;
-  z-index: 100000;
-  transform: translate(-50%, -50%);
-  max-width: ${(p) => p.$width || 320}px;
-
-  &[data-popper-placement^="top"] {
-    ${StyledStepCard}::before {
-      content: "";
-      left: 50%;
-      bottom: -8px;
-      width: 0;
-      height: 0;
-      margin-left: -8px;
-      position: absolute;
-      border-top: 8px solid white;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-    }
-  }
-
-  &[data-popper-placement^="right"] {
-    ${StyledStepCard}::before {
-      content: "";
-      top: 20px;
-      left: -8px;
-      width: 0;
-      height: 0;
-      position: absolute;
-      border-right: 8px solid white;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-  }
-
-  &[data-popper-placement="right-start"] ${StyledStepCard}::before {
-    top: 20px;
-  }
-`;
+import "./walkthrough.css";
 
 const CLIP_PADDING = 16;
-
-const StyledBackdrop = styled.div`
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10000;
-  position: fixed;
-  overflow: hidden;
-  color: ${rgba("#F8F8F9", 0.75)};
-`;
 
 const isInViewport = (el) => {
   const bounding = el.getBoundingClientRect();
@@ -82,13 +18,16 @@ const isInViewport = (el) => {
 
 const scrollIfNeeded = (el) => {
   if (!isInViewport(el)) {
-    el.scrollIntoView({ block: "center", inline: "center" });
+    const top = el.getBoundingClientRect().top - 100;
+    window.scrollTo({ top, behavior: "smooth" });
   }
 };
 
 export function useWalkthrough(steps, opts = {}) {
   const [visible, setVisible] = React.useState(opts.visible || false);
-  const [currentStepIndex, setCurrentStepIndex] = React.useState(0);
+  const [currentStepIndex, setCurrentStepIndex] = React.useState(
+    opts.initialStep || 0,
+  );
 
   const currentStep = steps[currentStepIndex];
 
@@ -174,10 +113,10 @@ function Backdrop({ highlight, clipPadding }) {
   }, [highlight, clipPadding]);
 
   return (
-    <StyledBackdrop
-      as={motion.div}
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      className="walkthrough-backdrop"
     >
       <svg width={width} height={height}>
         {highlight && (
@@ -259,7 +198,7 @@ function Backdrop({ highlight, clipPadding }) {
           mask="url(#mask)"
         ></rect>
       </svg>
-    </StyledBackdrop>
+    </motion.div>
   );
 }
 
@@ -289,7 +228,7 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
           {
             name: "offset",
             options: {
-              offset: [0, 16],
+              offset: currentStep.offset || [0, 20],
             },
           },
         ],
@@ -297,7 +236,7 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
 
       return () => popper.destroy();
     }
-  }, [anchor, highlight, currentStep.placement]);
+  }, [anchor, highlight, currentStep]);
 
   React.useLayoutEffect(() => {
     if (visible && anchor) return scrollIfNeeded(anchor);
@@ -307,14 +246,22 @@ export function Walkthrough({ currentStep, visible, steps, ...props }) {
 
   return (
     <Portal>
-      <StyledStep key={key} $width={currentStep.width} ref={stepRef}>
-        <StyledStepCard
+      <div
+        key={key}
+        ref={stepRef}
+        className="walkthrough-step"
+        style={{
+          maxWidth: currentStep.width || 300,
+        }}
+      >
+        <motion.div
+          className="walkthrough-card"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
         >
           <currentStep.component {...props} />
-        </StyledStepCard>
-      </StyledStep>
+        </motion.div>
+      </div>
       {(!anchor || highlight) && (
         <Backdrop
           highlight={highlight}

@@ -36,9 +36,15 @@ function FeedItem({ article, interest }) {
   const scrollToTop = () => window.scrollTo(0, 0);
 
   return (
-    <div className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start">
+    <div
+      className="bg-white rounded-[32px] shadow-feed p-6 md:p-8 flex flex-col lg:flex-row gap-10 items-start"
+      data-walkthrough="feed-item"
+    >
       <div>
-        <div className="flex items-center gap-3 mb-4">
+        <div
+          className="flex items-center gap-3 mb-4"
+          data-walkthrough="feed-item-author"
+        >
           <Avatar
             src={article.specialist.avatar}
             name={article.specialist.name}
