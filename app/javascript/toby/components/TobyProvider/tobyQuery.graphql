@@ -2,6 +2,7 @@ query TobyIntrospectionQuery {
   # RESOURCES
   resources {
     type
+    label
     queryNameCollection
     queryNameItem
     queryNameUpdate

@@ -13,6 +13,10 @@ module Toby
           @actions = []
         end
 
+        def display_name
+          model.name.gsub("::", "").tableize.humanize
+        end
+
         def query_name_collection
           model_s.pluralize.camelize(:lower)
         end

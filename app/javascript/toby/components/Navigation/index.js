@@ -22,7 +22,7 @@ export default function Navigation({ resource }) {
         {(menuButton) => (
           <StyledCurrentResource {...menuButton}>
             <MenuIcon />
-            <span>{pluralizeType(resource.type)}</span>
+            <span>{resource.label}</span>
           </StyledCurrentResource>
         )}
       </MenuButton>
@@ -37,7 +37,7 @@ export default function Navigation({ resource }) {
           {resources.map((r) => (
             <StyledResourceLink key={r.type} to={`/${pluralizeType(r.type)}`}>
               <Table />
-              <span>{pluralizeType(r.type)}</span>
+              <span>{r.label}</span>
             </StyledResourceLink>
           ))}
         </StyledResourceMenu>
