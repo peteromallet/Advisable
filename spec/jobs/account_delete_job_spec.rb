@@ -11,6 +11,8 @@ RSpec.describe AccountDeleteJob do
 
     allow_any_instance_of(Specialist).to receive(:remove_from_airtable)
     allow_any_instance_of(User).to receive(:remove_from_airtable)
+
+    expect_any_instance_of(::Analytics).to receive(:suppress_and_delete).with(match_array([stale_user.account.uid, stale_specialist.account.uid]))
     described_class.perform_now
 
     expect(Specialist.find_by(id: fresh_specialist.id)).not_to be_nil

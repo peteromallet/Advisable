@@ -6,6 +6,8 @@ class AccountDeleteJob < ApplicationJob
   DELETION_PERIOD = 14.days
 
   def perform
-    Account.where("deleted_at < ?", DELETION_PERIOD.ago).destroy_all
+    accounts_to_delete = Account.where("deleted_at < ?", DELETION_PERIOD.ago)
+    ::Analytics.new.suppress_and_delete(accounts_to_delete.map(&:uid))
+    accounts_to_delete.destroy_all
   end
 end
