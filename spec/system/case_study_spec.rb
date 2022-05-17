@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Case sutdy view", type: :system do
+RSpec.describe "Case study view", type: :system do
   let(:article) { create(:case_study_article) }
   let!(:background) { create(:case_study_section, type: "overview", article:) }
   let!(:h1) { create(:case_study_heading_content, section: background) }
@@ -29,5 +29,12 @@ RSpec.describe "Case sutdy view", type: :system do
     expect(page).to have_content(h3.content["text"])
     expect(page).to have_content(p3.content["text"])
     expect(page).to have_content(results.content["results"].first)
+  end
+
+  it "copy link to clipboard" do
+    visit("/articles/#{article.slug}")
+    expect(page).to have_content(article.title)
+    click_button("Copy Link")
+    expect(page).to have_content("Link copied!")
   end
 end
