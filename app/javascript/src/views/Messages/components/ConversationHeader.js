@@ -1,69 +1,58 @@
-import React, { useMemo } from "react";
-import { Avatar, Box, Text } from "@advisable/donut";
-import commaSeparated from "src/utilities/commaSeparated";
+import { DotsHorizontal } from "@styled-icons/heroicons-solid";
+import { useDialogState, Dialog, DialogDisclosure } from "reakit/Dialog";
+import React from "react";
+import CircularButton from "src/components/CircularButton";
+import ParticipantAvatars from "./ParticipantAvatars";
+import ParticipantNames from "./ParticipantNames";
+import ConversationDetails from "./ConversationDetails";
+import { X } from "@styled-icons/heroicons-outline";
+
+const classNames = `
+  border-b
+  border-solid
+  border-neutral100
+`;
 
 export default function ConversationHeader({ conversation }) {
-  const firstFour = useMemo(() => {
-    return conversation.participants.slice(0, 5);
-  }, [conversation.participants]);
-
-  const remaining = conversation.participants.length - firstFour.length;
+  const dialog = useDialogState();
 
   return (
-    <Box
-      height="72px"
-      flexShrink={0}
-      display="flex"
-      alignItems="center"
-      borderBottom="1px solid"
-      borderColor="neutral100"
-    >
-      <Box
-        px={4}
-        mx="auto"
-        width="100%"
-        display="flex"
-        maxWidth="700px"
-        alignItems="center"
-      >
-        <Box marginRight={2} flexShrink={0} display="flex">
-          {firstFour.map((participant, index) => (
-            <Avatar
-              size="s"
-              key={participant.id}
-              border="2px solid"
-              borderColor="white"
-              url={participant.avatar}
-              name={participant.firstName}
-              marginLeft={index > 0 ? "-20px" : null}
-            />
-          ))}
-          {remaining > 0 && (
-            <Avatar
-              size="s"
-              border="2px solid"
-              borderColor="white"
-              marginLeft="-20px"
-            >
-              <Box
-                width="100%"
-                fontSize="xs"
-                height="100%"
-                display="flex"
-                fontWeight={500}
-                color="neutral600"
-                alignItems="center"
-                justifyContent="center"
-              >
-                +{remaining}
-              </Box>
-            </Avatar>
-          )}
-        </Box>
-        <Text fontSize="lg" fontWeight={500} $truncate>
-          {commaSeparated(conversation.participants.map((p) => p.firstName))}
-        </Text>
-      </Box>
-    </Box>
+    <div className={classNames}>
+      <div className="h-[72px] px-4 mx-auto w-full flex max-w-[700px] items-center">
+        <div>
+          <ParticipantAvatars
+            conversation={conversation}
+            size="md"
+            className="mr-3"
+          />
+        </div>
+        <div className="flex-1">
+          <ParticipantNames
+            conversation={conversation}
+            className="font-medium tracking-tight leading-5 text-ellipsis"
+          />
+        </div>
+        <div>
+          <DialogDisclosure {...dialog}>
+            {(disclosure) => (
+              <CircularButton icon={DotsHorizontal} {...disclosure} />
+            )}
+          </DialogDisclosure>
+          <Dialog
+            {...dialog}
+            className="fixed bg-white z-10 top-[var(--header-height)] bottom-0 right-0 left-0"
+          >
+            <div className="max-w-[700px] mx-auto relative p-8">
+              <CircularButton
+                icon={X}
+                onClick={dialog.hide}
+                className="absolute right-4 top-4"
+              />
+              <ConversationDetails conversation={conversation} />
+            </div>
+          </Dialog>
+        </div>
+      </div>
+    </div>
   );
 }
