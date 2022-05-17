@@ -16,7 +16,6 @@ RSpec.describe Toby::Resources do
           Toby::Resources::Industry,
           Toby::Resources::SkillCategory,
           Toby::Resources::Conversation,
-          Toby::Resources::Consultation,
           Toby::Resources::Payout,
           Toby::Resources::Interview,
           Toby::Resources::Skill,

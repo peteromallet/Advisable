@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ZapierInteractorController, type: :request do
-  let(:key) { ENV["ACCOUNTS_CREATE_KEY"] }
+  let(:key) { ENV.fetch("ACCOUNTS_CREATE_KEY", nil) }
 
   describe "POST /update_interview" do
     let(:interview) { create(:interview, status: "Call Scheduled") }
@@ -31,27 +31,6 @@ RSpec.describe ZapierInteractorController, type: :request do
 
       it "is unauthorized" do
         post("/zapier_interactor/update_interview", params:)
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-  end
-
-  describe "POST /update_consultation" do
-    let(:consultation) { create(:consultation, status: "Request Completed") }
-    let(:status) { "Accepted By Specialist" }
-    let(:params) { {status:, uid: consultation.uid, key:} }
-
-    it "updates the consultation and syncs to airtable" do
-      post("/zapier_interactor/update_consultation", params:)
-      expect(response).to have_http_status(:success)
-      expect(consultation.reload.status).to eq("Accepted By Specialist")
-    end
-
-    context "when no key" do
-      let(:key) { "" }
-
-      it "is unauthorized" do
-        post("/zapier_interactor/update_consultation", params:)
         expect(response).to have_http_status(:unauthorized)
       end
     end

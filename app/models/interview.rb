@@ -21,7 +21,6 @@ class Interview < ApplicationRecord
   belongs_to :specialist
   belongs_to :user
   has_one :video_call, dependent: :destroy
-  has_one :consultation, dependent: :destroy
   has_many :messages, dependent: :destroy
 
   scope :scheduled, -> { where(status: "Call Scheduled") }

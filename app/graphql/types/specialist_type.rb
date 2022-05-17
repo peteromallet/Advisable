@@ -84,13 +84,6 @@ module Types
       end
     end
 
-    field :consultation, Types::ConsultationType, null: true, deprecation_reason: "Use interview field instead"
-    def consultation
-      return unless current_user.is_a?(::User)
-
-      object.consultations.where(user: current_user).order(:created_at).last
-    end
-
     field :case_study_skills, [Types::Skill], null: false
     def case_study_skills
       object.case_study_skills.distinct

@@ -20,7 +20,6 @@ class Company < ApplicationRecord
 
   # WIP Company migration 👇️
   has_many :interviews, through: :users
-  has_many :consultations, through: :users
   # WIP Company migration 👆️
 
   validates :business_type, inclusion: {in: VALID_BUSINESS_TYPES}, allow_nil: true

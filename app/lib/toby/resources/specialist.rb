@@ -14,7 +14,6 @@ module Toby
       attribute :ideal_project, Attributes::LongText, readonly: true
       attribute :linkedin, Attributes::Url
       attribute :website, Attributes::Url
-      attribute :consultation_url, Lookups::Specialists::ConsultationUrl, sortable: false
       attribute :unavailable_until, Attributes::Date
       attribute :username, Attributes::String
       attribute :skills, Attributes::HasManyThrough

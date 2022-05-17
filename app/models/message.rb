@@ -5,13 +5,12 @@ class Message < ApplicationRecord
   uid_prefix "msg"
 
   NOTIFICATION_WAIT_TIME = 10.minutes
-  KINDS = %w[AgreementAccepted AgreementCreated AgreementDeclined InterviewRequest InterviewScheduled InterviewDeclined ConsultationRequest ConsultationDeclined InterviewAutoDeclined system].freeze
+  KINDS = %w[AgreementAccepted AgreementCreated AgreementDeclined InterviewRequest InterviewScheduled InterviewDeclined InterviewAutoDeclined system].freeze
 
   belongs_to :conversation
   belongs_to :author, class_name: "Account", optional: true
   belongs_to :guild_post, class_name: "Guild::Post", optional: true
   belongs_to :agreement, optional: true
-  belongs_to :consultation, optional: true
   belongs_to :interview, optional: true
   has_many_attached :attachments
 
@@ -20,7 +19,6 @@ class Message < ApplicationRecord
   validates :kind, inclusion: {in: KINDS}, allow_nil: true
 
   scope :with_content, -> { where.not(content: nil) }
-  scope :consultation_requests, -> { where(kind: "ConsultationRequest") }
   scope :interview_requests, -> { where(kind: "InterviewRequest") }
 
   def system_message?
@@ -64,7 +62,6 @@ end
 #  updated_at      :datetime         not null
 #  agreement_id    :bigint
 #  author_id       :bigint
-#  consultation_id :bigint
 #  conversation_id :bigint           not null
 #  guild_post_id   :uuid
 #  interview_id    :bigint
@@ -73,7 +70,6 @@ end
 #
 #  index_messages_on_agreement_id     (agreement_id)
 #  index_messages_on_author_id        (author_id)
-#  index_messages_on_consultation_id  (consultation_id)
 #  index_messages_on_conversation_id  (conversation_id)
 #  index_messages_on_guild_post_id    (guild_post_id)
 #  index_messages_on_idempotency_key  (idempotency_key)
@@ -84,7 +80,6 @@ end
 #
 #  fk_rails_...  (agreement_id => agreements.id)
 #  fk_rails_...  (author_id => accounts.id)
-#  fk_rails_...  (consultation_id => consultations.id)
 #  fk_rails_...  (conversation_id => conversations.id)
 #  fk_rails_...  (guild_post_id => guild_posts.id)
 #

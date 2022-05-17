@@ -144,20 +144,6 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def consultation_declined(consultation, message)
-    @account = consultation.user.account
-    @specialist = consultation.specialist
-    @message = message
-
-    mail(
-      to: @account.email,
-      from: "Advisable <hello@advisable.com>",
-      subject: "Consultation Request Declined: #{@specialist.account.name}"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def new_agreement(agreement)
     agreement_mail(agreement, "#{agreement.specialist.account.name} has requested to work together on Advisable")
   end

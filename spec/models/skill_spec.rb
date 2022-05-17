@@ -12,20 +12,17 @@ RSpec.describe Skill do
 
     let(:specialist) { create(:specialist) }
     let(:user) { create(:user) }
-    let(:consultation) { create(:consultation) }
     let(:label) { create(:label, skill: duplicate) }
     let(:post) { create(:guild_post) }
 
     before do
       specialist.skills << duplicate
       user.skills << duplicate
-      consultation.update(skill: duplicate)
     end
 
     it "does all the things" do
       expect(duplicate.specialists).to eq([specialist])
       expect(duplicate.users).to eq([user])
-      expect(duplicate.consultations).to eq([consultation])
       expect(original.specialists_count).to eq(0)
 
       original.merge_with!(duplicate:)
@@ -33,7 +30,6 @@ RSpec.describe Skill do
 
       expect(original.specialists).to eq([specialist])
       expect(original.users).to eq([user])
-      expect(original.consultations).to eq([consultation])
       expect(original.specialists_count).to eq(1)
       expect(duplicate.airtable_id).to be_nil
       expect(described_class.where(id: duplicate.id)).to eq([])

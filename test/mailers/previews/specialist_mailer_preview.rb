@@ -17,12 +17,6 @@ class SpecialistMailerPreview < ActionMailer::Preview
     end
   end
 
-  %i[consultation_request consultation_request_reminder].each do |method|
-    define_method(method) do
-      SpecialistMailer.public_send(method, Consultation.order("RANDOM()").first)
-    end
-  end
-
   private
 
   def random_interview
