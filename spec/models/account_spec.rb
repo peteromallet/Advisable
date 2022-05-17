@@ -79,15 +79,44 @@ RSpec.describe Account, type: :model do
     end
 
     it "sets deleted_at and disabled_at when delete: true" do
+      expect(account).not_to be_disabled
       account.disable!(delete: true)
       expect(account.disabled_at).not_to be_nil
       expect(account.deleted_at).not_to be_nil
+      expect(account).to be_disabled
     end
 
     it "deletes magic links" do
       magic_link = create(:magic_link, account:)
       account.disable!
       expect(MagicLink.where(id: magic_link.id)).to be_empty
+    end
+  end
+
+  describe "#unsubscribed?" do
+    let(:account) { create(:account) }
+
+    it "returns false by default" do
+      expect(account).not_to be_unsubscribed("All")
+    end
+
+    it "returns true if All" do
+      account.unsubscribed_from = ["All"]
+      expect(account).to be_unsubscribed("Weekly Digest")
+      expect(account).to be_unsubscribed("All")
+    end
+
+    it "only affects the given subscription" do
+      account.unsubscribed_from = ["Weekly Digest"]
+      expect(account).to be_unsubscribed("Weekly Digest")
+      expect(account).not_to be_unsubscribed("All")
+      expect(account).not_to be_unsubscribed("Announcements")
+    end
+
+    it "returns true if account is disabled" do
+      expect(account).not_to be_unsubscribed("Weekly Digest")
+      account.disable!
+      expect(account).to be_unsubscribed("Weekly Digest")
     end
   end
 end

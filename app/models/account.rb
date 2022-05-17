@@ -101,6 +101,10 @@ class Account < ApplicationRecord
     AccountMailer.reset_password(id:, token:).deliver_later
   end
 
+  def disabled?
+    disabled_at.present?
+  end
+
   def disable!(delete: false)
     self.remember_token = nil
     self.disabled_at = Time.zone.now
@@ -120,7 +124,9 @@ class Account < ApplicationRecord
   end
 
   def unsubscribed?(subscription)
-    unsubscribed_from.include?("All") || unsubscribed_from.include?(subscription)
+    disabled? ||
+      unsubscribed_from.include?("All") ||
+      unsubscribed_from.include?(subscription)
   end
 
   def domain
