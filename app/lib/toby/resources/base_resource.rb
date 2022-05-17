@@ -14,7 +14,7 @@ module Toby
         end
 
         def display_name
-          model.name.gsub("::", "").tableize.humanize
+          model_s.gsub("::", "").tableize.humanize
         end
 
         def query_name_collection
