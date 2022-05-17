@@ -77,7 +77,7 @@ function FeedItem({ article, interest }) {
           </p>
         </Link>
 
-        <div className="flex flex-nowrap pt-6 items-center">
+        <div className="flex flex-nowrap pt-6 items-center justify-between">
           {interest && (
             <Link
               onClick={scrollToTop}
@@ -94,7 +94,7 @@ function FeedItem({ article, interest }) {
           <FavoriteArticleButton
             size="sm"
             article={article}
-            className={`hidden lg:flex ml-auto `}
+            className={`hidden lg:flex`}
           />
         </div>
       </div>
