@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "@styled-icons/heroicons-outline";
 import composeStyles from "src/utilities/composeStyles";
 import { Tooltip } from "@advisable/donut";
@@ -41,24 +42,47 @@ const iconClasses = composeStyles({
 
 function ShareArticleButton({ slug, className, size }) {
   const [copied, setCopied] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState("Copy Link");
   const url = `${location.origin}/articles/${slug}`;
 
   const handleClick = () => {
     setCopied(true);
+    setTooltipContent(null);
     navigator.clipboard.writeText(url);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1700);
+  };
+
+  const handleHover = () => {
+    !copied && setTooltipContent("Copy Link");
   };
 
   return (
-    <Tooltip placement="bottom" content={copied ? "Link copied!" : "Copy Link"}>
-      <button
-        className={buttonClasses({ className, size })}
-        aria-label="Copy Link"
-        onClick={handleClick}
-      >
-        <Link className={iconClasses({ size })} />
-      </button>
-    </Tooltip>
+    <div className="flex items-center justify-center">
+      <Tooltip placement="bottom" content={tooltipContent}>
+        <button
+          className={buttonClasses({ className, size })}
+          aria-label="Copy Link"
+          onClick={handleClick}
+          onMouseEnter={handleHover}
+        >
+          <Link className={iconClasses({ size })} />
+        </button>
+      </Tooltip>
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            initial={{ y: -10 }}
+            animate={{ y: 0 }}
+            exit={{ y: 20, opacity: 0 }}
+            className="absolute -bottom-4 bg-blue100 rounded-xs shadow px-2 py-2"
+          >
+            <div className="text-blue900 text-xs leading-none opacity-80">
+              Link copied!
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
