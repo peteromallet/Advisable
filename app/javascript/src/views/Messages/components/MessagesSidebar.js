@@ -20,7 +20,7 @@ export default function MessagesSidebar({ loading, conversations }) {
       flexShrink="0"
       bg="white"
       height="calc(100vh - var(--header-height))"
-      width={{ _: "100%", l: "380px" }}
+      width={{ _: "100%", l: "360px" }}
       css={`
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
       `}
@@ -33,17 +33,9 @@ export default function MessagesSidebar({ loading, conversations }) {
         }
       >
         <Box display="flex" flexDirection="column" height="100%">
-          <Box
-            height="72px"
-            paddingX={6}
-            display="flex"
-            flexShrink={0}
-            alignItems="center"
-            borderBottom="1px solid"
-            borderColor="neutral100"
-          >
-            <Heading size="2xl">Messages</Heading>
-          </Box>
+          <div className="pt-4 pb-1 px-6 flex flex-shrink-0 items-center">
+            <h3 className="text-lg font-medium">Messages</h3>
+          </div>
           <SimpleBar
             style={{ height: "calc(100vh - var(--header-height) - 72px)" }}
           >

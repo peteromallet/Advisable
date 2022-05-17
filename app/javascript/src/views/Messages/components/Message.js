@@ -61,19 +61,14 @@ export function BaseMessage({
       id={message.id}
       data-status={message.status}
       opacity={sending ? 0.4 : 1}
-      borderRadius="24px"
+      borderRadius="20px"
       bg="white"
       className="shadow-md"
-      padding={6}
+      padding={4}
       {...props}
     >
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        marginBottom={5}
-      >
-        <Box flexShrink="0" pr={3} display="flex">
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex-shrink-0 pr-3 flex">
           <Avatar
             bg="blue100"
             color="blue300"
@@ -82,18 +77,18 @@ export function BaseMessage({
             name={message.author?.name}
             url={message.author?.avatar}
           />
-        </Box>
-        <Box width="100%">
-          <Text fontSize="17px" fontWeight={550} marginBottom={1}>
+        </div>
+        <div className="w-full">
+          <div className="font-medium leading-none mb-1">
             {message.author?.name || "Deleted user"}
-          </Text>
-          <Text fontSize="xs" fontWeight={400} color="neutral600">
+          </div>
+          <div className="text-xs text-neutral600 leading-none">
             {dateForMessage(message.createdAt)}
-          </Text>
-        </Box>
-      </Box>
-      <Box my={4} height="1px" bg="neutral100" />
-      <Box width="100%">
+          </div>
+        </div>
+      </div>
+      <div className="my-2 h-px bg-neutral100" />
+      <div className="w-full">
         {children ? (
           <Box paddingTop={3} paddingBottom={5}>
             {children}
@@ -101,10 +96,9 @@ export function BaseMessage({
         ) : null}
         <Text
           autoLink
-          fontSize="17px"
           color="neutral900"
-          lineHeight="24px"
           style={{ overflowWrap: "break-word" }}
+          className="leading-normal"
         >
           {renderLineBreaks(message.content)}
         </Text>
@@ -120,7 +114,7 @@ export function BaseMessage({
             ))}
           </Box>
         )}
-      </Box>
+      </div>
     </Box>
   );
 }

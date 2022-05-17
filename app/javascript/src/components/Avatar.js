@@ -28,7 +28,12 @@ const avatarStyles = composeStyles({
       xl: `
         w-[60px]
         h-[60px]
-        text-base
+        text-lg
+      `,
+      "2xl": `
+        w-[80px]
+        h-[80px]
+        text-xl
       `,
     },
   },

@@ -37,7 +37,7 @@ export default function Conversation({ conversations, currentAccount }) {
             <ConversationNotFound />
           )}
         </Box>
-        <div className="hidden lg:block w-[400px] border-l border-solid border-neutral100 p-8">
+        <div className="hidden lg:block shrink-0 w-[360px] border-l border-solid border-neutral100 p-8">
           <ConversationDetails conversation={conversation} />
         </div>
       </Sentry.ErrorBoundary>

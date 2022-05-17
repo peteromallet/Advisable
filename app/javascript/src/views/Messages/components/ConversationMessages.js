@@ -69,7 +69,7 @@ export default function ConversationMessages({ conversation, currentAccount }) {
   return (
     <MessagePrompt simplebar={scrollRef}>
       <SimpleBar ref={scrollRef} style={{ height: "100%" }}>
-        <Box maxWidth="700px" mx="auto" px={4}>
+        <div className="max-w-[700px] mx-auto px-6">
           {isLoading && <MessagesLoading />}
           {!isLoading && (
             <Box
@@ -104,11 +104,11 @@ export default function ConversationMessages({ conversation, currentAccount }) {
                 </Box>
               )}
               <Box paddingY={8}>
-                <Stack spacing={6} id="messages" paddingBottom={6}>
+                <div className="space-y-4 pb-4" id="messages">
                   {messageEdges.map((edge) => (
                     <Message key={edge.node.id} message={edge.node} />
                   ))}
-                </Stack>
+                </div>
                 <MessageComposer
                   conversation={conversation}
                   currentAccount={currentAccount}
@@ -116,7 +116,7 @@ export default function ConversationMessages({ conversation, currentAccount }) {
               </Box>
             </Box>
           )}
-        </Box>
+        </div>
       </SimpleBar>
     </MessagePrompt>
   );

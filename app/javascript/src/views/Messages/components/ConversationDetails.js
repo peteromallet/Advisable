@@ -6,7 +6,11 @@ export default function ConversationDetails({ conversation }) {
   return (
     <>
       <div className="text-center">
-        <ParticipantAvatars conversation={conversation} className="mb-4" />
+        <ParticipantAvatars
+          className="mb-4"
+          conversation={conversation}
+          size={conversation.participants.length > 2 ? "xl" : "2xl"}
+        />
         <ParticipantNames
           conversation={conversation}
           className="text-center text-lg font-medium"
