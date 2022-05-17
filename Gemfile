@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "~> 3.1.2"
 
 gem "airrecord"
-gem "analytics-ruby", "~> 2.4.0", require: "segment/analytics"
+gem "analytics-ruby", require: "segment/analytics"
 gem "app_profiler"
 gem "aws-sdk-s3"
 gem "barnes"
@@ -93,7 +93,7 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-  gem "stripe-ruby-mock", "~> 3.0.1", require: "stripe_mock"
+  gem "stripe-ruby-mock", require: "stripe_mock"
   gem "timecop"
   gem "webdrivers"
   gem "webmock"
