@@ -2,6 +2,7 @@
 
 module Mutations
   class RequestInterview < Mutations::BaseMutation
+    argument :article, ID, required: false
     argument :message, String, required: true
     argument :specialist, ID, required: true
 
@@ -14,7 +15,8 @@ module Mutations
     def resolve(**args)
       specialist = Specialist.find_by!(uid: args[:specialist])
       conversation = Conversation.by_accounts([specialist.account, current_user.account])
-      interview = Interview.create(status: "Call Requested", user: current_user, specialist:)
+      article = ::CaseStudy::Article.find_by(uid: args[:article]) if args[:article]
+      interview = Interview.create(status: "Call Requested", user: current_user, specialist:, article:)
 
       conversation.new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
       Slack.bg_message(channel: "consultation_requests", text: "We have a new interview request for #{specialist.account.name} from #{current_user.name_with_company}.")

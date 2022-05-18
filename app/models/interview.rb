@@ -20,6 +20,8 @@ class Interview < ApplicationRecord
 
   belongs_to :specialist
   belongs_to :user
+  belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
+
   has_one :video_call, dependent: :destroy
   has_many :messages, dependent: :destroy
 
@@ -58,6 +60,7 @@ end
 #  uid                                :string           not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
+#  article_id                         :bigint
 #  google_calendar_id                 :string
 #  specialist_id                      :bigint           not null
 #  user_id                            :bigint
@@ -66,6 +69,7 @@ end
 # Indexes
 #
 #  index_interviews_on_application_id  (application_id)
+#  index_interviews_on_article_id      (article_id)
 #  index_interviews_on_specialist_id   (specialist_id)
 #  index_interviews_on_uid             (uid) UNIQUE
 #  index_interviews_on_user_id         (user_id)
@@ -73,6 +77,7 @@ end
 # Foreign Keys
 #
 #  fk_rails_...  (application_id => applications.id)
+#  fk_rails_...  (article_id => case_study_articles.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_10_115315) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -615,7 +615,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_115315) do
     t.string "google_calendar_id"
     t.bigint "specialist_id", null: false
     t.string "reason"
+    t.bigint "article_id"
     t.index ["application_id"], name: "index_interviews_on_application_id"
+    t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
     t.index ["user_id"], name: "index_interviews_on_user_id"
@@ -1244,6 +1246,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_115315) do
   add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "interviews", "applications"
+  add_foreign_key "interviews", "case_study_articles", column: "article_id"
   add_foreign_key "interviews", "specialists"
   add_foreign_key "interviews", "users"
   add_foreign_key "invoices", "companies"

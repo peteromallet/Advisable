@@ -6,6 +6,7 @@ RSpec.describe Mutations::RequestInterview do
   let(:specialist) { create(:specialist) }
   let(:current_user) { create(:user) }
   let(:context) { {current_user:} }
+  let(:extra_args) { "" }
 
   let(:query) do
     <<-GRAPHQL
@@ -13,6 +14,7 @@ RSpec.describe Mutations::RequestInterview do
       requestInterview(input: {
         specialist: "#{specialist.uid}",
         message: "Wanna work for me, bro?",
+        #{extra_args}
       }) {
         interview {
           id
@@ -60,6 +62,18 @@ RSpec.describe Mutations::RequestInterview do
 
       error = response["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
+    end
+  end
+
+  context "when an article is passed in" do
+    let(:article) { create(:case_study_article) }
+    let(:extra_args) { "article: \"#{article.uid}\"" }
+
+    it "stores it on the interview record" do
+      response = AdvisableSchema.execute(query, context:)
+      id = response.dig("data", "requestInterview", "interview", "id")
+      interview = Interview.find_by!(uid: id)
+      expect(interview.article).to eq(article)
     end
   end
 end
