@@ -28,7 +28,6 @@ RSpec.describe "Client signup", type: :system do
       # Company step
       expect(page).to have_content("Tell us about your company")
       fill_in("name", with: "Dunder Mifflin")
-      select("I'm looking to hire someone", from: "intent")
       click_on("Continue")
 
       # Industry step
@@ -37,6 +36,9 @@ RSpec.describe "Client signup", type: :system do
       # Customer
       fill_in("audience", with: "I'm looking for a developer")
       click_on("Continue")
+
+      # hiring
+      find_by_test_id("hire").click
 
       # Interests
       first(:button, "Creative PR Strategy").click

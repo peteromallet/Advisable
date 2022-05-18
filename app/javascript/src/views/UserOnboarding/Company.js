@@ -12,9 +12,6 @@ import { trackEvent } from "src/utilities/segment";
 
 const validationSchema = object().shape({
   name: string().required("Please provide your company name"),
-  intent: string().required(
-    "Please let us know how you are planning on using Advisable",
-  ),
 });
 
 export default function Company({ data }) {
@@ -24,15 +21,11 @@ export default function Company({ data }) {
   const initialValues = {
     name: data?.currentCompany?.name || "",
     businessType: data?.currentCompany?.businessType || "B2B",
-    intent: data?.currentCompany?.intent || "",
     kind: data?.currentCompany?.kind || "Startup",
   };
 
   const handleSubmit = async (values) => {
-    const response = await update({
-      variables: { input: values },
-    });
-
+    await update({ variables: { input: values } });
     trackEvent("Setup - Submitted Company", values);
     navigate("../industry");
   };
@@ -89,7 +82,7 @@ export default function Company({ data }) {
               </FormField>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-8">
               <FormField
                 label="Are you B2B or B2C"
                 id="businessType"
@@ -98,20 +91,6 @@ export default function Company({ data }) {
               >
                 <option>B2B</option>
                 <option>B2C</option>
-              </FormField>
-            </div>
-
-            <div className="mb-10">
-              <FormField
-                id="intent"
-                as={Select}
-                name="intent"
-                label="How are you planning to use Advisable?"
-                placeholder="How are you planning to use Advisable?"
-              >
-                <option>I'm just looking around</option>
-                <option>I'm looking to hire someone</option>
-                <option>I'm looking for ideas</option>
               </FormField>
             </div>
 
