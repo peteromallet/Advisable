@@ -137,4 +137,16 @@ fragment MessageFields on MessageInterface {
       }
     }
   }
+
+  ... on PaymentRequestCreated {
+    paymentRequest {
+      id
+    }
+  }
+
+  ... on PaymentRequestCompleted {
+    paymentRequest {
+      id
+    }
+  }
 }
