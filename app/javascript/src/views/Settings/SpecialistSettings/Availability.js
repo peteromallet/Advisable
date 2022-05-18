@@ -20,7 +20,14 @@ const GET_UNAVAILABLE_DATE = gql`
 
 function Unavailable({ timestamp }) {
   const [setUnavailable] = useSetUnavailableUntil();
-  const date = DateTime.fromISO(timestamp).toFormat("dd MMMM yyyy");
+
+  // Feel free to make this better. I have (almost) no idea what I'm doing.
+  let date;
+  if (timestamp.split("-")[0] > 2049) {
+    date = "further notice"
+  } else {
+    date = DateTime.fromISO(timestamp).toFormat("dd MMMM yyyy");
+  }
 
   const handleClear = useCallback(
     async (e) => {
