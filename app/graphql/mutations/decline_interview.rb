@@ -36,11 +36,8 @@ module Mutations
     def create_user_message(interview, reason)
       return if reason.nil? || interview.messages.none?
 
-      interview.messages.first.conversation.new_message!(author: current_user.account, content: reason, send_emails: false)
-
-      # Temporarily disable this based on slack conversation
-      # https://advisable.slack.com/archives/CT7JQ8RMX/p1652368647257499
-      # UserMailer.interview_declined(interview, message).deliver_later
+      message = interview.messages.first.conversation.new_message!(author: current_user.account, content: reason, send_emails: false)
+      UserMailer.interview_declined(interview, message).deliver_later
     end
   end
 end

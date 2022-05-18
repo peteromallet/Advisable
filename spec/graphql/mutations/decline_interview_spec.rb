@@ -48,7 +48,7 @@ RSpec.describe Mutations::DeclineInterview do
       AdvisableSchema.execute(query, context:)
       last_message = conversation.messages.last
       expect(last_message.content).to eq("Not interested")
-      # expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_declined", "deliver_now", {args: [interview, last_message]}).once
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_declined", "deliver_now", {args: [interview, last_message]}).once
     end
   end
 
