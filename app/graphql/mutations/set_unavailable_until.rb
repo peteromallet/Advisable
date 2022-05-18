@@ -2,8 +2,11 @@
 
 module Mutations
   class SetUnavailableUntil < Mutations::BaseMutation
+    class InvalidUnavailabilityDate < StandardError; end
+
     argument :clear, Boolean, required: false
     argument :date, GraphQL::Types::ISO8601Date, required: false
+    argument :unavailable, Boolean, required: false
 
     field :specialist, Types::SpecialistType, null: true
 
@@ -11,16 +14,20 @@ module Mutations
       requires_specialist!
     end
 
-    def resolve(date: nil, clear: nil)
+    def resolve(date: nil, clear: nil, unavailable: nil)
       if clear
         current_user.update(unavailable_until: nil)
-        {specialist: current_user}
+      elsif unavailable
+        current_user.update(unavailable_until: "1.1.2050")
       elsif date.future?
         current_user.update(unavailable_until: date)
-        {specialist: current_user}
       else
-        ApiError.invalid_request("INVALID_DATE", "The unavailability date has to be in the future.")
+        raise InvalidUnavailabilityDate
       end
+
+      {specialist: current_user}
+    rescue InvalidUnavailabilityDate
+      ApiError.invalid_request("INVALID_DATE", "The unavailability date has to be in the future.")
     end
   end
 end
