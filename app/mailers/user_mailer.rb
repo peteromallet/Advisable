@@ -194,7 +194,8 @@ class UserMailer < ApplicationMailer
     @account = interview.user.account
     @specialist = interview.specialist
 
-    @similar_articles = interview.article.similar(exclude_specialist: @specialist.id) if interview.article_id
+    article = interview.article || @specialist.articles.searchable.by_score.first
+    @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
 
     mail(
       to: @account.email,
