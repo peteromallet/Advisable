@@ -61,7 +61,7 @@ function FeedItem({ article, interest }) {
           <FavoriteArticleButton
             size="sm"
             article={article}
-            className={`flex lg:hidden ml-auto`}
+            className="flex lg:hidden ml-auto"
           />
         </div>
         <Link
@@ -94,7 +94,7 @@ function FeedItem({ article, interest }) {
           <FavoriteArticleButton
             size="sm"
             article={article}
-            className={`hidden lg:flex`}
+            className="hidden lg:flex"
           />
         </div>
       </div>

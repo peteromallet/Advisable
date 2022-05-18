@@ -33,7 +33,7 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
-    page.find_button("Add to Favorites", match: :first).click
+    first(:button, "Add to Favorites").click
     expect(page).to have_content("Added to favorites")
     click_button("Go back")
     expect(page).to have_content("Your feed")
