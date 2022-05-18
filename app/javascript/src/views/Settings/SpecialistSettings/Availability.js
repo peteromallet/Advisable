@@ -1,11 +1,13 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { DateTime } from "luxon";
 import { useQuery, gql } from "@apollo/client";
-import { Box, Card, Text, Button, Link } from "@advisable/donut";
+import { Toggle, Box, Card, Text, Button, Link } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import Loading from "src/components/Loading";
 import DatePicker from "src/components/DatePicker";
 import { useSetUnavailableUntil } from "src/shared/mutations/setUnavailableUntil";
+
+const DISABLED_DATE = "2050-01-01";
 
 const GET_UNAVAILABLE_DATE = gql`
   query getUnavailableDate {
@@ -24,7 +26,7 @@ function Unavailable({ timestamp }) {
   // Feel free to make this better. I have (almost) no idea what I'm doing.
   let date;
   if (timestamp.split("-")[0] > 2049) {
-    date = "further notice"
+    date = "further notice";
   } else {
     date = DateTime.fromISO(timestamp).toFormat("dd MMMM yyyy");
   }
@@ -45,14 +47,15 @@ function Unavailable({ timestamp }) {
   );
 
   return (
-    <Box bg="neutral100" padding={4} borderRadius="8px">
-      <Text fontSize="l" mb={2}>
-        You have currently set yourself as unavailable until <b>{date}</b>.
-      </Text>
-      <Link.External href="#" onClick={handleClear}>
+    <div className="bg-neutral100 p-4 rounded-lg">
+      <p className>
+        You have currently set yourself as unavailable until{" "}
+        <b className="font-medium">{date}</b>.
+      </p>
+      <a className="text-blue700" href="#" onClick={handleClear}>
         Set Available
-      </Link.External>
-    </Box>
+      </a>
+    </div>
   );
 }
 
@@ -111,10 +114,34 @@ function Available() {
   );
 }
 
-export default function Availability() {
-  const { data, loading, error } = useQuery(GET_UNAVAILABLE_DATE);
-  const unavailableUntil = data?.viewer?.unavailableUntil;
+function AvailabilityToggle({ isAvailableForWork }) {
+  const [checked, setChecked] = useState(isAvailableForWork);
+  const [setUnavailable] = useSetUnavailableUntil();
 
+  const handleToggle = (e) => {
+    setChecked((isChecked) => !isChecked);
+    if (e.target.checked) {
+      setUnavailable({
+        variables: { input: { clear: true } },
+      });
+    } else {
+      setUnavailable({
+        variables: { input: { unavailable: true } },
+      });
+    }
+  };
+
+  return (
+    <Toggle
+      name="availableForWork"
+      value={checked}
+      checked={checked}
+      onChange={handleToggle}
+    />
+  );
+}
+
+function PauseAvailability({ unavailableUntil, isAvailableForWork }) {
   const isAvailable = useMemo(() => {
     if (!unavailableUntil) return true;
     const now = DateTime.local();
@@ -122,30 +149,58 @@ export default function Availability() {
     return date < now;
   }, [unavailableUntil]);
 
+  return (
+    <div className={isAvailableForWork ? null : "opacity-50"}>
+      <h5 className="text-lg font-medium">Pause availability</h5>
+      <p className="mb-5">
+        If you are temporarily unavailable for work you can set a date when you
+        will be available again below and we won&apos;t recommend you for new
+        projects or consultation requests until then.
+      </p>
+      {isAvailableForWork && isAvailable && <Available />}
+      {isAvailableForWork && !isAvailable && (
+        <Unavailable timestamp={unavailableUntil} />
+      )}
+    </div>
+  );
+}
+
+export default function Availability() {
+  const { data, loading, error } = useQuery(GET_UNAVAILABLE_DATE);
+  const unavailableUntil = data?.viewer?.unavailableUntil;
+
+  const isAvailableForWork = useMemo(() => {
+    if (unavailableUntil === null) return true;
+
+    const date = DateTime.fromISO(unavailableUntil);
+    const disabledDate = DateTime.fromISO(DISABLED_DATE);
+    return !disabledDate.hasSame(date, "day");
+  }, [unavailableUntil]);
+
   if (loading) return <Loading />;
   if (error) return <>something went wrong</>;
 
   return (
     <Card padding={10} borderRadius="12px">
-      <Text
-        marginBottom={2}
-        fontSize="3xl"
-        fontWeight="medium"
-        color="neutral900"
-        letterSpacing="-0.02rem"
-      >
+      <h1 className="text-2xl font-medium text-neutral900 tracking-tight">
         Availability
-      </Text>
-      <Text fontSize="l" lineHeight="1.2" color="neutral800" mb={6}>
-        If you are unavailable for work at the moment you can set a date when
-        you will be available again below and we won&apos;t recommend you for
-        new projects or consultation requests until then.
-      </Text>
-      {isAvailable ? (
-        <Available />
-      ) : (
-        <Unavailable timestamp={unavailableUntil} />
-      )}
+      </h1>
+      <div className="h-px bg-neutral100 my-8" />
+      <div className="flex gap-2 items-center">
+        <div className="flex-1">
+          <h5 className="text-lg font-medium">Available for work</h5>
+          <p>
+            Allow others to request calls or message you from your profile or
+            case studies.
+          </p>
+        </div>
+        <AvailabilityToggle isAvailableForWork={isAvailableForWork} />
+      </div>
+      <div className="h-px bg-neutral100 my-8" />
+      <PauseAvailability
+        unavailableUntil={unavailableUntil}
+        isAvailableForWork={isAvailableForWork}
+      />
     </Card>
   );
 }
