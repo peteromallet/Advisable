@@ -118,30 +118,12 @@ class UserMailer < ApplicationMailer
   end
 
   def interview_declined(interview, message)
-    @account = interview.user.account
-    @specialist = interview.specialist
     @message = message
-
-    mail(
-      to: @account.email,
-      from: "Advisable <hello@advisable.com>",
-      subject: "Consultation Request Declined: #{@specialist.account.name}"
-    ) do |format|
-      format.html { render layout: false }
-    end
+    declined_interview_email(interview)
   end
 
   def interview_request_auto_declined(interview)
-    @account = interview.user.account
-    @specialist = interview.specialist
-
-    mail(
-      to: @account.email,
-      from: "Advisable <hello@advisable.com>",
-      subject: "Consultation Request Declined: #{@specialist.account.name}"
-    ) do |format|
-      format.html { render layout: false }
-    end
+    declined_interview_email(interview)
   end
 
   def new_agreement(agreement)
@@ -205,6 +187,21 @@ class UserMailer < ApplicationMailer
       subject:
     ) do |format|
       format.html { render layout: "email_v2" }
+    end
+  end
+
+  def declined_interview_email(interview)
+    @account = interview.user.account
+    @specialist = interview.specialist
+
+    @similar_articles = interview.article.similar(exclude_specialist: @specialist.id) if interview.article_id
+
+    mail(
+      to: @account.email,
+      from: "Advisable <hello@advisable.com>",
+      subject: "Consultation Request Declined: #{@specialist.account.name}"
+    ) do |format|
+      format.html { render layout: false }
     end
   end
 
