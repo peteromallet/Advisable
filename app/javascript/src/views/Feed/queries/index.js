@@ -102,7 +102,10 @@ export function useFavoriteArticle(article) {
         data: {
           favoritedArticles: {
             ...favoritedArticles,
-            edges: [...favoritedArticles.edges, { node: article }],
+            edges: [
+              ...favoritedArticles.edges,
+              { node: { ...article, isFavorited: true } },
+            ],
           },
         },
       });
