@@ -6,7 +6,7 @@ RSpec.describe PaymentRequestDueJob do
   let!(:payment_request) { create(:payment_request, due_at: 2.weeks.ago) }
 
   it "sends a slack message, marks the payment request as past due, and informs the user" do
-    expect(Slack).to receive(:message).with(channel: "payments", text: "Payment Request for *#{payment_request.company&.name}* (#{payment_request.company_id}) with *#{payment_request.specialist&.account&.name}* (#{payment_request.specialist&.uid}) is past due date! PaymentRequest: #{payment_request.uid}").once
+    expect(Slack).to receive(:bg_message).with(channel: "payments", text: "Payment Request for *#{payment_request.company&.name}* (#{payment_request.company_id}) with *#{payment_request.specialist&.account&.name}* (#{payment_request.specialist&.uid}) is past due date! PaymentRequest: #{payment_request.uid}").once
     described_class.perform_now
     described_class.perform_now
     described_class.perform_now
@@ -19,7 +19,7 @@ RSpec.describe PaymentRequestDueJob do
     let!(:payment_request) { create(:payment_request) }
 
     it "does not send a slack message" do
-      expect(Slack).not_to receive(:message)
+      expect(Slack).not_to receive(:bg_message)
       described_class.perform_now
       payment_request.reload
       expect(payment_request.status).to eq("pending")
