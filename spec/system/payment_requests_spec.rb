@@ -81,7 +81,7 @@ RSpec.describe "Payment requests", type: :system do
         allow(Stripe::PaymentIntent).to receive(:create).and_return(OpenStruct.new(id: "pi_123asdf456", status: "succeeded"))
         visit("/payment_requests/#{payment_request.uid}")
         click_button("Approve & Pay")
-        expect(page).to have_content("This request has been paid")
+        expect(page).to have_content("request has been paid")
       end
 
       it "falls back to approved state if payment fails" do
@@ -136,7 +136,7 @@ RSpec.describe "Payment requests", type: :system do
           fill_in("postal", with: "11111")
         end
         click_button("Complete Payment")
-        expect(page).to have_content("This request has been paid")
+        expect(page).to have_content("request has been paid")
       end
     end
   end
@@ -184,7 +184,7 @@ RSpec.describe "Payment requests", type: :system do
 
       it "informs them it's been paid and provides download for invoice" do
         visit("/payment_requests/#{payment_request.uid}")
-        expect(page).to have_content("This request has been paid")
+        expect(page).to have_content("request has been paid")
         expect(page).to have_content("Download invoice")
       end
     end
