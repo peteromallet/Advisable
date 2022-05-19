@@ -14,8 +14,8 @@ import AgreementDeclinedMessage from "./SystemMessage/AgreementDeclinedMessage";
 import InterviewDeclinedMessage from "./SystemMessage/InterviewDeclinedMessage";
 import InterviewRequestMessage from "./InterviewRequestMessage";
 import InterviewAutoDeclinedMessage from "./SystemMessage/InterviewAutoDeclinedMessage";
-import PaymentRequestCreated from "./PaymentRequestCreated";
-import PaymentRequestCompleted from "./PaymentRequestCompleted";
+import PaymentRequestCreated from "./SystemMessage/PaymentRequestCreated";
+import PaymentRequestCompleted from "./SystemMessage/PaymentRequestCompleted";
 
 const COMPONENTS = {
   UserMessage,
