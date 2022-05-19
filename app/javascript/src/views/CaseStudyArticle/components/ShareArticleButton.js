@@ -42,28 +42,21 @@ const iconClasses = composeStyles({
 
 function ShareArticleButton({ slug, className, size }) {
   const [copied, setCopied] = useState(false);
-  const [tooltipContent, setTooltipContent] = useState("Copy Link");
   const url = `${location.origin}/articles/${slug}`;
 
   const handleClick = () => {
     setCopied(true);
-    setTooltipContent(null);
     navigator.clipboard.writeText(url);
     setTimeout(() => setCopied(false), 1700);
   };
 
-  const handleHover = () => {
-    !copied && setTooltipContent("Copy Link");
-  };
-
   return (
     <div className="flex items-center justify-center">
-      <Tooltip placement="bottom" content={tooltipContent}>
+      <Tooltip placement="bottom" content={copied ? null : "Copy Link"}>
         <button
           className={buttonClasses({ className, size })}
           aria-label="Copy Link"
           onClick={handleClick}
-          onMouseEnter={handleHover}
         >
           <Link className={iconClasses({ size })} />
         </button>

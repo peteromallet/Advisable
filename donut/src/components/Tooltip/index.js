@@ -1,6 +1,6 @@
 // The tooltip component is built on top of the Reakit tooltip component.
 // https://reakit.io/docs/tooltip
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Tooltip as ReakitTooltip,
   TooltipReference,
@@ -84,6 +84,12 @@ const Tooltip = ({
     gutter: gutter || 10,
     placement,
   });
+
+  useEffect(() => {
+    if (!content) {
+      tooltip.hide();
+    }
+  }, [content, tooltip]);
 
   if (!content) return children;
 
