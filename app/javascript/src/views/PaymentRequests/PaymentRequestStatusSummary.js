@@ -124,13 +124,21 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
   if (status === "paid") {
     return (
       <Summary status={status} icon={<CheckCircle />}>
-        This request has been paid by {company.name}. We have received the funds
-        and they will be transferred out to your account on our next weekly
-        payout, which is done on Tuesdays.
-        {viewer.isClient && (
-          <div className="pt-4">
-            <DownloadInvoice payment={payment} />
-          </div>
+        {viewer.isSpecialist ? (
+          <>
+            This request has been paid by {company.name}. We have received the
+            funds and they will be transferred out to your account on our next
+            weekly payout, which is done on Tuesdays.
+          </>
+        ) : (
+          <>
+            This payment request has been paid. We have received the funds and
+            they will be transferred out to {specialist.name} on our next weekly
+            payout.
+            <div className="pt-4">
+              <DownloadInvoice payment={payment} />
+            </div>
+          </>
         )}
       </Summary>
     );
