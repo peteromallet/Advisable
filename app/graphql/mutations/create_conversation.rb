@@ -23,7 +23,7 @@ module Mutations
       ApiError.invalid_request("NO_PARTICIPANTS", "You must have at least one participant besides yourself!") if accounts.size < 2
 
       conversation = Conversation.by_accounts(accounts) do
-        Analytics.track(current_user, "Created Conversation", {accounts: accounts.map(&:uid)})
+        Analytics.bg_track(current_user, "Created Conversation", {accounts: accounts.map(&:uid)})
         Slack.bg_message(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{participant_accounts.map(&:name).to_sentence} via messaging.")
       end
       message = conversation.new_message!(author: current_account, content:, attachments:)
