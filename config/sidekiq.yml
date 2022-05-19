@@ -20,8 +20,6 @@ production:
     every: 10 minutes
   PaymentRequestReminderJob:
     every: 10 minutes
-  ConsultationReminderJob:
-    every: 10 minutes
   InterviewRequestReminderJob:
     every: 10 minutes
   InterviewRequestAutoDeclineJob:
