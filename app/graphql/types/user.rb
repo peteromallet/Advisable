@@ -161,5 +161,13 @@ module Types
       end
       times
     end
+
+    field :agreement, Types::Agreement, null: true
+    def agreement
+      requires_specialist!
+
+      Agreement.latest_accepted_for(specialist: current_user, user: object) ||
+        Agreement.latest_accepted_for(specialist: current_user, company: object.company)
+    end
   end
 end

@@ -24,6 +24,10 @@ class Agreement < ApplicationRecord
     scope status, -> { where(status:) }
   end
 
+  def self.latest_accepted_for(requirements)
+    accepted.order(created_at: :desc).where(requirements).first
+  end
+
   def due_days
     super.presence || DEFAULT_DUE_DAYS
   end

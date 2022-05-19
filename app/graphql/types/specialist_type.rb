@@ -274,5 +274,12 @@ module Types
 
       object.interviews.find_by(user: current_user)
     end
+
+    field :agreement, Types::Agreement, null: true
+    def agreement
+      requires_client!
+
+      Agreement.latest_accepted_for(specialist: object, user: current_user)
+    end
   end
 end
