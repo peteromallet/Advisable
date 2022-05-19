@@ -27,13 +27,13 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content("You have no favorite case studies yet.")
   end
 
-  it "add article to favorites" do
+  it "add article to favorites via article page" do
     authenticate_as(user)
     visit "/explore"
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
-    click_button("Add to Favorites")
+    first(:button, "Add to Favorites").click
     expect(page).to have_content("Added to favorites")
     click_button("Go back")
     expect(page).to have_content("Your feed")
@@ -43,7 +43,7 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content(article1.title)
   end
 
-  it "remove article from favorites" do
+  it "remove article from favorites via article page" do
     user.account.update(favorited_articles: [favorited_article])
     authenticate_as(user)
     visit "/explore/favorites"
@@ -54,6 +54,41 @@ RSpec.describe "Favorites", type: :system do
     click_button("Remove from Favorites")
     expect(page).to have_content("Removed from favorites")
     click_button("Go back")
+    expect(page).not_to have_content(article1.title)
+  end
+
+  it "add article to favorites via feed list" do
+    authenticate_as(user)
+    visit "/explore"
+    expect(page).to have_content(article1.title)
+    page.find_button("Add to Favorites", match: :first).click
+    expect(page).to have_content("Added to favorites")
+    click_on("Favorites")
+    expect(page).to have_content("Favorites")
+    expect(page).to have_current_path("/explore/favorites")
+    expect(page).to have_content(article1.title)
+  end
+
+  it "remove article from favorites via feed list" do
+    user.account.update(favorited_articles: [favorited_article])
+    authenticate_as(user)
+    visit "/explore"
+    expect(page).to have_content(article1.title)
+    click_button("Remove from Favorites")
+    expect(page).to have_content("Removed from favorites")
+    click_on("Favorites")
+    expect(page).to have_content("Favorites")
+    expect(page).to have_current_path("/explore/favorites")
+    expect(page).not_to have_content(article1.title)
+  end
+
+  it "remove article from favorites via favorites list" do
+    user.account.update(favorited_articles: [favorited_article])
+    authenticate_as(user)
+    visit "/explore/favorites"
+    expect(page).to have_content(article1.title)
+    click_button("Remove from Favorites")
+    expect(page).to have_content("Removed from favorites")
     expect(page).not_to have_content(article1.title)
   end
 end

@@ -7,6 +7,8 @@ import INTERESTS from "./interests.gql";
 import DELETE_INTEREST from "./deleteInterest.gql";
 import CREATE_INTERESTS from "./createInterests.gql";
 import TRENDING from "./trending.gql";
+import FAVORITE_CS_ARTICLE from "./favoriteCaseStudyArticle.gql";
+import UNFAVORITE_CS_ARTICLE from "./unfavoriteCaseStudyArticle.gql";
 import { useLocation } from "react-router-dom";
 
 export function useInterests() {
@@ -84,4 +86,53 @@ export function useDeleteInterest(subscribedInterest) {
 
 export default function useTrending() {
   return useQuery(TRENDING);
+}
+
+export function useFavoriteArticle(article) {
+  return useMutation(FAVORITE_CS_ARTICLE, {
+    variables: { input: { article: article.id } },
+    update(cache) {
+      const existing = cache.readQuery({ query: FAVORITED_ARTICLES });
+      if (!existing) return;
+
+      const { favoritedArticles } = existing;
+
+      cache.writeQuery({
+        query: FAVORITED_ARTICLES,
+        data: {
+          favoritedArticles: {
+            ...favoritedArticles,
+            edges: [
+              ...favoritedArticles.edges,
+              { node: { ...article, isFavorited: true } },
+            ],
+          },
+        },
+      });
+    },
+  });
+}
+
+export function useUnfavoriteArticle(article) {
+  return useMutation(UNFAVORITE_CS_ARTICLE, {
+    variables: { input: { article: article.id } },
+    update(cache) {
+      const existing = cache.readQuery({ query: FAVORITED_ARTICLES });
+      if (!existing) return;
+
+      const { favoritedArticles } = existing;
+
+      cache.writeQuery({
+        query: FAVORITED_ARTICLES,
+        data: {
+          favoritedArticles: {
+            ...favoritedArticles,
+            edges: favoritedArticles.edges.filter((edge) => {
+              return edge.node.id !== article.id;
+            }),
+          },
+        },
+      });
+    },
+  });
 }

@@ -4,10 +4,10 @@ import useViewer from "src/hooks/useViewer";
 import { useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import CircularButton from "src/components/CircularButton";
+import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
 import Avatar from "src/components/Avatar";
-import FavoriteArticleButton from "./FavoriteArticleButton";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
