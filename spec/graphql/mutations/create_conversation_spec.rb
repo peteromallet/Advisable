@@ -36,7 +36,9 @@ RSpec.describe Mutations::CreateConversation do
 
   let(:context) { {current_user:, current_account:} }
 
-  it "creates the conversation and message" do
+  it "creates the conversation and message and tracks event" do
+    expect(Analytics).to receive(:track).with(current_user, "Created Conversation", {accounts: match_array([current_user.account.uid, participant.uid])})
+    expect(Slack).to receive(:bg_message).with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{participant.name} via messaging.")
     response = AdvisableSchema.execute(query, context:)
     uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
     expect(uids).to match_array([current_account.uid, participant.uid])
@@ -53,7 +55,9 @@ RSpec.describe Mutations::CreateConversation do
       conversation.participants.create(account: participant)
     end
 
-    it "creates a message in that conversation" do
+    it "creates a message in that conversation and does not track event" do
+      expect(Analytics).not_to receive(:track)
+      expect(Slack).not_to receive(:bg_message)
       response = AdvisableSchema.execute(query, context:)
       expect(conversation.uid).to eq(response["data"]["createConversation"]["conversation"]["id"])
       uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")

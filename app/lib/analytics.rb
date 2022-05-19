@@ -34,6 +34,7 @@ class Analytics
     ENV["SEGMENT_BACKEND"].present?
   end
 
+  # Schedule a bg job here
   def self.track(user, event, properties = {})
     new.track(user, event, properties)
   end

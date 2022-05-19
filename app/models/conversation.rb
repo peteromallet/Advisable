@@ -7,9 +7,9 @@ class Conversation < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
 
-  def self.by_accounts(*accounts)
+  def self.by_accounts(*accounts, &)
     account_ids = Account.ids_from(accounts)
-    find_existing_with(account_ids) || create_new_with(account_ids)
+    find_existing_with(account_ids) || create_new_with(account_ids, &)
   end
 
   def self.find_existing_with(*accounts)
@@ -21,9 +21,10 @@ class Conversation < ApplicationRecord
       first
   end
 
-  def self.create_new_with(*accounts)
+  def self.create_new_with(*accounts, &block)
     conversation = create!
     Account.ids_from(accounts).each { |id| conversation.participants.create!(account_id: id) }
+    yield if block
     conversation
   end
 
