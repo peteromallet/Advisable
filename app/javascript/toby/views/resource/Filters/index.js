@@ -5,10 +5,10 @@ import { Box, Text, Stack } from "@advisable/donut";
 import { PlusCircle } from "@styled-icons/heroicons-solid";
 import Filter from "./Filter";
 import EmptyFilters from "./EmptyFilters";
-import { useSchema } from "../../../components/schema";
+import { useToby } from "../../../components/TobyProvider";
 
 export default function FilterDrawer({ filters, resource, open, onApply }) {
-  const schemaData = useSchema();
+  const toby = useToby();
   const attributesWithFilters = useMemo(
     () =>
       resource.attributes.filter((attr) => {
@@ -79,7 +79,7 @@ export default function FilterDrawer({ filters, resource, open, onApply }) {
             index={index}
             filter={filter}
             resource={resource}
-            schemaData={schemaData}
+            schemaData={toby}
             onRemove={removeFilter}
             onUpdate={handleUpdateFilter}
           />

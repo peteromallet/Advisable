@@ -5,7 +5,6 @@ import { Modal, Box, Text, Tag } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import SubmitButton from "src/components/SubmitButton";
 import { useNavigate, useLocation, useMatch } from "react-router";
-import { useSchema } from "../../../components/schema";
 import {
   attributeFormValueInitializer,
   AttributeInput,
@@ -19,6 +18,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import VersionHistory from "./VersionHistory";
 import ActionsMenu from "./ActionsMenu";
 import { isEqual } from "lodash-es";
+import { useToby } from "../../../components/TobyProvider";
 
 function useRoutedModal(path, returnPath) {
   const modal = useDialogState();
@@ -70,10 +70,10 @@ function History({ resource }) {
 }
 
 function Details({ id, resource }) {
-  const schema = useSchema();
+  const toby = useToby();
   const { error, notify } = useNotifications();
-  const updateMutation = generateUpdateMutation(schema, resource);
-  const query = generateShowQuery(schema, resource);
+  const updateMutation = generateUpdateMutation(toby, resource);
+  const query = generateShowQuery(toby, resource);
   const [update] = useMutation(updateMutation);
   const { data, loading } = useQuery(query, {
     variables: {

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 function getStoredOrder(resource) {
   const existing = localStorage.getItem(`${resource.type}_Order`) || "[]";
@@ -27,6 +27,10 @@ export default function useColumnOrder(resource) {
   const [orderedAttributes, setOrderedAttributes] = useState(() =>
     getOrderForResource(resource),
   );
+
+  useEffect(() => {
+    setOrderedAttributes(getOrderForResource(resource));
+  }, [resource]);
 
   const updateAttributeOrder = useCallback(
     (newOrder) => {

@@ -1,4 +1,31 @@
 query TobyIntrospectionQuery {
+  # RESOURCES
+  resources {
+    type
+    label
+    queryNameCollection
+    queryNameItem
+    queryNameUpdate
+    queryNameSearch
+    attributes {
+      name
+      readonly
+      sortable
+      description
+      columnLabel
+      columnName
+      filters {
+        name
+        type
+        nested
+      }
+      ... on SelectAttribute {
+        options
+      }
+    }
+  }
+
+  # SCHEMA INTROSPECTION
   __schema {
     queryType {
       name

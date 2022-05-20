@@ -108,7 +108,7 @@ export function useDeleteView(resource, view) {
       });
     },
     onCompleted() {
-      navigate(pluralizeType(resource.type));
+      navigate(`/${pluralizeType(resource.type)}`);
     },
   });
 }

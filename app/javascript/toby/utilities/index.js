@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import pluralize from "pluralize";
-import { gql } from "@apollo/client";
-import { useLazyQuery, useApolloClient } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
+import { useApolloClient } from "@apollo/client";
 import { jsonToGraphQLQuery, VariableType } from "json-to-graphql-query";
-import { useSchema } from "../components/schema";
+import { useToby } from "../components/TobyProvider";
 
 export function pluralizeType(type) {
   return pluralize(type.toLowerCase());
@@ -53,43 +53,18 @@ export function useSearchResource(resource) {
 }
 
 export function useFetchResources(resource, filters, sortBy, sortOrder) {
-  const [loading, setLoading] = useState(true);
-  const schemaData = useSchema();
-  const query = generateCollectionQuery(schemaData, resource);
-  const [fetch, { fetchMore, ...queryState }] = useLazyQuery(query, {
+  const toby = useToby();
+
+  const query = useMemo(
+    () => generateCollectionQuery(toby, resource),
+    [toby, resource],
+  );
+
+  return useQuery(query, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
-    onCompleted() {
-      setLoading(false);
-    },
+    variables: { filters, sortBy, sortOrder },
   });
-
-  const fetchRecords = useCallback(
-    async function fetchRecords() {
-      fetch({
-        variables: { filters, sortBy, sortOrder },
-      });
-    },
-    [fetch, filters, sortBy, sortOrder],
-  );
-
-  const fetchMoreRecords = useCallback(
-    (opts) => {
-      setLoading(true);
-      return fetchMore(opts);
-    },
-    [fetchMore],
-  );
-
-  useEffect(() => {
-    fetchRecords();
-  }, [fetchRecords]);
-
-  return {
-    ...queryState,
-    fetchMore: fetchMoreRecords,
-    loading,
-  };
 }
 
 // Generates a graphql a collection query for a resource

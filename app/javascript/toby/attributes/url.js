@@ -11,14 +11,15 @@ function UrlAttribute({ record, attribute }) {
   };
 
   return (
-    <Link.External
+    <a
       href={value}
       rel="noreferrer"
       target="_blank"
       onClick={handleClick}
+      className="text-blue-900 hover:text-blue-500"
     >
       {value}
-    </Link.External>
+    </a>
   );
 }
 
