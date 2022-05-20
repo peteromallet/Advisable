@@ -16,18 +16,40 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
-  belongs_to :specialist
-  belongs_to :user
+  belongs_to :legacy_specialist, optional: true, class_name: "Specialist", foreign_key: :specialist_id, inverse_of: :interviews
+  belongs_to :legacy_user, optional: true, class_name: "User", foreign_key: :user_id, inverse_of: :interviews
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
 
   has_one :video_call, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :interview_participants, dependent: :destroy
+  has_many :accounts, through: :interview_participants
 
   scope :scheduled, -> { where(status: "Call Scheduled") }
   scope :requested, -> { where(status: "Call Requested") }
   scope :reminded, -> { where(status: "Call Reminded") }
 
   validates :status, inclusion: {in: VALID_STATUSES}
+
+  def participants
+    [legacy_user&.account, legacy_specialist&.account, *accounts].compact.uniq
+  end
+
+  def specialist
+    legacy_specialist || Specialist.find_by(account: accounts)
+  end
+
+  def user
+    legacy_user || User.find_by(account: accounts)
+  end
+
+  def specialist=(specialist)
+    self.legacy_specialist = specialist
+  end
+
+  def user=(user)
+    self.legacy_user = user
+  end
 
   def pending?
     SCHEDULABLE_STATUSES.include?(status)
@@ -60,7 +82,7 @@ end
 #  updated_at                         :datetime         not null
 #  article_id                         :bigint
 #  google_calendar_id                 :string
-#  specialist_id                      :bigint           not null
+#  specialist_id                      :bigint
 #  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #
