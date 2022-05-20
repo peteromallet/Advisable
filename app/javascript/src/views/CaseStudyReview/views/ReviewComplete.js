@@ -47,7 +47,10 @@ export default function ReviewComplete({ data }) {
       </Box>
 
       <Box maxWidth="460px" marginX="auto" marginBottom={8} textAlign="center">
-        <LighthouseIllustration width="220px" color={theme.colors.blue400} />
+        <LighthouseIllustration
+          width="220px"
+          primaryColor={theme.colors.blue400}
+        />
         <Text
           marginTop={4}
           marginBottom={2}

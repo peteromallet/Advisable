@@ -18,6 +18,7 @@ import Progress from "./Progress";
 import CreatingFeed from "./CreatingFeed";
 import useMediaQuery from "src/utilities/useMediaQuery";
 import LogoMark from "src/components/LogoMark";
+import Hiring from "./Hiring";
 
 export const STEPS = [
   {
@@ -34,6 +35,11 @@ export const STEPS = [
     title: "Audience",
     path: "audience",
     component: Audience,
+  },
+  {
+    title: "Hiring",
+    path: "hiring",
+    component: Hiring,
   },
   {
     title: "Topics",

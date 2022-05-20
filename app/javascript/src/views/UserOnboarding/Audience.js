@@ -35,7 +35,7 @@ export default function Audience({ data }) {
     });
 
     trackEvent("Setup - Submitted Audience", { audience: values.audience });
-    navigate("/setup/interests");
+    navigate("/setup/hiring");
   };
 
   return (
