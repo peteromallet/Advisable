@@ -31,7 +31,7 @@ RSpec.describe "Specialist settings", type: :system do
     expect(specialist.reload.account.email).to eq("update@test.com")
   end
 
-  it "specialist can set their availability" do
+  it "specialist can pause their availability" do
     specialist = create(:specialist, unavailable_until: nil)
     authenticate_as(specialist)
     visit("/settings/availability")
@@ -43,5 +43,19 @@ RSpec.describe "Specialist settings", type: :system do
     click_on("Set Available")
     expect(page).not_to have_content(/You have currently set yourself as unavailable/i)
     expect(specialist.reload.unavailable_until).to be_nil
+  end
+
+  it "specialist can set themselves as unavailable" do
+    specialist = create(:specialist, unavailable_until: nil)
+    authenticate_as(specialist)
+    visit("/settings/availability")
+    uncheck("availableForWork")
+    wait_until do
+      expect(specialist.reload.unavailable_until).not_to be_nil
+    end
+    check("availableForWork")
+    wait_until do
+      expect(specialist.reload.unavailable_until).to be_nil
+    end
   end
 end
