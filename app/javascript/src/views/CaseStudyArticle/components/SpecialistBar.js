@@ -7,6 +7,7 @@ import CircularButton from "src/components/CircularButton";
 import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
+import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
 
 const Availability = ({ unavailableUntil }) => {
@@ -56,6 +57,7 @@ export default function SpecialistBar({ article }) {
         </div>
         <div className="flex items-center gap-3">
           <EditCaseStudyButton article={article} />
+          <ShareArticleButton slug={article.slug} />
           <FavoriteArticleButton article={article} />
           {article.specialist.id !== viewer?.id && (
             <ConnectButton
