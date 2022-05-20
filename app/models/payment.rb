@@ -69,7 +69,7 @@ class Payment < ApplicationRecord
 
     if company.project_payment_method == "Bank Transfer"
       update!(payment_method: "Bank Transfer")
-      Slack.message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nPayment Request: #{payment_request&.uid || "none"}")
+      Slack.bg_message(channel: "payments", text: "New Bank Transfer for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid})!\nPayment: #{uid}\nPayment Request: #{payment_request&.uid || "none"}")
     elsif company.stripe_payment_method.blank?
       create_intent_without_payment_method!
     elsif payment_intent_id.blank?
@@ -82,7 +82,7 @@ class Payment < ApplicationRecord
       if intent.status == "succeeded"
         mark_paid!
       else
-        Slack.message(
+        Slack.bg_message(
           channel: "payments",
           text: "Payment for *#{company&.name}* (#{company_id}) with *#{specialist&.account&.name}* (#{specialist&.uid}) was not successful! Payment: #{uid}"
         )
@@ -99,7 +99,7 @@ class Payment < ApplicationRecord
       "Stripe Payment Intent ID: #{payment_intent_id}",
       "Error: #{e.message}"
     ].compact.join("\n")
-    Slack.message(channel: "payments", text:)
+    Slack.bg_message(channel: "payments", text:)
     create_intent_without_payment_method!
     self
   end
@@ -114,7 +114,7 @@ class Payment < ApplicationRecord
       "Stripe Payment Intent ID: #{payment_intent_id}",
       "Error: #{e.message}"
     ]
-    Slack.message(channel: "payments", text:)
+    Slack.bg_message(channel: "payments", text:)
     self
   end
 

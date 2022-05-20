@@ -18,10 +18,19 @@ module Mutations
     def resolve(participants:, content:, attachments: nil)
       has_message_content?(content, attachments)
 
-      @accounts = (participants.map { |uid| Account.find_by!(uid:) } + [current_account]).uniq
-      has_participants?
+      participant_accounts = participants.map { |uid| Account.find_by!(uid:) }
+      accounts = (participant_accounts + [current_account]).uniq
+      ApiError.invalid_request("NO_PARTICIPANTS", "You must have at least one participant besides yourself!") if accounts.size < 2
 
-      conversation = Conversation.by_accounts(@accounts)
+      conversation = Conversation.by_accounts(accounts) do
+        Analytics.bg_track(current_user, "Created Conversation", {accounts: accounts.map(&:uid)})
+        if accounts.size == 2 && current_user.is_a?(User) && Specialist.exists?(account: participant_accounts)
+          Slack.bg_message(
+            channel: "consultation_requests",
+            text: "#{current_user.name_with_company} has connected with #{participant_accounts.first.name} via messaging."
+          )
+        end
+      end
       message = conversation.new_message!(author: current_account, content:, attachments:)
 
       {conversation:, message:}
@@ -33,12 +42,6 @@ module Mutations
       return true if content.present? || attachments.present?
 
       ApiError.invalid_request("NO_MESSAGE_CONTENT", "You must include message content")
-    end
-
-    def has_participants?
-      return true if @accounts.size > 1
-
-      ApiError.invalid_request("NO_PARTICIPANTS", "You must have at least one participant besides yourself!")
     end
   end
 end

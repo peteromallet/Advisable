@@ -14,10 +14,10 @@ class Analytics
     })
   end
 
-  def track(user, event, properties = {})
+  def track(account_uid, event, properties = {})
     return unless self.class.enabled?
 
-    client.track(user_id: user.account.uid, event:, properties:)
+    client.track(user_id: account_uid, event:, properties:)
   end
 
   def suppress_and_delete(account_uids)
@@ -34,7 +34,9 @@ class Analytics
     ENV["SEGMENT_BACKEND"].present?
   end
 
-  def self.track(user, event, properties = {})
-    new.track(user, event, properties)
+  def self.bg_track(user, event, properties = {})
+    return unless enabled?
+
+    AnalyticsTrackJob.perform_later(user.account.uid, event, properties)
   end
 end
