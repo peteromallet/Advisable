@@ -24,8 +24,9 @@ class Agreement < ApplicationRecord
     scope status, -> { where(status:) }
   end
 
-  def self.latest_accepted_for(requirements)
-    accepted.order(created_at: :desc).where(requirements).first
+  def self.latest_accepted_for(specialist:, user:)
+    by_specialist = accepted.order(created_at: :desc).where(specialist:)
+    by_specialist.where(user:).first || by_specialist.where(company: user.company).first
   end
 
   def due_days

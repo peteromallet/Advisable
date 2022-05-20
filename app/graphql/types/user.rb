@@ -166,8 +166,7 @@ module Types
     def agreement
       requires_specialist!
 
-      Agreement.latest_accepted_for(specialist: current_user, user: object) ||
-        Agreement.latest_accepted_for(specialist: current_user, company: object.company)
+      Agreement.latest_accepted_for(specialist: current_user, user: object)
     end
   end
 end
