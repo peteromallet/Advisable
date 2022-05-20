@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { DateTime } from "luxon";
 import { useQuery, gql } from "@apollo/client";
-import { Toggle, Box, Card, Text, Button, Link } from "@advisable/donut";
+import { Toggle, Card, Button } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import Loading from "src/components/Loading";
 import DatePicker from "src/components/DatePicker";
