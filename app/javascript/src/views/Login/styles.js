@@ -40,7 +40,7 @@ export const StyledLoginWithGoogle = styled(StyledButton)`
   border: 2px solid ${theme.colors.neutral200};
 
   &:not(:disabled):hover {
-    background: white;
+    background: white !important;
     color: ${theme.colors.neutral900};
     border-color: ${theme.colors.neutral300};
   }

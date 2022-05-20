@@ -4,9 +4,12 @@ import { Link, useBreakpoint } from "@advisable/donut";
 import ConnectButton from "src/components/ConnectButton";
 import Timezone from "./Timezone";
 import Availability from "./Availability";
+import ConnectModal from "src/components/ConnectModal";
+import useConnectModal from "src/components/ConnectModal/useConnectModal";
 
 export default function SidebarCard({ specialist }) {
   const xlUp = useBreakpoint("xlUp");
+  const connectModal = useConnectModal();
 
   return (
     <motion.div
@@ -40,6 +43,9 @@ export default function SidebarCard({ specialist }) {
       >
         Connect
       </ConnectButton>
+      <ConnectModal state={connectModal} specialist={specialist} />
+      <button onClick={connectModal.requestCall}>Request call</button>
+      <button onClick={connectModal.message}>Message</button>
       <hr className="border-neutral200 mt-5 pb-[3px]" />
       <div className="py-2">
         <div className="text-[15px] xl:text-lg font-[450] text-neutral900 truncate">

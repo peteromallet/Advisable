@@ -1,0 +1,8 @@
+mutation RequestInterview($input: RequestInterviewInput!) {
+  requestInterview(input: $input) {
+    interview {
+      id
+      status
+    }
+  }
+}
