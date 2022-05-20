@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SearchIllustration from "src/illustrations/zest/search";
 import CandidateIllustration from "src/illustrations/zest/candidate";
 import { ArrowSmRight } from "@styled-icons/heroicons-outline";
+import { trackEvent } from "src/utilities/segment";
 
 const optionClasses = composeStyles({
   base: `
@@ -31,6 +32,7 @@ function HiringOption({ illustration, title, subtext, option }) {
 
   const handleClick = () => {
     update({ variables: { input: { intent: option } } });
+    trackEvent("Setup - Hiring", { intent: option });
     navigate("/setup/interests");
   };
 
