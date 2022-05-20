@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Avatar } from "@advisable/donut";
 import Button from "src/components/Button";
+import { useMessagePrompt } from "../MessagePrompt";
+import PaymentRequestStatus from "src/views/PaymentRequests/PaymentRequestStatus";
 
 export default function PaymentRequestCreated({ message }) {
   const { specialist } = message.paymentRequest;
+  const { show, dismiss, highlight } = useMessagePrompt(
+    message,
+    "New payment request",
+  );
   const datetime = DateTime.fromISO(message.createdAt).toFormat(
-    "dd LLLL y 'at' hh:mma",
+    "dd MMM, yyyy HH:mm",
   );
 
+  useEffect(() => {
+    if (message.paymentRequest.status === "pending") {
+      show();
+    } else {
+      dismiss();
+    }
+  }, [message]);
+
   return (
-    <div className="rounded-lg bg-white shadow-lg">
-      <div className="pr-3 flex">
+    <motion.div
+      id={message.id}
+      style={{ borderColor: "#fff" }}
+      className="rounded-lg border-2 border-solid bg-white shadow-lg p-6"
+      animate={{
+        borderColor: highlight ? ["#1C1C25", "#FFF"] : "#FFF",
+      }}
+    >
+      <div className="flex gap-3">
         <Avatar
           bg="blue100"
           color="blue300"
@@ -20,15 +43,26 @@ export default function PaymentRequestCreated({ message }) {
           name={specialist.name}
           url={specialist.avatar}
         />
-      </div>
-      <div className="w-full">
-        <div className="text-[17px] font-[550] mb-1">
-          {specialist.name || "Deleted user"} requested payment
+        <div>
+          <div className="text-[17px] leading-5 mb-2 text-neutral900">
+            <strong className="font-[550]">
+              {specialist.name || "Deleted user"}
+            </strong>{" "}
+            requested payment
+          </div>
+          <div className="flex gap-2">
+            <div className="text-sm font-[400] leading-4 pt-[3px] pb-[1px] text-neutral600">
+              {datetime}
+            </div>
+            <PaymentRequestStatus status={message.paymentRequest.status} />
+          </div>
         </div>
-        <div className="text-xs font-[400] text-neutral600">{datetime}</div>
-        <div>{message.paymentRequest.status}</div>
-        <Button>View request</Button>
+        <div className="ml-auto my-auto">
+          <Link to={`/payment_requests/${message.paymentRequest.id}`}>
+            <Button>View request</Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
