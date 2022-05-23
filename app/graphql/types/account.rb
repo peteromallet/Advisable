@@ -28,5 +28,14 @@ module Types
         }
       end
     end
+
+    field :upcoming_interviews, [Types::Interview], null: false
+    def upcoming_interviews
+      upcoming = object.interviews.upcoming
+      # TODO: Interview Participant Migration: remove specialist/user handling
+      upcoming += object.specialist.interviews.upcoming if object.specialist.present?
+      upcoming += object.user.interviews.upcoming if object.user.present?
+      upcoming.uniq
+    end
   end
 end

@@ -28,6 +28,7 @@ class Interview < ApplicationRecord
   scope :scheduled, -> { where(status: "Call Scheduled") }
   scope :requested, -> { where(status: "Call Requested") }
   scope :reminded, -> { where(status: "Call Reminded") }
+  scope :upcoming, -> { scheduled.where(starts_at: Time.zone.now..) }
 
   validates :status, inclusion: {in: VALID_STATUSES}
 
