@@ -37,6 +37,16 @@ export const buttonStyles = composeStyles({
         hover:!border-blue600
         active:!border-blue800
       `,
+      subtle: `
+        text-blue700
+        bg-blue50
+        hover:text-blue900
+        hover:bg-blue100
+        active:text-blue900
+        active:bg-blue100
+        disabled:bg-blue100
+        disabled:text-blue700
+      `,
     },
     size: {
       sm: `h-8 px-4 text-md`,
