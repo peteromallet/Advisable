@@ -117,53 +117,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.index ["uid"], name: "index_answers_on_uid", unique: true
   end
 
-  create_table "applications", force: :cascade do |t|
-    t.string "availability"
-    t.string "status"
-    t.text "introduction"
-    t.jsonb "questions"
-    t.integer "score"
-    t.bigint "specialist_id"
-    t.bigint "project_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "accepts_fee"
-    t.boolean "accepts_terms"
-    t.boolean "featured", default: false
-    t.string "comment"
-    t.text "rejection_reason"
-    t.text "rejection_reason_comment"
-    t.string "invitation_rejection_reason"
-    t.datetime "applied_at", precision: nil
-    t.boolean "hidden"
-    t.string "proposal_comment"
-    t.string "project_type"
-    t.integer "monthly_limit"
-    t.string "uid", null: false
-    t.string "stopped_working_reason"
-    t.boolean "trial_program"
-    t.datetime "invited_to_apply_at", precision: nil
-    t.datetime "invitation_rejected_at", precision: nil
-    t.datetime "application_rejected_at", precision: nil
-    t.datetime "application_accepted_at", precision: nil
-    t.datetime "interview_scheduled_at", precision: nil
-    t.datetime "interview_completed_at", precision: nil
-    t.datetime "proposal_sent_at", precision: nil
-    t.datetime "started_working_at", precision: nil
-    t.datetime "stopped_working_at", precision: nil
-    t.boolean "auto_apply"
-    t.boolean "hide_from_profile"
-    t.jsonb "log_data"
-    t.text "rejection_feedback"
-    t.jsonb "meta_fields"
-    t.string "source"
-    t.integer "invoice_rate"
-    t.index ["project_id"], name: "index_applications_on_project_id"
-    t.index ["specialist_id"], name: "index_applications_on_specialist_id"
-    t.index ["status"], name: "index_applications_on_status"
-    t.index ["uid"], name: "index_applications_on_uid", unique: true
-  end
-
   create_table "auth_providers", force: :cascade do |t|
     t.string "uid", null: false
     t.string "provider"
@@ -400,7 +353,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   create_table "client_calls", force: :cascade do |t|
     t.string "airtable_id"
     t.integer "duration"
-    t.bigint "project_id"
     t.datetime "call_time", precision: nil
     t.string "phone_number"
     t.string "email"
@@ -414,7 +366,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.datetime "updated_at", null: false
     t.integer "call_attempt_count"
     t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
-    t.index ["project_id"], name: "index_client_calls_on_project_id"
     t.index ["sales_person_id"], name: "index_client_calls_on_sales_person_id"
     t.index ["user_id"], name: "index_client_calls_on_user_id"
   end
@@ -595,7 +546,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   end
 
   create_table "interviews", force: :cascade do |t|
-    t.bigint "application_id"
     t.datetime "starts_at", precision: nil
     t.string "status"
     t.string "time_zone"
@@ -616,7 +566,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.bigint "specialist_id", null: false
     t.string "reason"
     t.bigint "article_id"
-    t.index ["application_id"], name: "index_interviews_on_application_id"
     t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
@@ -738,7 +687,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.string "status"
     t.uuid "company_id", null: false
     t.bigint "specialist_id", null: false
-    t.bigint "task_id"
     t.string "payment_intent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -751,14 +699,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["payment_request_id"], name: "index_payments_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payments_on_specialist_id"
-    t.index ["task_id"], name: "index_payments_on_task_id"
     t.index ["uid"], name: "index_payments_on_uid", unique: true
   end
 
   create_table "payouts", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "specialist_id", null: false
-    t.bigint "task_id"
     t.integer "amount"
     t.integer "sourcing_fee"
     t.string "status"
@@ -769,104 +715,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.bigint "payment_request_id"
     t.index ["payment_request_id"], name: "index_payouts_on_payment_request_id"
     t.index ["specialist_id"], name: "index_payouts_on_specialist_id"
-    t.index ["task_id"], name: "index_payouts_on_task_id"
     t.index ["uid"], name: "index_payouts_on_uid", unique: true
-  end
-
-  create_table "problematic_flags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "application_id", null: false
-    t.bigint "user_id", null: false
-    t.text "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "index_problematic_flags_on_application_id"
-    t.index ["user_id"], name: "index_problematic_flags_on_user_id"
-  end
-
-  create_table "project_industries", force: :cascade do |t|
-    t.bigint "industry_id"
-    t.string "project_type"
-    t.bigint "project_id"
-    t.boolean "primary"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["industry_id"], name: "index_project_industries_on_industry_id"
-    t.index ["project_type", "project_id"], name: "index_project_industries_on_project_type_and_project_id"
-  end
-
-  create_table "project_skills", force: :cascade do |t|
-    t.bigint "skill_id"
-    t.string "project_type"
-    t.bigint "project_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "primary"
-    t.index ["project_type", "project_id"], name: "index_project_skills_on_project"
-    t.index ["skill_id"], name: "index_project_skills_on_skill_id"
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.string "airtable_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "currency"
-    t.string "client_referral_url"
-    t.text "company_description"
-    t.text "description"
-    t.text "specialist_description"
-    t.text "goals", default: [], array: true
-    t.text "questions", default: [], array: true
-    t.text "required_characteristics", default: [], array: true
-    t.text "characteristics", default: [], array: true
-    t.datetime "accepted_terms_at", precision: nil
-    t.integer "deposit"
-    t.string "status"
-    t.integer "deposit_paid"
-    t.bigint "user_id"
-    t.string "service_type"
-    t.string "estimated_budget"
-    t.boolean "remote"
-    t.string "sales_status"
-    t.string "deposit_payment_intent_id"
-    t.string "campaign_source"
-    t.datetime "brief_pending_confirmation_at", precision: nil
-    t.datetime "brief_confirmed_at", precision: nil
-    t.datetime "interview_scheduled_at", precision: nil
-    t.datetime "call_scheduled_at", precision: nil
-    t.datetime "candidate_proposed_at", precision: nil
-    t.datetime "candidate_accepted_at", precision: nil
-    t.datetime "interview_completed_at", precision: nil
-    t.datetime "booking_request_sent_at", precision: nil
-    t.datetime "booking_confirmed_at", precision: nil
-    t.datetime "proposal_received_at", precision: nil
-    t.datetime "won_at", precision: nil
-    t.datetime "lost_at", precision: nil
-    t.string "campaign_name"
-    t.string "uid", null: false
-    t.string "industry"
-    t.string "company_type"
-    t.boolean "industry_experience_required"
-    t.boolean "company_type_experience_required"
-    t.integer "industry_experience_importance"
-    t.integer "location_importance"
-    t.integer "likely_to_hire"
-    t.integer "candidate_count", default: 0
-    t.integer "proposed_count", default: 0
-    t.integer "hired_count", default: 0
-    t.boolean "sourcing"
-    t.bigint "linkedin_campaign_id"
-    t.datetime "published_at", precision: nil
-    t.jsonb "log_data"
-    t.integer "deposit_used"
-    t.boolean "stop_candidate_proposed_emails"
-    t.string "level_of_expertise_required"
-    t.integer "likelihood_to_confirm"
-    t.string "lost_reason"
-    t.string "project_start"
-    t.index ["sales_status"], name: "index_projects_on_sales_status"
-    t.index ["uid"], name: "index_projects_on_uid", unique: true
-    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -1061,37 +910,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.index ["specialist_id"], name: "index_subscriptions_on_specialist_id"
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "name"
-    t.string "uid", null: false
-    t.string "stage"
-    t.integer "estimate"
-    t.datetime "due_date", precision: nil
-    t.string "description"
-    t.string "submitted_for_approval_comment"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.bigint "application_id"
-    t.string "repeat"
-    t.integer "flexible_estimate"
-    t.integer "hours_worked"
-    t.boolean "trial"
-    t.string "stripe_invoice_id"
-    t.string "estimate_type"
-    t.integer "final_cost"
-    t.datetime "to_be_invited_at", precision: nil
-    t.datetime "quote_requested_at", precision: nil
-    t.datetime "quote_provided_at", precision: nil
-    t.datetime "assigned_at", precision: nil
-    t.datetime "started_working_at", precision: nil
-    t.datetime "submitted_at", precision: nil
-    t.datetime "approved_at", precision: nil
-    t.jsonb "log_data"
-    t.index ["application_id"], name: "index_tasks_on_application_id"
-    t.index ["stage"], name: "index_tasks_on_stage"
-    t.index ["uid"], name: "index_tasks_on_uid", unique: true
-  end
-
   create_table "toby_views", force: :cascade do |t|
     t.string "name"
     t.string "resource"
@@ -1101,16 +919,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
     t.string "sort_by"
     t.string "sort_order"
     t.index ["resource"], name: "index_toby_views_on_resource"
-  end
-
-  create_table "unresponsiveness_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "application_id", null: false
-    t.bigint "reporter_id", null: false
-    t.text "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "index_unresponsiveness_reports_on_application_id"
-    t.index ["reporter_id"], name: "index_unresponsiveness_reports_on_reporter_id"
   end
 
   create_table "user_skills", force: :cascade do |t|
@@ -1195,8 +1003,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "agreements", "users"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
-  add_foreign_key "applications", "projects"
-  add_foreign_key "applications", "specialists"
   add_foreign_key "auth_providers", "accounts"
   add_foreign_key "case_study_archived_articles", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_archived_articles", "users"
@@ -1226,7 +1032,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_skills", "skills"
-  add_foreign_key "client_calls", "projects"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
   add_foreign_key "companies", "industries"
@@ -1245,7 +1050,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "guild_post_images", "guild_posts", on_delete: :cascade
   add_foreign_key "guild_posts", "case_study_articles", column: "article_id"
   add_foreign_key "guild_posts", "specialists"
-  add_foreign_key "interviews", "applications"
   add_foreign_key "interviews", "case_study_articles", column: "article_id"
   add_foreign_key "interviews", "specialists"
   add_foreign_key "interviews", "users"
@@ -1267,15 +1071,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "payments", "companies"
   add_foreign_key "payments", "payment_requests"
   add_foreign_key "payments", "specialists"
-  add_foreign_key "payments", "tasks"
   add_foreign_key "payouts", "payment_requests"
   add_foreign_key "payouts", "specialists"
-  add_foreign_key "payouts", "tasks"
-  add_foreign_key "problematic_flags", "applications"
-  add_foreign_key "problematic_flags", "users"
-  add_foreign_key "project_industries", "industries"
-  add_foreign_key "project_skills", "skills"
-  add_foreign_key "projects", "users"
   add_foreign_key "reviews", "case_study_articles"
   add_foreign_key "reviews", "specialists"
   add_foreign_key "skill_category_skills", "skill_categories"
@@ -1292,8 +1089,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   add_foreign_key "specialists", "specialists", column: "referrer_id"
   add_foreign_key "subscriptions", "labels"
   add_foreign_key "subscriptions", "specialists"
-  add_foreign_key "unresponsiveness_reports", "accounts", column: "reporter_id"
-  add_foreign_key "unresponsiveness_reports", "applications"
   add_foreign_key "user_skills", "skills"
   add_foreign_key "user_skills", "users"
   add_foreign_key "users", "accounts"
@@ -1546,9 +1341,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   create_trigger :logidze_on_accounts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_accounts BEFORE INSERT OR UPDATE ON public.accounts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_applications, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_applications BEFORE INSERT OR UPDATE ON public.applications FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_case_study_articles, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_articles BEFORE INSERT OR UPDATE ON public.case_study_articles FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
@@ -1585,14 +1377,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_073933) do
   create_trigger :logidze_on_payouts, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_payouts BEFORE INSERT OR UPDATE ON public.payouts FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
-  create_trigger :logidze_on_projects, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_projects BEFORE INSERT OR UPDATE ON public.projects FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
   create_trigger :logidze_on_specialists, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_specialists BEFORE INSERT OR UPDATE ON public.specialists FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_tasks, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_tasks BEFORE INSERT OR UPDATE ON public.tasks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_users, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_users BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')

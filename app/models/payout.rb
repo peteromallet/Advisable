@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Payout < ApplicationRecord
-  self.ignored_columns += %i[task_id]
-
   include Uid
   uid_prefix "pyo"
 
@@ -65,12 +63,10 @@ end
 #
 #  index_payouts_on_payment_request_id  (payment_request_id)
 #  index_payouts_on_specialist_id       (specialist_id)
-#  index_payouts_on_task_id             (task_id)
 #  index_payouts_on_uid                 (uid) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (payment_request_id => payment_requests.id)
 #  fk_rails_...  (specialist_id => specialists.id)
-#  fk_rails_...  (task_id => tasks.id)
 #
