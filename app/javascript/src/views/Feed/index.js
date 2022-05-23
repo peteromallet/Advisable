@@ -7,7 +7,7 @@ import MainFeed from "./MainFeed";
 import { ErrorBoundary } from "react-error-boundary";
 import BottomBar from "./components/BottomBar";
 import useTutorial from "src/hooks/useTutorial";
-import Favorites from "./Favorites";
+import Bookmarks from "./Bookmarks";
 import Search from "./Search";
 import "./feed.css";
 import Footer from "src/components/Footer";
@@ -40,7 +40,7 @@ export default function Feed() {
               <Route index element={<MainFeed />} />
               <Route path="search" element={<Search />} />
               <Route path=":interest" element={<Interest />} />
-              <Route path="/favorites" element={<Favorites />} />
+              <Route path="bookmarks" element={<Bookmarks />} />
             </Routes>
           </ErrorBoundary>
         </div>

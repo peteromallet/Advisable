@@ -129,8 +129,8 @@ export default function FeedSidebar() {
           <SidebarItem to="/explore/search" icon={SearchIcon}>
             Search
           </SidebarItem>
-          <SidebarItem to="/explore/favorites" icon={BookmarkIcon}>
-            Favorites
+          <SidebarItem to="/explore/bookmarks" icon={BookmarkIcon}>
+            Bookmarks
           </SidebarItem>
           {/* <SidebarItem to="/explore/shared" icon={SharedIcon}>
             Shared

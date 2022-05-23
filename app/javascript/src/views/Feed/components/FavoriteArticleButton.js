@@ -80,16 +80,16 @@ function FavoriteArticleButton({ article, size, className }) {
     }
 
     notification.notify(
-      isFavorited ? "Removed from favorites" : "Added to favorites",
+      isFavorited ? "Removed from bookmarks" : "Added to bookmarks",
     );
   };
 
   return (
-    <Tooltip placement="bottom" content={!isFavorited && "Add to Favorites"}>
+    <Tooltip placement="bottom" content={!isFavorited && "Add to Bookmarks"}>
       <button
         onClick={handleClick}
         className={buttonClasses({ active: isFavorited, className, size })}
-        aria-label={isFavorited ? "Remove from Favorites" : "Add to Favorites"}
+        aria-label={isFavorited ? "Remove from Bookmarks" : "Add to Bookmarks"}
       >
         <BookmarkIcon className={iconClasses({ active: isFavorited, size })} />
       </button>

@@ -9,13 +9,13 @@ const EmptyState = () => {
   return (
     <div className="bg-neutral50 ring-1 ring-neutral100 ring-inset rounded-2xl py-10 px-4 text-center">
       <p className="text-neutral500 text-lg">
-        You have no favorite case studies yet.
+        You have no saved case studies yet.
       </p>
     </div>
   );
 };
 
-export default function Favorites() {
+export default function Bookmarks() {
   const { data, loading, fetchMore } = useFavoritedArticles();
 
   const handleLoadMore = useCallback(() => {
@@ -34,7 +34,7 @@ export default function Favorites() {
     <FeedContainer>
       <div>
         <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-5 md:mb-8">
-          Favorites
+          Bookmarks
         </h2>
         <div className="space-y-8">
           {!loading && results.length === 0 && <EmptyState />}
