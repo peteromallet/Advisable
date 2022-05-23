@@ -76,6 +76,7 @@ export function BaseMessage({
             size="xs"
             display="inline-flex"
             name={message.author?.name}
+            url={message.author?.avatar}
           />
         </Box>
         <Box width="100%">
