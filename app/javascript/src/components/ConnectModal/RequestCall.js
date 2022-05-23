@@ -1,7 +1,8 @@
-import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import { ArrowLeft, VideoCamera } from "@styled-icons/heroicons-solid";
 import React, { useState } from "react";
 import CircularButton from "../CircularButton";
 import Availability from "./Availability";
+import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
 import { useRequestInterview } from "./queries";
 
@@ -30,7 +31,7 @@ function RequestCallMessage({ state, specialist, onBack }) {
   };
 
   return (
-    <>
+    <div className="px-8 pb-8">
       <div className="absolute top-3 left-3">
         <CircularButton icon={ArrowLeft} onClick={onBack} />
       </div>
@@ -42,8 +43,9 @@ function RequestCallMessage({ state, specialist, onBack }) {
         specialist={specialist}
         buttonLabel="Request call"
         onSubmit={handleSubmit}
+        placeholder={`Include a message to ${specialist.firstName}...`}
       />
-    </>
+    </div>
   );
 }
 
@@ -51,8 +53,13 @@ export default function RequestCall({ state, specialist }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   return (
-    <div>
-      <h3 className="text-2xl font-medium tracking-tight leading-none mb-2 text-center">
+    <div className="pt-8">
+      <ConnectedAvatars
+        specialist={specialist}
+        className="mb-4"
+        icon={VideoCamera}
+      />
+      <h3 className="text-2xl font-semibold tracking-tight leading-none mb-2 text-center">
         Request a call with {specialist.firstName}
       </h3>
       {step === "AVAILABILITY" && (

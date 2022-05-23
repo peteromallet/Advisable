@@ -17,7 +17,7 @@ export default function ConnectModal({ state, ...props }) {
   const viewer = useViewer();
 
   return (
-    <Modal modal={state.modal}>
+    <Modal modal={state.modal} padding={0}>
       {viewer ? (
         <ConnectionType state={state} {...props} />
       ) : (

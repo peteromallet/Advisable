@@ -27,7 +27,7 @@ function AvailabilityForm({ data, onSubmit }) {
       <div className="mb-6">
         {sup ? (
           <AvailabilityInput
-            maxHeight="40vh"
+            maxHeight="300px"
             value={availability}
             timezone={timezone}
             onChange={setAvailability}
@@ -45,7 +45,7 @@ function AvailabilityForm({ data, onSubmit }) {
             />
           </div>
         )}
-        <div className="pt-4 pb-6">
+        <div className="pt-4">
           <TimezoneSelect
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
@@ -79,16 +79,27 @@ export default function RequestCallAvailability({
 
   return (
     <>
-      <p className="text-center mb-6">
-        Request a 30 minute call with {specialist.firstName} to talk about your
-        project. Please select your available times below.
-      </p>
-      {loading && <Loading />}
-      {error && <p>Error</p>}
-      {!loading && data && <AvailabilityForm data={data} onSubmit={onSubmit} />}
-      <div>
-        <h5>Send message instead?</h5>
-        <button onClick={state.message}>Just send message</button>
+      <div className="px-8 pb-8">
+        <p className="text-center mb-6">
+          Request a 30 minute call with {specialist.firstName} to talk about
+          your project. Please select your available times below.
+        </p>
+        {loading && <Loading />}
+        {error && <p>Error</p>}
+        {!loading && data && (
+          <AvailabilityForm data={data} onSubmit={onSubmit} />
+        )}
+      </div>
+      <div className="py-6 px-8 border-t border-solid border-neutral100">
+        <h5 className="font-medium leading-none mb-0.5">
+          Want to just send a message instead?
+        </h5>
+        <button
+          className="text-blue600 hover:text-blue800"
+          onClick={state.message}
+        >
+          Message {specialist.firstName}
+        </button>
       </div>
     </>
   );
