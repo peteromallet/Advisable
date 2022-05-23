@@ -29,7 +29,7 @@ export default function PaymentRequestCreated({ message }) {
     <motion.div
       id={message.id}
       style={{ borderColor: "#fff" }}
-      className="rounded-lg border-2 border-solid bg-white shadow-lg p-6"
+      className="rounded-lg border-2 border-solid bg-white shadow-md p-6"
       animate={{
         borderColor: highlight ? ["#1C1C25", "#FFF"] : "#FFF",
       }}

@@ -63,7 +63,7 @@ export function BaseMessage({
       opacity={sending ? 0.4 : 1}
       borderRadius="24px"
       bg="white"
-      boxShadow="0px 2px 4px rgba(15, 17, 26, 0.08), 0px 2px 24px rgba(15, 17, 26, 0.04);"
+      className="shadow-md"
       padding={6}
       {...props}
     >
