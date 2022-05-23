@@ -7,7 +7,8 @@ RSpec.describe "Payment requests", type: :system do
   let(:user) { create(:user, company:) }
   let(:specialist) { create(:specialist) }
   let(:status) { "pending" }
-  let(:payment_request) { create(:payment_request, specialist:, status:, company:) }
+  let(:agreement) { create(:agreement, status: "pending", specialist:, user:) }
+  let(:payment_request) { create(:payment_request, specialist:, status:, company:, agreement:) }
   let(:payment_intent) do
     Stripe::PaymentIntent.create(
       currency: "usd",
@@ -15,6 +16,7 @@ RSpec.describe "Payment requests", type: :system do
       setup_future_usage: "off_session"
     )
   end
+  let!(:conversation) { conversation_with_participants([user.account, specialist.account]) }
 
   before do
     allow_any_instance_of(Payment).to receive(:pdf_url).and_return("https://example.com")
@@ -51,9 +53,15 @@ RSpec.describe "Payment requests", type: :system do
       click_button("Send request")
     end
     expect(page).to have_content("This request is awaiting payment")
+    visit("/messages/#{conversation.uid}")
+    expect(page).to have_content(/requested payment/i)
   end
 
   context "when status is 'pending'" do
+    before do
+      conversation.new_message!(kind: "PaymentRequestCreated", payment_request:, send_emails: false)
+    end
+
     context "with the specialist logged in" do
       before { authenticate_as(specialist) }
 
@@ -70,6 +78,11 @@ RSpec.describe "Payment requests", type: :system do
           click_button("Submit")
         end
         expect(page).to have_content("This request has been canceled")
+      end
+
+      it "displays a message in coversation" do
+        visit("/messages/#{conversation.uid}")
+        expect(page).to have_content(/requested payment/i)
       end
     end
 
@@ -97,6 +110,11 @@ RSpec.describe "Payment requests", type: :system do
         fill_in("reason", with: "Because")
         click_on("Submit")
         expect(page).to have_content("This request was disputed")
+      end
+
+      it "displays a message in conversation" do
+        visit("/messages/#{conversation.uid}")
+        expect(page).to have_content(/requested payment/i)
       end
     end
   end
@@ -168,6 +186,7 @@ RSpec.describe "Payment requests", type: :system do
 
     before do
       create(:payment, payment_request:, company:, specialist:)
+      payment_request.mark_paid!
     end
 
     context "with the specialist logged in" do
@@ -176,6 +195,11 @@ RSpec.describe "Payment requests", type: :system do
       it "informs them it's been paid" do
         visit("/payment_requests/#{payment_request.uid}")
         expect(page).to have_content("This request has been paid")
+      end
+
+      it "displays approved message in conversation" do
+        visit("/messages/#{conversation.uid}")
+        expect(page).to have_content(/fulfilled payment request/i)
       end
     end
 
@@ -186,6 +210,11 @@ RSpec.describe "Payment requests", type: :system do
         visit("/payment_requests/#{payment_request.uid}")
         expect(page).to have_content("request has been paid")
         expect(page).to have_content("Download invoice")
+      end
+
+      it "displays approved message in conversation" do
+        visit("/messages/#{conversation.uid}")
+        expect(page).to have_content(/fulfilled payment request/i)
       end
     end
   end
@@ -230,6 +259,14 @@ RSpec.describe "Payment requests", type: :system do
       it "informs them it's been canceled" do
         visit("/payment_requests/#{payment_request.uid}")
         expect(page).to have_content("has been transferred to")
+      end
+    end
+  end
+
+  def conversation_with_participants(participants)
+    create(:conversation) do |conversation|
+      participants.each do |participant|
+        create(:conversation_participant, conversation:, account: participant)
       end
     end
   end
