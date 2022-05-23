@@ -8,7 +8,7 @@ import { useMessagePrompt } from "../MessagePrompt";
 import PaymentRequestStatus from "src/views/PaymentRequests/PaymentRequestStatus";
 
 export default function PaymentRequestCreated({ message }) {
-  const { specialist } = message.paymentRequest;
+  const { specialist, status } = message.paymentRequest;
   const { show, dismiss, highlight } = useMessagePrompt(
     message,
     "New payment request",
@@ -18,12 +18,12 @@ export default function PaymentRequestCreated({ message }) {
   );
 
   useEffect(() => {
-    if (message.paymentRequest.status === "pending") {
+    if (status === "pending") {
       show();
     } else {
       dismiss();
     }
-  }, [dismiss, message, show]);
+  }, [dismiss, status, show]);
 
   return (
     <motion.div
@@ -59,7 +59,9 @@ export default function PaymentRequestCreated({ message }) {
         </div>
         <div className="ml-auto my-auto">
           <Link to={`/payment_requests/${message.paymentRequest.id}`}>
-            <Button>View request</Button>
+            <Button variant={status === "pending" ? "primary" : "subtle"}>
+              View request
+            </Button>
           </Link>
         </div>
       </div>
