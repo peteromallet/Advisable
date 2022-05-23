@@ -23,7 +23,7 @@ export default function PaymentRequestCreated({ message }) {
     } else {
       dismiss();
     }
-  }, [message]);
+  }, [dismiss, message, show]);
 
   return (
     <motion.div
