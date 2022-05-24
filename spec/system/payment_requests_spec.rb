@@ -16,7 +16,7 @@ RSpec.describe "Payment requests", type: :system do
       setup_future_usage: "off_session"
     )
   end
-  let!(:conversation) { conversation_with_participants([user.account, specialist.account]) }
+  let(:conversation) { Conversation.by_accounts(user, specialist) }
 
   before do
     allow_any_instance_of(Payment).to receive(:pdf_url).and_return("https://example.com")
@@ -259,14 +259,6 @@ RSpec.describe "Payment requests", type: :system do
       it "informs them it's been canceled" do
         visit("/payment_requests/#{payment_request.uid}")
         expect(page).to have_content("has been transferred to")
-      end
-    end
-  end
-
-  def conversation_with_participants(participants)
-    create(:conversation) do |conversation|
-      participants.each do |participant|
-        create(:conversation_participant, conversation:, account: participant)
       end
     end
   end
