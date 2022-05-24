@@ -31,11 +31,10 @@ module Types
 
     field :upcoming_interviews, [Types::Interview], null: false
     def upcoming_interviews
-      upcoming = object.interviews.upcoming
-      # TODO: Interview Participant Migration: remove specialist/user handling
-      upcoming += object.specialist.interviews.upcoming if object.specialist.present?
-      upcoming += object.user.interviews.upcoming if object.user.present?
-      upcoming.uniq
+      # TODO: Interview Participant Migration: rework when we remove user and specialist
+      ::Interview.upcoming.select do |interview|
+        (interview.participants & [object, current_user.account]).size == 2
+      end
     end
   end
 end
