@@ -22,5 +22,7 @@ module Types
 
       object.user.try(:time_zone)
     end
+
+    field :participants, [Types::Account], null: false
   end
 end
