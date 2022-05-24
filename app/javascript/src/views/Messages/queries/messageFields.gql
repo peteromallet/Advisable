@@ -155,6 +155,7 @@ fragment MessageFields on MessageInterface {
     createdAt
     paymentRequest {
       id
+      status
       company {
         id
         name
