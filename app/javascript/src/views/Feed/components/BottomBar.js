@@ -69,8 +69,8 @@ export default function BottomBar() {
       <BottomBarItem to="/explore" icon={HomeIcon}>
         Feed
       </BottomBarItem>
-      <BottomBarItem to="/explore/favorites" icon={BookmarkIcon}>
-        Favorites
+      <BottomBarItem to="/explore/bookmarks" icon={BookmarkIcon}>
+        Bookmarks
       </BottomBarItem>
       <BottomBarItem to="/explore/search" icon={SearchIcon}>
         Search
