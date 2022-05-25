@@ -3,6 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Interviews", type: :system do
+  let(:specialist) { create(:specialist) }
   let(:user) do
     create(:user, availability:
       [
@@ -25,7 +26,7 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "specialist can accept an interview request via messages" do
-    interview = create(:interview, user:, status: "Call Requested")
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested")
     conversation = Conversation.by_accounts(interview.user, interview.specialist)
     message = conversation.new_message!(
       author: user.account,
@@ -47,7 +48,7 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "specialist can decline an interview request via messages" do
-    interview = create(:interview, user:, status: "Call Requested")
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested")
     conversation = Conversation.by_accounts(interview.user, interview.specialist)
     message = conversation.new_message!(
       author: user.account,
@@ -67,7 +68,7 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the client to request to reschedule a call" do
-    interview = create(:interview, user:, status: "Call Scheduled")
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled")
     authenticate_as(interview.user)
     visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
@@ -83,7 +84,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when the client has requested to reschedule" do
     it "the specialist can schedule the interview" do
-      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, user:)
+      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")
@@ -94,7 +95,7 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the specialist to request to reschedule a call" do
-    interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user:)
+    interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
     authenticate_as interview.specialist
     visit "/interviews/#{interview.uid}"
     click_on "Request To Reschedule"
@@ -105,7 +106,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when specialist has requested to reschedule" do
     it "the client can update their availability" do
-      interview = create(:interview, user:, status: "Specialist Requested Reschedule")
+      interview = create(:interview, accounts: [specialist.account, user.account], status: "Specialist Requested Reschedule")
       authenticate_as interview.user
       visit "/interviews/#{interview.uid}"
       find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
@@ -121,7 +122,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when more time options have been added" do
     it "allows the specialist can schedule the call" do
-      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, user:)
+      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")
@@ -132,9 +133,8 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the user to invite a member of their team" do
-    interview = create(:interview, user:, status: "Call Requested")
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested")
     create(:user, account: create(:account, first_name: "Thomas"), company: user.company)
-    create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user:)
     authenticate_as(user)
     visit "/interviews/#{interview.uid}"
     click_on("Invite Others")
@@ -144,8 +144,7 @@ RSpec.describe "Interviews", type: :system do
 
   it "allows the user to invite a new member of their team" do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    interview = create(:interview, user:, status: "Call Requested")
-    create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, user:)
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested")
     authenticate_as(user)
     visit "/interviews/#{interview.uid}"
     click_on("Invite Others")
@@ -156,7 +155,7 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "resends the interview request" do
-    interview = create(:interview, status: "Need More Time Options")
+    interview = create(:interview, :with_specialist_and_user, status: "Need More Time Options")
     authenticate_as interview.user
     visit "/interviews/#{interview.uid}"
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
