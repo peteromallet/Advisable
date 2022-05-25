@@ -6,7 +6,7 @@ RSpec.describe InterviewRequestAutoDeclineJob do
   let(:status) { "Call Reminded" }
   let(:created_at) { 5.days.ago }
   let(:conversation) { create(:conversation) }
-  let!(:interview) { create(:interview, created_at:, status:) }
+  let!(:interview) { create(:interview, :with_specialist_and_user, created_at:, status:) }
 
   before do
     create(:message, interview:, conversation:)
