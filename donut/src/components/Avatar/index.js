@@ -16,7 +16,7 @@ const Avatar = ({ url, name, children, ...props }) => {
     img.src = url;
   }, [url]);
 
-  if (!url && !name) return null;
+  if (!name && !url && !children) return null;
 
   const initials = reduce(
     name?.trim().split(/\s+/),
