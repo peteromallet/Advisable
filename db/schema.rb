@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_24_072830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -129,15 +129,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
     t.bigint "account_id", null: false
     t.index ["account_id"], name: "index_auth_providers_on_account_id"
     t.index ["provider", "uid"], name: "index_auth_providers_on_provider_and_uid", unique: true
-  end
-
-  create_table "case_study_archived_articles", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "article_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_case_study_archived_articles_on_article_id"
-    t.index ["user_id"], name: "index_case_study_archived_articles_on_user_id"
   end
 
   create_table "case_study_article_feedbacks", force: :cascade do |t|
@@ -279,36 +270,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
     t.index ["uid"], name: "index_case_study_interests_on_uid", unique: true
   end
 
-  create_table "case_study_search_feedbacks", force: :cascade do |t|
-    t.bigint "search_id", null: false
-    t.bigint "article_id", null: false
-    t.text "feedback"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "resolved_at", precision: nil
-    t.jsonb "log_data"
-    t.index ["article_id"], name: "index_case_study_search_feedbacks_on_article_id"
-    t.index ["search_id"], name: "index_case_study_search_feedbacks_on_search_id"
-  end
-
-  create_table "case_study_searches", force: :cascade do |t|
-    t.string "uid", null: false
-    t.string "name"
-    t.bigint "user_id", null: false
-    t.string "business_type"
-    t.jsonb "goals"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.jsonb "log_data"
-    t.jsonb "results"
-    t.datetime "finalized_at", precision: nil
-    t.jsonb "preferences"
-    t.jsonb "archived"
-    t.jsonb "selected"
-    t.index ["uid"], name: "index_case_study_searches_on_uid", unique: true
-    t.index ["user_id"], name: "index_case_study_searches_on_user_id"
-  end
-
   create_table "case_study_sections", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "article_id", null: false
@@ -343,9 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "log_data"
-    t.bigint "search_id"
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
-    t.index ["search_id"], name: "index_case_study_skills_on_search_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
     t.index ["uid"], name: "index_case_study_skills_on_uid", unique: true
   end
@@ -400,36 +359,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
     t.string "audience"
     t.index ["industry_id"], name: "index_companies_on_industry_id"
     t.index ["sales_person_id"], name: "index_companies_on_sales_person_id"
-  end
-
-  create_table "consultations", force: :cascade do |t|
-    t.string "uid", null: false
-    t.bigint "specialist_id"
-    t.bigint "user_id"
-    t.string "status"
-    t.string "topic"
-    t.bigint "skill_id"
-    t.string "airtable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "interview_id"
-    t.string "source"
-    t.integer "likely_to_hire"
-    t.datetime "request_started_at", precision: nil
-    t.datetime "request_completed_at", precision: nil
-    t.datetime "sent_at", precision: nil
-    t.datetime "accepted_at", precision: nil
-    t.datetime "rejected_at", precision: nil
-    t.datetime "advisable_rejected_at", precision: nil
-    t.bigint "search_id"
-    t.string "rejection_reason"
-    t.index ["airtable_id"], name: "index_consultations_on_airtable_id"
-    t.index ["interview_id"], name: "index_consultations_on_interview_id"
-    t.index ["search_id"], name: "index_consultations_on_search_id"
-    t.index ["skill_id"], name: "index_consultations_on_skill_id"
-    t.index ["specialist_id"], name: "index_consultations_on_specialist_id"
-    t.index ["uid"], name: "index_consultations_on_uid", unique: true
-    t.index ["user_id"], name: "index_consultations_on_user_id"
   end
 
   create_table "conversation_participants", force: :cascade do |t|
@@ -1013,8 +942,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "specialists"
   add_foreign_key "auth_providers", "accounts"
-  add_foreign_key "case_study_archived_articles", "case_study_articles", column: "article_id"
-  add_foreign_key "case_study_archived_articles", "users"
   add_foreign_key "case_study_article_feedbacks", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_article_feedbacks", "case_study_skills", column: "skill_id"
   add_foreign_key "case_study_articles", "accounts", column: "editor_id"
@@ -1031,24 +958,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
   add_foreign_key "case_study_interest_articles", "case_study_interests", column: "interest_id"
   add_foreign_key "case_study_interest_previews", "accounts"
   add_foreign_key "case_study_interests", "accounts"
-  add_foreign_key "case_study_search_feedbacks", "case_study_articles", column: "article_id"
-  add_foreign_key "case_study_search_feedbacks", "case_study_searches", column: "search_id"
-  add_foreign_key "case_study_searches", "users"
   add_foreign_key "case_study_sections", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_shared_articles", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_shared_articles", "users", column: "shared_by_id"
   add_foreign_key "case_study_shared_articles", "users", column: "shared_with_id"
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
-  add_foreign_key "case_study_skills", "case_study_searches", column: "search_id"
   add_foreign_key "case_study_skills", "skills"
   add_foreign_key "client_calls", "sales_people"
   add_foreign_key "client_calls", "users"
   add_foreign_key "companies", "industries"
   add_foreign_key "companies", "sales_people"
-  add_foreign_key "consultations", "interviews"
-  add_foreign_key "consultations", "skills"
-  add_foreign_key "consultations", "specialists"
-  add_foreign_key "consultations", "users"
   add_foreign_key "conversation_participants", "accounts"
   add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "event_attendees", "events"
@@ -1363,12 +1282,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_094732) do
   SQL
   create_trigger :logidze_on_case_study_industries, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_industries BEFORE INSERT OR UPDATE ON public.case_study_industries FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_search_feedbacks, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_search_feedbacks BEFORE INSERT OR UPDATE ON public.case_study_search_feedbacks FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
-  SQL
-  create_trigger :logidze_on_case_study_searches, sql_definition: <<-SQL
-      CREATE TRIGGER logidze_on_case_study_searches BEFORE INSERT OR UPDATE ON public.case_study_searches FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
   SQL
   create_trigger :logidze_on_case_study_sections, sql_definition: <<-SQL
       CREATE TRIGGER logidze_on_case_study_sections BEFORE INSERT OR UPDATE ON public.case_study_sections FOR EACH ROW WHEN ((COALESCE(current_setting('logidze.disabled'::text, true), ''::text) <> 'on'::text)) EXECUTE FUNCTION logidze_logger('null', 'updated_at')
