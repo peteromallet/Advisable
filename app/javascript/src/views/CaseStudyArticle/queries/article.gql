@@ -76,5 +76,12 @@ query Article($slug: ID!) {
     similar {
       ...ArticleFields
     }
+    review {
+      id
+      name
+      comment
+      companyName
+      avatar
+    }
   }
 }

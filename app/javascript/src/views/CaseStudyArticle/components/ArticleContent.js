@@ -4,6 +4,7 @@ import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import ArticleSidebar from "./ArticleSidebar";
 import SimilarArticles from "./SimilarArticles";
+import Testimonial from "./Testimonial";
 
 const CONTENT_TYPES = {
   Images,
@@ -37,6 +38,7 @@ export default function ArticleContent({ caseStudy }) {
             data-content-block={index}
           />
         ))}
+        <Testimonial review={caseStudy.review} />
         <SimilarArticles
           data-content-block={elements.length}
           articles={caseStudy.similar}
