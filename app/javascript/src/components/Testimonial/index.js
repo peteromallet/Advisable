@@ -1,4 +1,5 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import { Avatar } from "@advisable/donut";
 
 function TestimonialQuoteIcon(props) {
@@ -17,32 +18,34 @@ export default function Testimonial({ review }) {
   if (!review) return null;
 
   return (
-    <div className="bg-[#F3F1F0] rounded-lg relative p-5">
-      <div className="absolute right-5 top-5">
-        <TestimonialQuoteIcon />
-      </div>
-      <div className="flex items-center mb-4 gap-3">
-        <Avatar
-          bg="blue100"
-          color="blue300"
-          size="s"
-          display="inline-flex"
-          name={review.name}
-          url={review.avatar}
-        />
-        <div>
-          <div className="mb-1 text-lg tracking-tight leading-6 font-semibold text-neutral900">
-            {review.name}
-          </div>
-          <div className="text-sm text-neutral800 leading-none">
-            {review.companyName}
+    <Sentry.ErrorBoundary>
+      <div className="bg-[#F3F1F0] rounded-lg relative p-5">
+        <div className="absolute right-5 top-5">
+          <TestimonialQuoteIcon />
+        </div>
+        <div className="flex items-center mb-4 gap-3">
+          <Avatar
+            bg="blue100"
+            color="blue300"
+            size="s"
+            display="inline-flex"
+            name={review.name}
+            url={review.avatar}
+          />
+          <div>
+            <div className="mb-1 text-lg tracking-tight leading-6 font-semibold text-neutral900">
+              {review.name}
+            </div>
+            <div className="text-sm text-neutral800 leading-none">
+              {review.companyName}
+            </div>
           </div>
         </div>
-      </div>
 
-      <p className="italic text-neutral800 text-lg">
-        &quot;{review.comment}&quot;
-      </p>
-    </div>
+        <p className="italic text-neutral800 text-lg">
+          &quot;{review.comment}&quot;
+        </p>
+      </div>
+    </Sentry.ErrorBoundary>
   );
 }
