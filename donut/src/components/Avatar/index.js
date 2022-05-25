@@ -16,6 +16,8 @@ const Avatar = ({ url, name, children, ...props }) => {
     img.src = url;
   }, [url]);
 
+  if (!url && !name) return null;
+
   const initials = reduce(
     name?.trim().split(/\s+/),
     (sum, name) => `${sum}${name[0]}`,
