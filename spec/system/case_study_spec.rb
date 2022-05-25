@@ -14,6 +14,7 @@ RSpec.describe "Case study view", type: :system do
   let!(:h3) { create(:case_study_heading_content, section: outcome) }
   let!(:p3) { create(:case_study_paragraph_content, section: outcome) }
   let!(:results) { create(:case_study_results_content, section: outcome) }
+  let!(:review) { create(:review, case_study_article: article, comment: "comment", company_name: "Advisable", first_name: "David", last_name: "Bowie") }
 
   before do
     allow_any_instance_of(CaseStudy::Article).to receive(:similar).and_return([])
@@ -29,6 +30,10 @@ RSpec.describe "Case study view", type: :system do
     expect(page).to have_content(h3.content["text"])
     expect(page).to have_content(p3.content["text"])
     expect(page).to have_content(results.content["results"].first)
+    expect(page).to have_content(/review/i)
+    expect(page).to have_content(review.name)
+    expect(page).to have_content(review.comment)
+    expect(page).to have_content(review.company_name)
   end
 
   it "copy link to clipboard" do
