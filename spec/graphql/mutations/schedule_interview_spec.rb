@@ -9,7 +9,7 @@ RSpec.describe Mutations::ScheduleInterview do
   let(:starts_at) { user.availability.first }
   let(:initial_starts_at) { nil }
   let(:current_user) { specialist }
-  let(:interview) { create(:interview, specialist:, starts_at: initial_starts_at, status:, user:) }
+  let(:interview) { create(:interview, accounts: [specialist.account, user.account], starts_at: initial_starts_at, status:) }
 
   let(:query) do
     <<-GRAPHQL

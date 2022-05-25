@@ -3,6 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Accept interview request", type: :system do
+  let(:specialist) { create(:specialist) }
   let(:user) do
     create(:user, {
       availability: [
@@ -14,7 +15,7 @@ RSpec.describe "Accept interview request", type: :system do
     })
   end
   let(:interview) do
-    create(:interview, status: "Call Requested", user:)
+    create(:interview, status: "Call Requested", accounts: [specialist.account, user.account])
   end
 
   it "Accepts an interview request" do

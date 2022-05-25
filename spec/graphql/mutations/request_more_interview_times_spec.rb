@@ -3,10 +3,11 @@
 require "rails_helper"
 
 RSpec.describe Mutations::RequestMoreInterviewTimes do
+  let(:specialist) { create(:specialist) }
   let(:user) { create(:user) }
-  let(:current_user) { user }
+  let(:current_user) { specialist }
   let(:context) { {current_user:} }
-  let(:interview) { create(:interview, user:, status: "Call Requested") }
+  let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Requested") }
 
   let(:query) do
     <<-GRAPHQL
@@ -35,13 +36,13 @@ RSpec.describe Mutations::RequestMoreInterviewTimes do
     expect(interview.reload.requested_more_time_options_at).to be_within(1.second).of(Time.zone.now)
   end
 
-  it "sends the email to the specialist" do
+  it "sends the email to the user" do
     response
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "need_more_time_options", "deliver_now", {args: [interview]})
   end
 
   context "when the status is not 'Call Requested'" do
-    let(:interview) { create(:interview, user:, status: "Call Completed") }
+    let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Completed") }
 
     it "returns an error" do
       error = response["errors"][0]["extensions"]["code"]

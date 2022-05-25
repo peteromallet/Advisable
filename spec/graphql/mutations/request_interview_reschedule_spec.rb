@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Mutations::RequestInterviewReschedule do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
-  let(:interview) { create(:interview, specialist:, user:, status: "Call Scheduled") }
+  let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled") }
   let(:context) { {current_user:} }
 
   let(:query) do
@@ -53,7 +53,7 @@ RSpec.describe Mutations::RequestInterviewReschedule do
     end
 
     context "when interview not scheduled" do
-      let(:interview) { create(:interview, user:, status: "Call Requested") }
+      let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Requested") }
 
       it "raises an error" do
         response = AdvisableSchema.execute(query, context:)
