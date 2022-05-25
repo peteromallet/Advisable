@@ -6,6 +6,11 @@ RSpec.describe Interview, type: :model do
   it "has a valid factory" do
     interview = build(:interview)
     expect(interview).to be_valid
+    expect(interview).not_to be_specialist_and_user
+
+    interview = create(:interview, :with_specialist_and_user)
+    expect(interview).to be_valid
+    expect(interview).to be_specialist_and_user
   end
 
   describe "#specialist" do

@@ -29,11 +29,16 @@ class Interview < ApplicationRecord
   scope :requested, -> { where(status: "Call Requested") }
   scope :reminded, -> { where(status: "Call Reminded") }
   scope :upcoming, -> { scheduled.where(starts_at: Time.zone.now..) }
+  scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
   validates :status, inclusion: {in: VALID_STATUSES}
 
   def participants
     [legacy_user&.account, legacy_specialist&.account, *accounts].compact.uniq
+  end
+
+  def specialist_and_user?
+    participants.length == 2 && specialist && user
   end
 
   def specialist
