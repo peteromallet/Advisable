@@ -38,9 +38,12 @@ export default function ArticleContent({ caseStudy }) {
             data-content-block={index}
           />
         ))}
-        <Testimonial review={caseStudy.review} />
-        <SimilarArticles
+        <Testimonial
           data-content-block={elements.length}
+          review={caseStudy.review}
+        />
+        <SimilarArticles
+          data-content-block={elements.length + 1}
           articles={caseStudy.similar}
         />
       </div>
