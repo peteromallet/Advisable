@@ -268,11 +268,11 @@ module Types
       ::Conversation.find_existing_with(current_user, object)
     end
 
-    field :interview, Types::Interview, null: true
+    field :interview, Types::Interview, null: true, deprecation_reason: "Use upcomingInterviews instead"
     def interview
       requires_client!
 
-      object.interviews.find_by(user: current_user)
+      object.interviews.find_by(user: current_user) || Interview.with_accounts([object.account, current_user.account])&.first
     end
 
     field :agreement, Types::Agreement, null: true
