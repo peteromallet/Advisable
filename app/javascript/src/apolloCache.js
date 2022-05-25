@@ -28,6 +28,8 @@ const createCache = () => {
         "AgreementCreatedMessage",
         "AgreementAcceptedMessage",
         "AgreementDeclinedMessage",
+        "PaymentRequestCreated",
+        "PaymentRequestCompleted",
       ],
       ViewerUnion: ["User", "Specialist"],
       PostInterface: [

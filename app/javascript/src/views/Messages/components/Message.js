@@ -14,6 +14,8 @@ import AgreementDeclinedMessage from "./SystemMessage/AgreementDeclinedMessage";
 import InterviewDeclinedMessage from "./SystemMessage/InterviewDeclinedMessage";
 import InterviewRequestMessage from "./InterviewRequestMessage";
 import InterviewAutoDeclinedMessage from "./SystemMessage/InterviewAutoDeclinedMessage";
+import PaymentRequestCreated from "./SystemMessage/PaymentRequestCreated";
+import PaymentRequestCompleted from "./SystemMessage/PaymentRequestCompleted";
 
 const COMPONENTS = {
   UserMessage,
@@ -26,6 +28,8 @@ const COMPONENTS = {
   InterviewRequestMessage,
   InterviewDeclinedMessage,
   InterviewAutoDeclinedMessage,
+  PaymentRequestCreated,
+  PaymentRequestCompleted,
 };
 
 export default function Message({ message }) {
@@ -59,7 +63,7 @@ export function BaseMessage({
       opacity={sending ? 0.4 : 1}
       borderRadius="24px"
       bg="white"
-      boxShadow="0px 2px 4px rgba(15, 17, 26, 0.08), 0px 2px 24px rgba(15, 17, 26, 0.04);"
+      className="shadow-md"
       padding={6}
       {...props}
     >

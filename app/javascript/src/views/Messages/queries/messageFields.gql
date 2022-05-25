@@ -137,4 +137,29 @@ fragment MessageFields on MessageInterface {
       }
     }
   }
+
+  ... on PaymentRequestCreated {
+    createdAt
+    paymentRequest {
+      id
+      status
+      specialist {
+        id
+        name
+        avatar
+      }
+    }
+  }
+
+  ... on PaymentRequestCompleted {
+    createdAt
+    paymentRequest {
+      id
+      status
+      company {
+        id
+        name
+      }
+    }
+  }
 }

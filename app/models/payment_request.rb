@@ -15,6 +15,7 @@ class PaymentRequest < ApplicationRecord
 
   has_one :payment, dependent: :nullify
   has_one :payout, dependent: :nullify
+  has_many :messages, dependent: :destroy
 
   validates :status, inclusion: {in: VALID_STATUSES}
   before_save :set_due_at
@@ -38,6 +39,12 @@ class PaymentRequest < ApplicationRecord
     create_payout!(specialist:, amount:, status: "pending")
     payment = create_payment!(company:, specialist:, amount:, status: "pending")
     payment.charge!
+  end
+
+  def mark_paid!
+    update!(status: "paid")
+    conversation = Conversation.by_accounts(specialist, agreement.user)
+    conversation.new_message!(kind: "PaymentRequestCompleted", payment_request: self, send_emails: false)
   end
 
   def admin_fee
