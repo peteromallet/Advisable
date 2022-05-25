@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Avatar } from "@advisable/donut";
@@ -27,7 +28,7 @@ export default function PaymentRequestCreated({ message }) {
   }, [dismiss, status, show, viewer.isClient]);
 
   return (
-    <div
+    <motion.div
       id={message.id}
       className="rounded-lg border-2 border-solid border-white bg-white shadow-md p-6"
       animate={{
@@ -63,6 +64,6 @@ export default function PaymentRequestCreated({ message }) {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
