@@ -30,8 +30,7 @@ module CaseStudy
     scope :published, -> { where.not(published_at: nil) }
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
-    scope :reverse_chronological, -> { order(published_at: :desc) }
-    scope :for_feed, -> { searchable.reverse_chronological }
+    scope :for_feed, -> { searchable.trending }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
 
     def self.find_by_slug_or_id(slug)
@@ -79,18 +78,16 @@ module CaseStudy
     end
 
     def self.trending
-      articles = order(published_at: :desc).first(50)
-      return [] if articles.empty?
-
-      oldest = articles.last.published_at
-      delta = Time.zone.now - oldest
+      articles = (current_scope || all).order(published_at: :desc).select(:id, :published_at, :score).load
+      oldest = articles.last&.published_at || Time.current
+      delta = Time.current - oldest
 
       weighted = articles.map do |article|
         weighting = 1 + ((article.published_at - oldest) / delta)
-        {article:, score: (article.score || 0) * weighting}
+        {id: article.id, score: (article.score || 0) * weighting}
       end
 
-      weighted.sort_by { |a| a[:score] }.reverse.pluck(:article)
+      in_order_of(:id, weighted.sort_by { |a| a[:score] }.reverse.pluck(:id))
     end
   end
 end

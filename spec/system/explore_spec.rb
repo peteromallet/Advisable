@@ -8,7 +8,7 @@ RSpec.describe "Discover", type: :system do
   let(:article1) { create(:case_study_article, title: "Article One", score: 100) }
   let(:article2) { create(:case_study_article, title: "Article Two", score: 90) }
   let(:article3) { create(:case_study_article, title: "Article Three", score: 90) }
-  let!(:interest) do
+  let(:interest) do
     create(:case_study_interest, {
       term: "Test list",
       account:,
@@ -37,20 +37,20 @@ RSpec.describe "Discover", type: :system do
 
   describe "/explore" do
     it "lists the users interests and they can click into one" do
-      interest = create(:case_study_interest, term: "SEO", account:, article_ids: [article1.id])
+      an_interest = create(:case_study_interest, term: "SEO", account:, article_ids: [article1.id])
       authenticate_as(user)
       visit("/explore")
       expect(page).to have_content("SEO")
-      click_link("SEO")
-      expect(page).to have_current_path("/explore/#{interest.uid}")
+      click_link("SEO", match: :first)
+      expect(page).to have_current_path("/explore/#{an_interest.uid}")
     end
   end
 
   context "when trying to view an interest they dont have access to" do
     it "shows a 404 error" do
-      interest = create(:case_study_interest)
+      an_interest = create(:case_study_interest)
       authenticate_as(user)
-      visit("/explore/#{interest.uid}")
+      visit("/explore/#{an_interest.uid}")
       expect(page).to have_content("Not Found")
     end
   end
@@ -73,11 +73,12 @@ RSpec.describe "Discover", type: :system do
     end
     authenticate_as(user)
     visit("/explore")
-    expect(page).to have_content(articles.first.title)
-    expect(page).not_to have_content(articles.last.title)
+    trending = CaseStudy::Article.published.trending
+    expect(page).to have_content(trending.first.title)
+    expect(page).not_to have_content(trending.last.title)
     scroll_to(:bottom)
     expect(page).to have_selector("*[data-testid=feed-item-skeleton]")
-    expect(page).to have_content(articles.last.title)
+    expect(page).to have_content(trending.last.title)
   end
 
   it "shows the results for an interest and loads more on scroll" do
@@ -89,11 +90,12 @@ RSpec.describe "Discover", type: :system do
 
     authenticate_as(user)
     visit("/explore/#{interest.uid}")
-    expect(page).to have_content(articles.first.title)
-    expect(page).not_to have_content(articles.last.title)
+    trending = interest.articles.published.trending
+    expect(page).to have_content(trending.first.title)
+    expect(page).not_to have_content(trending.last.title)
     scroll_to(:bottom)
     expect(page).to have_selector("*[data-testid=feed-item-skeleton]")
-    expect(page).to have_content(articles.last.title)
+    expect(page).to have_content(trending.last.title)
   end
 
   it "allows user to remove an interest" do
