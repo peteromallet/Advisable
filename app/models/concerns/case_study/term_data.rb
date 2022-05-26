@@ -3,13 +3,10 @@
 module CaseStudy
   module TermData
     MIN_RESULTS = 5
-    MAX_RESULTS = 10
     SIMILARITY_THRESHOLD = 0.3
 
     def articles_for_interest
-      results = articles_by_relevancy.
-        select { |a| a[:similarity] > SIMILARITY_THRESHOLD }.
-        first(MAX_RESULTS)
+      results = articles_by_relevancy.select { |a| a[:similarity] > SIMILARITY_THRESHOLD }
 
       if results.size < MIN_RESULTS
         articles_by_relevancy.first(MIN_RESULTS)
