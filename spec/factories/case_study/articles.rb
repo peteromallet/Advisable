@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :case_study_article, class: "CaseStudy::Article" do
     sequence(:uid) { "csa_#{SecureRandom.hex[0..14]}" }
-    score { 1 }
+    score { 80 }
     company { association :case_study_company }
     confidential { false }
     sequence(:title) { |s| "#{Faker::Lorem.sentence} #{s}" }
