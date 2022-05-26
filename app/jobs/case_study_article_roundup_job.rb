@@ -12,8 +12,8 @@ class CaseStudyArticleRoundupJob < ApplicationJob
       next if account.unsubscribed?("Weekly Digest")
 
       already_showcased = account.showcased_articles
-      potential_article_ids = account.interest_articles.where.not(article_id: already_showcased).distinct.select(:article_id)
-      article_ids = CaseStudy::Article.where(id: potential_article_ids).where(score: MIN_SCORE..).pluck(:id).sample(AMOUNT_OF_ARTICLES)
+      relevant_articles = CaseStudy::Article.where.not(id: already_showcased).where(score: MIN_SCORE..)
+      article_ids = relevant_articles.trending.first(AMOUNT_OF_ARTICLES).pluck(:id)
 
       if article_ids.size == AMOUNT_OF_ARTICLES
         account.update!(showcased_articles: already_showcased + article_ids)
