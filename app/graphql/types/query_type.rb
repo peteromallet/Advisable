@@ -202,7 +202,7 @@ module Types
     end
 
     def top_case_studies(limit:)
-      ::CaseStudy::Article.trending.first(limit)
+      ::CaseStudy::Article.searchable.trending.first(limit)
     end
 
     field :case_studies_by_categories, Types::CaseStudy::Article.connection_type do
