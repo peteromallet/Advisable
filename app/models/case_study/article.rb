@@ -79,18 +79,16 @@ module CaseStudy
     end
 
     def self.trending
-      articles = order(published_at: :desc).first(50)
-      return [] if articles.empty?
-
-      oldest = articles.last.published_at
-      delta = Time.zone.now - oldest
+      articles = current_scope.order(published_at: :desc).select(:id, :published_at, :score).load
+      oldest = articles.last&.published_at || Time.current
+      delta = Time.current - oldest
 
       weighted = articles.map do |article|
         weighting = 1 + ((article.published_at - oldest) / delta)
-        {article:, score: (article.score || 0) * weighting}
+        {id: article.id, score: (article.score || 0) * weighting}
       end
 
-      weighted.sort_by { |a| a[:score] }.reverse.pluck(:article)
+      in_order_of(:id, weighted.sort_by { |a| a[:score] }.reverse.pluck(:id))
     end
   end
 end
