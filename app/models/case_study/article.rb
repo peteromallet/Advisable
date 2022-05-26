@@ -78,7 +78,7 @@ module CaseStudy
     end
 
     def self.trending
-      articles = current_scope.order(published_at: :desc).select(:id, :published_at, :score).load
+      articles = (current_scope || all).order(published_at: :desc).select(:id, :published_at, :score).load
       oldest = articles.last&.published_at || Time.current
       delta = Time.current - oldest
 
