@@ -1,4 +1,5 @@
 import React from "react";
+import SimpleBar from "simplebar-react";
 import * as Sentry from "@sentry/react";
 import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
@@ -37,8 +38,10 @@ export default function Conversation({ conversations, currentAccount }) {
             <ConversationNotFound />
           )}
         </Box>
-        <div className="hidden lg:block shrink-0 w-[360px] border-l border-solid border-neutral100 p-8">
-          <ConversationDetails conversation={conversation} />
+        <div className="hidden lg:block shrink-0 w-[360px] border-l border-solid border-neutral100">
+          <SimpleBar className="h-viewport">
+            <ConversationDetails conversation={conversation} />
+          </SimpleBar>
         </div>
       </Sentry.ErrorBoundary>
     </div>

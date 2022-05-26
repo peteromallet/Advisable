@@ -1,5 +1,5 @@
-import React, { useLayoutEffect } from "react";
-import { Box, useBreakpoint, useTheme } from "@advisable/donut";
+import React from "react";
+import { Box, useBackground, useBreakpoint } from "@advisable/donut";
 import { useConversations } from "./queries";
 import { Route, Navigate, Routes, useMatch } from "react-router-dom";
 import Loading from "src/components/Loading";
@@ -9,18 +9,13 @@ import MessagesSidebar from "./components/MessagesSidebar";
 import useOrderedConversations from "./hooks/useOrderedConversations";
 
 export default function Messages() {
+  useBackground("beige");
   const { data, loading } = useConversations();
-  const { setTheme } = useTheme();
   const isDesktop = useBreakpoint("lUp");
 
   const conversations = data?.conversations?.nodes || [];
   const hasConversations = conversations.length > 0;
   const ordered = useOrderedConversations(conversations);
-
-  useLayoutEffect(() => {
-    setTheme((t) => ({ ...t, background: "beige" }));
-    return () => setTheme((t) => ({ ...t, background: "default" }));
-  }, [setTheme]);
 
   const isMobileView = useMatch({ path: "/messages", end: !isDesktop });
 

@@ -1,7 +1,7 @@
 import SimpleBar from "simplebar-react";
 import { motion } from "framer-motion";
 import React, { useRef, useMemo, useEffect } from "react";
-import { Box, Stack, Button, useBreakpoint } from "@advisable/donut";
+import { Box, Button, useBreakpoint } from "@advisable/donut";
 import { useMessages } from "../queries";
 import Message from "./Message";
 import MessagesLoading from "./MessagesLoading";

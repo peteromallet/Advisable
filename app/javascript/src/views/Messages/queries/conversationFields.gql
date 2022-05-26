@@ -8,10 +8,28 @@ fragment ConversationFields on Conversation {
     name
     avatar
     isViewer
+    user {
+      id
+      company {
+        id
+        name
+      }
+    }
+    specialist {
+      id
+      name
+      profilePath
+    }
   }
   lastMessage {
     id
     content
     createdAt
+  }
+  agreement {
+    id
+    invoicing
+    hourlyRate
+    collaboration
   }
 }
