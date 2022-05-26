@@ -5,6 +5,7 @@ module Toby
     class Company < BaseResource
       model_name ::Company
       attribute :name, Attributes::String
+      attribute :intent, Attributes::String, readonly: true
       attribute :sales_person, Attributes::BelongsTo
       attribute :industry, Attributes::BelongsTo
       attribute :audience, Attributes::String
