@@ -18,10 +18,6 @@ class Company < ApplicationRecord
   has_many :accounts, through: :users
   has_many :invoices, dependent: :destroy
 
-  # WIP Company migration 👇️
-  has_many :interviews, through: :users
-  # WIP Company migration 👆️
-
   validates :business_type, inclusion: {in: VALID_BUSINESS_TYPES}, allow_nil: true
   validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
