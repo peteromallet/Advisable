@@ -15,6 +15,8 @@ namespace :data do
   task interview_participants: :environment do
     progressbar = ProgressBar.create(format: "Migrating interviews: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: Interview.count)
     Interview.find_each do |interview|
+      next if interview.specialist_id.nil? && interview.user_id.nil?
+
       accounts = interview.participants
       interview.update!(
         specialist: nil,
