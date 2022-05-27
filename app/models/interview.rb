@@ -50,10 +50,12 @@ class Interview < ApplicationRecord
   end
 
   def specialist=(specialist)
+    Sentry.capture_message("Setting specialist directly! Stop it!", level: "debug")
     self.legacy_specialist = specialist
   end
 
   def user=(user)
+    Sentry.capture_message("Setting user directly! Stop it!", level: "debug")
     self.legacy_user = user
   end
 
