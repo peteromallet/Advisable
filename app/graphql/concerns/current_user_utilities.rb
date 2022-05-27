@@ -38,6 +38,8 @@ module CurrentUserUtilities
   end
 
   def track_event(event, properties = {})
+    return if impersonating?
+
     AnalyticsTrackJob.perform_later(current_user.account.uid, event, properties)
   end
 
