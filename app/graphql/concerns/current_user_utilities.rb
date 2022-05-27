@@ -9,14 +9,18 @@ module CurrentUserUtilities
     context[:oauth_viewer]
   end
 
-  # Can return the user's account or admin's that's logged in as that user
+  # Can return the user's account or admin's who's impersonating that user
   def current_account
     context[:current_account]
   end
 
-  # Can return the id of the user's account or admin's that's logged in as that user
+  # Can return the id of the user's account id or admin's who's impersonating that user
   def current_account_id
     current_account&.id
+  end
+
+  def impersonating?
+    current_user.account_id != current_account_id
   end
 
   def current_company
