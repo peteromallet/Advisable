@@ -16,7 +16,7 @@ module Mutations
       def resolve(term:)
         interest_preview = ::CaseStudy::InterestPreview.find_or_create_by!(term:, account: current_user.account)
         interest_preview.find_results!
-        ::Analytics.bg_track(current_user, "Search", {term:})
+        track_event("Search", {term:})
         {interest_preview:}
       end
     end

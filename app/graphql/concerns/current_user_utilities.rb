@@ -37,6 +37,10 @@ module CurrentUserUtilities
     end
   end
 
+  def track_event(event, properties = {})
+    AnalyticsTrackJob.perform_later(current_user.account.uid, event, properties)
+  end
+
   private
 
   def requires_current_user!

@@ -24,7 +24,7 @@ module Mutations
       if interview.specialist_and_user?
         Slack.bg_message(channel: "consultation_requests", text: "We have a new interview request for #{interview.specialist.account.name} from #{interview.user.name_with_company}.")
         SpecialistMailer.interview_request(interview).deliver_later
-        ::Analytics.bg_track(interview.user, "Requested Consultation", {specialist: interview.specialist.uid})
+        track_event("Requested Consultation", {specialist: interview.specialist.uid})
       end
 
       {interview:}
