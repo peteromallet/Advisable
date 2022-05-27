@@ -17,6 +17,6 @@ class InterviewPolicy < BasePolicy
   private
 
   def participant?
-    record.participants.include?(current_user.account)
+    record.accounts.include?(current_user.account)
   end
 end
