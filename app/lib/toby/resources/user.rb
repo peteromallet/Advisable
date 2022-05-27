@@ -26,7 +26,7 @@ module Toby
       end
 
       def self.login_as(object, context)
-        context[:session_manager].session[:admin_override] = object.to_global_id.to_param
+        context[:session_manager].session[:impersonating] = object.to_global_id.to_param
 
         {url: Advisable::Application::ORIGIN_HOST}
       end

@@ -13,7 +13,7 @@ class SessionManager
   end
 
   def current_user
-    @current_user ||= admin_override || current_account&.specialist_or_user
+    @current_user ||= impersonating || current_account&.specialist_or_user
   end
 
   def current_account
@@ -61,8 +61,8 @@ class SessionManager
   end
 
   def logout
-    if admin_override
-      session.delete(:admin_override)
+    if impersonating
+      session.delete(:impersonating)
     else
       current_account&.clear_remember_token
       clear_browser_data
@@ -71,13 +71,13 @@ class SessionManager
 
   private
 
-  def admin_override
+  def impersonating
     return unless current_account&.admin?
 
-    user = GlobalID::Locator.locate(session[:admin_override])
+    user = GlobalID::Locator.locate(session[:impersonating])
     return user if user.respond_to?(:account)
 
-    session.delete(:admin_override)
+    session.delete(:impersonating)
     nil
   end
 
