@@ -29,11 +29,16 @@ class Interview < ApplicationRecord
   scope :requested, -> { where(status: "Call Requested") }
   scope :reminded, -> { where(status: "Call Reminded") }
   scope :upcoming, -> { scheduled.where(starts_at: Time.zone.now..) }
+  scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
   validates :status, inclusion: {in: VALID_STATUSES}
 
   def participants
     [legacy_user&.account, legacy_specialist&.account, *accounts].compact.uniq
+  end
+
+  def specialist_and_user?
+    participants.length == 2 && specialist && user
   end
 
   def specialist
@@ -45,10 +50,12 @@ class Interview < ApplicationRecord
   end
 
   def specialist=(specialist)
+    Sentry.capture_message("Setting specialist directly! Stop it!", level: "debug")
     self.legacy_specialist = specialist
   end
 
   def user=(user)
+    Sentry.capture_message("Setting user directly! Stop it!", level: "debug")
     self.legacy_user = user
   end
 

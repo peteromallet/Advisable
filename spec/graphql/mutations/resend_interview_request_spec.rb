@@ -5,8 +5,9 @@ require "rails_helper"
 RSpec.describe Mutations::ResendInterviewRequest do
   let(:user) { create(:user, availability: []) }
   let(:current_user) { user }
+  let(:specialist) { create(:specialist) }
   let(:context) { {current_user:} }
-  let(:interview) { create(:interview, status: "Need More Time Options", time_zone: "Perth", user:) }
+  let(:interview) { create(:interview, status: "Need More Time Options", time_zone: "Perth", accounts: [specialist.account, user.account]) }
 
   let(:query) do
     <<-GRAPHQL

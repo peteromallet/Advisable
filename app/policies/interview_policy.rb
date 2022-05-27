@@ -2,7 +2,7 @@
 
 class InterviewPolicy < BasePolicy
   def read?
-    specialist_owner? || owned_by_user_or_company? || admin?
+    participant? || admin?
   end
   alias resend_request? read?
   alias request_reschedule? read?
@@ -13,4 +13,10 @@ class InterviewPolicy < BasePolicy
     specialist_owner? || admin?
   end
   alias decline? schedule?
+
+  private
+
+  def participant?
+    record.participants.include?(current_user.account)
+  end
 end
