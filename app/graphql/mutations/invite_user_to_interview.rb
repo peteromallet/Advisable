@@ -14,7 +14,7 @@ module Mutations
     def authorized?(interview_id:, **_args)
       requires_client!
 
-      interview = find_interview(interview_id)
+      interview = Interview.find_by!(uid: interview_id)
       policy = InterviewPolicy.new(current_user, interview)
       return true if policy.invite_user?
 
@@ -23,19 +23,10 @@ module Mutations
 
     def resolve(interview_id:, email:, **args)
       invited_user = find_or_create_user_by_email!(email, args)
-      interview = find_interview(interview_id)
+      interview = Interview.find_by!(uid: interview_id)
       UserMailer.invited_to_interview(current_user, invited_user, interview).deliver_later
 
       {user: invited_user}
-    end
-
-    private
-
-    def find_interview(uid)
-      interview = current_user.interviews.find_by(uid:) || Interview.with_accounts([current_user.account])&.first
-      raise ActiveRecord::RecordNotFound unless interview
-
-      interview
     end
   end
 end
