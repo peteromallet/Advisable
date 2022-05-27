@@ -470,7 +470,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
     t.string "time_zone"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "user_id"
     t.string "availability_note"
     t.string "zoom_meeting_id"
     t.string "uid", null: false
@@ -482,15 +481,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
     t.datetime "specialist_requested_reschedule_at", precision: nil
     t.jsonb "log_data"
     t.string "google_calendar_id"
-    t.bigint "specialist_id"
     t.string "reason"
     t.bigint "article_id"
     t.bigint "requested_by_id"
     t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["requested_by_id"], name: "index_interviews_on_requested_by_id"
-    t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
-    t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -970,8 +966,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
   add_foreign_key "interview_participants", "interviews"
   add_foreign_key "interviews", "accounts", column: "requested_by_id"
   add_foreign_key "interviews", "case_study_articles", column: "article_id"
-  add_foreign_key "interviews", "specialists"
-  add_foreign_key "interviews", "users"
   add_foreign_key "invoices", "companies"
   add_foreign_key "labelings", "guild_posts"
   add_foreign_key "labelings", "labels"
