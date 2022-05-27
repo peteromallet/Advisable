@@ -38,7 +38,7 @@ class Interview < ApplicationRecord
   end
 
   def specialist_and_user?
-    participants.length == 2 && specialist && user
+    !!(participants.length == 2 && specialist && user)
   end
 
   def specialist
