@@ -6,7 +6,7 @@ class Analytics
   attr_reader :client
 
   def initialize
-    return unless self.class.enabled?
+    return if disabled?
 
     @client = Segment::Analytics.new({
       write_key: ENV.fetch("SEGMENT_BACKEND", nil),
@@ -15,13 +15,13 @@ class Analytics
   end
 
   def track(account_uid, event, properties = {})
-    return unless self.class.enabled?
+    return if disabled?
 
     client.track(user_id: account_uid, event:, properties:)
   end
 
   def suppress_and_delete(account_uids)
-    return if !self.class.enabled? || account_uids.blank? || ENV["SEGMENT_TOKEN"].blank?
+    return if disabled? || account_uids.blank? || ENV["SEGMENT_TOKEN"].blank?
 
     url = "https://platform.segmentapis.com/v1beta/workspaces/advisable-peter-omalley/regulations"
     headers = {"Content-Type" => "application/json", "Authorization" => "Bearer #{ENV.fetch("SEGMENT_TOKEN", nil)}"}
@@ -30,13 +30,9 @@ class Analytics
     Sentry.capture_message("Analytics suppression failed!", extra: {payload:, response: res.body}) unless res.success?
   end
 
-  def self.enabled?
-    ENV["SEGMENT_BACKEND"].present?
-  end
+  private
 
-  def self.bg_track(user, event, properties = {})
-    return unless enabled?
-
-    AnalyticsTrackJob.perform_later(user.account.uid, event, properties)
+  def disabled?
+    ENV["SEGMENT_BACKEND"].blank?
   end
 end
