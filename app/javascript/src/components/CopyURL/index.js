@@ -19,7 +19,7 @@ const CopyURL = ({ bg, children }) => {
     <Wrapper bg={bg}>
       <input ref={inputRef} value={children} onClick={handleClick} readOnly />
       {copied && <span>Copied to clipboard</span>}
-      <button type="button" onClick={handleCopy}>
+      <button type="button" aria-label="copy url" onClick={handleCopy}>
         Copy
       </button>
     </Wrapper>
