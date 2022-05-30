@@ -29,21 +29,23 @@ export default function SidebarCard({ specialist }) {
         )}
       </Link>
       <Link to={specialist.profilePath}>
-        <h4 className="font-semibold tracking-tight xl:text-3xl text-2xl text-neutral800 hover:text-neutral800 xl:leading-8 leading-6 pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+        <h4 className="font-semibold tracking-tight xl:text-3xl text-2xl text-neutral900 xl:leading-8 leading-6 mb-1 hover:underline decoration-neutral500">
           {specialist.name}
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
       <ConnectModal modal={connectModal} specialist={specialist} />
-      <div className="pt-4 flex flex-col gap-2">
-        <DialogDisclosure {...connectModal}>
-          {(disclosure) => (
-            <Button size="lg" {...disclosure}>
-              Talk with {specialist.firstName}
-            </Button>
-          )}
-        </DialogDisclosure>
-      </div>
+      {!specialist.unavailableUntil && (
+        <div className="pt-4">
+          <DialogDisclosure {...connectModal}>
+            {(disclosure) => (
+              <Button className="w-full" size="lg" {...disclosure}>
+                Talk with {specialist.firstName}
+              </Button>
+            )}
+          </DialogDisclosure>
+        </div>
+      )}
       <hr className="border-neutral200 mt-5 pb-[3px]" />
       <div className="py-2">
         <div className="text-[15px] xl:text-lg font-[450] text-neutral900 truncate">

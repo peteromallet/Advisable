@@ -50,14 +50,18 @@ const SpecialistInfo = ({ specialist }) => {
         {specialist.name}
       </div>
       <Availability unavailableUntil={specialist.unavailableUntil} />
-      <ConnectModal modal={modal} specialist={specialist} />
-      <DialogDisclosure {...modal}>
-        {(disclosure) => (
-          <Button className="mt-5 mb-8 w-[184px]" {...disclosure}>
-            Talk with {specialist.firstName}
-          </Button>
-        )}
-      </DialogDisclosure>
+      {!specialist.unavailableUntil && (
+        <>
+          <ConnectModal modal={modal} specialist={specialist} />
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button className="mt-5 mb-8 w-[184px]" {...disclosure}>
+                Talk with {specialist.firstName}
+              </Button>
+            )}
+          </DialogDisclosure>
+        </>
+      )}
       <hr className="w-20 pb-[3px] mb-7" />
     </div>
   );

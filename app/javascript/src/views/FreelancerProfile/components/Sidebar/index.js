@@ -96,7 +96,7 @@ function Sidebar({ data, isOwner, ...props }) {
               {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               )}
-              {!isOwner && (
+              {!isOwner && !specialist.unavailableUntil && (
                 <>
                   <DialogDisclosure {...modal}>
                     {(disclosure) => (

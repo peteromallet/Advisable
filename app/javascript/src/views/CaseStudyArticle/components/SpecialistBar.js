@@ -61,14 +61,15 @@ export default function SpecialistBar({ article }) {
           <EditCaseStudyButton article={article} />
           <ShareArticleButton slug={article.slug} />
           <FavoriteArticleButton article={article} />
-          {article.specialist.id !== viewer?.id && (
-            <>
-              <ConnectModal modal={modal} specialist={article.specialist} />
-              <DialogDisclosure {...modal}>
-                {(disclosure) => <Button {...disclosure}>Message</Button>}
-              </DialogDisclosure>
-            </>
-          )}
+          {article.specialist.id !== viewer?.id &&
+            !article.specialist.unavailableUntil && (
+              <>
+                <ConnectModal modal={modal} specialist={article.specialist} />
+                <DialogDisclosure {...modal}>
+                  {(disclosure) => <Button {...disclosure}>Message</Button>}
+                </DialogDisclosure>
+              </>
+            )}
         </div>
       </div>
     </div>
