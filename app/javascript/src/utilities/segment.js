@@ -1,5 +1,5 @@
 export function trackEvent(name, payload) {
-  if (!window.analytics) return;
+  if (!window.analytics || window.__ADMIN) return;
 
   window.analytics.track(name, payload);
 }
