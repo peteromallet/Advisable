@@ -1,27 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "@advisable/donut";
 import CreateConversation from "./CreateConversation";
 import RequestCall from "./RequestCall";
 import useViewer from "src/hooks/useViewer";
 import AuthenticateForConnection from "./AuthenticateForConnection";
+import SelectConnectionType from "./SelectConnectionType";
 
-function ConnectionType({ state, ...props }) {
-  if (state.connectionType === "MESSAGE") {
-    return <CreateConversation state={state} {...props} />;
+function ConnectionType(props) {
+  const [connectionType, setConnectionType] = useState(null);
+
+  if (connectionType === "MESSAGE") {
+    return (
+      <CreateConversation onBack={() => setConnectionType(null)} {...props} />
+    );
   }
 
-  return <RequestCall state={state} {...props} />;
+  if (connectionType === "REQUEST_CALL") {
+    return <RequestCall onBack={() => setConnectionType(null)} {...props} />;
+  }
+
+  return (
+    <SelectConnectionType
+      requestCall={() => setConnectionType("REQUEST_CALL")}
+      message={() => setConnectionType("MESSAGE")}
+      {...props}
+    />
+  );
 }
 
-export default function ConnectModal({ state, ...props }) {
+export default function ConnectModal({ modal, ...props }) {
   const viewer = useViewer();
 
   return (
-    <Modal modal={state.modal} padding={0}>
+    <Modal modal={modal} padding={0}>
       {viewer ? (
-        <ConnectionType state={state} {...props} />
+        <ConnectionType {...props} />
       ) : (
-        <AuthenticateForConnection state={state} {...props} />
+        <AuthenticateForConnection {...props} />
       )}
     </Modal>
   );

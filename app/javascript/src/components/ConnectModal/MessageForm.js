@@ -48,10 +48,7 @@ export default function MessageForm({
           How to get a reply from {specialist.firstName}
         </h4>
         <ul className="space-y-2 mb-8">
-          <ListItem>Provide details on why you are contacting them.</ListItem>
-          <ListItem>
-            Explain why you’re excited about working together.
-          </ListItem>
+          <ListItem>Explain why you’re reaching out to them.</ListItem>
           <ListItem>Describe how you envision collaborating.</ListItem>
           <ListItem>Be nice, friendly and professional!</ListItem>
         </ul>

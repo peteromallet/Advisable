@@ -49,7 +49,7 @@ function RequestCallMessage({ state, specialist, onBack }) {
   );
 }
 
-export default function RequestCall({ state, specialist }) {
+export default function RequestCall({ specialist, onBack }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   return (
@@ -64,14 +64,13 @@ export default function RequestCall({ state, specialist }) {
       </h3>
       {step === "AVAILABILITY" && (
         <Availability
-          state={state}
           specialist={specialist}
           onSubmit={() => setStep("MESSAGE")}
+          onBack={onBack}
         />
       )}
       {step === "MESSAGE" && (
         <RequestCallMessage
-          state={state}
           specialist={specialist}
           onBack={() => setStep("AVAILABILITY")}
         />

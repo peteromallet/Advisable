@@ -1,15 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link, useBreakpoint } from "@advisable/donut";
+import {
+  Link,
+  useBreakpoint,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import Timezone from "./Timezone";
 import Availability from "./Availability";
 import ConnectModal from "src/components/ConnectModal";
-import useConnectModal from "src/components/ConnectModal/useConnectModal";
 import Button from "src/components/Button";
-import { ChatAlt, VideoCamera } from "@styled-icons/heroicons-outline";
 
 export default function SidebarCard({ specialist }) {
-  const connectModal = useConnectModal();
+  const connectModal = useModal();
 
   return (
     <motion.div
@@ -36,23 +39,15 @@ export default function SidebarCard({ specialist }) {
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
-      <ConnectModal state={connectModal} specialist={specialist} />
+      <ConnectModal modal={connectModal} specialist={specialist} />
       <div className="pt-4 flex flex-col gap-2">
-        <Button
-          size="lg"
-          prefix={<VideoCamera />}
-          onClick={connectModal.requestCall}
-        >
-          Request call
-        </Button>
-        <Button
-          size="lg"
-          prefix={<ChatAlt />}
-          variant="outlined"
-          onClick={connectModal.message}
-        >
-          Message
-        </Button>
+        <DialogDisclosure {...connectModal}>
+          {(disclosure) => (
+            <Button size="lg" {...disclosure}>
+              Talk with {specialist.firstName}
+            </Button>
+          )}
+        </DialogDisclosure>
       </div>
       <hr className="border-neutral200 mt-5 pb-[3px]" />
       <div className="py-2">

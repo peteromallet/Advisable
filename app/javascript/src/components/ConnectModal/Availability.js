@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import CircularButton from "../CircularButton";
 import Loading from "../Loading";
 import { DateTime } from "luxon";
 import { Availability, useBreakpoint } from "@advisable/donut";
@@ -63,7 +65,7 @@ function AvailabilityForm({ data, onSubmit }) {
           onClick={handleSubmit}
           loading={loading}
         >
-          Continue
+          Next
         </Button>
       )}
     </>
@@ -71,14 +73,17 @@ function AvailabilityForm({ data, onSubmit }) {
 }
 
 export default function RequestCallAvailability({
-  state,
   onSubmit,
   specialist,
+  onBack,
 }) {
   const { data, loading, error } = useAvailability();
 
   return (
     <>
+      <div className="absolute top-3 left-3">
+        <CircularButton icon={ArrowLeft} onClick={onBack} />
+      </div>
       <div className="px-8 pb-8">
         <p className="text-center mb-6">
           Request a 30 minute call with {specialist.firstName} to talk about
@@ -89,17 +94,6 @@ export default function RequestCallAvailability({
         {!loading && data && (
           <AvailabilityForm data={data} onSubmit={onSubmit} />
         )}
-      </div>
-      <div className="py-6 px-8 border-t border-solid border-neutral100">
-        <h5 className="font-medium leading-none mb-0.5">
-          Want to just send a message instead?
-        </h5>
-        <button
-          className="text-blue600 hover:text-blue800"
-          onClick={state.message}
-        >
-          Message {specialist.firstName}
-        </button>
       </div>
     </>
   );

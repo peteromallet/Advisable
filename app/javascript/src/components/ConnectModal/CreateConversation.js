@@ -1,11 +1,12 @@
-import { ChatAlt } from "@styled-icons/heroicons-solid";
+import { ArrowLeft, ChatAlt } from "@styled-icons/heroicons-solid";
+import CircularButton from "../CircularButton";
 import React from "react";
 import { useNotifications } from "../Notifications";
 import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
 import { useCreateConversation } from "./queries";
 
-export default function CreateConversation({ state, specialist }) {
+export default function CreateConversation({ specialist, onBack }) {
   const notifications = useNotifications();
   const [createConversation] = useCreateConversation();
 
@@ -25,12 +26,15 @@ export default function CreateConversation({ state, specialist }) {
       notifications.notify(
         `Your message has been sent to ${specialist.firstName}.`,
       );
-      state.modal.hide();
+      // state.modal.hide();
     }
   };
 
   return (
     <>
+      <div className="absolute top-3 left-3">
+        <CircularButton icon={ArrowLeft} onClick={onBack} />
+      </div>
       <div className="p-8">
         <ConnectedAvatars
           specialist={specialist}
@@ -49,17 +53,6 @@ export default function CreateConversation({ state, specialist }) {
           placeholder="Message..."
           buttonLabel="Send message"
         />
-      </div>
-      <div className="py-6 px-8 border-t border-solid border-neutral100">
-        <h5 className="font-medium leading-none mb-0.5">
-          Want to request a call with {specialist.firstName} instead?
-        </h5>
-        <button
-          className="text-blue600 hover:text-blue800"
-          onClick={state.requestCall}
-        >
-          Request a call
-        </button>
       </div>
     </>
   );
