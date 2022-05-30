@@ -14,8 +14,14 @@ export default function useSegmentIdentity(viewer) {
   useEffect(() => {
     if (!window.analytics) return;
 
-    // VIEWER LOGGED OUT
+    // Viewer logged out
     if (previousID && !viewer) {
+      window.analytics.reset();
+      return;
+    }
+
+    // Clear out the session if the user is an admin
+    if (viewer?.isAdmin) {
       window.analytics.reset();
       return;
     }

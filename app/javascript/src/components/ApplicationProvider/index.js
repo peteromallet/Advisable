@@ -19,6 +19,15 @@ const ApplicationProvider = ({ children }) => {
     viewer: data?.viewer,
   };
 
+  const isAdmin = data?.viewer?.isAdmin;
+  if (isAdmin) {
+    window.__ADMIN = true;
+  }
+
+  if (window._ADMIN && !isAdmin) {
+    window.__ADMIN = false;
+  }
+
   if (loading) {
     return <Loading />;
   }
