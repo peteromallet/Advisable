@@ -5,10 +5,64 @@ import { useNotifications } from "../Notifications";
 import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
 import { useCreateConversation } from "./queries";
+import ModalHeading from "./ModalHeading";
+import SubHeading from "./SubHeading";
+import Button from "../Button";
+import MessagesIllustration from "src/illustrations/zest/messages";
 
-export default function CreateConversation({ specialist, onBack }) {
+function ConversationCreated({ modal, specialist }) {
+  return (
+    <div className="text-center pb-3">
+      <MessagesIllustration
+        width="150px"
+        className="mx-auto my-4"
+        color="var(--color-violet-200)"
+        secondaryColor="var(--color-blue900)"
+      />
+      <h5 className="font-medium text-xl mb-1">Message sent</h5>
+      <SubHeading>
+        Your message has been sent to {specialist.firstName}. We will let you
+        know when they respond.
+      </SubHeading>
+      <Button variant="secondary" onClick={modal.hide}>
+        Okay
+      </Button>
+    </div>
+  );
+}
+
+function CreateConversation({ specialist, onSubmit, onBack }) {
+  return (
+    <>
+      {onBack && (
+        <div className="absolute top-3 left-3">
+          <CircularButton icon={ArrowLeft} onClick={onBack} />
+        </div>
+      )}
+      <>
+        <ConnectedAvatars
+          specialist={specialist}
+          className="mb-4"
+          icon={ChatAlt}
+        />
+        <ModalHeading>Message {specialist.firstName}</ModalHeading>
+        <SubHeading>
+          Connect with {specialist.firstName} by sending them a message.
+        </SubHeading>
+        <MessageForm
+          onSubmit={onSubmit}
+          specialist={specialist}
+          placeholder="Message..."
+          buttonLabel="Send message"
+        />
+      </>
+    </>
+  );
+}
+
+export default function ConnectViaMessaging({ modal, specialist, onBack }) {
   const notifications = useNotifications();
-  const [createConversation] = useCreateConversation();
+  const [createConversation, { data }] = useCreateConversation();
 
   const handleSubmit = async (values) => {
     const { errors } = await createConversation({
@@ -22,40 +76,18 @@ export default function CreateConversation({ specialist, onBack }) {
 
     if (errors) {
       notifications.error("Something went wrong, please try again");
-    } else {
-      notifications.notify(
-        `Your message has been sent to ${specialist.firstName}.`,
-      );
-      // state.modal.hide();
     }
   };
 
+  if (data) {
+    return <ConversationCreated modal={modal} specialist={specialist} />;
+  }
+
   return (
-    <>
-      {onBack && (
-        <div className="absolute top-3 left-3">
-          <CircularButton icon={ArrowLeft} onClick={onBack} />
-        </div>
-      )}
-      <div className="p-8">
-        <ConnectedAvatars
-          specialist={specialist}
-          className="mb-4"
-          icon={ChatAlt}
-        />
-        <h3 className="text-2xl font-semibold tracking-tight leading-none mb-2 text-center">
-          Message {specialist.firstName}
-        </h3>
-        <p className="text-center font-inter mb-6">
-          Connect with {specialist.firstName} by sending them a message.
-        </p>
-        <MessageForm
-          specialist={specialist}
-          onSubmit={handleSubmit}
-          placeholder="Message..."
-          buttonLabel="Send message"
-        />
-      </div>
-    </>
+    <CreateConversation
+      onBack={onBack}
+      specialist={specialist}
+      onSubmit={handleSubmit}
+    />
   );
 }

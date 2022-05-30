@@ -6,33 +6,40 @@ import CreateAccountForm from "./CreateAccountForm";
 import { useCreateClientAccount, useCreateFreelancerAcccount } from "./queries";
 import { useApolloClient } from "@apollo/client";
 import VIEWER from "src/graphql/queries/getViewer.graphql";
+import OptionsList, { OptionsListOption } from "./OptionsList";
 
 function ConnectModalSignup({ specialist, setStep }) {
   return (
-    <div>
+    <>
       <h3 className="text-2xl font-medium tracking-tight leading-none mb-2 text-center max-w-[360px] mx-auto">
         Connect with {specialist.firstName} and thousands of other specialists
       </h3>
       <p className="text-center mb-6 text-neutral700 max-w-[400px] mx-auto">
         Advisable lets you discover how leading marketers did their most
-        impactful work. Learn from their case studies and collaborate with the
+        impactful work, Learn from their case studies and collaborate with the
         people behind them.
       </p>
       <div>
-        <div onClick={() => setStep("CLIENT_SIGNUP")}>
-          <h4>Signup as a company</h4>
-          <p>Find proven people and projects</p>
-        </div>
-        <div onClick={() => setStep("FREELANCER_SIGNUP")}>
-          <h4>Signup as a specialist</h4>
-          <p>Be found for freelance projects</p>
-        </div>
+        <OptionsList>
+          <OptionsListOption
+            title="Signup as a company"
+            onClick={() => setStep("CLIENT_SIGNUP")}
+          >
+            Find proven people and projects
+          </OptionsListOption>
+          <OptionsListOption
+            title="Signup as a freelancer"
+            onClick={() => setStep("FREELANCER_SIGNUP")}
+          >
+            Be found for freelance projects
+          </OptionsListOption>
+        </OptionsList>
       </div>
       <h5 className="font-medium">Already have an Advisable account?</h5>
       <button className="text-blue700" onClick={() => setStep("LOGIN")}>
         Login
       </button>
-    </div>
+    </>
   );
 }
 

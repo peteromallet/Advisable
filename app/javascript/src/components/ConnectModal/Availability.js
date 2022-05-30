@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import { ArrowLeft, VideoCamera } from "@styled-icons/heroicons-solid";
+import ConnectedAvatars from "./ConnectedAvatars";
 import CircularButton from "../CircularButton";
+import ModalHeading from "./ModalHeading";
 import Loading from "../Loading";
 import { DateTime } from "luxon";
 import { Availability, useBreakpoint } from "@advisable/donut";
@@ -8,6 +10,7 @@ import Button from "../Button";
 import { useAvailability, useUpdateAvailability } from "./queries";
 import AvailabilityInput from "../AvailabilityInput";
 import TimezoneSelect from "./TimezoneSelect";
+import SubHeading from "./SubHeading";
 
 function AvailabilityForm({ data, onSubmit }) {
   const sup = useBreakpoint("sUp");
@@ -84,17 +87,23 @@ export default function RequestCallAvailability({
       <div className="absolute top-3 left-3">
         <CircularButton icon={ArrowLeft} onClick={onBack} />
       </div>
-      <div className="px-8 pb-8">
-        <p className="text-center mb-6">
+      <>
+        <ConnectedAvatars
+          specialist={specialist}
+          className="mb-4"
+          icon={VideoCamera}
+        />
+        <ModalHeading>Request a call with {specialist.firstName}</ModalHeading>
+        <SubHeading>
           Request a 30 minute call with {specialist.firstName} to talk about
           your project. Please select your available times below.
-        </p>
+        </SubHeading>
         {loading && <Loading />}
         {error && <p>Error</p>}
         {!loading && data && (
           <AvailabilityForm data={data} onSubmit={onSubmit} />
         )}
-      </div>
+      </>
     </>
   );
 }

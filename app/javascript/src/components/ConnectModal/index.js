@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "@advisable/donut";
-import CreateConversation from "./CreateConversation";
 import RequestCall from "./RequestCall";
 import useViewer from "src/hooks/useViewer";
 import AuthenticateForConnection from "./AuthenticateForConnection";
 import SelectConnectionType from "./SelectConnectionType";
+import ConnectViaMessaging from "./CreateConversation";
 
 function ConnectionType(props) {
   const viewer = useViewer();
@@ -12,7 +12,7 @@ function ConnectionType(props) {
 
   if (connectionType === "MESSAGE") {
     return (
-      <CreateConversation onBack={() => setConnectionType(null)} {...props} />
+      <ConnectViaMessaging onBack={() => setConnectionType(null)} {...props} />
     );
   }
 
@@ -21,7 +21,7 @@ function ConnectionType(props) {
   }
 
   if (viewer?.isSpecialist) {
-    return <CreateConversation {...props} />;
+    return <ConnectViaMessaging {...props} />;
   }
 
   return (
@@ -38,11 +38,13 @@ export default function ConnectModal({ modal, ...props }) {
 
   return (
     <Modal modal={modal} padding={0}>
-      {viewer ? (
-        <ConnectionType {...props} />
-      ) : (
-        <AuthenticateForConnection {...props} />
-      )}
+      <div className="p-8">
+        {viewer ? (
+          <ConnectionType modal={modal} {...props} />
+        ) : (
+          <AuthenticateForConnection {...props} />
+        )}
+      </div>
     </Modal>
   );
 }

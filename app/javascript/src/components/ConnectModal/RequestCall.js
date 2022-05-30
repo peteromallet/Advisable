@@ -4,9 +4,13 @@ import CircularButton from "../CircularButton";
 import Availability from "./Availability";
 import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
+import SubHeading from "./SubHeading";
+import ModalHeading from "./ModalHeading";
 import { useRequestInterview } from "./queries";
+import MessagesIllustration from "src/illustrations/zest/messages";
+import Button from "../Button";
 
-function RequestCallMessage({ state, specialist, onBack }) {
+function RequestCallMessage({ specialist, onBack, onComplete }) {
   const [requestInterview] = useRequestInterview();
 
   const handleSubmit = async (values) => {
@@ -27,41 +31,63 @@ function RequestCallMessage({ state, specialist, onBack }) {
       },
     });
 
-    state.modal.hide();
+    onComplete();
   };
 
   return (
-    <div className="px-8 pb-8">
+    <>
       <div className="absolute top-3 left-3">
         <CircularButton icon={ArrowLeft} onClick={onBack} />
       </div>
-      <p className="text-center mb-6">
+      <ConnectedAvatars
+        specialist={specialist}
+        className="mb-4"
+        icon={VideoCamera}
+      />
+      <ModalHeading>Request a call with {specialist.firstName}</ModalHeading>
+      <SubHeading>
         Request a 30 minute call with {specialist.firstName} to talk about your
         project. Please select your available times below.
-      </p>
+      </SubHeading>
       <MessageForm
         specialist={specialist}
         buttonLabel="Request call"
         onSubmit={handleSubmit}
         placeholder={`Include a message to ${specialist.firstName}...`}
       />
+    </>
+  );
+}
+
+function CallRequested({ specialist, modal }) {
+  return (
+    <div className="text-center pb-3">
+      <MessagesIllustration
+        width="150px"
+        className="mx-auto my-4"
+        color="var(--color-violet-200)"
+        secondaryColor="var(--color-blue900)"
+      />
+      <h5 className="font-medium text-xl mb-1">Request sent</h5>
+      <SubHeading>
+        Your request has been sent to {specialist.firstName}. We will let you
+        know when they respond.
+      </SubHeading>
+      <Button variant="secondary" onClick={modal.hide}>
+        Okay
+      </Button>
     </div>
   );
 }
 
-export default function RequestCall({ specialist, onBack }) {
+export default function RequestCall({ modal, specialist, onBack }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   return (
-    <div className="pt-8">
-      <ConnectedAvatars
-        specialist={specialist}
-        className="mb-4"
-        icon={VideoCamera}
-      />
-      <h3 className="text-2xl font-semibold tracking-tight leading-none mb-2 text-center">
-        Request a call with {specialist.firstName}
-      </h3>
+    <>
+      {step === "SENT" && (
+        <CallRequested modal={modal} specialist={specialist} />
+      )}
       {step === "AVAILABILITY" && (
         <Availability
           specialist={specialist}
@@ -73,8 +99,9 @@ export default function RequestCall({ specialist, onBack }) {
         <RequestCallMessage
           specialist={specialist}
           onBack={() => setStep("AVAILABILITY")}
+          onComplete={() => setStep("SENT")}
         />
       )}
-    </div>
+    </>
   );
 }
