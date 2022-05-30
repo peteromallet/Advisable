@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Box, Stack, useModal, DialogDisclosure } from "@advisable/donut";
 import CardButton from "src/components/CardButton";
 import SectionTitle from "./SectionTitle";
-import Testimonial from "src/components/Testimonial";
+import Testimonial from "./Testimonial";
 import TestimonialLinkModal from "./TestimonialLinkModal";
 import TestimonialsEmptyState from "./TestimonialsEmptyState";
 

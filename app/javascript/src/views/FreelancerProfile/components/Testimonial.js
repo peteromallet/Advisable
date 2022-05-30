@@ -14,12 +14,12 @@ function TestimonialQuoteIcon(props) {
   );
 }
 
-export default function Testimonial({ review }) {
+export default function Testimonial({ review, className }) {
   if (!review) return null;
 
   return (
     <Sentry.ErrorBoundary>
-      <div className="bg-[#F3F1F0] rounded-lg relative p-5">
+      <div className={`bg-[#F3F1F0] rounded-lg relative p-5 ${className}`}>
         <div className="absolute right-5 top-5">
           <TestimonialQuoteIcon />
         </div>
