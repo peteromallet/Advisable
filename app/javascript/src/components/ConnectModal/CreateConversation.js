@@ -32,9 +32,11 @@ export default function CreateConversation({ specialist, onBack }) {
 
   return (
     <>
-      <div className="absolute top-3 left-3">
-        <CircularButton icon={ArrowLeft} onClick={onBack} />
-      </div>
+      {onBack && (
+        <div className="absolute top-3 left-3">
+          <CircularButton icon={ArrowLeft} onClick={onBack} />
+        </div>
+      )}
       <div className="p-8">
         <ConnectedAvatars
           specialist={specialist}

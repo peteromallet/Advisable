@@ -26,7 +26,6 @@ const Availability = ({ unavailableUntil }) => {
 export default function SpecialistBar({ article }) {
   const viewer = useViewer();
   const location = useLocation();
-  const sUp = useBreakpoint("sUp");
   const modal = useModal();
   const { back } = location.state || {};
   const { specialist } = article;
@@ -66,7 +65,11 @@ export default function SpecialistBar({ article }) {
               <>
                 <ConnectModal modal={modal} specialist={article.specialist} />
                 <DialogDisclosure {...modal}>
-                  {(disclosure) => <Button {...disclosure}>Message</Button>}
+                  {(disclosure) => (
+                    <Button {...disclosure}>
+                      Talk with {article.specialist.firstName}
+                    </Button>
+                  )}
                 </DialogDisclosure>
               </>
             )}

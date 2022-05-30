@@ -7,6 +7,7 @@ import AuthenticateForConnection from "./AuthenticateForConnection";
 import SelectConnectionType from "./SelectConnectionType";
 
 function ConnectionType(props) {
+  const viewer = useViewer();
   const [connectionType, setConnectionType] = useState(null);
 
   if (connectionType === "MESSAGE") {
@@ -17,6 +18,10 @@ function ConnectionType(props) {
 
   if (connectionType === "REQUEST_CALL") {
     return <RequestCall onBack={() => setConnectionType(null)} {...props} />;
+  }
+
+  if (viewer?.isSpecialist) {
+    return <CreateConversation {...props} />;
   }
 
   return (
