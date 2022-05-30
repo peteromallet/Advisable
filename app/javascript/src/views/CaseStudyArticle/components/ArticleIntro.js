@@ -6,9 +6,9 @@ import AdvisableComment from "./AdvisableComment";
 import SpecialistCompanyRelation from "./SpecialistCompanyRelation";
 import Availability from "./Availability";
 import ScrollTip from "./ScrollTip";
-import Testimonial from "src/components/Testimonial";
 import useViewer from "src/hooks/useViewer";
 import TestimonialRequest from "./TestimonialRequest";
+import Testimonial from "./Testimonial";
 
 const Title = ({ children }) => (
   <h1
@@ -60,6 +60,7 @@ export default function ArticleIntro({ caseStudy }) {
   const viewer = useViewer();
   const showComment = !viewer?.isSpecialist && !caseStudy.review;
   const showTestimonialRequest = viewer?.isSpecialist && !caseStudy.review;
+
   return (
     <div id="caseStudyIntro">
       <SpecialistCompanyRelation
@@ -69,7 +70,7 @@ export default function ArticleIntro({ caseStudy }) {
       <SpecialistInfo specialist={caseStudy.specialist} />
       <Title>{caseStudy.title}</Title>
       <CompanyBox caseStudy={caseStudy} />
-      <Testimonial review={caseStudy.review} />
+      <Testimonial review={caseStudy.review} className="mb-8" />
       {showTestimonialRequest && (
         <TestimonialRequest
           id={caseStudy.id}
