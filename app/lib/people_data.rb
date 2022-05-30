@@ -83,6 +83,7 @@ class PeopleData
   end
 
   def dump_data
+    FileUtils.mkdir_p(TestData::PRUNED_DIR)
     TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
   end
 
@@ -127,7 +128,7 @@ class PeopleData
             permissions: %w[admin team_manager editor],
             features: [],
             confirmed_at: 1.hour.ago,
-            completed_tutorials: %w[onboarding],
+            completed_tutorials: %w[onboarding feed],
             updated_at: now,
             created_at: now
           },

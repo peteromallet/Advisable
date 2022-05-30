@@ -18,7 +18,6 @@ module CaseStudy
     has_many :industries, dependent: :destroy
     has_many :sections, dependent: :destroy
     has_many :contents, through: :sections
-    has_many :search_feedbacks, dependent: :destroy
     has_many :shares, class_name: "SharedArticle", dependent: :destroy
     has_many :embeddings, dependent: :destroy
     has_many :interest_articles, dependent: :destroy
