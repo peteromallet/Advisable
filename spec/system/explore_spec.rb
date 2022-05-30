@@ -148,6 +148,11 @@ RSpec.describe "Discover", type: :system do
 
   it "brings the user through a walkthrough" do
     user.account.update(completed_tutorials: ["onboarding"])
+    interest = create(:case_study_interest, account: user.account)
+    articles = create_list(:case_study_article, 10)
+    articles.each do |article|
+      create(:case_study_interest_article, interest:, article:)
+    end
     authenticate_as(user)
     visit("/explore")
     expect(page).to have_content("Welcome to Advisable")
