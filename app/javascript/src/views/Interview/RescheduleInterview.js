@@ -11,7 +11,7 @@ export default function RescheduleInterview({ interview }) {
   const isSpecialist = viewer.isSpecialist;
 
   if (!ALLOWED_STATUSES.includes(interview.status)) {
-    return <Navigate to={`/interviews/${interview.id}`} />;
+    return <Navigate replace to={`/interviews/${interview.id}`} />;
   }
 
   return isSpecialist ? (

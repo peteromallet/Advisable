@@ -29,7 +29,7 @@ function Invoices() {
   const { loading, error, data, client } = useInvoices();
 
   if (!viewer.isTeamManager) {
-    return <Navigate to="/settings" />;
+    return <Navigate replace to="/settings" />;
   }
 
   if (loading) return <Loading />;

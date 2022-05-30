@@ -26,7 +26,7 @@ export default function NewAgreement() {
         <Route path="confirm" element={<ConfirmAgreement {...data} />} />
         <Route
           path="*"
-          element={<Navigate to={`/new_agreement/${userId}`} />}
+          element={<Navigate replace to={`/new_agreement/${userId}`} />}
         />
       </Routes>
     </Container>

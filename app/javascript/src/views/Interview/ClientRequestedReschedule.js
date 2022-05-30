@@ -10,7 +10,7 @@ export default function ClientRequestedReschedule({ interview }) {
   const { isSpecialist } = useViewer();
 
   if (isSpecialist) {
-    return <Navigate to={`/interview_request/${id}`} />;
+    return <Navigate replace to={`/interview_request/${id}`} />;
   }
 
   return (

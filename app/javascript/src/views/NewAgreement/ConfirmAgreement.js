@@ -59,7 +59,7 @@ export default function ConfirmAgreement({ user }) {
   const { uploading } = attachmentProps;
 
   if (!location.state?.invoicing) {
-    return <Navigate to={`/new_agreement/${userId}/invoicing`} />;
+    return <Navigate replace to={`/new_agreement/${userId}/invoicing`} />;
   }
 
   const handleSubmit = async (values) => {

@@ -20,7 +20,7 @@ const PaymentSettings = () => {
   const [updateInvoiceSettings] = useMutation(UPDATE_INVOICE_SETTINGS);
 
   if (!viewer.isTeamManager) {
-    return <Navigate to="/settings" />;
+    return <Navigate replace to="/settings" />;
   }
 
   const handleSubmit = async (values, formik) => {

@@ -8,7 +8,7 @@ export default function MoreTimeOptionsAdded({ interview }) {
   const isSpecialist = viewer.isSpecialist;
 
   return isSpecialist ? (
-    <Navigate to={`/interview_request/${interview.id}`} />
+    <Navigate replace to={`/interview_request/${interview.id}`} />
   ) : (
     <CallRequested interview={interview} />
   );

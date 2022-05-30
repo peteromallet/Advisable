@@ -66,7 +66,9 @@ export default function InterviewRequestView() {
           />
           <Route
             path="*"
-            element={<Navigate to={`/interview_request/${interview.id}`} />}
+            element={
+              <Navigate replace to={`/interview_request/${interview.id}`} />
+            }
           />
         </Routes>
       )}
