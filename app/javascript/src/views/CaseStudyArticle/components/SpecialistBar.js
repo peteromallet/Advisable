@@ -1,14 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
-import { useBreakpoint } from "@advisable/donut";
-import ConnectButton from "src/components/ConnectButton";
+import { useBreakpoint, useModal, DialogDisclosure } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
 import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
 import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
+import ConnectModal from "src/components/ConnectModal";
+import Button from "src/components/Button";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -26,6 +27,7 @@ export default function SpecialistBar({ article }) {
   const viewer = useViewer();
   const location = useLocation();
   const sUp = useBreakpoint("sUp");
+  const modal = useModal();
   const { back } = location.state || {};
   const { specialist } = article;
 
@@ -60,13 +62,12 @@ export default function SpecialistBar({ article }) {
           <ShareArticleButton slug={article.slug} />
           <FavoriteArticleButton article={article} />
           {article.specialist.id !== viewer?.id && (
-            <ConnectButton
-              specialist={specialist}
-              circular={!sUp}
-              className="ml-auto"
-            >
-              Connect
-            </ConnectButton>
+            <>
+              <ConnectModal modal={modal} specialist={article.specialist} />
+              <DialogDisclosure {...modal}>
+                {(disclosure) => <Button {...disclosure}>Message</Button>}
+              </DialogDisclosure>
+            </>
           )}
         </div>
       </div>

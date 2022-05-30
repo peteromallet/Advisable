@@ -1,9 +1,0 @@
-#import "../../../graphql/fragments/viewerFields.graphql"
-
-mutation CreateClientAccount($input: CreateClientAccountInput!) {
-  createClientAccount(input: $input) {
-    viewer {
-      ...ViewerFields
-    }
-  }
-}

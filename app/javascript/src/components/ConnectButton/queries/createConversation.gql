@@ -1,7 +1,0 @@
-mutation CreateConversationFromProfile($input: CreateConversationInput!) {
-  createConversation(input: $input) {
-    conversation {
-      id
-    }
-  }
-}

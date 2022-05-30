@@ -1,11 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  Link,
-  useBreakpoint,
-  useModal,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Link, useModal, DialogDisclosure } from "@advisable/donut";
 import Timezone from "./Timezone";
 import Availability from "./Availability";
 import ConnectModal from "src/components/ConnectModal";

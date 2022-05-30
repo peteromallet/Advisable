@@ -13,7 +13,7 @@ function RequestCallMessage({ state, specialist, onBack }) {
     await requestInterview({
       variables: {
         input: {
-          specialist: specialist.id,
+          accounts: [specialist.account.id],
           message: values.message,
         },
       },
