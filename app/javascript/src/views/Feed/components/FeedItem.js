@@ -31,6 +31,39 @@ const Availability = ({ unavailableUntil }) => {
   );
 };
 
+function ArticleResults({ article }) {
+  const results = article.resultsContent?.results || [];
+
+  if (results.length === 0) {
+    return (
+      <p className="line-clamp-3 font-inter text-sm md:text-[15px] md:leading-relaxed text-neutral-600">
+        {article.subtitle}
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <h5 className="text-xs font-semibold uppercase leading-none mb-3 text-neutral500">
+        Results
+      </h5>
+      <ul className="space-y-2">
+        {results.map((result, index) => (
+          <li
+            key={result}
+            className="flex align-start gap-2 font-inter text-[15px] text-neutral800"
+          >
+            <div className="w-5 h-5 rounded-full bg-blue100 text-blue800 font-semibold grid place-items-center text-xs flex-shrink-0">
+              {index + 1}
+            </div>
+            {result}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function FeedItem({ article, interest }) {
   const location = useLocation();
 
@@ -69,12 +102,10 @@ function FeedItem({ article, interest }) {
           className="group"
           state={{ ...location.state, back: true }}
         >
-          <h3 className="block text-xl md:text-[24px] md:leading-8 font-[560] tracking-tight mb-2.5 text-neutral900 group-hover:underline">
+          <h3 className="block text-xl md:text-[24px] md:leading-8 font-[650] tracking-tight mb-5 text-neutral900 group-hover:underline">
             {article.title}
           </h3>
-          <p className="line-clamp-3 font-inter text-sm md:text-[15px] md:leading-relaxed text-neutral-600">
-            {article.subtitle}
-          </p>
+          <ArticleResults article={article} />
         </Link>
 
         <div className="flex flex-nowrap pt-6 items-center justify-between">
