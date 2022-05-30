@@ -25,4 +25,8 @@ fragment ArticleFields on CaseStudyArticle {
     favicon
     businessType
   }
+  resultsContent {
+    id
+    results
+  }
 }

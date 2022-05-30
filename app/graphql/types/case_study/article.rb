@@ -66,6 +66,11 @@ module Types
       field :similar, [Article], null: false
       field :shares, [SharedArticle], null: true
       field :review, Types::CaseStudyArticleReview, null: true
+
+      field :results_content, Types::CaseStudy::ResultsContent, null: true
+      def results_content
+        object.contents.find_by(type: "CaseStudy::ResultsContent")
+      end
     end
   end
 end
