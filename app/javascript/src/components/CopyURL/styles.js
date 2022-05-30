@@ -1,21 +1,6 @@
 import { rgba } from "polished";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { theme } from "@advisable/donut";
-
-const copiedAnimation = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  25%, 75% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-`;
 
 export const CopyURL = styled.div`
   height: 48px;
@@ -81,19 +66,5 @@ export const CopyURL = styled.div`
   button:hover {
     color: ${theme.colors.blue700};
     box-shadow: 0px 1px 8px -2px rgba(0, 20, 90, 0.4);
-  }
-
-  span {
-    right: 0;
-    top: -28px;
-    color: ${theme.colors.blue500};
-    font-size: 12px;
-    position: absolute;
-    background: white;
-    padding: ${theme.space[1]};
-    border-radius: 8px;
-    box-shadow: 0px 1px 5px rgba(0, 20, 90, 0.18);
-
-    animation: ${copiedAnimation} 1.5s cubic-bezier(0.3, 0, 0, 1) forwards;
   }
 `;
