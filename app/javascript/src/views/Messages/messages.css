@@ -1,0 +1,17 @@
+.conversation-link {
+  height: 72px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0 12px 0 8px;
+  border-left: 4px solid transparent;
+
+  &:hover {
+    background: var(--color-neutral50);
+  }
+
+  &.active {
+    border-left-color: var(--color-neutral900);
+    background: var(--color-neutral-100);
+  }
+}

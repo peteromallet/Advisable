@@ -1,15 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import {
-  theme,
-  Box,
-  Text,
-  Avatar,
-  StyledAvatar,
-  StyledBadge,
-  Badge,
-} from "@advisable/donut";
+import { Avatar, StyledAvatar } from "@advisable/donut";
 import commaSeparated from "src/utilities/commaSeparated";
 
 export const StyledAvatars = styled.div`
@@ -117,41 +109,13 @@ export const StyledAvatars = styled.div`
   }
 `;
 
-const StyledConversationLink = styled(NavLink)`
-  margin: 8px -4px;
-  display: flex;
-  align-items: center;
-  border-radius: 12px;
-  padding: 0 12px 0 4px;
-  height: 64px;
-
-  &:hover {
-    background: ${theme.colors.neutral50};
-
-    ${StyledAvatar} {
-      border-color: ${theme.colors.neutral50};
-    }
-  }
-
-  &.active {
-    background: ${theme.colors.neutral100};
-
-    ${StyledAvatar} {
-      border-color: ${theme.colors.neutral100};
-    }
-
-    ${StyledBadge} {
-      display: none;
-    }
-  }
-`;
-
 export default function ConversationLink({ conversation }) {
   const others = conversation.participants.filter((p) => !p.isViewer);
 
   return (
-    <StyledConversationLink
+    <NavLink
       id={conversation.id}
+      className="conversation-link"
       data-testid="conversationLink"
       to={`/messages/${conversation.id}`}
     >
@@ -165,21 +129,24 @@ export default function ConversationLink({ conversation }) {
           />
         ))}
       </StyledAvatars>
-      <Box width="100%" paddingLeft={2} minWidth="0">
-        <Text fontWeight={500} color="neutral900" marginBottom={1.5} $truncate>
+      <div className="pl-2 min-w-0 w-full">
+        <h5 className="font-medium text-neutral900 truncate">
           {commaSeparated(others.map((p) => p.firstName))}
-        </Text>
-        <Text fontSize="sm" color="neutral600" $truncate>
+        </h5>
+        <p className="text-sm text-neutral600 truncate">
           {conversation.lastMessage?.content || "-"}
-        </Text>
-      </Box>
+        </p>
+      </div>
       {conversation.unreadCount > 0 && (
-        <Box flexShrink={0} marginLeft={4}>
-          <Badge data-testid="conversationUnreadCount">
+        <div className="flex-shrink-0 ml-4 mr-2 right-2 top-2 static md:absolute xl:static">
+          <div
+            className="py-1 px-2 rounded-full bg-blue500 text-white text-xs font-semibold leading-none"
+            data-testid="conversationUnreadCount"
+          >
             {conversation.unreadCount}
-          </Badge>
-        </Box>
+          </div>
+        </div>
       )}
-    </StyledConversationLink>
+    </NavLink>
   );
 }

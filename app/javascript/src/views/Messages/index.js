@@ -7,11 +7,12 @@ import Conversation from "./components/Conversation";
 import NoConversations from "./components/NoConversations";
 import MessagesSidebar from "./components/MessagesSidebar";
 import useOrderedConversations from "./hooks/useOrderedConversations";
+import "./messages.css";
 
 export default function Messages() {
   useBackground("beige");
   const { data, loading } = useConversations();
-  const isDesktop = useBreakpoint("lUp");
+  const isDesktop = useBreakpoint("mUp");
 
   const conversations = data?.conversations?.nodes || [];
   const hasConversations = conversations.length > 0;

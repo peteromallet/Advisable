@@ -1,7 +1,7 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
 import SimpleBar from "simplebar-react";
-import { Box, Heading, Text, Skeleton } from "@advisable/donut";
+import { Box, Text, Skeleton } from "@advisable/donut";
 import ConversationsList from "./ConversationsList";
 
 function LoadingConversations() {
@@ -14,17 +14,18 @@ function LoadingConversations() {
   );
 }
 
+const sidebarClasses = `
+  flex-shrink-0
+  bg-white
+  bg-white
+  h-[calc(100vh - var(--header-height))]
+  w-full md:w-[80px] xl:w-[350px]
+  shadow
+`;
+
 export default function MessagesSidebar({ loading, conversations }) {
   return (
-    <Box
-      flexShrink="0"
-      bg="white"
-      height="calc(100vh - var(--header-height))"
-      width={{ _: "100%", l: "360px" }}
-      css={`
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-      `}
-    >
+    <div className={sidebarClasses}>
       <Sentry.ErrorBoundary
         fallback={
           <>
@@ -32,17 +33,15 @@ export default function MessagesSidebar({ loading, conversations }) {
           </>
         }
       >
-        <Box display="flex" flexDirection="column" height="100%">
-          <div className="pt-4 pb-1 px-6 flex flex-shrink-0 items-center">
+        <div className="flex flex-col h-viewport">
+          <div className="py-3 px-6 flex md:hidden xl:flex flex-shrink-0 items-center border-b border-solid border-neutral100">
             <h3 className="text-lg font-medium">Messages</h3>
           </div>
-          <SimpleBar
-            style={{ height: "calc(100vh - var(--header-height) - 72px)" }}
-          >
+          <SimpleBar className="flex-1 h-full min-h-0">
             {loading && <LoadingConversations />}
-            <Box paddingX={4}>
+            <div>
               <ConversationsList conversations={conversations} />
-            </Box>
+            </div>
             {!loading && conversations.length === 0 && (
               <Text
                 textAlign="center"
@@ -54,8 +53,8 @@ export default function MessagesSidebar({ loading, conversations }) {
               </Text>
             )}
           </SimpleBar>
-        </Box>
+        </div>
       </Sentry.ErrorBoundary>
-    </Box>
+    </div>
   );
 }
