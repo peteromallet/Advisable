@@ -31,7 +31,7 @@ export default function RequestConsultationMessage({ specialist, onSubmit }) {
     await requestInterview({
       variables: {
         input: {
-          specialist: specialist.id,
+          accounts: [specialist.account.id],
           message: values.message,
         },
       },
