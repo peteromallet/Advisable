@@ -361,7 +361,7 @@ export default function AgreementCreatedMessage({ message }) {
               variant={viewer.isClient && isPending ? "gradient" : "secondary"}
               {...disclosure}
             >
-              {viewer.isClient ? "Respond" : "View"}
+              {viewer.isClient && isPending ? "Respond" : "View"}
             </Button>
           )}
         </DialogDisclosure>
