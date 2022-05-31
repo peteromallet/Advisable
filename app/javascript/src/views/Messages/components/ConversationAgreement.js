@@ -8,6 +8,7 @@ import ConversationAction, {
 } from "./ConversationAction";
 import ConversationActionsList from "./ConversationActionsList";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
+import { isSpecialistAndUser } from "../utilities";
 
 function ConversationActiveAgreement({ conversation }) {
   const viewer = useViewer();
@@ -30,7 +31,7 @@ function ConversationActiveAgreement({ conversation }) {
           hourlyRate={agreement.hourlyRate}
         />
       </Modal>
-      <p className="leading-tight text-[15px] text-neutral-700 mb-4">
+      <p className="leading-tight text-[15px] text-neutral-700 mb-2">
         You have an active agreement with {other.firstName}.
       </p>
       <ConversationActionsList>
@@ -67,7 +68,7 @@ function ConversationNoAgreement({ conversation }) {
   if (viewer.isSpecialist) {
     return (
       <>
-        <p className="leading-tight text-[15px] text-neutral-700 mb-4">
+        <p className="leading-tight text-[15px] text-neutral-700 mb-2">
           Create an agreement with {other.firstName} to start working together
           and accept payments from them.
         </p>
@@ -77,7 +78,7 @@ function ConversationNoAgreement({ conversation }) {
             variant="blue"
             onClick={handleRequest}
           >
-            Request to work together
+            Create agreement
           </ConversationAction>
         </ConversationActionsList>
       </>
@@ -94,8 +95,12 @@ function ConversationNoAgreement({ conversation }) {
 export default function ConversationAgreement({ conversation }) {
   const { agreement } = conversation;
 
+  if (!isSpecialistAndUser(conversation)) {
+    return null;
+  }
+
   return (
-    <div className="p-8 border-t border-solid border-neutral100">
+    <div className="p-7">
       <h4 className="leading-none font-medium mb-2">Collaboration</h4>
       {agreement ? (
         <ConversationActiveAgreement conversation={conversation} />

@@ -6,11 +6,13 @@ const classNames = composeStyles({
   base: `
     flex
     group
+    w-full
     items-center
     cursor-pointer
     font-inter
-    text-[15px] text-neutral-700 hover:text-blue600
-    py-3 first:pt-0 last:pb-0
+    outline-none
+    text-left text-[15px] text-neutral-700 hover:text-blue600
+    py-3
   `,
 });
 

@@ -9,7 +9,7 @@ import ProfileLink from "./ProfileLink";
 export default function ConversationDetails({ conversation }) {
   return (
     <>
-      <div className="text-center p-8">
+      <div className="text-center p-8 border-b border-solid border-neutral100">
         <ParticipantAvatars
           className="mb-4"
           conversation={conversation}
