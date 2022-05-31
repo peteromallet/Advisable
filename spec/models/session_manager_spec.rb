@@ -110,7 +110,7 @@ RSpec.describe SessionManager do
     it "overwrites current_user" do
       session = double
       allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
-      allow(session).to receive(:[]).with(:admin_override).and_return(specialist.to_global_id)
+      allow(session).to receive(:[]).with(:impersonating).and_return(specialist.to_global_id)
 
       manager = described_class.new(session:, cookies: mock_cookies)
       expect(manager.current_user).to eq(specialist)
@@ -134,10 +134,10 @@ RSpec.describe SessionManager do
       it "does not overwrite current_user" do
         session = double
         allow(session).to receive(:[]).with(:account_uid).and_return(account.uid)
-        allow(session).to receive(:[]).with(:admin_override).and_return(payment_request.to_global_id)
+        allow(session).to receive(:[]).with(:impersonating).and_return(payment_request.to_global_id)
 
         manager = described_class.new(session:, cookies: mock_cookies)
-        expect(session).to receive(:delete).with(:admin_override)
+        expect(session).to receive(:delete).with(:impersonating)
         expect(manager.current_user).to eq(user)
       end
     end

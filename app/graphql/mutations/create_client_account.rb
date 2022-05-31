@@ -35,7 +35,7 @@ module Mutations
           login_as(account)
           user.sync_to_airtable
           user.send_confirmation_email
-          ::Analytics.bg_track(current_user, "Client Signed Up")
+          track_event("Client Signed Up")
           GeocodeAccountJob.perform_later(account, context[:client_ip])
           {viewer: user}
         else

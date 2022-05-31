@@ -23,7 +23,7 @@ module Mutations
       ApiError.invalid_request("NO_PARTICIPANTS", "You must have at least one participant besides yourself!") if accounts.size < 2
 
       conversation = Conversation.by_accounts(accounts) do
-        Analytics.bg_track(current_user, "Created Conversation", {accounts: accounts.map(&:uid)})
+        track_event("Created Conversation", {accounts: accounts.map(&:uid)})
         if accounts.size == 2 && current_user.is_a?(User) && Specialist.exists?(account: participant_accounts)
           Slack.bg_message(
             channel: "consultation_requests",
