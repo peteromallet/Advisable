@@ -19,7 +19,7 @@ const sidebarClasses = `
   bg-white
   bg-white
   h-[calc(100vh - var(--header-height))]
-  w-full md:w-[80px] xl:w-[350px]
+  w-full md:w-[80px] xl:w-[340px]
   shadow
 `;
 

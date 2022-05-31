@@ -53,7 +53,7 @@ RSpec.describe "Agreements", type: :system do
   it "allows client to accept an agreement" do
     authenticate_as(user)
     visit("/messages/#{conversation.uid}")
-    click_button("Review")
+    click_button("Respond")
     click_button("Accept")
     expect(page).to have_content("Michael Scott accepted Dwight’s request to work together")
   end
@@ -61,7 +61,7 @@ RSpec.describe "Agreements", type: :system do
   it "allows client to decline an agreement" do
     authenticate_as(user)
     visit("/messages/#{conversation.uid}")
-    click_button("Review")
+    click_button("Respond")
     click_button("Decline")
     within("*[role='dialog']") do
       fill_in("message", with: "Not interested")
@@ -78,7 +78,7 @@ RSpec.describe "Agreements", type: :system do
       authenticate_as(user)
       user.company.update(payments_setup: false)
       visit("/messages/#{conversation.uid}")
-      click_button("Review")
+      click_button("Respond")
       click_button("Accept")
       fill_in("name", with: "Michael Scott")
       fill_in("companyName", with: "Dunder Mifflin")
