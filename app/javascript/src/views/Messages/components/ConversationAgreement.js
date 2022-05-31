@@ -31,8 +31,13 @@ function ConversationActiveAgreement({ conversation }) {
           hourlyRate={agreement.hourlyRate}
         />
       </Modal>
+      <h4 className="leading-tight font-medium mb-2">Agreement</h4>
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
-        You have an active agreement with {other.firstName}.
+        {viewer.isSpecialist ? (
+          <>You have an active agreement with {other.user.company.name}.</>
+        ) : (
+          <>You have an active agreement with {other.firstName}.</>
+        )}
       </p>
       <ConversationActionsList>
         {viewer.isSpecialist && (
@@ -68,7 +73,10 @@ function ConversationNoAgreement({ conversation }) {
   if (viewer.isSpecialist) {
     return (
       <>
-        <p className="leading-tight text-[15px] text-neutral-700 mb-2">
+        <h4 className="leading-none font-medium mb-2">
+          Work with {other.user.company.name}
+        </h4>
+        <p className="text-[15px] text-neutral-700 mb-2">
           Create an agreement with {other.firstName} to start working together
           and accept payments from them.
         </p>
@@ -86,9 +94,16 @@ function ConversationNoAgreement({ conversation }) {
   }
 
   return (
-    <p className="leading-tight text-[15px] text-neutral-700 mb-4">
-      {other.firstName} has not created an agreement with you yet.
-    </p>
+    <>
+      <h4 className="leading-none font-medium mb-2">
+        Work with {other.firstName}
+      </h4>
+      <p className="text-[15px] text-neutral-700 mb-4">
+        {other.firstName} hasn’t created an agreement to work together yet. If
+        you want to start working with them, ask them to share an agreement on
+        Advisable.
+      </p>
+    </>
   );
 }
 
@@ -101,7 +116,6 @@ export default function ConversationAgreement({ conversation }) {
 
   return (
     <div className="p-7">
-      <h4 className="leading-none font-medium mb-2">Collaboration</h4>
       {agreement ? (
         <ConversationActiveAgreement conversation={conversation} />
       ) : (
