@@ -1,9 +1,4 @@
-fragment AgreementFields on Agreement {
-  id
-  invoicing
-  hourlyRate
-  collaboration
-}
+#import './agreementFields.gql'
 
 fragment ConversationFields on Conversation {
   id

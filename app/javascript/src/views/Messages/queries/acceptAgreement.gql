@@ -1,8 +1,12 @@
+#import './agreementFields.gql'
+
 mutation AcceptAgreement($input: AcceptAgreementInput!) {
   acceptAgreement(input: $input) {
     agreement {
-      id
-      status
+      ...AgreementFields
+      specialist {
+        id
+      }
     }
   }
 }
