@@ -1,4 +1,45 @@
-#import "./conversationFields.gql"
+fragment AgreementFields on Agreement {
+  id
+  invoicing
+  hourlyRate
+  collaboration
+}
+
+fragment ConversationFields on Conversation {
+  id
+  unreadCount
+  participants {
+    id
+    firstName
+    lastName
+    name
+    avatar
+    isViewer
+    user {
+      id
+      agreement {
+        ...AgreementFields
+      }
+      company {
+        id
+        name
+      }
+    }
+    specialist {
+      id
+      name
+      profilePath
+      agreement {
+        ...AgreementFields
+      }
+    }
+  }
+  lastMessage {
+    id
+    content
+    createdAt
+  }
+}
 
 query Conversations {
   currentAccount {

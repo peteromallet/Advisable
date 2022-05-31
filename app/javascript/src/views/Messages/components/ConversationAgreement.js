@@ -8,13 +8,13 @@ import ConversationAction, {
 } from "./ConversationAction";
 import ConversationActionsList from "./ConversationActionsList";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
-import { isSpecialistAndUser } from "../utilities";
+import { agreementForConversation, isSpecialistAndUser } from "../utilities";
 
 function ConversationActiveAgreement({ conversation }) {
   const viewer = useViewer();
   const detailsModal = useModal();
   const other = conversation.participants.find((p) => !p.isViewer);
-  const { agreement } = conversation;
+  const agreement = agreementForConversation(conversation);
   const user = conversation.participants.find((p) => p.user)?.user;
   const specialist = conversation.participants.find(
     (p) => p.specialist,
@@ -93,7 +93,7 @@ function ConversationNoAgreement({ conversation }) {
 }
 
 export default function ConversationAgreement({ conversation }) {
-  const { agreement } = conversation;
+  const agreement = agreementForConversation(conversation);
 
   if (!isSpecialistAndUser(conversation)) {
     return null;
