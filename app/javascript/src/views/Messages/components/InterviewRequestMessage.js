@@ -122,6 +122,7 @@ function InterviewRequestModal({ message, modal }) {
         <DeclineInterviewRequest
           message={message}
           onBack={() => setDecline(false)}
+          onDecline={modal.hide}
         />
       ) : (
         <AcceptInterviewRequest
