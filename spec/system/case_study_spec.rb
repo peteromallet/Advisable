@@ -40,7 +40,7 @@ RSpec.describe "Case study view", type: :system do
     expect(page).to have_content(/verify this project/i)
     expect(page).to have_content(/send this link to the client/i)
     click_button("copy url")
-    expect(page).to have_content(/copied to clipboard/i)
+    expect(page).to have_content(/link copied/i)
   end
 
   it "copy link to clipboard" do
