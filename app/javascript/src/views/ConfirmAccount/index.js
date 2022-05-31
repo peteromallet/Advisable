@@ -44,7 +44,7 @@ const ConfirmAccount = () => {
   }, [confirmAccount]);
 
   if (!parsed.email) {
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   return <Loading />;

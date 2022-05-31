@@ -28,7 +28,7 @@ export default function SetPassword() {
   };
 
   if (!viewer.needsToSetAPassword) {
-    return <Navigate to={from} />;
+    return <Navigate replace to={from} />;
   }
 
   const initialValues = {

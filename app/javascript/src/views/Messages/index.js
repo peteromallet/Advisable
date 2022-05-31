@@ -44,7 +44,7 @@ export default function Messages() {
             />
           )}
           {hasConversations && isDesktop && (
-            <Route path="*" element={<Navigate to={ordered[0].id} />} />
+            <Route path="*" element={<Navigate replace to={ordered[0].id} />} />
           )}
           {!loading && isDesktop && (
             <Route path="*" element={<NoConversations />} />

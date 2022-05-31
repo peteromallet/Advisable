@@ -9,7 +9,7 @@ export default function Team() {
   const viewer = useViewer();
 
   if (!viewer.isTeamManager) {
-    return <Navigate to="/settings" />;
+    return <Navigate replace to="/settings" />;
   }
 
   return (

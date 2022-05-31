@@ -15,7 +15,12 @@ export default function ReviewIntro({ data }) {
     return <Reviewed />;
   }
   if (data.oauthViewer) {
-    return <Navigate to={`/review/${id}/case_studies/${article_id}/ratings`} />;
+    return (
+      <Navigate
+        replace
+        to={`/review/${id}/case_studies/${article_id}/ratings`}
+      />
+    );
   }
 
   return (

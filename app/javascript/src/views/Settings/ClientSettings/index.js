@@ -49,7 +49,7 @@ const ClientSettings = () => {
               <Route
                 exact
                 path="/"
-                element={<Navigate to="/settings/account" />}
+                element={<Navigate replace to="/settings/account" />}
               />
             )}
           </Routes>

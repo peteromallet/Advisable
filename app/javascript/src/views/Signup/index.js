@@ -31,7 +31,7 @@ const Signup = () => {
   const notice = location?.state?.notice;
 
   if (viewer) {
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   const handleSubmit = async (values, formikBag) => {

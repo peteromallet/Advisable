@@ -8,7 +8,7 @@ export default function Invoices() {
     <Routes>
       <Route path="/:id" element={<Invoice />} />
       <Route path="/" element={<InvoicesList />} />
-      <Route path="*" element={<Navigate to="/settings/invoices" />} />
+      <Route path="*" element={<Navigate replace to="/settings/invoices" />} />
     </Routes>
   );
 }

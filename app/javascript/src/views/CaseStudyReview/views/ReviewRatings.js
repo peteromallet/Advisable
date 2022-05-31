@@ -76,7 +76,10 @@ function ReviewRatings({ data }) {
   }
   if (!oauthViewer) {
     return (
-      <Navigate to={`/review/${specialist.id}/case_studies/${article_id}`} />
+      <Navigate
+        replace
+        to={`/review/${specialist.id}/case_studies/${article_id}`}
+      />
     );
   }
 

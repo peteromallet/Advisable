@@ -44,7 +44,7 @@ export default function InvoicingType({ user }) {
   const companyName = user.company.name;
 
   if (!location.state?.collaboration) {
-    return <Navigate to={`/new_agreement/${userId}/collaboration`} />;
+    return <Navigate replace to={`/new_agreement/${userId}/collaboration`} />;
   }
 
   const handleSubmit = (values) => {

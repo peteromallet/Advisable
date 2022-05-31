@@ -31,7 +31,7 @@ const PaymentRequests = lazy(() => import("./views/PaymentRequests"));
 
 function RedirectToFreelancerProfile() {
   const viewer = useViewer();
-  return <Navigate to={viewer.profilePath} />;
+  return <Navigate replace to={viewer.profilePath} />;
 }
 
 const ApplicationRoutes = () => {
@@ -48,11 +48,11 @@ const ApplicationRoutes = () => {
               <Route
                 path="/"
                 exact
-                element={<Navigate exact to="/explore" />}
+                element={<Navigate replace exact to="/explore" />}
               />
             )}
 
-            <Route path="/set_password" element={<Navigate to="/" />} />
+            <Route path="/set_password" element={<Navigate replace to="/" />} />
 
             <Route
               path="/"

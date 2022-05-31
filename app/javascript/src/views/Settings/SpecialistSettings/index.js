@@ -45,7 +45,10 @@ function SpecialistSettings() {
             {/* If the user is not on a small screen, then redirect them to the
           first settings page when they are on exactly /settings */}
             {breakpointS && (
-              <Route path="*" element={<Navigate to="/settings/general" />} />
+              <Route
+                path="*"
+                element={<Navigate replace to="/settings/general" />}
+              />
             )}
           </Routes>
         </Container>
