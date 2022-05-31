@@ -15,6 +15,7 @@ import CalendarIllustration from "src/illustrations/zest/calendar";
 import { Link, useLocation } from "react-router-dom";
 import CircularButton from "src/components/CircularButton";
 import { useDeclineInterview } from "../queries";
+import MessageCTA from "./MessageCTA";
 
 function DeclineInterviewRequest({ message, onBack, onDecline }) {
   const [decline, { loading }] = useDeclineInterview();
@@ -157,23 +158,22 @@ function InterviewRequestForRecipient({ message }) {
 
   return (
     <BaseMessage message={message} highlight={highlight}>
-      <div className="p-4 border-2 border-solid border-neutral100 rounded-lg flex">
-        <div className="shrink-0 w-10 h-10 bg-blue100 rounded-full grid place-items-center">
-          <Calendar className="w-5 h-5 text-blue800" />
-        </div>
-        <div className="flex-1 px-3">
-          <h5 className="font-medium leading-none text-lg mb-1">
-            {sender} requested a call with you
-          </h5>
-          <p className="text-neutral700">Check their availability</p>
-        </div>
-        {isPending && (
-          <DialogDisclosure {...modal}>
-            {(disclosure) => <Button {...disclosure}>Respond</Button>}
-          </DialogDisclosure>
-        )}
-        <InterviewRequestModal modal={modal} message={message} />
-      </div>
+      <MessageCTA
+        icon={Calendar}
+        title={`${sender} requested a call with you`}
+        subText="Check their availability"
+        onClick={isPending && modal.show}
+        action={
+          isPending && (
+            <>
+              <DialogDisclosure {...modal}>
+                {(disclosure) => <Button {...disclosure}>Respond</Button>}
+              </DialogDisclosure>
+              <InterviewRequestModal modal={modal} message={message} />
+            </>
+          )
+        }
+      />
     </BaseMessage>
   );
 }
@@ -181,7 +181,7 @@ function InterviewRequestForRecipient({ message }) {
 function InterviewRequestForSender({ message }) {
   return (
     <BaseMessage message={message}>
-      <div className="p-4 border-2 border-solid border-neutral100 rounded-lg flex">
+      <div className="p-4 rounded-lg bg-neutral-100 flex items-center leading-none">
         {message.author?.name} requested a call
       </div>
     </BaseMessage>

@@ -7,7 +7,6 @@ import {
   DialogDisclosure,
   Box,
   Text,
-  Circle,
   Textarea,
   Heading,
 } from "@advisable/donut";
@@ -15,7 +14,7 @@ import { BaseMessage } from "./Message";
 import {
   ArrowLeft,
   BadgeCheck,
-  Calendar,
+  DocumentText,
   XCircle,
 } from "@styled-icons/heroicons-solid";
 import {
@@ -30,9 +29,9 @@ import useViewer from "src/hooks/useViewer";
 import CircularButton from "src/components/CircularButton";
 import { Field, Form, Formik } from "formik";
 import SubmitButton from "src/components/SubmitButton";
-import css from "@styled-system/css";
 import { Loading } from "src/components";
 import InvoiceSettingsFields from "src/components/InvoiceSettingsFields";
+import MessageCTA from "./MessageCTA";
 
 const declineValidationSchema = object().shape({
   message: string().required(),
@@ -329,43 +328,27 @@ export default function AgreementCreatedMessage({ message }) {
 
   return (
     <BaseMessage message={message} highlight={highlight}>
-      <Box
-        padding={4}
-        borderRadius="20px"
-        border="2px solid"
-        display="flex"
-        alignItems="center"
+      <MessageCTA
+        icon={DocumentText}
         onClick={modal.show}
-        css={css({
-          cursor: "pointer",
-          borderColor: "neutral300",
-          "&:hover": {
-            borderColor: "neutral400",
-          },
-        })}
-      >
-        <Circle size={40} bg="neutral200" color="neutral800">
-          <Calendar size={20} />
-        </Circle>
-        <Box paddingLeft={3} flex={1}>
-          <Text fontSize="17px" fontWeight={560} marginBottom={1}>
-            {sender} requested to work together
-          </Text>
-          <Text color="neutral600" fontSize="sm">
-            Review the agreement
-          </Text>
-        </Box>
-        <DialogDisclosure {...modal}>
-          {(disclosure) => (
-            <Button
-              variant={viewer.isClient && isPending ? "gradient" : "secondary"}
-              {...disclosure}
-            >
-              {viewer.isClient && isPending ? "Respond" : "View"}
-            </Button>
-          )}
-        </DialogDisclosure>
-      </Box>
+        title={`${sender} requested to work together`}
+        subText="Review the agreement"
+        action={
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button
+                variant={
+                  viewer.isClient && isPending ? "gradient" : "secondary"
+                }
+                {...disclosure}
+              >
+                {viewer.isClient && isPending ? "Respond" : "View"}
+              </Button>
+            )}
+          </DialogDisclosure>
+        }
+      />
+
       <AgreementModal agreement={message.agreement} modal={modal} />
     </BaseMessage>
   );
