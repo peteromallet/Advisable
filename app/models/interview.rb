@@ -16,6 +16,8 @@ class Interview < ApplicationRecord
     "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
   ].freeze
 
+  DECLINABLE_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added", "Need More Time Options"].freeze
+
   belongs_to :legacy_specialist, optional: true, class_name: "Specialist", foreign_key: :specialist_id, inverse_of: :interviews
   belongs_to :legacy_user, optional: true, class_name: "User", foreign_key: :user_id, inverse_of: :interviews
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"

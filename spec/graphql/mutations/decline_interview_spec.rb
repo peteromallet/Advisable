@@ -78,7 +78,17 @@ RSpec.describe Mutations::DeclineInterview do
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("INVALID_PERMISSIONS_FOR_FIELD")
+      expect(error).to eq("NOT_AUTHORIZED")
+    end
+  end
+
+  context "when the interview has already been declined" do
+    let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Specialist Declined") }
+
+    it "returns an error" do
+      response = AdvisableSchema.execute(query, context:)
+      error = response["errors"][0]["extensions"]["code"]
+      expect(error).to eq("CANNOT_DECLINE")
     end
   end
 end

@@ -10,7 +10,10 @@ module Mutations
     def authorized?(interview:, **_args)
       requires_specialist!
       interview = Interview.find_by!(uid: interview)
-      InterviewPolicy.new(current_user, interview).decline?
+      policy = InterviewPolicy.new(current_user, interview)
+      ApiError.not_authorized("You do not have permission to decline this interview") unless policy.decline?
+      ApiError.invalid_request("CANNOT_DECLINE", "Interview is not in a declinable state") unless Interview::DECLINABLE_STATUSES.include?(interview.status)
+      true
     end
 
     def resolve(interview:, reason: nil)
