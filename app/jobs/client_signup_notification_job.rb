@@ -7,7 +7,7 @@ class ClientSignupNotificationJob < ApplicationJob
     user = User.find(id)
     return if user.blank?
 
-    Slack.bg_message(
+    SlackMessageJob.perform_later(
       channel: "new_client_application",
       text: "New client signup",
       blocks: [

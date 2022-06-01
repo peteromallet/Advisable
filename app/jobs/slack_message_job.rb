@@ -6,7 +6,7 @@ class SlackMessageJob < ApplicationJob
   DEFAULT_OPTIONS = {username: "Advisable"}.freeze
 
   def perform(options)
-    return if ENV["SLACK_BOT_TOKEN"].nil?
+    return if ENV["SLACK_BOT_TOKEN"].blank?
 
     headers = {
       "Authorization" => "Bearer #{ENV.fetch('SLACK_BOT_TOKEN', nil)}",
