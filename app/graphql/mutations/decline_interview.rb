@@ -21,7 +21,7 @@ module Mutations
       create_system_message(interview)
       create_user_message(interview, reason)
       interview.update(status: "Specialist Declined", reason:)
-      Slack.bg_message(channel: "consultation_requests", text: "#{current_user.account.name} declined a consultation request from #{interview.user.name_with_company}. They provided the following reason: \"#{reason}\".")
+      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name} declined a consultation request from #{interview.user.name_with_company}. They provided the following reason: \"#{reason}\".")
       {interview:}
     end
 

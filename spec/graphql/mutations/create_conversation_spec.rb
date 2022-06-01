@@ -37,7 +37,6 @@ RSpec.describe Mutations::CreateConversation do
   let(:context) { {current_user:, current_account:} }
 
   it "creates the conversation and message and tracks event" do
-    expect(Slack).not_to receive(:bg_message).with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{participant.name} via messaging.")
     response = AdvisableSchema.execute(query, context:)
     uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
     expect(uids).to match_array([current_account.uid, participant.uid])
@@ -45,14 +44,15 @@ RSpec.describe Mutations::CreateConversation do
     expect(message["content"]).to eq("This is the message content.")
     expect(message["author"]["id"]).to eq(current_account.uid)
     expect(AnalyticsTrackJob).to have_been_enqueued.with(current_account.uid, "Created Conversation", {accounts: match_array([current_user.account.uid, participant.uid])})
+    expect(SlackMessageJob).not_to have_been_enqueued
   end
 
   context "when the conversation is between user and specialist" do
     let!(:specialist) { create(:specialist, account: participant) }
 
     it "sends a slack message" do
-      expect(Slack).to receive(:bg_message).with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{specialist.account.name} via messaging.")
       AdvisableSchema.execute(query, context:)
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{specialist.account.name} via messaging.").once
     end
   end
 
@@ -65,7 +65,6 @@ RSpec.describe Mutations::CreateConversation do
     end
 
     it "creates a message in that conversation and does not track event" do
-      expect(Slack).not_to receive(:bg_message)
       response = AdvisableSchema.execute(query, context:)
       expect(conversation.uid).to eq(response["data"]["createConversation"]["conversation"]["id"])
       uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
@@ -74,6 +73,7 @@ RSpec.describe Mutations::CreateConversation do
       expect(message["content"]).to eq("This is the message content.")
       expect(message["author"]["id"]).to eq(current_account.uid)
       expect(AnalyticsTrackJob).not_to have_been_enqueued
+      expect(SlackMessageJob).not_to have_been_enqueued
     end
   end
 
@@ -81,7 +81,6 @@ RSpec.describe Mutations::CreateConversation do
     let(:current_account) { create(:account) }
 
     it "creates the conversation and message and does not tracks event" do
-      expect(Slack).not_to receive(:bg_message).with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{participant.name} via messaging.")
       response = AdvisableSchema.execute(query, context:)
       uids = response["data"]["createConversation"]["conversation"]["participants"].pluck("id")
       expect(uids).to match_array([current_account.uid, participant.uid])
@@ -89,6 +88,7 @@ RSpec.describe Mutations::CreateConversation do
       expect(message["content"]).to eq("This is the message content.")
       expect(message["author"]["id"]).to eq(current_account.uid)
       expect(AnalyticsTrackJob).not_to have_been_enqueued
+      expect(SlackMessageJob).not_to have_been_enqueued
     end
   end
 
