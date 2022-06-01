@@ -40,7 +40,7 @@ module Toby
             if group.size == 2
               specialist_id = group.filter_map { |g| g[1] }.first
               user_id = group.filter_map { |g| g[2] }.first
-              agreement = ::Agreement.find_by(user_id:, specialist_id:).uid unless specialist_id.nil? || user_id.nil?
+              agreement = ::Agreement.find_by(user_id:, specialist_id:)&.uid unless specialist_id.nil? || user_id.nil?
             end
 
             [interview_id, agreement]
