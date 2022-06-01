@@ -22,7 +22,7 @@ module Mutations
       Conversation.by_accounts(accounts).new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
 
       if interview.specialist_and_user?
-        Slack.bg_message(channel: "consultation_requests", text: "We have a new interview request for #{interview.specialist.account.name} from #{interview.user.name_with_company}.")
+        SlackMessageJob.perform_later(channel: "consultation_requests", text: "We have a new interview request for #{interview.specialist.account.name} from #{interview.user.name_with_company}: #{args[:message]}.")
         SpecialistMailer.interview_request(interview).deliver_later
         track_event("Requested Consultation", {specialist: interview.specialist.uid})
       end

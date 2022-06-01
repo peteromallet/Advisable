@@ -44,6 +44,7 @@ RSpec.describe Mutations::RequestInterview do
 
       expect(MessageNotifierJob).not_to have_been_enqueued
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request", "deliver_now", {args: [an_instance_of(Interview)]}).once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "We have a new interview request for #{specialist.account.name} from #{current_user.name_with_company}: Wanna chat?.").once
     end
   end
 
