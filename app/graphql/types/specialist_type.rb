@@ -272,7 +272,7 @@ module Types
     def interview
       requires_client!
 
-      object.interviews.find_by(user: current_user) || Interview.with_accounts([object.account, current_user.account])&.first
+      Interview.with_accounts([object.account, current_user.account])&.first
     end
 
     field :agreement, Types::Agreement, null: true

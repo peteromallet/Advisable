@@ -93,7 +93,7 @@ module Types
     end
 
     def interviews(status: nil)
-      interviews = object.interviews
+      interviews = object.account.interviews
       interviews = interviews.where(status:) if status
       interviews
     end
@@ -156,7 +156,7 @@ module Types
     def availability(exclude_conflicts: false)
       times = object.availability || []
       if exclude_conflicts
-        interviews = object.interviews.scheduled.map(&:starts_at)
+        interviews = object.account.interviews.scheduled.map(&:starts_at)
         times.reject! { |t| interviews.include?(t) }
       end
       times
