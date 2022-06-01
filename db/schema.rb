@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_24_072831) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_01_095048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -307,26 +307,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_072831) do
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
     t.index ["uid"], name: "index_case_study_skills_on_uid", unique: true
-  end
-
-  create_table "client_calls", force: :cascade do |t|
-    t.string "airtable_id"
-    t.integer "duration"
-    t.datetime "call_time", precision: nil
-    t.string "phone_number"
-    t.string "email"
-    t.string "event_type"
-    t.string "calendly_id"
-    t.boolean "cancelled"
-    t.bigint "sales_person_id"
-    t.string "type_of_call"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "call_attempt_count"
-    t.index ["airtable_id"], name: "index_client_calls_on_airtable_id"
-    t.index ["sales_person_id"], name: "index_client_calls_on_sales_person_id"
-    t.index ["user_id"], name: "index_client_calls_on_user_id"
   end
 
   create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -966,8 +946,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_072831) do
   add_foreign_key "case_study_shared_articles", "users", column: "shared_with_id"
   add_foreign_key "case_study_skills", "case_study_articles", column: "article_id"
   add_foreign_key "case_study_skills", "skills"
-  add_foreign_key "client_calls", "sales_people"
-  add_foreign_key "client_calls", "users"
   add_foreign_key "companies", "industries"
   add_foreign_key "companies", "sales_people"
   add_foreign_key "conversation_participants", "accounts"
