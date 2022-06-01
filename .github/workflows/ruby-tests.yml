@@ -27,6 +27,7 @@ jobs:
       GUILD_REPLIES_DOMAIN: guild-replies
       MESSAGE_REPLIES_DOMAIN: message-replies
       CASE_STUDY_COVERS_BUCKET_NAME: case-study-covers
+      RUBY_DEBUG_FORK_MODE: parent
       RSPEC_RETRY: 3
       LOG_JS_ERRORS: true
 
