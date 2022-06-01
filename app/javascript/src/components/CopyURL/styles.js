@@ -1,24 +1,9 @@
 import { rgba } from "polished";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { theme } from "@advisable/donut";
 
-const copiedAnimation = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  25%, 75% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-`;
-
 export const CopyURL = styled.div`
-  height: 40px;
+  height: 48px;
   margin: 0 auto;
   max-width: 100%;
   position: relative;
@@ -46,7 +31,7 @@ export const CopyURL = styled.div`
     width: 100%;
     height: 100%;
     border: none;
-    color: #1e3458;
+    color: ${theme.colors.neutral700};
     font-size: 14px;
     padding: 0 20px;
     font-weight: 500;
@@ -61,12 +46,12 @@ export const CopyURL = styled.div`
     z-index: 2;
     right: 8px;
     border: none;
-    height: 24px;
+    height: 36px;
     outline: none;
-    color: #173fcd;
+    color: ${theme.colors.blue600};
     cursor: pointer;
     font-size: 11px;
-    padding: 0 15px;
+    padding: 0 20px;
     font-weight: 600;
     appearance: none;
     line-height: 24px;
@@ -75,19 +60,11 @@ export const CopyURL = styled.div`
     border-radius: 20px;
     text-transform: uppercase;
     transform: translateY(-50%);
-    box-shadow: 0px 2px 8px rgba(0, 20, 90, 0.08);
+    box-shadow: 0px 1px 5px rgba(0, 20, 90, 0.18);
   }
 
-  span {
-    right: 0;
-    top: -24px;
-    color: #173fcd;
-    font-size: 12px;
-    position: absolute;
-    background: white;
-    padding: ${theme.space[1]};
-    border-radius: 4px;
-
-    animation: ${copiedAnimation} 1.5s cubic-bezier(0.3, 0, 0, 1) forwards;
+  button:hover {
+    color: ${theme.colors.blue700};
+    box-shadow: 0px 1px 8px -2px rgba(0, 20, 90, 0.4);
   }
 `;

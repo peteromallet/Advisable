@@ -30,7 +30,7 @@ export default function SpecialistBar({ article }) {
   const { specialist } = article;
 
   return (
-    <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-[2]">
+    <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-10">
       <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto flex items-center justify-between">
         <div className="flex items-center">
           {back && (

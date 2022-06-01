@@ -19,7 +19,9 @@ export default function Testimonial({ review, className }) {
 
   return (
     <Sentry.ErrorBoundary>
-      <div className={`bg-[#F3F1F0] rounded-lg relative p-5 ${className}`}>
+      <div
+        className={`relative px-4 xl:px-6 py-4 xl:py-6 bg-neutral50 rounded-[20px] xl:rounded-lg ring-neutral200 ring-1 ring-inset mb-8 ${className}`}
+      >
         <div className="absolute right-5 top-5">
           <TestimonialQuoteIcon />
         </div>
