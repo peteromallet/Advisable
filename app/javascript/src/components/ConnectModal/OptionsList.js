@@ -15,7 +15,7 @@ function OptionsList({ children }) {
 
 export function OptionsListOption({ icon, title, children, ...props }) {
   return (
-    <div {...props} className={optionClasses}>
+    <div {...props} role="button" aria-label={title} className={optionClasses}>
       {icon && (
         <div className="w-10 h-10 bg-blue100 rounded-full grid place-items-center text-blue500">
           {createElement(icon, { className: "w-5 h-5" })}

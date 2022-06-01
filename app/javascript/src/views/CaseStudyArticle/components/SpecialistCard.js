@@ -39,7 +39,12 @@ export default function SidebarCard({ specialist }) {
         <div className="pt-4">
           <DialogDisclosure {...connectModal}>
             {(disclosure) => (
-              <Button className="w-full" size="lg" {...disclosure}>
+              <Button
+                className="w-full"
+                size="lg"
+                aria-label="Talk with specialist"
+                {...disclosure}
+              >
                 Talk with {specialist.firstName}
               </Button>
             )}
