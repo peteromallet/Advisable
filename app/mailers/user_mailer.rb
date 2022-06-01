@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = consultations_sales_person(interview.user.company)
     mail(from: @sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
   end
 
@@ -79,7 +79,7 @@ class UserMailer < ApplicationMailer
 
   def need_more_time_options(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = consultations_sales_person(interview.user.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -91,7 +91,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reminder(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = consultations_sales_person(interview.user.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -193,13 +193,13 @@ class UserMailer < ApplicationMailer
   def declined_interview_email(interview)
     @account = interview.user.account
     @specialist = interview.specialist
-
+    @sales_person = consultations_sales_person(interview.user.company)
     article = interview.article || @specialist.articles.searchable.by_score.first
     @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
 
     mail(
       to: @account.email,
-      from: "Advisable <hello@advisable.com>",
+      from: @sales_person.email_with_name,
       subject: "Consultation Request Declined: #{@specialist.account.name}"
     ) do |format|
       format.html { render layout: false }
@@ -214,7 +214,11 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def default_sales_person_for(company)
+  def user_sales_person(company)
     SalesPerson.default_for_user || company.sales_person
+  end
+
+  def consultations_sales_person(company)
+    SalesPerson.default_for_consultations || company.sales_person
   end
 end
