@@ -13,11 +13,15 @@ class SalesPerson < ApplicationRecord
   resize image: {resize_to_limit: [400, 400]}
 
   def self.default_for_user
-    find_by(username: ENV["SALES_PERSON_USER_DEFAULT"])
+    find_by(username: ENV.fetch("SALES_PERSON_USER_DEFAULT", nil))
   end
 
   def self.default_for_specialist
-    find_by(username: ENV["SALES_PERSON_SPECIALIST_DEFAULT"])
+    find_by(username: ENV.fetch("SALES_PERSON_SPECIALIST_DEFAULT", nil))
+  end
+
+  def self.default_for_consultations
+    find_by(username: ENV.fetch("SALES_PERSON_CONSULTATIONS_DEFAULT", nil))
   end
 
   def name

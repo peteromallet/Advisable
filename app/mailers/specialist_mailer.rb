@@ -11,7 +11,7 @@ class SpecialistMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    @sales_person = interview.user.company.sales_person
+    @sales_person = default_sales_person_for(interview.user.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.specialist.account.email,
