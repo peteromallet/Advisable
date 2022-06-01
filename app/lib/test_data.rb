@@ -7,7 +7,7 @@ require "zip"
 class TestData
   DATA_DIR = "db/seeds/data"
   PRUNED_DIR = "#{DATA_DIR}/pruned".freeze
-  ZIP_NAME = "test_data_2022_04_v2.zip"
+  ZIP_NAME = "test_data_2022_05_v1.zip"
   ZIP_PATH = "#{DATA_DIR}/#{ZIP_NAME}".freeze
   IMAGES_PATH = "db/seeds/assets/images/"
   AMOUNT_OF_RANDOM_IMAGES = 100
@@ -35,7 +35,7 @@ class TestData
 
   def ensure_csv_files_exist
     unless File.exist?(ZIP_PATH)
-      obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: ZIP_NAME)
+      obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: ZIP_NAME)
       obj.download_file(ZIP_PATH)
     end
 
