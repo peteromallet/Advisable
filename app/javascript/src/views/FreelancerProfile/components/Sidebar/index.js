@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Map } from "@styled-icons/heroicons-outline/Map";
 import {
   Box,
@@ -25,7 +26,8 @@ import Button from "src/components/Button";
 import ConnectModal from "src/components/ConnectModal";
 
 function Sidebar({ data, isOwner, ...props }) {
-  const modal = useModal();
+  const [searchParams] = useSearchParams();
+  const modal = useModal({ visible: searchParams.get("prompt") === "true" });
   const mUp = useBreakpoint("mUp");
 
   const { specialist } = data;
