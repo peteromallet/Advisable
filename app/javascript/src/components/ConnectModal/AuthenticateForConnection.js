@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "@styled-icons/heroicons-solid";
+import { Link } from "@advisable/donut";
 import CircularButton from "../CircularButton";
 import LoginForm from "src/views/Login/LoginForm";
 import CreateAccountForm from "./CreateAccountForm";
@@ -19,7 +20,7 @@ function ConnectModalSignup({ specialist, setStep }) {
         impactful work, Learn from their case studies and collaborate with the
         people behind them.
       </p>
-      <div>
+      <div className="mb-6">
         <OptionsList>
           <OptionsListOption
             title="Signup as a company"
@@ -35,10 +36,12 @@ function ConnectModalSignup({ specialist, setStep }) {
           </OptionsListOption>
         </OptionsList>
       </div>
-      <h5 className="font-medium">Already have an Advisable account?</h5>
-      <button className="text-blue700" onClick={() => setStep("LOGIN")}>
-        Login
-      </button>
+      <div className="text-center">
+        <h5 className="font-medium mb-2">Already have an Advisable account?</h5>
+        <Link as="button" variant="underlined" onClick={() => setStep("LOGIN")}>
+          Login
+        </Link>
+      </div>
     </>
   );
 }

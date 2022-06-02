@@ -38,7 +38,7 @@ export default function ConnectModal({ modal, ...props }) {
 
   return (
     <Modal modal={modal} padding={0}>
-      <div className="p-8">
+      <div className="px-8 py-10">
         {viewer ? (
           <ConnectionType modal={modal} {...props} />
         ) : (
