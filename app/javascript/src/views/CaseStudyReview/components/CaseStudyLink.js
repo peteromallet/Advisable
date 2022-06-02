@@ -29,9 +29,12 @@ export const StyledCaseStudyHeader = styled.h3(
 
 const StyledCaseStudyIcon = styled.div(
   css({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     color: "neutral300",
-    height: ["36px", "44px"],
-    minWidth: ["36px", "44px"],
+    height: "36px",
+    minWidth: "28px",
     transition: "color 0.2s",
   }),
 );
@@ -48,9 +51,9 @@ export const StyledCaseStudy = styled.div(
     borderColor: "neutral100",
     transition:
       "border-color 200ms, box-shadow 200ms, color 200ms, transform 200ms",
-    p: [3, 4],
+    p: [4, 5],
     pt: [2, 3],
-    gap: [2, 2],
+    gap: [2, 3],
 
     "&:hover": {
       transform: "translateY(-2px)",
@@ -73,11 +76,11 @@ export const StyledCaseStudy = styled.div(
 export default function CaseStudyLink({ to, children }) {
   return (
     <Link to={to} target="_blank" mb={4}>
-      <StyledCaseStudy p={4} pt={3}>
+      <StyledCaseStudy>
         <StyledCaseStudyIcon>
           <ExternalLink color="neutral200" size={28} />
         </StyledCaseStudyIcon>
-        <Box pt={1}>
+        <Box>
           <StyledLinkType>Case Study</StyledLinkType>
           <StyledCaseStudyHeader>{children}</StyledCaseStudyHeader>
         </Box>
