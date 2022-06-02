@@ -7,6 +7,9 @@ RSpec.describe "Talk with specialist button", type: :system do
   let(:specialist) { create(:specialist) }
   let(:article) { create(:case_study_article) }
 
+  # Resolve OpenAI access token issue
+  before { allow_any_instance_of(OpenAiInteractor).to receive(:document_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
+
   it "allows client to request a call" do
     authenticate_as(user)
     visit("/articles/#{article.slug}")
