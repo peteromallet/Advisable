@@ -8,6 +8,7 @@ class InterviewPolicy < BasePolicy
   alias request_reschedule? read?
   alias request_more_times? read?
   alias invite_user? read?
+  alias reschedule? read?
 
   def schedule?
     specialist_owner? || admin?

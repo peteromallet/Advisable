@@ -17,10 +17,28 @@ class AccountMailer < ApplicationMailer
     @account = account
     @conversation = conversation
     @messages = Message.where(id: message_ids).order(:created_at)
-    reply_to = "#{conversation.uid}@#{ENV["MESSAGE_REPLIES_DOMAIN"]}"
+    reply_to = "#{conversation.uid}@#{ENV.fetch("MESSAGE_REPLIES_DOMAIN", nil)}"
 
     mail(to: @account.email, reply_to:, subject: "New messages in conversation") do |f|
       f.html { render(layout: "email_v2") }
+    end
+  end
+
+  def interview_rescheduled(account, interview, rescheduler, message)
+    @account = account
+    @interview = interview
+    @rescheduler = rescheduler
+    @message = message
+    @sales_person = consultations_sales_person(interview.user&.company)
+
+    other_accounts = (@interview.accounts - [@account])
+    @other_names = other_accounts.map(&:name_with_company).to_sentence
+    mail(
+      from: @sales_person.email_with_name,
+      to: @account.email_with_name,
+      subject: "Interview rescheduled by #{@rescheduler.name}"
+    ) do |format|
+      format.html { render layout: false }
     end
   end
 end

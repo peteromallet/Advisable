@@ -14,11 +14,10 @@ class Interview < ApplicationRecord
     "Client Requested Reschedule", "Specialist Declined", "Auto Declined"
   ].freeze
 
-  SCHEDULABLE_STATUSES = [
-    "Call Requested", "Call Reminded", "Client Requested Reschedule", "Specialist Requested Reschedule", "More Time Options Added"
-  ].freeze
-
-  DECLINABLE_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added", "Need More Time Options"].freeze
+  PRE_START_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added"].freeze
+  SCHEDULABLE_STATUSES = PRE_START_STATUSES + ["Client Requested Reschedule", "Specialist Requested Reschedule"].freeze
+  RESCHEDULABLE_STATUSES = SCHEDULABLE_STATUSES + ["Call Scheduled"]
+  DECLINABLE_STATUSES = PRE_START_STATUSES + ["Need More Time Options"].freeze
 
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
 

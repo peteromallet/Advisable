@@ -1,0 +1,15 @@
+p Hi #{@account.first_name},
+
+p This is #{@sales_person.first_name} from Advisable.com.
+
+p Your interview with #{@other_names} has been rescheduled to #{time_in_zone(@interview.starts_at, @account.timezone)}.
+
+- if @message
+  p  #{@rescheduler.name_with_company} left the following message:
+
+  p "#{@message.content}"
+
+p
+  ' Best,
+  br
+  = @sales_person.first_name

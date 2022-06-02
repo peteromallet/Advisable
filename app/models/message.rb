@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   NOTIFICATION_WAIT_TIME = 10.minutes
   KINDS = %w[
     AgreementAccepted AgreementCreated AgreementDeclined
-    InterviewRequest InterviewScheduled InterviewDeclined InterviewAutoDeclined
+    InterviewRequest InterviewScheduled InterviewDeclined InterviewAutoDeclined InterviewRescheduled
     PaymentRequestCreated PaymentRequestCompleted
     system
   ].freeze
