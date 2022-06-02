@@ -15,6 +15,8 @@ class GoogleCalendar
     find_calendar_provider
     @interview = interview
     interview.google_calendar_id.blank? ? create_event : reschedule_event
+  rescue GoogleCalendarError => e
+    raise e unless Rails.env.test?
   end
 
   private
