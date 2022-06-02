@@ -55,11 +55,6 @@ class Interview < ApplicationRecord
   def pending?
     SCHEDULABLE_STATUSES.include?(status)
   end
-
-  def create_system_message!
-    conversation = Conversation.by_accounts([specialist.account, user.account])
-    conversation.new_message!(kind: "InterviewScheduled", interview: self, metadata: {starts_at:}, send_emails: false)
-  end
 end
 
 # == Schema Information

@@ -31,12 +31,9 @@ RSpec.describe Mutations::DeclineInterview do
   end
 
   context "when a message exists" do
-    let(:conversation) { create(:conversation) }
+    let(:conversation) { Conversation.by_accounts(interview.accounts) }
 
-    before do
-      conversation.participants.create(account: current_user.account)
-      create(:message, interview:, conversation:)
-    end
+    before { create(:message, interview:, conversation:) }
 
     it "creates a system message" do
       expect(conversation.messages.where(kind: "InterviewDeclined")).not_to exist
