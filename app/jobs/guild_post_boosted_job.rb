@@ -11,7 +11,7 @@ class GuildPostBoostedJob < ApplicationJob
     end
 
     Account.joins(:specialist).where("specialists.id" => subscriber_ids).each do |account|
-      Notification.create!(account:, action: "suggested_post", notifiable: post)
+      Notification.create!(account:, action: "suggested_post", guild_post: post)
     end
   end
 end

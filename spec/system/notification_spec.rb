@@ -9,7 +9,7 @@ RSpec.describe "Notification", type: :system do
   let!(:post) { create(:guild_post, specialist:) }
 
   before do
-    Notification.create!(account: specialist.account, action: "suggested_post", notifiable: post)
+    Notification.create!(account: specialist.account, action: "suggested_post", guild_post: post)
     authenticate_as(specialist)
   end
 
@@ -30,7 +30,7 @@ RSpec.describe "Notification", type: :system do
     suggested_post = create(:guild_post, specialist: other_specialist)
     specialist.account.notifications.create!(
       action: "suggested_post",
-      notifiable: suggested_post
+      guild_post: suggested_post
     )
 
     visit "/"
