@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_02_122527) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_02_131359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -574,9 +574,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_122527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "guild_post_id"
+    t.bigint "interview_id"
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
     t.index ["guild_post_id"], name: "index_notifications_on_guild_post_id"
+    t.index ["interview_id"], name: "index_notifications_on_interview_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
