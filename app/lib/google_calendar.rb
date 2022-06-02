@@ -31,6 +31,7 @@ class GoogleCalendar
     raise GoogleCalendarError, "No provider for Google Calendar" unless provider
   end
 
+  # TODO: Need to update this to work with interviews that are other combos besides user and specialist
   def create_event
     description = <<~DESCRIPTION.strip
       You can use the following link for you call: #{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}.\n
