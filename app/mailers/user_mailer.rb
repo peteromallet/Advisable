@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(from: @sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
   end
 
@@ -71,7 +71,7 @@ class UserMailer < ApplicationMailer
 
   def need_more_time_options(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -83,7 +83,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reminder(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -97,7 +97,7 @@ class UserMailer < ApplicationMailer
   def post_interview(interview)
     @interview = interview
     @account = interview.user.account
-    @sales_person = interview.user.company.sales_person
+    @sales_person = interview.user&.company&.sales_person
 
     mail(
       from: "Advisable <hello@advisable.com>",
@@ -185,7 +185,7 @@ class UserMailer < ApplicationMailer
   def declined_interview_email(interview)
     @account = interview.user.account
     @specialist = interview.specialist
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     article = interview.article || @specialist.articles.searchable.by_score.first
     @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
 
