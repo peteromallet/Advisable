@@ -18,9 +18,9 @@ export default function CaseStudyReview() {
 
   return (
     <>
-      <Box textAlign="center" py="40px">
+      <div className=" pt-10 pb-8 md:pt-12 md:pb-10 flex justify-center">
         <Logo />
-      </Box>
+      </div>
       <Container maxWidth="700px" pb="20px">
         <Routes>
           <Route path="/ratings" element={<ReviewRatings data={data} />} />
