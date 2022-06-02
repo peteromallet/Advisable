@@ -10,6 +10,7 @@ import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
 import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
+import { ChatAlt } from "@styled-icons/heroicons-solid";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -29,6 +30,8 @@ export default function SpecialistBar({ article }) {
   const modal = useModal();
   const { back } = location.state || {};
   const { specialist } = article;
+  const sUp = useBreakpoint("sUp");
+  const TalkButton = sUp ? Button : CircularButton;
 
   return (
     <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-10">
@@ -66,9 +69,9 @@ export default function SpecialistBar({ article }) {
                 <ConnectModal modal={modal} specialist={article.specialist} />
                 <DialogDisclosure {...modal}>
                   {(disclosure) => (
-                    <Button {...disclosure}>
+                    <TalkButton {...disclosure} icon={ChatAlt} color="blue">
                       Talk with {article.specialist.firstName}
-                    </Button>
+                    </TalkButton>
                   )}
                 </DialogDisclosure>
               </>
