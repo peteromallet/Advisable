@@ -23,11 +23,9 @@ module Mutations
       ApiError.invalid_request("INTERVIEW NOT RESCHEDULABLE") unless Interview::RESCHEDULABLE_STATUSES.include?(interview.status)
 
       current_account_responsible_for do
-        interview.update(starts_at:)
+        interview.reschedule!(starts_at)
         GoogleCalendar.new.schedule_for_interview(interview)
-        conversation = Conversation.by_accounts(interview.accounts)
-        conversation.new_message!(kind: "InterviewRescheduled", interview:, send_emails: false, metadata: {starts_at: starts_at.iso8601})
-        message = conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?
+        message = interview.conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?
         other_participants = interview.accounts - [current_account]
         other_participants.each { |acc| AccountMailer.interview_rescheduled(acc, interview, current_account, message).deliver_later }
       end

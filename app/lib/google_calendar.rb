@@ -26,10 +26,10 @@ class GoogleCalendar
     service.watch_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), channel)
   end
 
-  def sync(interview)
+  def reschedule(interview)
     set_up_service
     event = service.get_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), interview.google_calendar_id)
-    interview.update!(starts_at: event.start.date_time)
+    interview.reschedule!(event.start.date_time)
   end
 
   private
@@ -45,7 +45,7 @@ class GoogleCalendar
       end
     end
 
-    raise GoogleCalendarError, "No provider for Google Calendar" unless provider || Rails.env.test?
+    raise GoogleCalendarError, "No provider for Google Calendar" unless provider
   end
 
   # TODO: Need to update this to work with interviews that are other combos besides user and specialist

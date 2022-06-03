@@ -39,6 +39,10 @@ class Interview < ApplicationRecord
     accounts
   end
 
+  def conversation
+    Conversation.by_accounts(accounts)
+  end
+
   def specialist_and_user?
     !!(accounts.length == 2 && specialist && user)
   end
@@ -53,6 +57,13 @@ class Interview < ApplicationRecord
 
   def pending?
     SCHEDULABLE_STATUSES.include?(status)
+  end
+
+  def reschedule!(starts_at)
+    return unless RESCHEDULABLE_STATUSES.include?(status)
+
+    update!(starts_at:)
+    conversation.new_message!(kind: "InterviewRescheduled", interview: self, send_emails: false, metadata: {starts_at: starts_at.iso8601})
   end
 end
 
