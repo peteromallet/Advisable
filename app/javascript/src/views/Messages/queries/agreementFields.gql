@@ -1,0 +1,6 @@
+fragment AgreementFields on Agreement {
+  id
+  invoicing
+  hourlyRate
+  collaboration
+}

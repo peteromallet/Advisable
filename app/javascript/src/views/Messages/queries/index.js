@@ -15,6 +15,7 @@ import DECLINE_AGREEMENT from "./declineAgreement.gql";
 import SETUP_PAYMENTS_DATA from "./setupPaymentsData.gql";
 import UPDATE_INVOICE_SETTINGS from "./updateInvoiceSettings.gql";
 import DECLINE_INTERVIEW from "./declineInterview.gql";
+import AGREEMENT_FIELDS from "./agreementFields.gql";
 
 export function useConversations() {
   return useQuery(CONVERSATIONS);
@@ -147,7 +148,24 @@ function appendToMessages(messages, message) {
 }
 
 export function useAcceptAgreement() {
-  return useMutation(ACCEPT_AGREEMENT);
+  return useMutation(ACCEPT_AGREEMENT, {
+    update(cache, response) {
+      const agreement = response.data?.acceptAgreement?.agreement;
+      if (!agreement) return;
+
+      const agreementRef = cache.writeFragment({
+        fragment: AGREEMENT_FIELDS,
+        data: agreement,
+      });
+
+      cache.modify({
+        id: cache.identify(agreement.specialist),
+        fields: {
+          agreement: () => agreementRef,
+        },
+      });
+    },
+  });
 }
 
 export function useDeclineAgreement() {

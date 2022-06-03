@@ -6,6 +6,7 @@ class Conversation < ApplicationRecord
 
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
+  has_many :accounts, through: :participants
 
   def self.by_accounts(*accounts, &)
     account_ids = Account.ids_from(accounts)

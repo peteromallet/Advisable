@@ -1,4 +1,5 @@
 import React from "react";
+import SimpleBar from "simplebar-react";
 import * as Sentry from "@sentry/react";
 import { Box } from "@advisable/donut";
 import { useParams } from "react-router-dom";
@@ -6,16 +7,19 @@ import ConversationMessages from "./ConversationMessages";
 import ConversationHeader from "./ConversationHeader";
 import ConversationNotFound from "./ConversationNotFound";
 import ConversationError from "./ConversationError";
+import ConversationDetails from "./ConversationDetails";
 
 export default function Conversation({ conversations, currentAccount }) {
   const { id } = useParams();
   const conversation = conversations.find((c) => c.id === id);
 
   return (
-    <Box height="100%" display="flex" flexDirection="column">
+    <div className="h-full flex flex-col lg:flex-row">
       <Sentry.ErrorBoundary fallback={ConversationError}>
         {conversation ? (
-          <ConversationHeader conversation={conversation} />
+          <div className="block lg:hidden">
+            <ConversationHeader conversation={conversation} />
+          </div>
         ) : null}
         <Box
           height="100%"
@@ -34,7 +38,12 @@ export default function Conversation({ conversations, currentAccount }) {
             <ConversationNotFound />
           )}
         </Box>
+        <div className="hidden lg:block shrink-0 w-[340px] border-l border-solid border-neutral100">
+          <SimpleBar className="h-viewport">
+            <ConversationDetails conversation={conversation} />
+          </SimpleBar>
+        </div>
       </Sentry.ErrorBoundary>
-    </Box>
+    </div>
   );
 }

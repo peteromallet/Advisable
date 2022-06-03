@@ -25,6 +25,16 @@ const avatarStyles = composeStyles({
         h-[52px]
         text-base
       `,
+      xl: `
+        w-[60px]
+        h-[60px]
+        text-lg
+      `,
+      "2xl": `
+        w-[80px]
+        h-[80px]
+        text-xl
+      `,
     },
   },
 });

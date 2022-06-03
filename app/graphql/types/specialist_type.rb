@@ -277,9 +277,10 @@ module Types
 
     field :agreement, Types::Agreement, null: true
     def agreement
-      requires_client!
+      requires_current_user!
+      return nil if current_user.is_a?(Specialist)
 
-      Agreement.latest_accepted_for(specialist: object, user: current_user)
+      ::Agreement.latest_accepted_for(specialist: object, user: current_user)
     end
   end
 end
