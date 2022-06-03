@@ -22,9 +22,9 @@ module Mutations
       accounts = (participant_accounts + [current_account]).uniq
       ApiError.invalid_request("NO_PARTICIPANTS", "You must have at least one participant besides yourself!") if accounts.size < 2
 
-      conversation = Conversation.by_accounts(accounts) do
+      conversation = Conversation.by_accounts(accounts) do |cnv|
         track_event("Created Conversation", {accounts: accounts.map(&:uid)})
-        if accounts.size == 2 && current_user.is_a?(User) && Specialist.exists?(account: participant_accounts)
+        if cnv.specialist_and_user?
           SlackMessageJob.perform_later(
             channel: "consultation_requests",
             text: "#{current_user.name_with_company} has connected with #{participant_accounts.first.name} via messaging."
