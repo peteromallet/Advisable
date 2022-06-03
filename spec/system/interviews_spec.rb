@@ -13,12 +13,7 @@ RSpec.describe "Interviews", type: :system do
         2.days.from_now.change({hour: 11, min: 30, secs: 0})
       ])
   end
-
-  let(:next_work_day) do
-    # rubocop:disable Rails/TimeZone
-    Time.now.next_weekday.beginning_of_day
-    # rubocop:enable Rails/TimeZone
-  end
+  let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
