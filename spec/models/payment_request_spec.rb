@@ -52,6 +52,22 @@ RSpec.describe PaymentRequest, type: :model do
       end
     end
 
+    context "when payment exists" do
+      let!(:payment) { create(:payment, payment_request:) }
+
+      it "updates existing payment" do
+        expect(payment_request.payout).to be_nil
+        expect(payment_request.payment).to eq(payment)
+        payment_request.financialize!
+        payment.reload
+        expect(payment_request.payout).not_to be_nil
+        expect(payment_request.payment).to eq(payment)
+        expect(payment_request.payment.amount).to eq(payment_request.amount)
+        expect(payment_request.payout.amount).to eq(payment_request.amount)
+        expect(payment_request.payment.payment_intent_id).to eq("pi_123asdf456")
+      end
+    end
+
     context "when amount is zero" do
       let(:payment_request) { create(:payment_request, amount: 0) }
 
