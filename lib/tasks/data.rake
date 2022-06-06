@@ -39,4 +39,14 @@ namespace :data do
       Notification.find(id).update_columns(guild_post_id: post_id)
     end
   end
+
+  task users_availability: :environment do
+    progressbar = ProgressBar.create(format: "Migrating user availabilities: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: User.count)
+    User.pluck(:account_id, :availability).each do |account_id, availability|
+      next if availability.blank?
+
+      Account.find(account_id).update_columns(availability:)
+      progressbar.increment
+    end
+  end
 end
