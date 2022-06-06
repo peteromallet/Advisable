@@ -2,22 +2,23 @@
 
 module Mutations
   class UpdateAvailability < Mutations::BaseMutation
-    argument :id, ID, required: false, deprecation_reason: "Do not provide this anymore"
-    argument :availability, [String], required: true, description: "The clients availability. Should be an array of ISO strings"
+    argument :availability, [String], required: true, description: "An array of ISO strings"
+
+    # Do we need this anymore now that we have #timezone on Account?
     argument :time_zone, String, required: false
 
+    # This should now handle Specialist so you need to update the frontend
     field :user, Types::User, null: true
 
     def authorized?(**_args)
-      requires_client!
+      requires_current_user!
     end
 
     def resolve(**args)
-      current_user.update!(
-        availability: args[:availability],
-        time_zone: args[:time_zone]
-      )
-
+      current_account_responsible_for do
+        current_user.update!(time_zone: args[:time_zone]) if args[:time_zone] && current_user.respond_to?(:time_zone)
+        current_user.account.update!(availability: args[:availability])
+      end
       {user: current_user}
     end
   end

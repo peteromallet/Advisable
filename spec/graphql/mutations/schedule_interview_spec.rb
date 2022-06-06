@@ -4,9 +4,10 @@ require "rails_helper"
 
 RSpec.describe Mutations::ScheduleInterview do
   let(:status) { "Call Requested" }
+  let(:account) { create(:account, availability: [Time.zone.now.next_weekday.beginning_of_day]) }
   let(:specialist) { create(:specialist) }
-  let(:user) { create(:user, availability: [Time.zone.now.next_weekday.beginning_of_day]) }
-  let(:starts_at) { user.availability.first }
+  let(:user) { create(:user, account:) }
+  let(:starts_at) { account.availability.first }
   let(:initial_starts_at) { nil }
   let(:current_user) { specialist }
   let(:interview) { create(:interview, accounts: [specialist.account, user.account], starts_at: initial_starts_at, status:) }

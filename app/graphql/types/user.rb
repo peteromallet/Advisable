@@ -93,7 +93,7 @@ module Types
     end
 
     def interviews(status: nil)
-      interviews = object.account.interviews
+      interviews = account.interviews
       interviews = interviews.where(status:) if status
       interviews
     end
@@ -146,20 +146,13 @@ module Types
     field :id, ID, null: false, method: :uid
 
     field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
-      argument :exclude_conflicts,
-               Boolean,
-               required: false,
-               description:
-                 "Exclude any times that conflict with scheduled interviews"
+      argument :exclude_conflicts, Boolean, required: false, description: "Exclude any times that conflict with scheduled interviews"
     end
-
     def availability(exclude_conflicts: false)
-      times = object.availability || []
-      if exclude_conflicts
-        interviews = object.account.interviews.scheduled.map(&:starts_at)
-        times.reject! { |t| interviews.include?(t) }
-      end
-      times
+      return account.availability unless exclude_conflicts
+
+      interviews = account.interviews.scheduled.map(&:starts_at)
+      account.availability.reject { |t| interviews.include?(t) }
     end
 
     field :agreement, Types::Agreement, null: true
