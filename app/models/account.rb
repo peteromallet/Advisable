@@ -30,6 +30,8 @@ class Account < ApplicationRecord
   has_one_attached :avatar
   resize avatar: {resize_to_limit: [400, 400]}
 
+  attribute :availability, :datetime, default: -> { [] }, array: true
+
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
   validates :email, uniqueness: true, presence: true, format: {with: /@/}
@@ -67,6 +69,10 @@ class Account < ApplicationRecord
 
   def name_with_company
     user.nil? ? name : user.name_with_company
+  end
+
+  def availability
+    (super.presence || []).select(&:future?)
   end
 
   def cached_avatar_url
@@ -172,6 +178,7 @@ end
 # Table name: accounts
 #
 #  id                  :bigint           not null, primary key
+#  availability        :text
 #  completed_tutorials :jsonb
 #  confirmation_digest :string
 #  confirmation_token  :string

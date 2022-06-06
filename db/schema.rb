@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_085047) do
     t.jsonb "features"
     t.string "timezone"
     t.jsonb "showcased_articles"
+    t.text "availability"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["uid"], name: "index_accounts_on_uid", unique: true
   end
