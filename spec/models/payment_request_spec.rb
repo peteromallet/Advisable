@@ -46,6 +46,7 @@ RSpec.describe PaymentRequest, type: :model do
         payment_request.financialize!
         expect(payment_request.payout).not_to be_nil
         expect(payment_request.payment).not_to be_nil
+        expect(payment_request.payment).to be_persisted
         expect(payment_request.payment.amount).to eq(payment_request.amount)
         expect(payment_request.payout.amount).to eq(payment_request.amount)
         expect(payment_request.payment.payment_intent_id).to eq("pi_123asdf456")

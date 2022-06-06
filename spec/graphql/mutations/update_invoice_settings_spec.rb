@@ -63,7 +63,7 @@ RSpec.describe Mutations::UpdateInvoiceSettings do
   it "Sets the invoice_company_name" do
     expect do
       AdvisableSchema.execute(query, context:)
-    end.to change(company, :invoice_company_name).from(nil).to("company name")
+    end.to change(company, :invoice_company_name).from(company.name).to("company name")
   end
 
   it "Sets the billing_email" do
