@@ -9,6 +9,13 @@ FactoryBot.define do
     password { "testing123" }
     confirmed_at { 1.day.ago }
 
+    availability do
+      [
+        2.days.from_now.change({hour: 12, min: 0, sec: 0}),
+        2.days.from_now.change({hour: 12, min: 30, sec: 0})
+      ]
+    end
+
     trait :team_manager do
       permissions { ["team_manager"] }
     end
