@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Mutations::ResendInterviewRequest do
-  let(:user) { create(:user, availability: []) }
+  let(:account) { create(:account, availability: []) }
+  let(:user) { create(:user, account:) }
   let(:current_user) { user }
   let(:specialist) { create(:specialist) }
   let(:context) { {current_user:} }

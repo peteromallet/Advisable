@@ -4,6 +4,8 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
+  self.ignored_columns = %w[availability]
+
   include ::Airtable::Syncable
   include Uid
   include SpecialistOrUser
@@ -27,8 +29,6 @@ class User < ApplicationRecord
   scope :active, -> { joins(:account).where(accounts: {disabled_at: nil}) }
   scope :accepted, -> { where(application_status: "Application Accepted") }
 
-  attribute :availability, :datetime, default: [], array: true
-
   validates :company, presence: {unless: :disabled?}
   validates :rejection_reason, inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true
   validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
@@ -43,7 +43,8 @@ class User < ApplicationRecord
   end
 
   def availability
-    (super.presence || []).select(&:future?)
+    Sentry.capture_message("Reading availability on User! Stop it!", level: "debug")
+    account.availability
   end
 
   def accepted?
@@ -108,7 +109,6 @@ end
 #  application_interview_starts_at   :datetime
 #  application_rejected_at           :datetime
 #  application_reminder_at           :datetime
-#  availability                      :text
 #  campaign_content                  :string
 #  campaign_medium                   :string
 #  campaign_name                     :string

@@ -3,17 +3,17 @@
 require "rails_helper"
 
 RSpec.describe "Interviews", type: :system do
-  let(:specialist) { create(:specialist) }
-  let(:user) do
-    create(:user, availability:
-      [
-        2.days.from_now.change({hour: 10, min: 0, secs: 0}),
-        2.days.from_now.change({hour: 10, min: 30, secs: 0}),
-        2.days.from_now.change({hour: 11, min: 0, secs: 0}),
-        2.days.from_now.change({hour: 11, min: 30, secs: 0})
-      ])
+  let(:account) do
+    create(:account, availability: [
+             2.days.from_now.change({hour: 10, min: 0, secs: 0}),
+             2.days.from_now.change({hour: 10, min: 30, secs: 0}),
+             2.days.from_now.change({hour: 11, min: 0, secs: 0}),
+             2.days.from_now.change({hour: 11, min: 30, secs: 0})
+           ])
   end
   let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
+  let(:user) { create(:user, account:) }
+  let(:specialist) { create(:specialist) }
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
