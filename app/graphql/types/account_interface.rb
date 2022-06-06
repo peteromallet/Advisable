@@ -15,7 +15,8 @@ module Types
     field :last_name, String, null: true
     field :name, String, null: true
     field :features, [String], null: true
-    delegate :name, :first_name, :last_name, :features, to: :account
+    field :availability, [GraphQL::Types::ISO8601DateTime], null: false
+    delegate :name, :first_name, :last_name, :features, :availability, to: :account
 
     field :avatar, String, null: true
     def avatar
