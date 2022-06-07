@@ -40,15 +40,13 @@ RSpec.describe Airtable::ClientContact do
       described_class.new({
         "Email Address" => " test@airtable.com ",
         "First Name" => " Dwight ",
-        "Last Name" => " Schrute ",
-        "VAT Number" => " 1234 "
+        "Last Name" => " Schrute "
       }, id: user.airtable_id)
     end
 
     it "strips association attributes" do
       airtable.sync
       user.reload
-      expect(user.company.vat_number).to eq("1234")
       attributes = user.account.attributes.slice("email", "first_name", "last_name").map(&:second)
       expect(attributes).to match_array(["Dwight", "Schrute", "test@airtable.com"])
     end
