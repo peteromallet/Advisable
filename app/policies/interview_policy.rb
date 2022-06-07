@@ -9,11 +9,8 @@ class InterviewPolicy < BasePolicy
   alias request_more_times? read?
   alias invite_user? read?
   alias reschedule? read?
-
-  def schedule?
-    specialist_owner? || admin?
-  end
-  alias decline? schedule?
+  alias schedule? read?
+  alias decline? read?
 
   private
 

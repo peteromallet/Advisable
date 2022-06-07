@@ -24,9 +24,9 @@ module Toby
       action :decline, label: "Decline", if: ->(interview) { interview.pending? }
 
       def self.decline(object, _context)
-        return unless object.pending?
+        return unless Interview::DECLINABLE_STATUSES.include?(object.status)
 
-        object.update(status: "Specialist Declined")
+        object.update(status: "Declined")
         return if object.messages.none?
 
         object.messages.first.conversation.new_message!(kind: "InterviewDeclined", interview: object, send_emails: false)
