@@ -33,7 +33,7 @@ class GeneratePaymentInvoiceJob < ApplicationJob
       tempfile = Tempfile.new(key, binmode: true)
       tempfile.write(res.body)
       tempfile.close
-      obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key:)
+      obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key:)
       obj.upload_file(tempfile.path)
       payment.update(pdf_key: key)
     else
@@ -46,7 +46,8 @@ class GeneratePaymentInvoiceJob < ApplicationJob
     {
       billing_address: payment.company.address.inline,
       vat_number: payment.company.vat_number,
-      client_name: payment.company.name,
+      client_name: payment.company.invoice_name,
+      client_company_name: payment.company.invoice_company_name,
       issue_date: payment.created_at.strftime("%d.%m.%Y"),
       due_date: due_date.strftime("%d.%m.%Y"),
       invoice_number: payment.uid.sub(/^pay_/, "").to_s,

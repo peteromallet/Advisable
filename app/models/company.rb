@@ -65,6 +65,10 @@ class Company < ApplicationRecord
     stripe_payment_method.present? || stripe_customer.invoice_settings.default_payment_method
   end
 
+  def invoice_company_name
+    super.presence || name
+  end
+
   def invoice_settings
     {
       name: invoice_name,
