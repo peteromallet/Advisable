@@ -11,7 +11,7 @@ class Interview < ApplicationRecord
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
     "Need More Time Options", "More Time Options Added", "Specialist Requested Reschedule",
-    "Client Requested Reschedule", "Specialist Declined", "Auto Declined"
+    "Client Requested Reschedule", "Auto Declined", "Declined"
   ].freeze
 
   PRE_START_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added"].freeze

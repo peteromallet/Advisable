@@ -49,4 +49,8 @@ namespace :data do
       progressbar.increment
     end
   end
+
+  task interview_declined: :environment do
+    Interview.where(status: "Specialist Declined").update_all(status: "Declined")
+  end
 end

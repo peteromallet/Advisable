@@ -24,10 +24,10 @@ RSpec.describe Mutations::DeclineInterview do
     GRAPHQL
   end
 
-  it "sets the interview status to 'Specialist Rejected'" do
+  it "sets the interview status to 'Declined'" do
     expect(interview.status).to eq("Call Requested")
     AdvisableSchema.execute(query, context:)
-    expect(interview.reload.status).to eq("Specialist Declined")
+    expect(interview.reload.status).to eq("Declined")
   end
 
   context "when a message exists" do
@@ -49,6 +49,16 @@ RSpec.describe Mutations::DeclineInterview do
     end
   end
 
+  context "when the current user is the user" do
+    let(:current_user) { user }
+
+    it "sets the interview status to 'Declined'" do
+      expect(interview.status).to eq("Call Requested")
+      AdvisableSchema.execute(query, context:)
+      expect(interview.reload.status).to eq("Declined")
+    end
+  end
+
   context "when no user is logged in" do
     let(:current_user) { nil }
 
@@ -59,13 +69,13 @@ RSpec.describe Mutations::DeclineInterview do
     end
   end
 
-  context "when the current user is a user" do
+  context "when the current user is another user" do
     let(:current_user) { create(:user) }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
       error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("MUST_BE_SPECIALIST")
+      expect(error).to eq("NOT_AUTHORIZED")
     end
   end
 
@@ -80,7 +90,7 @@ RSpec.describe Mutations::DeclineInterview do
   end
 
   context "when the interview has already been declined" do
-    let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Specialist Declined") }
+    let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Declined") }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)
