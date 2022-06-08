@@ -12,11 +12,8 @@ module Airtable
     sync_column_to_association "Email Address", association: :account, to: :email
     sync_column_to_association "First Name", association: :account, to: :first_name
     sync_column_to_association "Last Name", association: :account, to: :last_name
-    sync_column_to_association "VAT Number", association: :company, to: :vat_number
     sync_column_to_association "Type of Company", association: :company, to: :kind
     sync_column_to_association "Project Payment Method", association: :company, to: :project_payment_method
-    sync_column_to_association "Invoice Name", association: :company, to: :invoice_name
-    sync_column_to_association "Invoice Company Name", association: :company, to: :invoice_company_name
 
     sync_column "Title", to: :title
     sync_column "Exceptional Project Payment Terms", to: :exceptional_project_payment_terms
@@ -32,8 +29,6 @@ module Airtable
     sync_column "Trustpilot Review Status", to: :trustpilot_review_status
 
     sync_data do |user|
-      user.company.address = Address.parse(self["Address"]).to_h if self["Address"]
-
       sales_person_airtable_id = fields["Owner"].try(:first)
       if sales_person_airtable_id
         sales_person = ::SalesPerson.find_by(airtable_id: sales_person_airtable_id)
@@ -80,9 +75,6 @@ module Airtable
       self["Country"] = [user.country.airtable_id] if user.country.present?
       self["Project Payment Method"] = user.company.project_payment_method || "Card"
       self["Exceptional Project Payment Terms"] = user.exceptional_project_payment_terms
-      self["Invoice Name"] = user.company.invoice_name
-      self["Invoice Company Name"] = user.company.invoice_company_name
-      self["VAT Number"] = user.company.vat_number
       self["Industry"] = [user.company.industry.try(:airtable_id)].compact
       self["Type of Company"] = user.company.kind
       self["Owner"] = [user.company.sales_person&.airtable_id].compact
@@ -97,7 +89,6 @@ module Airtable
       self["Application Reminder At"] = user.application_reminder_at
       self["Contact Status"] = user.contact_status
       self["Same City Importance"] = user.locality_importance
-      self["Address"] = Address.new(user.company.address).to_s if user.company.address.present?
       self["Skills Interested In"] = user.skills.filter_map(&:airtable_id).uniq
       self["Application Accepted Timestamp"] = user.application_accepted_at
       self["Application Rejected Timestamp"] = user.application_rejected_at
