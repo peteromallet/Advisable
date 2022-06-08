@@ -36,7 +36,8 @@ class PaymentRequest < ApplicationRecord
   def financialize!
     return unless amount.to_i.positive?
 
-    create_payout!(specialist:, amount:, status: "pending")
+    payout = Payout.find_or_initialize_by(payment_request: self)
+    payout.update!(specialist:, amount:, status: "pending")
     payment = Payment.find_or_initialize_by(payment_request: self)
     payment.update!(company:, specialist:, amount:, status: "pending")
     payment.charge!
