@@ -5,6 +5,7 @@ import FeedContainer from "./components/FeedContainer";
 import TrendingArticles from "./components/TrendingArticles";
 import SearchResults from "./SearchResults";
 import DiamondGrid from "./components/DiamondGrid";
+import SuggestedInterests from "./components/SuggestedInterests";
 
 export default function Search() {
   const [searchParams] = useSearchParams();
@@ -16,7 +17,7 @@ export default function Search() {
 
   return (
     <>
-      <div className="bg-gradient-to-br from-blue-800 to-violet-600 md:pt-20 pb-6 md:pb-[100px] relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-800 to-violet-600 md:pt-20 pb-6 md:pb-14 relative overflow-hidden">
         <FeedContainer>
           <DiamondGrid
             className="absolute -right-[120px] -top-[110px] z-none"
@@ -38,9 +39,11 @@ export default function Search() {
               behind them.
             </p>
             <Searchbox size="lg" autoFocus />
+            <SuggestedInterests />
           </div>
         </FeedContainer>
       </div>
+      <FeedContainer></FeedContainer>
       <FeedContainer>
         <div className="pt-4 md:pt-16 pb-12">
           <TrendingArticles />
