@@ -22,6 +22,7 @@ function UpcomingCall({ interview }) {
     <Link
       key={interview.id}
       to={`/interviews/${interview.id}`}
+      state={{ back: true }}
       className="ring-1 ring-neutral200 hover:ring-2 hover:ring-blue300 transition-shadow p-4 rounded-sm block bg-white"
     >
       <div className="flex gap-2 items-center pb-0.5">
