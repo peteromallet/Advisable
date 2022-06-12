@@ -43,7 +43,6 @@ export default function Search() {
           </div>
         </FeedContainer>
       </div>
-      <FeedContainer></FeedContainer>
       <FeedContainer>
         <div className="pt-4 md:pt-16 pb-12">
           <TrendingArticles />
