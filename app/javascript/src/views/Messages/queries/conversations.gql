@@ -20,6 +20,16 @@ fragment ConversationFields on Conversation {
         name
       }
     }
+    upcomingInterviews {
+      id
+      startsAt
+      participants {
+        id
+        firstName
+        isViewer
+        avatar
+      }
+    }
     specialist {
       id
       name
