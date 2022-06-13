@@ -66,6 +66,10 @@ class PaymentRequest < ApplicationRecord
     APPROVABLE_STATUSES.include?(status)
   end
 
+  def past_due
+    super || false
+  end
+
   private
 
   def set_due_at
