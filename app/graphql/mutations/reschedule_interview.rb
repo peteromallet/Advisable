@@ -4,7 +4,7 @@ module Mutations
   class RescheduleInterview < Mutations::BaseMutation
     argument :interview, ID, required: true
     argument :message, String, required: false
-    argument :starts_at, String, required: true
+    argument :starts_at, GraphQL::Types::ISO8601DateTime, required: true
 
     field :interview, Types::Interview, null: true
 
@@ -17,9 +17,8 @@ module Mutations
       ApiError.not_authorized("You do not have permission to reschedule this interview.")
     end
 
-    def resolve(**args)
+    def resolve(starts_at:, **args)
       interview = Interview.find_by!(uid: args[:interview])
-      starts_at = Time.zone.parse(args[:starts_at])
       ApiError.invalid_request("STARTS AT NOT IN FUTURE") unless starts_at.future?
       ApiError.invalid_request("INTERVIEW NOT RESCHEDULABLE") unless Interview::RESCHEDULABLE_STATUSES.include?(interview.status)
 
