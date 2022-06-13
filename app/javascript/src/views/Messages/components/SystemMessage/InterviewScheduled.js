@@ -28,7 +28,9 @@ export default function InterviewScheduledMessage({ message }) {
         </Text>
       </Text>
 
-      <Link to={`/interviews/${id}`}>Manage call</Link>
+      <Link to={`/interviews/${id}`} state={{ back: true }}>
+        Manage call
+      </Link>
     </Box>
   );
 }
