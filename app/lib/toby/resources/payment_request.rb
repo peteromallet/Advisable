@@ -16,6 +16,7 @@ module Toby
       attribute :payment, Attributes::HasOne
       attribute :payout, Attributes::HasOne
       attribute :due_at, Attributes::DateTime
+      attribute :past_due, Attributes::Boolean
       attribute :memo, Attributes::String
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
