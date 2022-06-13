@@ -118,6 +118,43 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect { participant.reload.last_read_at.present? }.to become_truthy
   end
 
+  it "shows an upcoming call for a client" do
+    conversation2 = conversation_with_participants([michael, dwight])
+    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled")
+    authenticate_as(interview.user)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Upcoming calls")
+    click_on("Call with #{interview.specialist.first_name}")
+    expect(page).to have_content(/scheduled to take place/i)
+    find('[aria-label="Back"]').click
+    expect(page).to have_content("Upcoming calls")
+  end
+
+  it "shows an upcoming call for a specialist" do
+    conversation2 = conversation_with_participants([michael, dwight])
+    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled")
+    authenticate_as(interview.specialist)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Upcoming calls")
+    click_on("Call with #{interview.user.first_name}")
+    expect(page).to have_content(/scheduled to take place/i)
+    find('[aria-label="Back"]').click
+    expect(page).to have_content("Upcoming calls")
+  end
+
+  it "doesn't show upcoming calls section if no calls" do
+    conversation2 = conversation_with_participants([michael, dwight])
+    authenticate_as(michael.user)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).not_to have_content("Upcoming calls")
+  end
+
+  it "doesn't show upcoming calls section in a group chat" do
+    authenticate_as(michael.user)
+    visit("/messages/#{conversation.uid}")
+    expect(page).not_to have_content("Upcoming calls")
+  end
+
   def conversation_with_participants(participants)
     create(:conversation) do |conversation|
       participants.each do |participant|
