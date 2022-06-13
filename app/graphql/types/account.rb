@@ -33,10 +33,7 @@ module Types
 
     field :upcoming_interviews, [Types::Interview], null: false
     def upcoming_interviews
-      # TODO: Interview Participant Migration: rework when we remove user and specialist
-      ::Interview.upcoming.select do |interview|
-        (interview.participants & [object, current_user.account]).size == 2
-      end
+      ::Interview.upcoming.with_accounts([object, current_user.account])
     end
   end
 end

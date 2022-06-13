@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  self.ignored_columns += %i[specialist_id user_id]
+
   extend Memoist
   include Uid
 
@@ -18,8 +20,6 @@ class Interview < ApplicationRecord
 
   DECLINABLE_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added", "Need More Time Options"].freeze
 
-  belongs_to :legacy_specialist, optional: true, class_name: "Specialist", foreign_key: :specialist_id, inverse_of: :interviews
-  belongs_to :legacy_user, optional: true, class_name: "User", foreign_key: :user_id, inverse_of: :interviews
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
 
   has_one :video_call, dependent: :destroy
@@ -36,29 +36,20 @@ class Interview < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}
 
   def participants
-    [legacy_user&.account, legacy_specialist&.account, *accounts].compact.uniq
+    Sentry.capture_message("Something is still calling Interview#participants! Stop it!", level: "debug")
+    accounts
   end
 
   def specialist_and_user?
-    !!(participants.length == 2 && specialist && user)
+    !!(accounts.length == 2 && specialist && user)
   end
 
   def specialist
-    legacy_specialist || Specialist.find_by(account: accounts)
+    Specialist.find_by(account: accounts)
   end
 
   def user
-    legacy_user || User.find_by(account: accounts)
-  end
-
-  def specialist=(specialist)
-    Sentry.capture_message("Setting specialist directly! Stop it!", level: "debug")
-    self.legacy_specialist = specialist
-  end
-
-  def user=(user)
-    Sentry.capture_message("Setting user directly! Stop it!", level: "debug")
-    self.legacy_user = user
+    User.find_by(account: accounts)
   end
 
   def pending?

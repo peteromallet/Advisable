@@ -13,9 +13,8 @@ RSpec.describe Interview, type: :model do
     expect(interview).to be_specialist_and_user
   end
 
-  describe "#specialist" do
-    let(:specialist) { create(:specialist) }
-    let(:interview) { create(:interview, specialist:, user: nil) }
+  describe "#specialist and #user" do
+    let(:interview) { create(:interview) }
     let(:specialist_participant) { create(:specialist) }
     let(:user_participant) { create(:user) }
 
@@ -24,64 +23,10 @@ RSpec.describe Interview, type: :model do
       create(:interview_participant, interview:, account: specialist_participant.account)
     end
 
-    context "when the interview has a legacy specialist" do
-      it "returns the legacy specialist" do
-        expect(interview.specialist).to eq(specialist)
-        expect(interview.participants).to match_array([specialist.account, specialist_participant.account, user_participant.account])
-      end
-    end
-
-    context "when the interview doesn't have a legacy specialist" do
-      it "returns the participant with a specialist" do
-        interview.update!(specialist: nil)
-        expect(interview.specialist).to eq(specialist_participant)
-        expect(interview.participants).to match_array([specialist_participant.account, user_participant.account])
-      end
-    end
-
-    context "when the legacy specialist and specialist participant are the same account" do
-      let(:specialist_participant) { specialist }
-
-      it "returns it only once in #participants" do
-        expect(interview.specialist).to eq(specialist)
-        expect(interview.participants).to match_array([specialist.account, user_participant.account])
-      end
-    end
-  end
-
-  describe "#user" do
-    let(:user) { create(:user) }
-    let(:interview) { create(:interview, user:, specialist: nil) }
-    let(:specialist_participant) { create(:specialist) }
-    let(:user_participant) { create(:user) }
-
-    before do
-      create(:interview_participant, interview:, account: user_participant.account)
-      create(:interview_participant, interview:, account: specialist_participant.account)
-    end
-
-    context "when the interview has a legacy user" do
-      it "returns the legacy user" do
-        expect(interview.user).to eq(user)
-        expect(interview.participants).to match_array([user.account, specialist_participant.account, user_participant.account])
-      end
-    end
-
-    context "when the interview doesn't have a legacy user" do
-      it "returns the participant with a user" do
-        interview.update!(user: nil)
-        expect(interview.user).to eq(user_participant)
-        expect(interview.participants).to match_array([specialist_participant.account, user_participant.account])
-      end
-    end
-
-    context "when the legacy user and user participant are the same account" do
-      let(:user_participant) { user }
-
-      it "returns it only once in #participants" do
-        expect(interview.user).to eq(user)
-        expect(interview.participants).to match_array([specialist_participant.account, user.account])
-      end
+    it "returns the account who responds to a called method" do
+      expect(interview.specialist).to eq(specialist_participant)
+      expect(interview.user).to eq(user_participant)
+      expect(interview.accounts).to match_array([specialist_participant.account, user_participant.account])
     end
   end
 end

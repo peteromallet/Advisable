@@ -33,7 +33,6 @@ class Specialist < ApplicationRecord
   has_many :payouts, dependent: :nullify
   has_many :reviews, dependent: :destroy
   has_many :agreements, dependent: :destroy
-  has_many :interviews, dependent: :destroy
   has_many :specialist_skills, dependent: :destroy
   has_many :skills, through: :specialist_skills
   has_many :specialist_industries, dependent: :destroy

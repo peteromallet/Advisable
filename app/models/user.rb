@@ -15,7 +15,6 @@ class User < ApplicationRecord
 
   airtable_class Airtable::ClientContact
 
-  has_many :interviews, dependent: :destroy
   has_many :agreements, dependent: :destroy
   has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
