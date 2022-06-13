@@ -63,7 +63,7 @@ export default function ClientPaymentRequests() {
               </Box>
             </Table.Cell>
             <Table.Cell className="hidden md:block w-[120px]">
-              <PaymentRequestStatus status={pr.status} />
+              <PaymentRequestStatus status={pr.status} pastDue={pr.pastDue} />
             </Table.Cell>
             <Table.Cell width="120px" textAlign="right">
               <Text fontWeight={560} color="neutral900">
