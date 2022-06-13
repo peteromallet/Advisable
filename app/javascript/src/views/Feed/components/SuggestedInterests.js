@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const list = [
-  "Scale Performance Marketing",
-  "Creative PR Strategy",
-  "Start B2B Podcast",
   "Long-Form Content Marketing",
-  "Creative Growth Marketing",
-  "Test Instagram Ads",
   "Improve SEO Rankings",
-  "Develop Value Proposition",
+  "Growth Marketing",
+  "Video Content",
+  "Implement Hubspot",
+  "Create Brand Identity",
+  "Growth Marketing",
+  "Public Relations",
 ];
 
 export default function SuggestedInterests() {
