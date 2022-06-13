@@ -146,6 +146,17 @@ RSpec.describe "Discover", type: :system do
     expect(page).to have_content("Discover new projects")
   end
 
+  it "searches with suggested interests when has no results" do
+    allow_any_instance_of(CaseStudy::InterestPreview).to receive(:results).and_return([])
+    authenticate_as(user)
+    visit("/explore/search")
+    expect(page).to have_content("Long-Form Content Marketing")
+    click_on("Long-Form Content Marketing")
+    expect(page).to have_content(/No matches/i)
+    click_button("New search")
+    expect(page).to have_content("Discover new projects")
+  end
+
   it "brings the user through a walkthrough" do
     user.account.update(completed_tutorials: ["onboarding"])
     interest = create(:case_study_interest, account: user.account)
