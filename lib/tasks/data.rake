@@ -26,4 +26,17 @@ namespace :data do
       progressbar.increment
     end
   end
+
+  task migrate_notifications: :environment do
+    progressbar = ProgressBar.create(format: "Migrating notifications: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: Notification.count)
+    notifications = Notification.pluck(:id, :notifiable_id, :notifiable_type, :guild_post_id)
+    notifications.each do |id, post_id, type, guild_post_id|
+      progressbar.increment
+      next unless guild_post_id.nil?
+      next unless type == "Guild::Post"
+      next if post_id.nil? || !Guild::Post.exists?(id: post_id)
+
+      Notification.find(id).update_columns(guild_post_id: post_id)
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_01_095048) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_02_122527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -568,13 +568,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_095048) do
     t.bigint "account_id", null: false
     t.bigint "actor_id"
     t.string "action", null: false
-    t.string "notifiable_type", null: false
-    t.uuid "notifiable_id", null: false
+    t.string "notifiable_type"
+    t.uuid "notifiable_id"
     t.datetime "read_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "guild_post_id"
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["guild_post_id"], name: "index_notifications_on_guild_post_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
@@ -976,6 +978,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_095048) do
   add_foreign_key "messages", "payment_requests"
   add_foreign_key "notifications", "accounts"
   add_foreign_key "notifications", "accounts", column: "actor_id"
+  add_foreign_key "notifications", "guild_posts"
   add_foreign_key "payment_requests", "agreements"
   add_foreign_key "payment_requests", "companies"
   add_foreign_key "payment_requests", "specialists"

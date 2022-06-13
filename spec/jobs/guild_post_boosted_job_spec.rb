@@ -48,10 +48,8 @@ RSpec.describe GuildPostBoostedJob do
       notification = specialist.account.notifications.first
       expect(notification).to have_attributes({
         account: specialist.account,
-        actor: nil,
         action: "suggested_post",
-        notifiable_type: "Guild::Post",
-        notifiable_id: guild_post.id
+        guild_post_id: guild_post.id
       })
     end
   end

@@ -29,7 +29,7 @@ RSpec.describe Mutations::UpdateLastReadNotification do
     let(:other) { create(:specialist) }
 
     before do
-      Notification.create!(account: specialist.account, action: "suggested_post", notifiable: guild_post)
+      Notification.create!(account: specialist.account, action: "suggested_post", guild_post:)
     end
 
     it "updates unread notifications as read" do
@@ -41,7 +41,7 @@ RSpec.describe Mutations::UpdateLastReadNotification do
         }.from(true).to(false)
 
         expect(unread_notification.reload.read_at).to eq(Time.current)
-        expect(touch_read_at["unreadNotifications"]).to eq(false)
+        expect(touch_read_at["unreadNotifications"]).to be(false)
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Mutations::UpdateLastReadNotification do
         freeze_time do
           expect { touch_read_at }.not_to(change { specialist.account.reload.unread_notifications? })
           expect(unread_notification.reload.read_at).not_to eq(Time.current)
-          expect(touch_read_at["unreadNotifications"]).to eq(true)
+          expect(touch_read_at["unreadNotifications"]).to be(true)
         end
       end
     end
