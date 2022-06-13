@@ -4,6 +4,7 @@ import { Text, Link, Circle } from "@advisable/donut";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import { DateTime } from "luxon";
 import { Calendar, OfficeBuilding, User } from "@styled-icons/heroicons-solid";
+import PaymentRequestPastDue from "./PaymentRequestPastDue";
 
 function SourcingFee({ amount = 0, sourcingFee }) {
   if (amount <= 0) return null;
@@ -150,6 +151,8 @@ export default function PaymentRequestSummary({
             <p className="text-md leading-relaxed text-neutral700">{memo}</p>
           </div>
         ) : null}
+
+        <PaymentRequestPastDue paymentRequest={paymentRequest} />
       </div>
     </div>
   );

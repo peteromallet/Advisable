@@ -3,6 +3,7 @@ fragment PaymentRequestFields on PaymentRequest {
   memo
   dueAt
   status
+  pastDue
   amount
   adminFee
   createdAt

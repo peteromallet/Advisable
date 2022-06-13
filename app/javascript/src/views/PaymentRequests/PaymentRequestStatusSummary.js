@@ -74,30 +74,6 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
     );
   }
 
-  // TODO: Tommy do your magic
-  if (status === "past_due") {
-    return (
-      <Summary status={status} icon={<CreditCard />}>
-        {viewer.isSpecialist ? (
-          <>
-            This payment request is past due. We have reached out to{" "}
-            {company.name} to collect payment. Once we have received the
-            payment, the funds will be released to you on our next weekly
-            payout, which is done on Tuesdays.
-          </>
-        ) : (
-          <>
-            <div className="mb-6">
-              This request is awaiting payment from {company.name}. Once paid
-              the funds will be released immediately to {specialist.name}.
-            </div>
-            <ApprovePaymentRequest paymentRequest={paymentRequest} />
-          </>
-        )}
-      </Summary>
-    );
-  }
-
   if (status === "disputed") {
     return (
       <Summary status={status} icon={<Exclamation />}>

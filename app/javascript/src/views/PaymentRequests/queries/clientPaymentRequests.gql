@@ -8,6 +8,7 @@ query ClientPaymentRequests($cursor: String) {
       node {
         id
         status
+        pastDue
         amount
         adminFee
         createdAt

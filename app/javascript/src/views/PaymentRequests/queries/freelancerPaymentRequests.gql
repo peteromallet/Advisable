@@ -8,6 +8,7 @@ query FreelancerPaymentRequests($cursor: String) {
       node {
         id
         status
+        pastDue
         amount
         createdAt
         lineItems {

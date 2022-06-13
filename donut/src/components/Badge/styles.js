@@ -37,6 +37,10 @@ export const VARIANTS = variant({
       color: theme.colors.orange800,
       bg: theme.colors.orange100,
     },
+    red: {
+      color: "var(--color-red-50)",
+      bg: "var(--color-red-800)",
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const StyledBadge = styled.div`
   ${VARIANTS}
   ${SIZES}
   
+  line-height: 1;
   font-weight: 600;
   border-radius: 6px;
   align-items: center;
