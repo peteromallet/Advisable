@@ -6,7 +6,7 @@ module Types
 
     field_class BaseField
 
-    orphan_types Types::Notifications::SuggestedPostNotification
+    orphan_types(*Types::Notifications.constants.map { |k| "Types::Notifications::#{k}".constantize })
 
     field :id, ID, null: false do
       description "The unique ID for notification"
@@ -22,11 +22,9 @@ module Types
 
     definition_methods do
       def resolve_type(object, _context)
-        case object.action
-        when "suggested_post" then Types::Notifications::SuggestedPostNotification
-        else
-          raise "Unknown notification action"
-        end
+        raise "Unknown notification action" unless Object.const_defined?("Types::Notifications::#{object.action&.camelize}")
+
+        Object.const_get("Types::Notifications::#{object.action.camelize}")
       end
     end
   end

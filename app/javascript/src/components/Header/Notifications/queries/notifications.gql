@@ -4,7 +4,7 @@ query Notifications {
       __typename
       id
       createdAt
-      ... on SuggestedPostNotification {
+      ... on SuggestedPost {
         specialist {
           id
           name

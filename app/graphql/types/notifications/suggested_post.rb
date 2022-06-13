@@ -2,7 +2,7 @@
 
 module Types
   module Notifications
-    class SuggestedPostNotification < Types::BaseType
+    class SuggestedPost < Types::BaseType
       implements Types::NotificationInterface
 
       field :guild_post, Types::Guild::Post, null: false
