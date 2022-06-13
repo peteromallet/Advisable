@@ -74,6 +74,7 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
     );
   }
 
+  // TODO: Tommy do your magic
   if (status === "past_due") {
     return (
       <Summary status={status} icon={<CreditCard />}>
