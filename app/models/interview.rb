@@ -83,8 +83,6 @@ end
 #  updated_at                         :datetime         not null
 #  article_id                         :bigint
 #  google_calendar_id                 :string
-#  specialist_id                      :bigint
-#  user_id                            :bigint
 #  zoom_meeting_id                    :string
 #
 # Indexes
