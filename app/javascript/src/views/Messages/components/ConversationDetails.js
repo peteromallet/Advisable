@@ -22,7 +22,7 @@ export default function ConversationDetails({ conversation }) {
         <ProfileLink conversation={conversation} />
       </div>
       <ConversationAgreement conversation={conversation} />
-      {/* <ConversationCalls conversation={conversation} /> */}
+      <ConversationCalls conversation={conversation} />
       {/* <ConversationActions conversation={conversation} /> */}
     </>
   );

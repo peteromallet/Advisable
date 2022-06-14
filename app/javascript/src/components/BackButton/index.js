@@ -30,9 +30,11 @@ export default function BackButton({ to, label = "Back", state, ...props }) {
       as={motion.div}
       initial="initial"
       whileHover="hover"
+      onClick={() => !to && window.history.back()}
+      aria-label={label}
       {...props}
     >
-      <Link to={to} aria-label={label} state={state} />
+      {to ? <Link to={to} state={state} /> : null}
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
         <motion.path
           d="M25 20H14"
