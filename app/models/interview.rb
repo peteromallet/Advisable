@@ -61,7 +61,7 @@ class Interview < ApplicationRecord
 
   def reschedule!(starts_at)
     return unless RESCHEDULABLE_STATUSES.include?(status)
-    return if starts_at == self.starts_at
+    return if (self.starts_at - starts_at).abs < 1.minute
 
     update!(starts_at:)
     conversation.new_message!(kind: "InterviewRescheduled", interview: self, send_emails: false, metadata: {starts_at: starts_at.iso8601})

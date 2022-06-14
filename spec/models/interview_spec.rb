@@ -57,8 +57,8 @@ RSpec.describe Interview, type: :model do
       end
     end
 
-    context "when the new start time is the same" do
-      let(:new_start_time) { start_time }
+    context "when the new start time is almost the same (google rounds up)" do
+      let(:new_start_time) { start_time + 3.seconds }
 
       it "does nothing" do
         interview.reschedule!(new_start_time)
