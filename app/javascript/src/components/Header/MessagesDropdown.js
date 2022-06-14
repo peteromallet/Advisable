@@ -1,7 +1,8 @@
 import React from "react";
+import pluralize from "pluralize";
 import SimpleBar from "simplebar-react";
 import { Chat } from "@styled-icons/heroicons-solid";
-import { Avatar } from "@advisable/donut";
+import { Avatar, Tooltip } from "@advisable/donut";
 import Popover, { usePopoverState } from "./Popover";
 import {
   useConversations,
@@ -10,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import commaSeparated from "src/utilities/commaSeparated";
 import { StyledAvatars } from "src/views/Messages/components/ConversationLink";
+import { Calendar } from "@styled-icons/heroicons-solid";
 import HeaderButton from "./HeaderButton";
 import Loading from "../Loading";
 import MessagesIllustration from "src/illustrations/zest/messages";
@@ -17,6 +19,15 @@ import useOrderedConversations from "src/views/Messages/hooks/useOrderedConversa
 
 function Conversation({ conversation }) {
   const others = conversation.participants.filter((p) => !p.isViewer);
+
+  let numOfCalls;
+  if (others.length === 1) {
+    numOfCalls = others[0].upcomingInterviews.length;
+  }
+  const tooltipContent = `${numOfCalls} upcoming ${pluralize(
+    "call",
+    numOfCalls,
+  )}`;
 
   return (
     <Link
@@ -31,10 +42,17 @@ function Conversation({ conversation }) {
         </StyledAvatars>
       </div>
       <div className="min-w-0 w-full">
-        <p className="font-medium leading-none mb-1 truncate">
-          {commaSeparated(others.map((p) => p.firstName))}
-        </p>
-        <p className="text-neutral600 text-sm leading-none truncate">
+        <div className="flex items-center gap-1 mb-1">
+          <p className="font-medium leading-none truncate">
+            {commaSeparated(others.map((p) => p.firstName))}
+          </p>
+          {numOfCalls > 0 && (
+            <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
+              <Calendar className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70" />
+            </Tooltip>
+          )}
+        </div>
+        <p className="text-neutral600 text-sm leading-4 truncate">
           {conversation.lastMessage?.content || "-"}
         </p>
       </div>

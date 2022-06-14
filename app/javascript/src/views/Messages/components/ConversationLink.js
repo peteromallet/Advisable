@@ -1,7 +1,9 @@
 import React from "react";
+import pluralize from "pluralize";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { Avatar, StyledAvatar } from "@advisable/donut";
+import { Calendar } from "@styled-icons/heroicons-solid";
+import { Avatar, StyledAvatar, Tooltip } from "@advisable/donut";
 import commaSeparated from "src/utilities/commaSeparated";
 
 export const StyledAvatars = styled.div`
@@ -112,6 +114,15 @@ export const StyledAvatars = styled.div`
 export default function ConversationLink({ conversation }) {
   const others = conversation.participants.filter((p) => !p.isViewer);
 
+  let numOfCalls;
+  if (others.length === 1) {
+    numOfCalls = others[0].upcomingInterviews.length;
+  }
+  const tooltipContent = `${numOfCalls} upcoming ${pluralize(
+    "call",
+    numOfCalls,
+  )}`;
+
   return (
     <NavLink
       id={conversation.id}
@@ -130,9 +141,16 @@ export default function ConversationLink({ conversation }) {
         ))}
       </StyledAvatars>
       <div className="pl-2 min-w-0 w-full">
-        <h5 className="font-medium text-neutral900 truncate">
-          {commaSeparated(others.map((p) => p.firstName))}
-        </h5>
+        <div className="flex items-center gap-1">
+          <h5 className="font-medium text-neutral900 truncate">
+            {commaSeparated(others.map((p) => p.firstName))}
+          </h5>
+          {numOfCalls > 0 && (
+            <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
+              <Calendar className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70" />
+            </Tooltip>
+          )}
+        </div>
         <p className="text-sm text-neutral600 truncate">
           {conversation.lastMessage?.content || "-"}
         </p>
