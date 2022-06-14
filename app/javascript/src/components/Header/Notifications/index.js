@@ -1,64 +1,34 @@
 import React, { useCallback, useMemo } from "react";
-import truncate from "lodash/truncate";
 import * as Sentry from "@sentry/react";
 import SimpleBar from "simplebar-react";
 import Loading from "src/components/Loading";
 import useViewer from "src/hooks/useViewer";
-import { Box, Avatar, Text, Link, Stack } from "@advisable/donut";
-import { NotificationItem } from "./styles";
-import { relativeDate } from "@guild/utils";
+import { Box, Text, Stack } from "@advisable/donut";
 import { Bell } from "@styled-icons/heroicons-outline";
 import NotificationIllustration from "src/illustrations/zest/notification";
 import Popover, { usePopoverState } from "../Popover";
 import { useNotifications, useUpdateLastRead } from "./queries";
 import HeaderButton from "../HeaderButton";
+import Notification from "./Notification";
 
-const Notification = ({
-  createdAt,
-  guildPost,
-  specialist,
-  closeNotifications,
-  __typename: type,
-}) => {
-  const messageTypes = {
-    SuggestedPost: "You have a new suggested Post: ",
-  };
-  const message = messageTypes[type];
+// const Notification = ({
+//   createdAt,
+//   guildPost,
+//   specialist,
+//   closeNotifications,
+//   __typename: type,
+// }) => {
+//   const messageTypes = {
+//     SuggestedPost: "You have a new suggested Post: ",
+//   };
+//   const message = messageTypes[type];
 
-  return (
-    <Sentry.ErrorBoundary fallback={null}>
-      <NotificationItem>
-        <Box mr={4}>
-          <Avatar size="s" name={specialist.name} url={specialist.avatar} />
-        </Box>
-        <Box flex={1}>
-          <Text size="s" color="neutral600" mb={1} lineHeight="1.1rem">
-            {message}
+//   return (
+//     </Sentry.ErrorBoundary>
+//   );
+// };
 
-            <Link
-              to={`/posts/${guildPost?.id}`}
-              fontWeight="medium"
-              variant="dark"
-              onClick={closeNotifications}
-            >
-              {truncate(guildPost?.title, { length: 100 })}
-            </Link>
-          </Text>
-          <Text
-            fontSize="xxs"
-            fontWeight="light"
-            letterSpacing="-0.01em"
-            color="neutral700"
-          >
-            {relativeDate(createdAt)}
-          </Text>
-        </Box>
-      </NotificationItem>
-    </Sentry.ErrorBoundary>
-  );
-};
-
-function NotificationsList({ notifications, closeNotifications }) {
+function NotificationsList({ notifications, popover }) {
   return (
     <>
       <Text
@@ -73,11 +43,9 @@ function NotificationsList({ notifications, closeNotifications }) {
       <Stack spacing={4}>
         {notifications.map((notification) => {
           return (
-            <Notification
-              key={notification.id}
-              closeNotifications={closeNotifications}
-              {...notification}
-            />
+            <Sentry.ErrorBoundary key={notification.id} fallback={null}>
+              <Notification popover={popover} notification={notification} />
+            </Sentry.ErrorBoundary>
           );
         })}
       </Stack>
@@ -85,7 +53,7 @@ function NotificationsList({ notifications, closeNotifications }) {
   );
 }
 
-const Notifications = ({ closeNotifications }) => {
+const Notifications = ({ popover }) => {
   const { data, loading } = useNotifications();
   const notificationItems = data?.notifications?.nodes;
 
@@ -97,7 +65,7 @@ const Notifications = ({ closeNotifications }) => {
             <Loading />
           ) : notificationItems && notificationItems.length ? (
             <NotificationsList
-              closeNotifications={closeNotifications}
+              popover={popover}
               notifications={notificationItems}
             />
           ) : (
@@ -141,7 +109,7 @@ export default function NotificationsMenu() {
         />
       }
     >
-      {popover.visible && <Notifications />}
+      {popover.visible && <Notifications popover={popover} />}
     </Popover>
   );
 }
