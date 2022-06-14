@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/react";
 import SimpleBar from "simplebar-react";
 import Loading from "src/components/Loading";
 import useViewer from "src/hooks/useViewer";
-import { Box, Text, Stack } from "@advisable/donut";
+import { Box, Text } from "@advisable/donut";
 import { Bell } from "@styled-icons/heroicons-outline";
 import NotificationIllustration from "src/illustrations/zest/notification";
 import Popover, { usePopoverState } from "../Popover";
@@ -11,36 +11,13 @@ import { useNotifications, useUpdateLastRead } from "./queries";
 import HeaderButton from "../HeaderButton";
 import Notification from "./Notification";
 
-// const Notification = ({
-//   createdAt,
-//   guildPost,
-//   specialist,
-//   closeNotifications,
-//   __typename: type,
-// }) => {
-//   const messageTypes = {
-//     SuggestedPost: "You have a new suggested Post: ",
-//   };
-//   const message = messageTypes[type];
-
-//   return (
-//     </Sentry.ErrorBoundary>
-//   );
-// };
-
 function NotificationsList({ notifications, popover }) {
   return (
     <>
-      <Text
-        fontSize="3xl"
-        color="neutral90"
-        marginBottom={5}
-        fontWeight={500}
-        letterSpacing="-0.03em"
-      >
+      <h5 className="py-3 px-4 border-b border-solid border-neutral100 text-lg font-medium">
         Notifications
-      </Text>
-      <Stack spacing={4}>
+      </h5>
+      <div className="divide-y divide-solid divide-neutral100">
         {notifications.map((notification) => {
           return (
             <Sentry.ErrorBoundary key={notification.id} fallback={null}>
@@ -48,7 +25,7 @@ function NotificationsList({ notifications, popover }) {
             </Sentry.ErrorBoundary>
           );
         })}
-      </Stack>
+      </div>
     </>
   );
 }
@@ -60,7 +37,7 @@ const Notifications = ({ popover }) => {
   return (
     <Box width="400px">
       <SimpleBar style={{ maxHeight: "60vh" }}>
-        <Box padding={5} display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column">
           {loading ? (
             <Loading />
           ) : notificationItems && notificationItems.length ? (
