@@ -35,6 +35,6 @@ RSpec.describe "Notification", type: :system do
 
     visit "/"
     find(:xpath, unread_selector).click
-    expect(page).to have_content("You have a new suggested Post")
+    expect(page).to have_content("You have a new suggested post")
   end
 end
