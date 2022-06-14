@@ -8,6 +8,7 @@ import MessagesLoading from "./MessagesLoading";
 import MessageComposer from "./MessageComposer";
 import useUpdateConversationLastRead from "../hooks/useUpdateConversationLastRead";
 import MessagePrompt from "./MessagePrompt";
+import { ErrorBoundary } from "react-error-boundary";
 
 // Poll every 5 minutes as fallback if subscriptions fail
 const POLL = 300000;
@@ -106,7 +107,16 @@ export default function ConversationMessages({ conversation, currentAccount }) {
               <Box paddingY={8}>
                 <div className="space-y-4 pb-4" id="messages">
                   {messageEdges.map((edge) => (
-                    <Message key={edge.node.id} message={edge.node} />
+                    <ErrorBoundary
+                      key={edge.node.id}
+                      fallback={
+                        <div className="text-neutral-500 text-sm leading-none text-center p-2 border border-solid border-neutral-200 rounded-md">
+                          Failed to load message
+                        </div>
+                      }
+                    >
+                      <Message message={edge.node} />
+                    </ErrorBoundary>
                   ))}
                 </div>
                 <MessageComposer
