@@ -147,7 +147,10 @@ export default function ConversationLink({ conversation }) {
           </h5>
           {numOfCalls > 0 && (
             <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
-              <Calendar className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70" />
+              <Calendar
+                className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70"
+                aria-label={tooltipContent}
+              />
             </Tooltip>
           )}
         </div>

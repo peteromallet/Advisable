@@ -48,7 +48,10 @@ function Conversation({ conversation }) {
           </p>
           {numOfCalls > 0 && (
             <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
-              <Calendar className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70" />
+              <Calendar
+                className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70"
+                aria-label={tooltipContent}
+              />
             </Tooltip>
           )}
         </div>
@@ -95,7 +98,13 @@ export default function MessagesDropdown() {
   return (
     <Popover
       state={popover}
-      disclosure={<HeaderButton count={unreadCount} icon={Chat} />}
+      disclosure={
+        <HeaderButton
+          aria-label="Messages dropdown"
+          count={unreadCount}
+          icon={Chat}
+        />
+      }
     >
       <div className="w-[400px]">
         <h5 className="py-3 px-4 border-b border-solid border-neutral100 text-lg font-medium">

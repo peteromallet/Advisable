@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Messaging", type: :system, action_cable: :async do
   let(:dwight) { create(:account, first_name: "Dwight", specialist: create(:specialist)) }
   let(:jim) { create(:account, first_name: "Jim", specialist: create(:specialist)) }
-  let(:michael) { create(:account, first_name: "Michael", user: create(:user)) }
+  let(:michael) { create(:account, first_name: "Michael", user: create(:user), completed_tutorials: %w[onboarding feed]) }
   let!(:conversation) { conversation_with_participants([dwight, jim, michael]) }
 
   it "redirects to the first conversation" do
@@ -140,6 +140,29 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content(/scheduled to take place/i)
     find('[aria-label="Back"]').click
     expect(page).to have_content("Upcoming calls")
+  end
+
+  it "shows upcoming calls indicators for a client" do
+    conversation_with_participants([michael, dwight])
+    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled")
+    authenticate_as(interview.user)
+    visit("/")
+    find("*[aria-label='Messages dropdown']").click
+    expect(page).to have_content("Messages")
+    find("*[aria-label='1 upcoming call']").hover
+    expect(page).to have_content("1 upcoming call")
+    visit("/messages")
+    first("*[aria-label='1 upcoming call']").hover
+    expect(page).to have_content("1 upcoming call")
+  end
+
+  it "shows upcoming calls indicator for a specialist" do
+    conversation_with_participants([michael, dwight])
+    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled")
+    authenticate_as(interview.specialist)
+    visit("/messages")
+    first("*[aria-label='1 upcoming call']").hover
+    expect(page).to have_content("1 upcoming call")
   end
 
   it "doesn't show upcoming calls section if no calls" do
