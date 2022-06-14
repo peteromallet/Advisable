@@ -182,7 +182,7 @@ module Types
     field :notifications, Types::NotificationInterface.connection_type, null: true, max_page_size: 20
     def notifications
       requires_current_user!
-      current_account.notifications
+      current_account.notifications.order(created_at: :desc)
     end
 
     field :case_studies, Types::CaseStudy::Article.connection_type, null: true, max_page_size: 20
