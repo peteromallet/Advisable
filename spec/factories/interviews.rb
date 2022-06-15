@@ -9,5 +9,9 @@ FactoryBot.define do
     trait :with_specialist_and_user do
       accounts { [create(:specialist).account, create(:user).account] }
     end
+
+    trait :with_two_accounts do
+      accounts { [create(:account), create(:account)] }
+    end
   end
 end

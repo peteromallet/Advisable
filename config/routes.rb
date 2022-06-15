@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
 
   post "/stripe_events", to: "stripe_events#create"
+  post "/google_calendar_events", to: "google_calendar_events#create"
 
   get "/auth/:provider/callback", to: "auth_providers#create"
   get "/auth/failure", to: "auth_providers#failure"

@@ -82,6 +82,7 @@ RSpec.describe Mutations::RescheduleInterview do
     context "when multiple participants" do
       it "sends email to all other accounts" do
         interview.accounts << create(:account)
+        expect_any_instance_of(GoogleCalendar).to receive(:schedule_for_interview).with(interview)
         AdvisableSchema.execute(query, context:)
         other_accounts = interview.accounts - [current_user.account]
         expect(other_accounts.count).to eq(2)

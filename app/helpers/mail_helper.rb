@@ -2,6 +2,7 @@
 
 module MailHelper
   include MagicLinkHelper
+  include HostHelper
 
   def specialist_unsubscribe_url(specialist)
     "#{root_host}/unsubscribe?Specialist%20ID=#{specialist.uid}&field66878840=#{specialist.account.email}"
@@ -76,20 +77,5 @@ module MailHelper
 
   def interview_url(interview)
     "#{app_host}/interviews/#{interview.uid}"
-  end
-
-  def root_host
-    "https://advisable.com"
-  end
-
-  def app_host
-    heroku_name = ENV.fetch("HEROKU_APP_NAME", nil)
-    if heroku_name.present? && heroku_name != "advisable"
-      "https://#{heroku_name}.herokuapp.com"
-    elsif Rails.env.production?
-      "https://app.advisable.com"
-    else
-      ActionMailer::Base.default_url_options[:host]
-    end
   end
 end
