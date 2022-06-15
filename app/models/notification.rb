@@ -3,10 +3,11 @@
 class Notification < ApplicationRecord
   self.ignored_columns += %i[notifiable_type notifiable_id actor_id]
 
-  ACTION_TYPES = %w[suggested_post].freeze
+  ACTION_TYPES = %w[suggested_post send_agreement].freeze
 
-  belongs_to :account
   belongs_to :guild_post, optional: true, class_name: "Guild::Post"
+  belongs_to :interview, optional: true
+  belongs_to :account, optional: true
 
   scope :unread, -> { where(read_at: nil) }
 
@@ -24,12 +25,14 @@ end
 #  updated_at    :datetime         not null
 #  account_id    :bigint           not null
 #  guild_post_id :uuid
+#  interview_id  :bigint
 #
 # Indexes
 #
 #  index_notifications_on_account_id     (account_id)
 #  index_notifications_on_actor_id       (actor_id)
 #  index_notifications_on_guild_post_id  (guild_post_id)
+#  index_notifications_on_interview_id   (interview_id)
 #  index_notifications_on_notifiable     (notifiable_type,notifiable_id)
 #
 # Foreign Keys

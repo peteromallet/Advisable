@@ -21,7 +21,7 @@ const Notification = ({
   __typename: type,
 }) => {
   const messageTypes = {
-    SuggestedPostNotification: "You have a new suggested Post: ",
+    SuggestedPost: "You have a new suggested Post: ",
   };
   const message = messageTypes[type];
 
