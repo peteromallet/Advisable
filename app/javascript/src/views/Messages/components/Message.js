@@ -16,6 +16,7 @@ import InterviewRequestMessage from "./InterviewRequestMessage";
 import InterviewAutoDeclinedMessage from "./SystemMessage/InterviewAutoDeclinedMessage";
 import PaymentRequestCreated from "./SystemMessage/PaymentRequestCreated";
 import PaymentRequestCompleted from "./SystemMessage/PaymentRequestCompleted";
+import InterviewRescheduledMessage from "./SystemMessage/InterviewRescheduledMessage";
 
 const COMPONENTS = {
   UserMessage,
@@ -30,6 +31,7 @@ const COMPONENTS = {
   InterviewAutoDeclinedMessage,
   PaymentRequestCreated,
   PaymentRequestCompleted,
+  InterviewRescheduledMessage,
 };
 
 export default function Message({ message }) {

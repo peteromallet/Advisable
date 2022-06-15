@@ -61,6 +61,14 @@ class Account < ApplicationRecord
     @name ||= [first_name, last_name].select(&:present?).join(" ")
   end
 
+  def email_with_name
+    %("#{name}" <#{email}>)
+  end
+
+  def name_with_company
+    user.nil? ? name : user.name_with_company
+  end
+
   def cached_avatar_url
     Rails.cache.fetch("account_avatar_#{id}") { resized_avatar_url }
   end

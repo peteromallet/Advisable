@@ -5,15 +5,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.invited_by_manager(User.first, User.last)
   end
 
-  def invited_to_review_applications
-    UserMailer.invited_to_review_applications(User.first, User.last, random_project)
-  end
-
-  def invited_to_review_applications_with_application
-    application = random_application
-    UserMailer.invited_to_review_applications(User.first, User.last, application.project, application_id: application.uid)
-  end
-
   def invited_to_interview
     UserMailer.invited_to_interview(User.first, User.last, random_interview)
   end

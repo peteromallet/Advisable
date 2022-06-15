@@ -28,8 +28,9 @@ module Mutations
         )
       end
 
+      conversation = Conversation.by_accounts(interview.accounts)
+      conversation.new_message!(kind: "InterviewScheduled", interview:, metadata: {starts_at: interview.starts_at}, send_emails: false)
       interview.create_video_call! if interview.video_call.blank?
-      interview.create_system_message!
       GoogleCalendar.new.schedule_for_interview(interview)
 
       unless specialist.account.completed_tutorial?("introductory_call")

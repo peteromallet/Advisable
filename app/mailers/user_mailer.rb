@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reschedule_request(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(from: @sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
   end
 
@@ -17,14 +17,6 @@ class UserMailer < ApplicationMailer
     @manager = manager
     @user = user
     mail(to: user.account.email, subject: "#{manager.account.first_name} invited you to Advisable")
-  end
-
-  def invited_to_review_applications(inviter, user, project, application_id: nil)
-    @inviter = inviter
-    @user = user
-    @project = project
-    @url = application_url(application_id)
-    mail(to: @user.account.email, subject: "#{@inviter.account.first_name} invited you to review applications for a #{@project.try(:name)} project on Advisable")
   end
 
   def invited_to_interview(inviter, user, interview)
@@ -79,7 +71,7 @@ class UserMailer < ApplicationMailer
 
   def need_more_time_options(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -91,7 +83,7 @@ class UserMailer < ApplicationMailer
 
   def interview_reminder(interview)
     @interview = interview
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     mail(
       from: @sales_person.email_with_name,
       to: interview.user.account.email,
@@ -105,7 +97,7 @@ class UserMailer < ApplicationMailer
   def post_interview(interview)
     @interview = interview
     @account = interview.user.account
-    @sales_person = interview.user.company.sales_person
+    @sales_person = interview.user&.company&.sales_person
 
     mail(
       from: "Advisable <hello@advisable.com>",
@@ -193,7 +185,7 @@ class UserMailer < ApplicationMailer
   def declined_interview_email(interview)
     @account = interview.user.account
     @specialist = interview.specialist
-    @sales_person = consultations_sales_person(interview.user.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
     article = interview.article || @specialist.articles.searchable.by_score.first
     @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
 
@@ -204,21 +196,5 @@ class UserMailer < ApplicationMailer
     ) do |format|
       format.html { render layout: false }
     end
-  end
-
-  def application_url(application_id)
-    if application_id.present?
-      "#{default_url_options[:host]}/projects/#{@project.uid}/candidates/#{application_id}"
-    else
-      "#{default_url_options[:host]}/projects/#{@project.uid}/matches"
-    end
-  end
-
-  def user_sales_person(company)
-    SalesPerson.default_for_user || company.sales_person
-  end
-
-  def consultations_sales_person(company)
-    SalesPerson.default_for_consultations || company.sales_person
   end
 end

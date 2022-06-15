@@ -13,7 +13,21 @@ class AccountMailerPreview < ActionMailer::Preview
     )
   end
 
+  def interview_rescheduled
+    accounts = random_interview.accounts.order("RANDOM()").to_a
+    rescheduler = accounts.pop
+    AccountMailer.interview_rescheduled(accounts.sample, random_interview, rescheduler, random_message)
+  end
+
   private
+
+  def random_interview
+    @random_interview ||= Interview.order("RANDOM()").first
+  end
+
+  def random_message
+    @random_message ||= Message.order("RANDOM()").first
+  end
 
   def random_account
     @random_account ||= Account.order("RANDOM()").first

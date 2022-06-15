@@ -11,10 +11,6 @@ module MailHelper
     "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(', '))}"
   end
 
-  def specialist_project_application_url(project)
-    "#{app_host}/opportunities/#{project.uid}?utm_campaign=#{project.uid}"
-  end
-
   def magic_link_manage_guild_follows(account)
     magic_link(account, "#{app_host}/guild/follows", expires_at: 1.day.from_now)
   end
@@ -52,7 +48,7 @@ module MailHelper
     "#{app_host}/messages/#{conversation.uid}"
   end
 
-  def time_in_zone(timestamp, zone, format = "%d %B, %I:%M%P %Z")
+  def time_in_zone(timestamp, zone = "UTC", format = "%d %B, %I:%M%P %Z")
     timestamp.in_time_zone(zone).strftime(format)
   end
 

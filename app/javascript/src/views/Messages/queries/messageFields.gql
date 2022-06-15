@@ -138,6 +138,13 @@ fragment MessageFields on MessageInterface {
     }
   }
 
+  ... on InterviewRescheduledMessage {
+    startsAt
+    interview {
+      id
+    }
+  }
+
   ... on PaymentRequestCreated {
     createdAt
     paymentRequest {
