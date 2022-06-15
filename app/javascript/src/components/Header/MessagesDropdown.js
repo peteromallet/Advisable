@@ -48,10 +48,12 @@ function Conversation({ conversation }) {
           </p>
           {numOfCalls > 0 && (
             <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
-              <Calendar
-                className="hidden xl:block min-w-[16px] h-[16px] fill-neutral700 hover:opacity-100 opacity-70"
+              <div
                 aria-label={tooltipContent}
-              />
+                className="items-center justify-center hidden xl:flex min-w-[16px] h-[16px] hover:opacity-100 opacity-70"
+              >
+                <Calendar className="fill-neutral700" />
+              </div>
             </Tooltip>
           )}
         </div>
