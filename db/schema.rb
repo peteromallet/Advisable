@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_02_131359) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_13_085047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -598,6 +598,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_02_131359) do
     t.datetime "due_at"
     t.datetime "reminded_at"
     t.bigint "agreement_id"
+    t.boolean "past_due"
     t.index ["agreement_id"], name: "index_payment_requests_on_agreement_id"
     t.index ["company_id"], name: "index_payment_requests_on_company_id"
     t.index ["specialist_id"], name: "index_payment_requests_on_specialist_id"

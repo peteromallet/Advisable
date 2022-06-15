@@ -8,12 +8,10 @@ const STATUSES = {
   disputed: "orange",
   canceled: "neutral",
   paid_out: "cyan",
-  past_due: "orange",
 };
 
 const LABELS = {
   paid_out: "Paid out",
-  past_due: "Past Due",
 };
 
 export default function PaymentRequestStatus({ status }) {

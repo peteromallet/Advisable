@@ -6,8 +6,8 @@ class PaymentRequest < ApplicationRecord
 
   has_logidze
 
-  VALID_STATUSES = %w[pending approved past_due disputed canceled paid paid_out].freeze
-  APPROVABLE_STATUSES = %w[pending past_due].freeze
+  VALID_STATUSES = %w[pending approved disputed canceled paid paid_out].freeze
+  APPROVABLE_STATUSES = %w[pending].freeze
 
   belongs_to :company, optional: true
   belongs_to :specialist, optional: true
@@ -22,6 +22,7 @@ class PaymentRequest < ApplicationRecord
 
   scope :with_status, ->(status) { where(status:) }
   scope :due, -> { where(due_at: (..Time.current)) }
+  scope :not_past_due, -> { where(past_due: [nil, false]) }
   scope :unreminded, -> { where(reminded_at: nil) }
 
   def line_items
@@ -65,6 +66,10 @@ class PaymentRequest < ApplicationRecord
     APPROVABLE_STATUSES.include?(status)
   end
 
+  def past_due
+    super || false
+  end
+
   private
 
   def set_due_at
@@ -85,6 +90,7 @@ end
 #  due_at              :datetime
 #  line_items          :jsonb
 #  memo                :string
+#  past_due            :boolean
 #  reminded_at         :datetime
 #  status              :string           not null
 #  uid                 :string           not null

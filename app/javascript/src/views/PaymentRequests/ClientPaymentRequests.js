@@ -7,6 +7,9 @@ import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";
 import NoPaymentRequests from "./NoPaymentRequests";
 import { Loading } from "src/components";
+import { ExclamationCircle } from "@styled-icons/heroicons-solid";
+
+const PAYABLE_STATUSES = ["pending", "approved"];
 
 export default function ClientPaymentRequests() {
   const { data, loading, error, fetchMore } = useClientPaymentRequests();
@@ -36,7 +39,7 @@ export default function ClientPaymentRequests() {
           <Table.HeaderCell className="hidden md:block w-[120px]">
             Status
           </Table.HeaderCell>
-          <Table.HeaderCell width="120px" textAlign="right">
+          <Table.HeaderCell className="w-[120px] text-right">
             Amount
           </Table.HeaderCell>
         </Table.Header>
@@ -47,7 +50,11 @@ export default function ClientPaymentRequests() {
         )}
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
-            <Table.Cell className="flex-1">
+            <Table.Cell className="flex items-center flex-1">
+              {pr.pastDue && PAYABLE_STATUSES.includes(pr.status) && (
+                <ExclamationCircle className="w-5 h-5 text-red-800 mr-2" />
+              )}
+
               <Text
                 fontSize="lg"
                 fontWeight={520}
@@ -63,9 +70,9 @@ export default function ClientPaymentRequests() {
               </Box>
             </Table.Cell>
             <Table.Cell className="hidden md:block w-[120px]">
-              <PaymentRequestStatus status={pr.status} />
+              <PaymentRequestStatus status={pr.status} pastDue={pr.pastDue} />
             </Table.Cell>
-            <Table.Cell width="120px" textAlign="right">
+            <Table.Cell className="w-[120px] text-right">
               <Text fontWeight={560} color="neutral900">
                 {currency(pr.amount + pr.adminFee, { format: "$0,0.00" })}
               </Text>

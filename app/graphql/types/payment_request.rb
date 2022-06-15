@@ -28,5 +28,6 @@ module Types
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :due_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :past_due, Boolean, null: false
   end
 end
