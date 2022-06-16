@@ -11,6 +11,7 @@ test("user can update invoice settings", async () => {
 
   const user = mockData.user({
     projectPaymentMethod: "Card",
+    company,
   });
 
   const graphQLMocks = [
@@ -30,7 +31,6 @@ test("user can update invoice settings", async () => {
       },
       result: {
         data: {
-          currentCompany: company,
           viewer: user,
         },
       },
