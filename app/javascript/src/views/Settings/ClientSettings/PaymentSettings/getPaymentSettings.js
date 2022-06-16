@@ -11,18 +11,21 @@ export default gql`
         country {
           id
         }
-        invoiceSettings {
-          name
-          companyName
-          billingEmail
-          vatNumber
-          address {
-            line1
-            line2
-            city
-            state
-            country
-            postcode
+        company {
+          id
+          invoiceSettings {
+            name
+            companyName
+            billingEmail
+            vatNumber
+            address {
+              line1
+              line2
+              city
+              state
+              country
+              postcode
+            }
           }
         }
         paymentMethod {

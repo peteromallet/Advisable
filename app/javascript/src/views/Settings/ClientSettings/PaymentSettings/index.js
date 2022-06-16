@@ -40,22 +40,21 @@ const PaymentSettings = () => {
     }
   };
 
+  const invoiceSettings = data?.viewer?.company?.invoiceSettings;
+
   let initialValues = {
     paymentMethod: data?.viewer?.projectPaymentMethod,
-    name: data?.viewer?.invoiceSettings?.name || data?.viewer?.name,
-    companyName:
-      data?.viewer?.invoiceSettings?.companyName || data?.viewer?.companyName,
-    billingEmail: data?.viewer?.invoiceSettings?.billingEmail || "",
-    vatNumber: data?.viewer?.invoiceSettings?.vatNumber || "",
+    name: invoiceSettings?.name || data?.viewer?.name,
+    companyName: invoiceSettings?.companyName || data?.viewer?.companyName,
+    billingEmail: invoiceSettings?.billingEmail || "",
+    vatNumber: invoiceSettings?.vatNumber || "",
     address: {
-      line1: data?.viewer?.invoiceSettings?.address?.line1 || "",
-      line2: data?.viewer?.invoiceSettings?.address?.line2 || "",
-      city: data?.viewer?.invoiceSettings?.address?.city || "",
-      state: data?.viewer?.invoiceSettings?.address?.state || "",
-      country:
-        data?.viewer?.invoiceSettings?.address?.country ||
-        data?.viewer?.country?.id,
-      postcode: data?.viewer?.invoiceSettings?.address?.postcode || "",
+      line1: invoiceSettings?.address?.line1 || "",
+      line2: invoiceSettings?.address?.line2 || "",
+      city: invoiceSettings?.address?.city || "",
+      state: invoiceSettings?.address?.state || "",
+      country: invoiceSettings?.address?.country || data?.viewer?.country?.id,
+      postcode: invoiceSettings?.address?.postcode || "",
     },
   };
 
