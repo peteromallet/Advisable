@@ -1,13 +1,16 @@
 import React from "react";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
+import { PlusSm } from "@styled-icons/heroicons-outline";
 import { VideoCamera } from "@styled-icons/heroicons-solid";
+import { Modal, useModal, DialogDisclosure } from "@advisable/donut";
 import ConversationAction from "./ConversationAction";
 import ConversationActionsList from "./ConversationActionsList";
+import ConversationCallRequest from "./ConversationCallRequest";
 
 function EmptyState({ firstName }) {
   return (
-    <p className="leading-tight text-[15px] text-neutral-700 mb-5">
+    <p className="leading-tight text-[15px] text-neutral-700 mb-2">
       You don&apos;t have any upcoming calls with {firstName}.
     </p>
   );
@@ -43,22 +46,32 @@ function UpcomingCall({ interview }) {
 export default function ConversationCalls({ conversation }) {
   const other = conversation.participants.find((p) => !p.isViewer);
   const calls = other.upcomingInterviews;
-  if (calls.length === 0 || conversation.participants.length > 2) return null;
+  const dialog = useModal();
+  if (conversation.participants.length > 2) return null;
 
   return (
     <div className="p-8 border-t border-solid border-neutral100">
       <h4 className="leading-none font-medium mb-3">Upcoming calls</h4>
-      <div className="space-y-3">
+      <div className="space-y-3 mb-1">
         {calls.map((interview) => (
           <UpcomingCall key={interview.id} interview={interview} />
         ))}
       </div>
       {calls.length === 0 && <EmptyState firstName={other.firstName} />}
-      {/* <ConversationActionsList>
-        <ConversationAction icon={VideoCamera} variant="blue">
-          Request a call
-        </ConversationAction>
-      </ConversationActionsList> */}
+      <Modal
+        width={600}
+        modal={dialog}
+        label={`Request consultation with ${other.name}`}
+      >
+        <ConversationCallRequest specialist={other} dialog={dialog} />
+      </Modal>
+      <ConversationActionsList>
+        <DialogDisclosure {...dialog}>
+          <ConversationAction icon={PlusSm} variant="neutral">
+            Request a call
+          </ConversationAction>
+        </DialogDisclosure>
+      </ConversationActionsList>
     </div>
   );
 }
