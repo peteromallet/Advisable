@@ -6,7 +6,7 @@ import Availability from "./Availability";
 import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
 
-export default function SidebarCard({ specialist }) {
+export default function SidebarCard({ article, specialist }) {
   const connectModal = useModal();
 
   return (
@@ -34,7 +34,11 @@ export default function SidebarCard({ specialist }) {
         </h4>
       </Link>
       <Availability unavailableUntil={specialist.unavailableUntil} />
-      <ConnectModal modal={connectModal} specialist={specialist} />
+      <ConnectModal
+        modal={connectModal}
+        specialist={specialist}
+        article={article}
+      />
       {!specialist.unavailableUntil && (
         <div className="pt-4">
           <DialogDisclosure {...connectModal}>

@@ -21,10 +21,10 @@ export default function SelectConnectionType({
       <OptionsList>
         <OptionsListOption
           icon={VideoCamera}
-          title="Free consultation"
+          title="Request call"
           onClick={requestCall}
         >
-          Request a free 30 minute consultation call with {specialist.firstName}
+          Request a 30 minute call with {specialist.firstName}
         </OptionsListOption>
         <OptionsListOption icon={ChatAlt} title="Message" onClick={message}>
           Send {specialist.firstName} a message
