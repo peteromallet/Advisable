@@ -149,7 +149,6 @@ function MessageStep({ specialist, onSubmit }) {
             <Button
               onClick={() => {
                 formik.setFieldValue("message", "");
-                formik.submitForm();
               }}
               type="submit"
               size="lg"
