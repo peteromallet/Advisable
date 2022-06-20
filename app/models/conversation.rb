@@ -15,10 +15,11 @@ class Conversation < ApplicationRecord
 
   def self.find_existing_with(*accounts)
     account_ids = Account.ids_from(accounts)
-    joins(:participants).
-      where(participants: {account_id: account_ids}).
+    conversations_ids = joins(:participants).where(participants: {account_id: account_ids}).distinct.pluck(:id)
+    where(id: conversations_ids).
+      joins(:participants).
       group(:id).
-      having("COUNT(participants.id) = ?", account_ids.size).
+      having("COUNT(conversation_participants.id) = ?", account_ids.size).
       first
   end
 
