@@ -25,8 +25,12 @@ class Conversation < ApplicationRecord
   def self.create_new_with(*accounts, &block)
     conversation = create!
     Account.ids_from(accounts).each { |id| conversation.participants.create!(account_id: id) }
-    yield if block
+    yield(conversation) if block
     conversation
+  end
+
+  def specialist_and_user?
+    !!(accounts.size == 2 && accounts.any?(&:specialist) && accounts.any?(&:user))
   end
 
   def mark_as_read_for!(account)

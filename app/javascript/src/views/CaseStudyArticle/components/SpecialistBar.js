@@ -1,14 +1,16 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
-import { useBreakpoint } from "@advisable/donut";
-import ConnectButton from "src/components/ConnectButton";
+import { useBreakpoint, useModal, DialogDisclosure } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
 import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import EditCaseStudyButton from "./EditCaseStudyButton";
 import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
+import ConnectModal from "src/components/ConnectModal";
+import Button from "src/components/Button";
+import { ChatAlt } from "@styled-icons/heroicons-solid";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -25,9 +27,11 @@ const Availability = ({ unavailableUntil }) => {
 export default function SpecialistBar({ article }) {
   const viewer = useViewer();
   const location = useLocation();
-  const sUp = useBreakpoint("sUp");
+  const modal = useModal();
   const { back } = location.state || {};
   const { specialist } = article;
+  const sUp = useBreakpoint("sUp");
+  const TalkButton = sUp ? Button : CircularButton;
 
   return (
     <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-10">
@@ -59,15 +63,19 @@ export default function SpecialistBar({ article }) {
           <EditCaseStudyButton article={article} />
           <ShareArticleButton slug={article.slug} />
           <FavoriteArticleButton article={article} />
-          {article.specialist.id !== viewer?.id && (
-            <ConnectButton
-              specialist={specialist}
-              circular={!sUp}
-              className="ml-auto"
-            >
-              Connect
-            </ConnectButton>
-          )}
+          {article.specialist.id !== viewer?.id &&
+            !article.specialist.unavailableUntil && (
+              <>
+                <ConnectModal modal={modal} specialist={article.specialist} />
+                <DialogDisclosure {...modal}>
+                  {(disclosure) => (
+                    <TalkButton {...disclosure} icon={ChatAlt} color="blue">
+                      Talk with {article.specialist.firstName}
+                    </TalkButton>
+                  )}
+                </DialogDisclosure>
+              </>
+            )}
         </div>
       </div>
     </div>

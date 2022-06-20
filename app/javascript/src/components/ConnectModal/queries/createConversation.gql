@@ -1,4 +1,4 @@
-mutation CreateConversationFromProfile($input: CreateConversationInput!) {
+mutation CreateConversation($input: CreateConversationInput!) {
   createConversation(input: $input) {
     conversation {
       id

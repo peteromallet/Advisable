@@ -56,9 +56,9 @@ function Modal({
                     $width={width}
                     padding={padding}
                     transition={{ duration: 0.4 }}
-                    initial={{ opacity: 0, y: 32 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 32 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 40, scale: 0.96 }}
                     oAnimationComplete={modal.stopAnimation}
                   >
                     {showCloseButton ? (

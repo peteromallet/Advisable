@@ -1,17 +1,16 @@
-import { DateTime } from "luxon";
-import {
-  Box,
-  Button,
-  Text,
-  Heading,
-  Availability,
-  useBreakpoint,
-} from "@advisable/donut";
 import React, { useState } from "react";
-import Loading from "src/components/Loading";
+import { ArrowLeft, VideoCamera } from "@styled-icons/heroicons-solid";
+import ConnectedAvatars from "./ConnectedAvatars";
+import CircularButton from "../CircularButton";
+import ModalHeading from "./ModalHeading";
+import Loading from "../Loading";
+import { DateTime } from "luxon";
+import { Availability, useBreakpoint } from "@advisable/donut";
+import Button from "../Button";
 import { useAvailability, useUpdateAvailability } from "./queries";
 import AvailabilityInput from "../AvailabilityInput";
 import TimezoneSelect from "./TimezoneSelect";
+import SubHeading from "./SubHeading";
 
 function AvailabilityForm({ data, onSubmit }) {
   const sup = useBreakpoint("sUp");
@@ -30,10 +29,10 @@ function AvailabilityForm({ data, onSubmit }) {
 
   return (
     <>
-      <Box marginBottom={6}>
+      <div className="mb-6">
         {sup ? (
           <AvailabilityInput
-            maxHeight="40vh"
+            maxHeight="300px"
             value={availability}
             timezone={timezone}
             onChange={setAvailability}
@@ -43,65 +42,68 @@ function AvailabilityForm({ data, onSubmit }) {
             }))}
           />
         ) : (
-          <Box marginBottom={8}>
+          <div className="mb-8">
             <Availability
               timezone={timezone}
               value={availability}
               onChange={setAvailability}
             />
-          </Box>
+          </div>
         )}
-        <Box paddingTop={4} paddingBottom={2}>
+        <div className="pt-4">
           <TimezoneSelect
             value={timezone}
             onChange={(e) => setTimezone(e.target.value)}
           />
-        </Box>
-      </Box>
+        </div>
+      </div>
       {availability.length < 6 ? (
-        <Text color="neutral600" marginTop={5} letterSpacing="-0.01em">
+        <p className="text-neutral600 mt-5">
           Please select at least 6 available times to continue
-        </Text>
+        </p>
       ) : (
         <Button
-          variant="gradient"
-          width="100%"
-          size="l"
+          size="lg"
+          className="w-full"
           onClick={handleSubmit}
           loading={loading}
         >
-          Continue
+          Next
         </Button>
       )}
     </>
   );
 }
 
-export default function RequestConsultationAvailability({
-  specialist,
+export default function RequestCallAvailability({
   onSubmit,
+  specialist,
+  onBack,
 }) {
   const { data, loading, error } = useAvailability();
 
   return (
     <>
-      <Box paddingBottom={6} paddingRight={4}>
-        <Heading size="5xl" marginBottom={2}>
-          Connect with {specialist.firstName}
-        </Heading>
-        <Text
-          fontSize="lg"
-          fontWeight={420}
-          lineHeight="24px"
-          color="neutral700"
-        >
+      <div className="absolute top-3 left-3">
+        <CircularButton icon={ArrowLeft} onClick={onBack} />
+      </div>
+      <>
+        <ConnectedAvatars
+          specialist={specialist}
+          className="mb-4"
+          icon={VideoCamera}
+        />
+        <ModalHeading>Request a call with {specialist.firstName}</ModalHeading>
+        <SubHeading>
           Request a 30 minute call with {specialist.firstName} to talk about
           your project. Please select your available times below.
-        </Text>
-      </Box>
-      {loading && <Loading />}
-      {!loading && data && <AvailabilityForm data={data} onSubmit={onSubmit} />}
-      {error && <>Failed to load availability</>}
+        </SubHeading>
+        {loading && <Loading />}
+        {error && <p>Error</p>}
+        {!loading && data && (
+          <AvailabilityForm data={data} onSubmit={onSubmit} />
+        )}
+      </>
     </>
   );
 }

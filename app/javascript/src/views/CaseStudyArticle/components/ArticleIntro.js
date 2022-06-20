@@ -1,5 +1,5 @@
 import React from "react";
-import ConnectButton from "src/components/ConnectButton";
+import { useModal, DialogDisclosure } from "@advisable/donut";
 import CompanyBox from "./CompanyBox";
 import Achievements from "./Achievements";
 import AdvisableComment from "./AdvisableComment";
@@ -9,6 +9,8 @@ import ScrollTip from "./ScrollTip";
 import useViewer from "src/hooks/useViewer";
 import TestimonialRequest from "./TestimonialRequest";
 import Testimonial from "./Testimonial";
+import ConnectModal from "src/components/ConnectModal";
+import Button from "src/components/Button";
 
 const Title = ({ children }) => (
   <h1
@@ -36,25 +38,34 @@ const Title = ({ children }) => (
   </h1>
 );
 
-const SpecialistInfo = ({ specialist }) => (
-  <div
-    id="specialistInfo"
-    className="flex lg:hidden items-center flex-col mx-auto"
-  >
-    <div className="font-bold text-2xl text-center text-neutral800 hover:text-neutral800 leading-none pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
-      {specialist.name}
-    </div>
-    <Availability unavailableUntil={specialist.unavailableUntil} />
-    <ConnectButton
-      className="mt-5 mb-8 w-[184px]"
-      specialist={specialist}
-      size="md"
+const SpecialistInfo = ({ specialist }) => {
+  const modal = useModal();
+
+  return (
+    <div
+      id="specialistInfo"
+      className="flex lg:hidden items-center flex-col mx-auto"
     >
-      Connect
-    </ConnectButton>
-    <hr className="w-20 pb-[3px] mb-7" />
-  </div>
-);
+      <div className="font-bold text-2xl text-center text-neutral800 hover:text-neutral800 leading-none pt-px pb-[3px] mb-1 hover:underline decoration-neutral500">
+        {specialist.name}
+      </div>
+      <Availability unavailableUntil={specialist.unavailableUntil} />
+      {!specialist.unavailableUntil && (
+        <>
+          <ConnectModal modal={modal} specialist={specialist} />
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button className="mt-5 mb-8 w-[184px]" {...disclosure}>
+                Talk with {specialist.firstName}
+              </Button>
+            )}
+          </DialogDisclosure>
+        </>
+      )}
+      <hr className="w-20 pb-[3px] mb-7" />
+    </div>
+  );
+};
 
 export default function ArticleIntro({ caseStudy }) {
   const viewer = useViewer();

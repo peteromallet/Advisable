@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Map } from "@styled-icons/heroicons-outline/Map";
-import { Box, Text, useBreakpoint } from "@advisable/donut";
+import {
+  Box,
+  Text,
+  useBreakpoint,
+  useModal,
+  DialogDisclosure,
+} from "@advisable/donut";
 import ProfilePicture from "../ProfilePicture";
 import {
   StyledStickySidebar,
@@ -12,12 +19,15 @@ import {
 } from "./styles";
 // CTA button
 import EditInfo from "../EditInfo";
-import ConnectButton from "src/components/ConnectButton";
 import SocialProfilesIcons from "../SocialProfilesIcons";
 // Constant values
 import { SPECIALIST_BIO_LENGTH } from "src/constants";
+import Button from "src/components/Button";
+import ConnectModal from "src/components/ConnectModal";
 
 function Sidebar({ data, isOwner, ...props }) {
+  const [searchParams] = useSearchParams();
+  const modal = useModal({ visible: searchParams.get("prompt") === "true" });
   const mUp = useBreakpoint("mUp");
 
   const { specialist } = data;
@@ -88,13 +98,21 @@ function Sidebar({ data, isOwner, ...props }) {
               {isOwner && (
                 <EditInfo specialist={specialist}>Edit Info</EditInfo>
               )}
-              {!isOwner && (
-                <ConnectButton
-                  specialist={specialist}
-                  variant="secondary"
-                  className="w-full sm:w-auto"
-                  size={mUp ? "lg" : "md"}
-                />
+              {!isOwner && !specialist.unavailableUntil && (
+                <>
+                  <DialogDisclosure {...modal}>
+                    {(disclosure) => (
+                      <Button
+                        className="w-full sm:w-auto"
+                        size={mUp ? "lg" : "md"}
+                        {...disclosure}
+                      >
+                        Talk with {specialist.firstName}
+                      </Button>
+                    )}
+                  </DialogDisclosure>
+                  <ConnectModal modal={modal} specialist={specialist} />
+                </>
               )}
             </Box>
             <SocialProfilesIcons isOwner={isOwner} specialist={specialist} />

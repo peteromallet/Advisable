@@ -60,20 +60,9 @@ export default function CreateAccountForm({ onSubmit, setStep }) {
             placeholder="Confirm password"
             marginBottom={8}
           />
-          <SubmitButton size="l" width="100%" marginBottom={6}>
+          <SubmitButton size="l" width="100%">
             Create account
           </SubmitButton>
-
-          <Text fontWeight={500} marginBottom={1}>
-            Already have an account?
-          </Text>
-          <Link.External
-            href="#"
-            variant="underlined"
-            onClick={() => setStep("LOGIN")}
-          >
-            Login
-          </Link.External>
           <Error marginTop={4}>{formik.status}</Error>
         </Form>
       )}
