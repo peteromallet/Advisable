@@ -147,14 +147,14 @@ RSpec.describe "Discover", type: :system do
   end
 
   it "searches with suggested interests when has no results" do
-    allow_any_instance_of(CaseStudy::InterestPreview).to receive(:results).and_return([])
+    article = create(:case_study_article, title: "How to sell paper")
+    allow_any_instance_of(CaseStudy::InterestPreview).to receive(:results).and_return([article])
     authenticate_as(user)
     visit("/explore/search")
     expect(page).to have_content("Long-Form Content Marketing")
     click_on("Long-Form Content Marketing")
-    expect(page).to have_content(/No matches/i)
-    click_button("New search")
-    expect(page).to have_content("Discover new projects")
+    expect(page).to have_current_path("/explore/search?q=Long-Form Content Marketing")
+    expect(page).to have_content(/how to sell paper/i)
   end
 
   it "brings the user through a walkthrough" do
