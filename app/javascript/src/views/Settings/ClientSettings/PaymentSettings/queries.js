@@ -6,18 +6,21 @@ export const UPDATE_INVOICE_SETTINGS = gql`
       user {
         id
         paymentsSetup
-        invoiceSettings {
-          name
-          vatNumber
-          companyName
-          billingEmail
-          address {
-            line1
-            line2
-            city
-            state
-            country
-            postcode
+        company {
+          id
+          invoiceSettings {
+            name
+            vatNumber
+            companyName
+            billingEmail
+            address {
+              line1
+              line2
+              city
+              state
+              country
+              postcode
+            }
           }
         }
       }

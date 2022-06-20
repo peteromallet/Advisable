@@ -4,18 +4,21 @@ mutation UpdateInvoiceSettings($input: UpdateInvoiceSettingsInput!) {
       id
       paymentsSetup
       projectPaymentMethod
-      invoiceSettings {
-        name
-        vatNumber
-        companyName
-        billingEmail
-        address {
-          line1
-          line2
-          city
-          state
-          country
-          postcode
+      company {
+        id
+        invoiceSettings {
+          name
+          vatNumber
+          companyName
+          billingEmail
+          address {
+            line1
+            line2
+            city
+            state
+            country
+            postcode
+          }
         }
       }
     }
