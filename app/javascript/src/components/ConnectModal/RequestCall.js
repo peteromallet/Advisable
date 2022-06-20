@@ -10,13 +10,14 @@ import { useRequestInterview } from "./queries";
 import MessagesIllustration from "src/illustrations/zest/messages";
 import Button from "../Button";
 
-function RequestCallMessage({ specialist, onBack, onComplete }) {
+function RequestCallMessage({ specialist, onBack, onComplete, article }) {
   const [requestInterview] = useRequestInterview();
 
   const handleSubmit = async (values) => {
     await requestInterview({
       variables: {
         input: {
+          article: article?.id,
           accounts: [specialist.account.id],
           message: values.message,
         },
@@ -80,7 +81,7 @@ function CallRequested({ specialist, modal }) {
   );
 }
 
-export default function RequestCall({ modal, specialist, onBack }) {
+export default function RequestCall({ modal, specialist, onBack, article }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   return (
@@ -97,6 +98,7 @@ export default function RequestCall({ modal, specialist, onBack }) {
       )}
       {step === "MESSAGE" && (
         <RequestCallMessage
+          article={article}
           specialist={specialist}
           onBack={() => setStep("AVAILABILITY")}
           onComplete={() => setStep("SENT")}

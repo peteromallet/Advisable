@@ -66,7 +66,11 @@ export default function SpecialistBar({ article }) {
           {article.specialist.id !== viewer?.id &&
             !article.specialist.unavailableUntil && (
               <>
-                <ConnectModal modal={modal} specialist={article.specialist} />
+                <ConnectModal
+                  modal={modal}
+                  specialist={article.specialist}
+                  article={article}
+                />
                 <DialogDisclosure {...modal}>
                   {(disclosure) => (
                     <TalkButton {...disclosure} icon={ChatAlt} color="blue">
