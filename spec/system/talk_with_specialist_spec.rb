@@ -19,7 +19,7 @@ RSpec.describe "Talk with specialist button", type: :system do
     visit("/articles/#{article.slug}")
     click_button("Talk with specialist")
     expect(page).to have_content("Connect with #{article.specialist.first_name} to discuss your project and collaborate together.")
-    find("*[aria-label=\"Free consultation\"]").click
+    find("*[aria-label=\"Request call\"]").click
     expect(page).to have_content("Request a call with #{article.specialist.first_name}")
     expect(page).to have_content("Please select at least 6 available times to continue")
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
@@ -71,7 +71,7 @@ RSpec.describe "Talk with specialist button", type: :system do
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
     click_button("Create account")
-    find("*[aria-label=\"Free consultation\"]").click
+    find("*[aria-label=\"Request call\"]").click
     expect(page).to have_content("Request a call with #{article.specialist.first_name}")
     expect(page).to have_content("Please select at least 6 available times to continue")
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
