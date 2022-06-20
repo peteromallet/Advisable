@@ -78,7 +78,11 @@ export default function ConversationCalls({ conversation }) {
       >
         <ConversationCallRequest specialist={other} dialog={dialog} />
       </Modal>
-      <DialogDisclosure {...dialog} className="w-full">
+      <DialogDisclosure
+        {...dialog}
+        className="w-full"
+        aria-label="Request a call"
+      >
         <RequestCallAction />
       </DialogDisclosure>
     </div>

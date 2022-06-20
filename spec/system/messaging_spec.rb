@@ -7,6 +7,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   let(:jim) { create(:account, first_name: "Jim", specialist: create(:specialist)) }
   let(:michael) { create(:account, first_name: "Michael", user: create(:user), completed_tutorials: %w[onboarding feed]) }
   let!(:conversation) { conversation_with_participants([dwight, jim, michael]) }
+  let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
 
   it "redirects to the first conversation" do
     authenticate_as(dwight.specialist)
@@ -165,11 +166,37 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content("1 upcoming call")
   end
 
-  it "doesn't show upcoming calls section if no calls" do
+  it "shows empty state of upcoming calls section" do
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(michael.user)
     visit("/messages/#{conversation2.uid}")
-    expect(page).not_to have_content("Upcoming calls")
+    expect(page).to have_content("Upcoming calls")
+    expect(page).to have_content("You don't have any upcoming calls with #{dwight.first_name}")
+    expect(page).to have_content("Request a call")
+  end
+
+  it "client requests a call with a specialist" do
+    conversation2 = conversation_with_participants([michael, dwight])
+    authenticate_as(michael.user)
+    visit("/messages/#{conversation2.uid}")
+    click_on("Request a call")
+    expect(page).to have_content("Request a call with #{dwight.first_name}")
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    click_on("Continue")
+    expect(page).to have_content("Attach a message")
+    # click_on("Send Request")
+    click_on("Request without message")
+    expect(page).to have_content("Request sent")
+    click_on("Okay")
+    authenticate_as(dwight.specialist)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Upcoming calls")
+    expect(page).to have_content("#{michael.name} requested a call with you")
   end
 
   it "doesn't show upcoming calls section in a group chat" do
