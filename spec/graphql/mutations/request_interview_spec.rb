@@ -5,7 +5,8 @@ require "rails_helper"
 RSpec.describe Mutations::RequestInterview do
   let(:specialist) { create(:specialist) }
   let(:current_user) { create(:user) }
-  let(:context) { {current_user:} }
+  let(:current_account) { current_user&.account }
+  let(:context) { {current_user:, current_account:} }
   let(:extra_args) { "" }
 
   let(:query) do
@@ -37,6 +38,7 @@ RSpec.describe Mutations::RequestInterview do
       uid = response["data"]["requestInterview"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, current_user.account])
+      expect(interview.requested_by).to eq(current_user.account)
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")
@@ -62,6 +64,7 @@ RSpec.describe Mutations::RequestInterview do
       uid = response["data"]["requestInterview"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, current_user.account])
+      expect(interview.requested_by).to eq(current_user.account)
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")
@@ -87,6 +90,7 @@ RSpec.describe Mutations::RequestInterview do
       uid = response["data"]["requestInterview"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, current_user.account])
+      expect(interview.requested_by).to eq(current_user.account)
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")
@@ -115,6 +119,7 @@ RSpec.describe Mutations::RequestInterview do
       uid = response["data"]["requestInterview"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, current_user.account, another_specialist.account, user.account])
+      expect(interview.requested_by).to eq(current_user.account)
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")

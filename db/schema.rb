@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_13_085047) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -485,7 +485,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_085047) do
     t.bigint "specialist_id"
     t.string "reason"
     t.bigint "article_id"
+    t.bigint "requested_by_id"
     t.index ["article_id"], name: "index_interviews_on_article_id"
+    t.index ["requested_by_id"], name: "index_interviews_on_requested_by_id"
     t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
     t.index ["user_id"], name: "index_interviews_on_user_id"
@@ -966,6 +968,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_13_085047) do
   add_foreign_key "guild_posts", "specialists"
   add_foreign_key "interview_participants", "accounts"
   add_foreign_key "interview_participants", "interviews"
+  add_foreign_key "interviews", "accounts", column: "requested_by_id"
   add_foreign_key "interviews", "case_study_articles", column: "article_id"
   add_foreign_key "interviews", "specialists"
   add_foreign_key "interviews", "users"
