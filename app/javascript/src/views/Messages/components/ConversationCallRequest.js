@@ -11,10 +11,10 @@ import {
   useUpdateAvailability,
   useRequestCall,
 } from "../queries";
-import TimezoneSelect from "src/components/ConnectButton/TimezoneSelect";
+import TimezoneSelect from "src/components/ConnectModal/TimezoneSelect";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
-import ConsultationRequestSent from "src/components/ConnectButton/ConsultationRequestSent";
+import { CallRequested } from "src/components/ConnectModal/RequestCall";
 
 function AvailabilityForm({ data, onSubmit }) {
   const sup = useBreakpoint("sUp");
@@ -172,7 +172,7 @@ function MessageStep({ specialist, onSubmit }) {
   );
 }
 
-export default function ConversationCallRequest({ specialist, dialog }) {
+export default function ConversationCallRequest({ specialist, modal }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   switch (step) {
@@ -188,8 +188,6 @@ export default function ConversationCallRequest({ specialist, dialog }) {
         <MessageStep specialist={specialist} onSubmit={() => setStep("SENT")} />
       );
     default:
-      return (
-        <ConsultationRequestSent specialist={specialist} dialog={dialog} />
-      );
+      return <CallRequested specialist={specialist} modal={modal} />;
   }
 }

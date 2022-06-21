@@ -60,7 +60,7 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
   );
 }
 
-function CallRequested({ specialist, modal }) {
+export function CallRequested({ specialist, modal }) {
   return (
     <div className="text-center pb-3">
       <MessagesIllustration

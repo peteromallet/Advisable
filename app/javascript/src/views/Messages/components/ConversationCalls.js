@@ -59,7 +59,7 @@ function RequestCallAction() {
 export default function ConversationCalls({ conversation }) {
   const other = conversation.participants.find((p) => !p.isViewer);
   const calls = other.upcomingInterviews;
-  const dialog = useModal();
+  const modal = useModal();
   if (conversation.participants.length > 2) return null;
 
   return (
@@ -73,13 +73,13 @@ export default function ConversationCalls({ conversation }) {
       {calls.length === 0 && <EmptyState firstName={other.firstName} />}
       <Modal
         width={600}
-        modal={dialog}
+        modal={modal}
         label={`Request consultation with ${other.name}`}
       >
-        <ConversationCallRequest specialist={other} dialog={dialog} />
+        <ConversationCallRequest specialist={other} modal={modal} />
       </Modal>
       <DialogDisclosure
-        {...dialog}
+        {...modal}
         className="w-full"
         aria-label="Request a call"
       >

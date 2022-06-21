@@ -8,7 +8,7 @@ import { REQUEST_MORE_TIMES } from "./queries";
 export default function RequestMoreAvailability({
   onCancel,
   interviewID,
-  clientName,
+  name,
 }) {
   const [requestMoreTimes, { loading }] = useMutation(REQUEST_MORE_TIMES);
 
@@ -40,8 +40,8 @@ export default function RequestMoreAvailability({
         Request more availability
       </Text>
       <Text mb="l" lineHeight="m" color="neutral800">
-        We will request more availability from {clientName} and let you know
-        when they respond.
+        We will request more availability from {name} and let you know when they
+        respond.
       </Text>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         <Form>
