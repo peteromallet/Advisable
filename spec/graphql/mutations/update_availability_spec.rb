@@ -15,7 +15,7 @@ RSpec.describe Mutations::UpdateAvailability do
       updateAvailability(input: {
         availability: ["#{time}"]
       }) {
-        user {
+        viewer {
           id
           availability
         }
@@ -27,7 +27,7 @@ RSpec.describe Mutations::UpdateAvailability do
   it "updates the users availability" do
     expect(user.reload.availability).to be_empty
     response = AdvisableSchema.execute(query, context:)
-    availability = response["data"]["updateAvailability"]["user"]["availability"]
+    availability = response["data"]["updateAvailability"]["viewer"]["availability"]
     expect(availability).to include(time)
   end
 
@@ -47,7 +47,7 @@ RSpec.describe Mutations::UpdateAvailability do
     it "updates the specialists availability" do
       expect(user.reload.availability).to be_empty
       response = AdvisableSchema.execute(query, context:)
-      availability = response["data"]["updateAvailability"]["user"]["availability"]
+      availability = response["data"]["updateAvailability"]["viewer"]["availability"]
       expect(availability).to include(time)
     end
   end
