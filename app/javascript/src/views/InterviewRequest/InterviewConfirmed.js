@@ -15,6 +15,7 @@ export default function InterviewConfirmed({ name, startsAt }) {
         color={theme.colors.blue100}
         width="160px"
         marginBottom={4}
+        mx="auto"
       />
       <Heading marginBottom={2}>Call Scheduled</Heading>
       <Text fontSize="lg" color="neutral900" mb={8}>
