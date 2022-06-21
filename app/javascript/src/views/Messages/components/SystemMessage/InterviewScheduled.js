@@ -4,7 +4,6 @@ import { Box, Link, Text } from "@advisable/donut";
 
 export default function InterviewScheduledMessage({ message }) {
   const { startsAt, interview } = message;
-  const { id, specialist } = interview;
   const datetime = DateTime.fromISO(startsAt).toFormat("dd LLLL y 'at' hh:mma");
 
   return (
@@ -19,16 +18,13 @@ export default function InterviewScheduledMessage({ message }) {
       textAlign="center"
     >
       <Text marginBottom={2}>
-        <Text as="span" fontWeight={520}>
-          {specialist.firstName}
-        </Text>{" "}
-        scheduled a call for{" "}
+        Your call has been scheduled for{" "}
         <Text as="span" fontWeight={520}>
           {datetime}
         </Text>
       </Text>
 
-      <Link to={`/interviews/${id}`} state={{ back: true }}>
+      <Link to={`/interviews/${interview.id}`} state={{ back: true }}>
         Manage call
       </Link>
     </Box>
