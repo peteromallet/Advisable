@@ -10,6 +10,7 @@ module Types
     field :name, String, null: true
     field :timezone, String, null: true
     field :avatar, String, null: true, method: :cached_avatar_url
+    field :availability, [GraphQL::Types::ISO8601DateTime], null: false
     field :user, Types::User, null: true
     field :specialist, Types::SpecialistType, null: true
     field :email, String do
