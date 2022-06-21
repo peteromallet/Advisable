@@ -5,7 +5,19 @@ module Types
     include Types::BaseInterface
 
     description "Fields that are common for all types that have an account"
+    orphan_types Types::User, Types::SpecialistType
 
+    definition_methods do
+      def resolve_type(object, _)
+        if object.is_a?(::User)
+          Types::User
+        else
+          Types::SpecialistType
+        end
+      end
+    end
+
+    field :id, ID, null: false, method: :uid
     field :account, Types::Account, null: false
     def account
       dataloader.with(::ActiveRecordSource, ::Account).load(object.account_id)
