@@ -90,17 +90,6 @@ module Types
 
     field :country, Types::CountryType, null: true
 
-    field :interviews, [Types::Interview], null: true do
-      argument :status, String, required: false
-      authorize :user?
-    end
-
-    def interviews(status: nil)
-      interviews = account.interviews
-      interviews = interviews.where(status:) if status
-      interviews
-    end
-
     field :city, String, null: true
 
     def city

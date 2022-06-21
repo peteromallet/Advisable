@@ -38,7 +38,9 @@ function AvailabilityForm({ data, onSubmit }) {
             onChange={setAvailability}
             events={data.viewer.interviews?.map((i) => ({
               time: i.startsAt,
-              label: `Interview with ${i.specialist.firstName}`,
+              label: `Call with ${i.participants
+                .map((p) => p.firstName)
+                .join(", ")}`,
             }))}
           />
         ) : (
