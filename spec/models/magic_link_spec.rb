@@ -25,9 +25,9 @@ RSpec.describe MagicLink, type: :model do
       expect(magic_link.path).to eq("/testing/path")
     end
 
-    it "sets path to nil when given an invalid uri" do
+    it "sets path to / when given an invalid uri" do
       magic_link.path = "invalid URI"
-      expect(magic_link.path).to be_nil
+      expect(magic_link.path).to eq("/")
     end
   end
 
