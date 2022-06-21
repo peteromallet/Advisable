@@ -31,7 +31,7 @@ module Types
       current_user.company
     end
 
-    field :viewer, Types::ViewerUnion, "Get the current viewer", null: true
+    field :viewer, Types::AccountInterface, "Get the current viewer", null: true
 
     def viewer
       current_user
