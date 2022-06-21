@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  module AccountInterface
+  module ViewerInterface
     include Types::BaseInterface
 
     description "Fields that are common for all types that have an account"
