@@ -54,5 +54,15 @@ module Types
     def conversation
       Conversation.find_existing_with([current_user.account, object.account])
     end
+
+    field :interviews, [Types::Interview], null: true do
+      argument :status, String, required: false
+      authorize :user?
+    end
+    def interviews(status: nil)
+      interviews = account.interviews
+      interviews = interviews.where(status:) if status
+      interviews
+    end
   end
 end

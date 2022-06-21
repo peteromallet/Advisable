@@ -1,15 +1,13 @@
 query Availability {
   viewer {
-    ... on User {
+    id
+    availability
+    interviews {
       id
-      availability
-      interviews {
+      startsAt
+      participants {
         id
-        startsAt
-        specialist {
-          id
-          firstName
-        }
+        firstName
       }
     }
   }
