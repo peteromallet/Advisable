@@ -26,6 +26,7 @@ class Account < ApplicationRecord
   has_many :conversations, through: :conversation_participants
   has_many :interview_participants, dependent: :destroy
   has_many :interviews, through: :interview_participants
+  has_many :requested_interviews, class_name: "Interview", foreign_key: :requested_by_id, dependent: :nullify, inverse_of: :requested_by
 
   has_one_attached :avatar
   resize avatar: {resize_to_limit: [400, 400]}

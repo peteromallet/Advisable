@@ -11,7 +11,6 @@ module Toby
       attribute :accounts, Attributes::HasManyThrough
       attribute :agreement, Lookups::Interviews::Agreement
       attribute :availability_note, Attributes::String
-      attribute :call_requested_at, Attributes::DateTime
       attribute :call_scheduled_at, Attributes::DateTime
       attribute :time_zone, Attributes::String
       attribute :zoom_meeting_id, Attributes::String

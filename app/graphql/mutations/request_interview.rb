@@ -18,7 +18,7 @@ module Mutations
       accounts = Array(args[:accounts]).map { |uid| Account.find_by!(uid:) }
       accounts += [Specialist.find_by(uid: args[:specialist])&.account, current_user.account]
       accounts = accounts.compact.uniq
-      interview = Interview.create!(status: "Call Requested", accounts:, article:)
+      interview = Interview.create!(accounts:, article:, status: "Call Requested", requested_by: current_account)
       Conversation.by_accounts(accounts).new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
 
       if interview.specialist_and_user?

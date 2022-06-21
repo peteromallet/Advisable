@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns += %i[specialist_id user_id]
+  self.ignored_columns += %i[specialist_id user_id call_requested_at]
 
   extend Memoist
   include Uid
@@ -20,6 +20,7 @@ class Interview < ApplicationRecord
   DECLINABLE_STATUSES = PRE_START_STATUSES + ["Need More Time Options"].freeze
 
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
+  belongs_to :requested_by, optional: true, class_name: "Account"
 
   has_one :video_call, dependent: :destroy
   has_many :messages, dependent: :destroy
@@ -76,7 +77,6 @@ end
 #
 #  id                                 :bigint           not null, primary key
 #  availability_note                  :string
-#  call_requested_at                  :datetime
 #  call_scheduled_at                  :datetime
 #  client_requested_reschedule_at     :datetime
 #  more_time_options_added_at         :datetime
@@ -91,18 +91,21 @@ end
 #  updated_at                         :datetime         not null
 #  article_id                         :bigint
 #  google_calendar_id                 :string
+#  requested_by_id                    :bigint
 #  zoom_meeting_id                    :string
 #
 # Indexes
 #
-#  index_interviews_on_article_id     (article_id)
-#  index_interviews_on_specialist_id  (specialist_id)
-#  index_interviews_on_uid            (uid) UNIQUE
-#  index_interviews_on_user_id        (user_id)
+#  index_interviews_on_article_id       (article_id)
+#  index_interviews_on_requested_by_id  (requested_by_id)
+#  index_interviews_on_specialist_id    (specialist_id)
+#  index_interviews_on_uid              (uid) UNIQUE
+#  index_interviews_on_user_id          (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (article_id => case_study_articles.id)
+#  fk_rails_...  (requested_by_id => accounts.id)
 #  fk_rails_...  (specialist_id => specialists.id)
 #  fk_rails_...  (user_id => users.id)
 #
