@@ -3,7 +3,7 @@
 </p>
 <p>
   Unfortunately, <%= @interview.user.account.first_name %> needs to reschedule your interview for <%=
-      time_in_zone(@interview.starts_at, @interview.user.time_zone) %>.
+      time_in_zone(@interview.starts_at, @interview.user.account.timezone) %>.
 </p>
 <p>
   Please select a new time that works best for you. Once you select a time, we'll send new invitations.

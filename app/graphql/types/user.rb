@@ -32,9 +32,12 @@ module Types
       object.company.name
     end
 
-    field :time_zone, String, null: true
-    field :company, Types::CompanyType, null: true
+    field :time_zone, String, null: true, deprecation_reason: "Use timezone from Account instead"
+    def time_zone
+      account.timezone
+    end
 
+    field :company, Types::CompanyType, null: true
     field :industry, Types::IndustryType, null: true
 
     # TODO: Teams - frontend should not query for user industry, instead it should
