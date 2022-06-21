@@ -177,7 +177,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content("Request a call")
   end
 
-  it "requests and confirm a call between a client and a specialist" do
+  it "requests and confirm a call from a client to specialist" do
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(michael.user)
     visit("/messages/#{conversation2.uid}")
@@ -213,6 +213,46 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     visit("/messages/#{conversation2.uid}")
     expect(page).to have_content("Your call has been scheduled for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
     authenticate_as(michael.user)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Your call has been scheduled for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+  end
+
+  it "requests and confirm a call from a specialist to client" do
+    conversation2 = conversation_with_participants([michael, dwight])
+    authenticate_as(dwight.specialist)
+    visit("/messages/#{conversation2.uid}")
+    click_on("Request a call")
+    expect(page).to have_content("Request a call with #{michael.first_name}")
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    click_on("Continue")
+    expect(page).to have_content("Attach a message")
+    click_on("Request without message")
+    expect(page).to have_content("Request sent")
+    click_on("Okay")
+    authenticate_as(michael.user)
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Upcoming calls")
+    expect(page).to have_content("#{dwight.name} requested a call with you")
+    click_on("Respond")
+    expect(page).to have_content("New call request")
+    click_button("View availability")
+    click_on(next_work_day.strftime("%-d %b %Y"))
+    expect(page).to have_content("Select a time for your call")
+    click_on("10:00 AM - 10:30 AM")
+    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content("10:00 AM - 10:30 AM")
+    click_button("Confirm Call")
+    expect(page).to have_content("Call Scheduled")
+    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content("10:00 AM - 10:30 AM")
+    visit("/messages/#{conversation2.uid}")
+    expect(page).to have_content("Your call has been scheduled for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
     expect(page).to have_content("Your call has been scheduled for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
   end
