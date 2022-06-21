@@ -192,7 +192,7 @@ function InterviewRequestForSender({ message }) {
 export default function InterviewRequestMessage({ message }) {
   const viewer = useViewer();
 
-  if (viewer.id === message.interview?.specialist?.id) {
+  if (viewer.account.id !== message.author.id) {
     return <InterviewRequestForRecipient message={message} />;
   }
 
