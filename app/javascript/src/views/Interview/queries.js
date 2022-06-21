@@ -16,7 +16,6 @@ const interviewFields = gql`
     user {
       id
       firstName
-      availability
     }
   }
 `;
@@ -72,16 +71,14 @@ export function useResendInterviewRequest() {
 export const GET_AVAILABILITY = gql`
   query getAvailability {
     viewer {
-      ... on User {
+      id
+      availability
+      interviews(status: "Call Scheduled") {
         id
-        availability
-        interviews(status: "Call Scheduled") {
+        startsAt
+        specialist {
           id
-          startsAt
-          specialist {
-            id
-            firstName
-          }
+          firstName
         }
       }
     }
@@ -95,7 +92,7 @@ export function useAvailability(opts) {
 export const UPDATE_AVAILABILITY = gql`
   mutation updateAvailability($input: UpdateAvailabilityInput!) {
     updateAvailability(input: $input) {
-      user {
+      viewer {
         id
         availability
       }
