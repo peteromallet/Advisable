@@ -5,7 +5,7 @@ module Types
     delegate :account, :company, to: :object
 
     description "Represents a user"
-    implements Types::AccountInterface
+    implements Types::ViewerInterface
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :application_stage, String, null: true, method: :application_status
 
