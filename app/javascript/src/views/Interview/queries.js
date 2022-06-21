@@ -13,6 +13,10 @@ const interviewFields = gql`
       avatar
       location
     }
+    participants {
+      id
+      firstName
+    }
     user {
       id
       firstName
@@ -76,7 +80,7 @@ export const GET_AVAILABILITY = gql`
       interviews(status: "Call Scheduled") {
         id
         startsAt
-        specialist {
+        participants {
           id
           firstName
         }
