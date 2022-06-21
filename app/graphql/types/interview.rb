@@ -18,9 +18,7 @@ module Types
 
     field :time_zone, String, null: true
     def time_zone
-      return object.time_zone if object.time_zone.present?
-
-      object.user.try(:time_zone)
+      object.time_zone.presence || object.user&.account&.timezone
     end
 
     field :participants, [Types::Account], null: false, deprecation_reason: "Use accounts instead"

@@ -4,7 +4,7 @@
 # A freelancer account is represented by the Specialist model. Ideally these
 # two models will eventually be merged to be different types of users.
 class User < ApplicationRecord
-  self.ignored_columns = %w[availability]
+  self.ignored_columns = %w[availability time_zone]
 
   include ::Airtable::Syncable
   include Uid
@@ -89,6 +89,16 @@ class User < ApplicationRecord
   end
   # rubocop:enable Rails/SkipsModelValidations
 
+  def time_zone
+    Sentry.capture_message("Accessing time_zone on user instead of Account!", level: "debug")
+    account.timezone
+  end
+
+  def time_zone=(time_zone)
+    Sentry.capture_message("Setting time_zone on user instead of Account!", level: "debug")
+    account.update(timezone: time_zone)
+  end
+
   private
 
   def update_timestamps
@@ -126,7 +136,6 @@ end
 #  setup_intent_status               :string
 #  submitted_at                      :datetime
 #  talent_quality                    :string
-#  time_zone                         :string
 #  title                             :string
 #  trustpilot_review_status          :string
 #  uid                               :string           not null
