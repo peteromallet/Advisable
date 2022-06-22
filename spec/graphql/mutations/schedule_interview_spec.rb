@@ -38,29 +38,14 @@ RSpec.describe Mutations::ScheduleInterview do
     AdvisableSchema.execute(query, context: {current_user:})
   end
 
-  it "sets the interview status to Call Scheduled" do
-    expect do
-      request
-    end.to change {
-      interview.reload.status
-    }.from("Call Requested").to("Call Scheduled")
-  end
-
-  it "sets the startsAt attribute" do
-    expect do
-      request
-    end.to change {
-      interview.reload.starts_at
-    }.from(nil).to(user.availability.first)
-  end
-
-  it "sets call_scheduled_at" do
-    request
-    expect(interview.reload.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
-  end
-
-  it "creates a video call record" do
-    expect { request }.to(change(VideoCall, :count).by(1))
+  it "changes the status, starts_at, scheduled_at, and video" do
+    expect(interview.status).to eq("Call Requested")
+    response = AdvisableSchema.execute(query, context: {current_user:})
+    interview = Interview.find_by(uid: response["data"]["scheduleInterview"]["interview"]["id"])
+    expect(interview.status).to eq("Call Scheduled")
+    expect(interview.starts_at).to eq(user.availability.first)
+    expect(interview.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
+    expect(interview.video_call).to be_present
   end
 
   it "creates a new message in a conversation" do
@@ -133,23 +118,26 @@ RSpec.describe Mutations::ScheduleInterview do
     end
   end
 
-  describe "has to be a specialist" do
-    context "when specialist not logged in" do
-      let(:current_user) { nil }
+  context "when logged in user is a user" do
+    let(:current_user) { user }
 
-      it "raises an error" do
-        error = request["errors"].first["extensions"]["type"]
-        expect(error).to eq("NOT_AUTHENTICATED")
-      end
+    it "changes the status, starts_at, scheduled_at, and video" do
+      expect(interview.status).to eq("Call Requested")
+      response = AdvisableSchema.execute(query, context: {current_user:})
+      interview = Interview.find_by(uid: response["data"]["scheduleInterview"]["interview"]["id"])
+      expect(interview.status).to eq("Call Scheduled")
+      expect(interview.starts_at).to eq(user.availability.first)
+      expect(interview.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
+      expect(interview.video_call).to be_present
     end
+  end
 
-    context "when logged in user not specialist" do
-      let(:current_user) { user }
+  context "when not logged in" do
+    let(:current_user) { nil }
 
-      it "raises an error" do
-        error = request["errors"].first["extensions"]["type"]
-        expect(error).to eq("INVALID_REQUEST")
-      end
+    it "raises an error" do
+      error = request["errors"].first["extensions"]["type"]
+      expect(error).to eq("NOT_AUTHENTICATED")
     end
   end
 end
