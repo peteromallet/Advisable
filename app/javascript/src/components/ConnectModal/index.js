@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "@advisable/donut";
 import RequestCall from "./RequestCall";
 import useViewer from "src/hooks/useViewer";
 import AuthenticateForConnection from "./AuthenticateForConnection";
 import SelectConnectionType from "./SelectConnectionType";
 import ConnectViaMessaging from "./CreateConversation";
+import { trackEvent } from "src/utilities/segment";
 
 function ConnectionType(props) {
   const viewer = useViewer();
@@ -33,16 +34,22 @@ function ConnectionType(props) {
   );
 }
 
-export default function ConnectModal({ modal, ...props }) {
+export default function ConnectModal({ modal, specialist, ...props }) {
   const viewer = useViewer();
+
+  useEffect(() => {
+    if (modal.visible) {
+      trackEvent("Opened Connect Modal", { specialist: specialist.uid });
+    }
+  }, [modal, specialist]);
 
   return (
     <Modal modal={modal} padding={0}>
       <div className="px-8 py-10">
         {viewer ? (
-          <ConnectionType modal={modal} {...props} />
+          <ConnectionType modal={modal} specialist={specialist} {...props} />
         ) : (
-          <AuthenticateForConnection {...props} />
+          <AuthenticateForConnection specialist={specialist} {...props} />
         )}
       </div>
     </Modal>
