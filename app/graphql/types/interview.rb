@@ -23,6 +23,7 @@ module Types
       object.user.try(:time_zone)
     end
 
-    field :participants, [Types::Account], null: false
+    field :participants, [Types::Account], null: false, deprecation_reason: "Use accounts instead"
+    field :accounts, [Types::Account], null: false
   end
 end
