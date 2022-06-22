@@ -8,7 +8,7 @@ module Mutations
     field :interview, Types::Interview, null: true
 
     def authorized?(**args)
-      requires_specialist!
+      requires_current_user!
       interview = Interview.find_by!(uid: args[:id])
       policy = InterviewPolicy.new(current_user, interview)
       ApiError.not_authorized("You do not have permission to schedule this interview") unless policy.schedule?
