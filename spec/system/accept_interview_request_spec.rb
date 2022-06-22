@@ -15,7 +15,7 @@ RSpec.describe "Accept interview request", type: :system do
   end
   let(:user) { create(:user, account:) }
   let(:specialist) { create(:specialist) }
-  let(:interview) { create(:interview, status: "Call Requested", accounts: [specialist.account, user.account]) }
+  let(:interview) { create(:interview, status: "Call Requested", accounts: [specialist.account, user.account], requested_by: user.account) }
 
   it "Accepts an interview request" do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)

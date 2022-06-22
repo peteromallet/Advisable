@@ -79,7 +79,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when the client has requested to reschedule" do
     it "the specialist can schedule the interview" do
-      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
+      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")
@@ -117,7 +117,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when more time options have been added" do
     it "allows the specialist can schedule the call" do
-      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
+      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")

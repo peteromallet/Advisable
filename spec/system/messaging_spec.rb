@@ -147,7 +147,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
 
   it "shows upcoming calls indicators for a client" do
     conversation_with_participants([michael, dwight])
-    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled")
+    interview = create(:interview, accounts: [dwight, michael], status: "Call Scheduled", requested_by: michael)
     authenticate_as(interview.user)
     visit("/")
     find("*[aria-label='Messages dropdown']").click
