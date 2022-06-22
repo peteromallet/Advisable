@@ -58,6 +58,10 @@ class Interview < ApplicationRecord
     User.find_by(account: accounts)
   end
 
+  def requested_by
+    super.presence || messages.find_by(kind: "InterviewRequest")&.author
+  end
+
   def pending?
     SCHEDULABLE_STATUSES.include?(status)
   end
