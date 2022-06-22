@@ -130,6 +130,14 @@ fragment MessageFields on MessageInterface {
     startsAt
     interview {
       id
+      requestedBy {
+        id
+      }
+      participants {
+        id
+        isViewer
+        name
+      }
     }
   }
 

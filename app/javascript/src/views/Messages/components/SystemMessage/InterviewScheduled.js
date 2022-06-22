@@ -1,9 +1,13 @@
 import React from "react";
 import { DateTime } from "luxon";
+import useViewer from "src/hooks/useViewer";
 import { Box, Link, Text } from "@advisable/donut";
 
 export default function InterviewScheduledMessage({ message }) {
+  const viewer = useViewer();
   const { startsAt, interview } = message;
+  const other = interview.participants.find((p) => !p.isViewer);
+  const isRequestor = interview.requestedBy.id === viewer.account.id;
   const datetime = DateTime.fromISO(startsAt).toFormat("dd LLLL y 'at' hh:mma");
 
   return (
@@ -18,7 +22,10 @@ export default function InterviewScheduledMessage({ message }) {
       textAlign="center"
     >
       <Text marginBottom={2}>
-        Your call has been scheduled for{" "}
+        <Text as="span" fontWeight={520}>
+          {isRequestor ? other.name : "You"}
+        </Text>{" "}
+        scheduled a call for{" "}
         <Text as="span" fontWeight={520}>
           {datetime}
         </Text>
