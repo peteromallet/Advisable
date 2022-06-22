@@ -32,6 +32,7 @@ module Mutations
       conversation.new_message!(kind: "InterviewScheduled", interview:, metadata: {starts_at: interview.starts_at}, send_emails: false)
       interview.create_video_call! if interview.video_call.blank?
       GoogleCalendar.new.schedule_for_interview(interview)
+      track_event("Interview Scheduled", {interview_id: interview.uid})
 
       unless specialist.account.completed_tutorial?("introductory_call")
         SpecialistMailer.first_interview_scheduled(interview).deliver_later
