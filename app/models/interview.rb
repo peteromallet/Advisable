@@ -35,6 +35,8 @@ class Interview < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}
 
   def participants
+    raise "Interview#participants is deprecated. Use Interview#accounts instead." unless Rails.env.production?
+
     Sentry.capture_message("Something is still calling Interview#participants! Stop it!", level: "debug")
     accounts
   end
@@ -44,7 +46,7 @@ class Interview < ApplicationRecord
   end
 
   def specialist_and_user?
-    !!(participants.size == 2 && specialist && user)
+    !!(accounts.size == 2 && specialist && user)
   end
 
   def specialist

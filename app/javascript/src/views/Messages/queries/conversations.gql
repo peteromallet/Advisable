@@ -23,7 +23,7 @@ fragment ConversationFields on Conversation {
     upcomingInterviews {
       id
       startsAt
-      participants {
+      accounts {
         id
         firstName
         isViewer

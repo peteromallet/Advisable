@@ -17,7 +17,7 @@ function UpcomingCall({ interview }) {
   const time = DateTime.fromISO(interview.startsAt).toFormat(
     "dd LLLL 'at' hh:mma",
   );
-  const other = interview.participants.find((p) => !p.isViewer);
+  const other = interview.accounts.find((p) => !p.isViewer);
   return (
     <Link
       key={interview.id}
