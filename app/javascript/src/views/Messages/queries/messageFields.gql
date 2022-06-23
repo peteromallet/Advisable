@@ -132,10 +132,6 @@ fragment MessageFields on MessageInterface {
       id
       requestedBy {
         id
-      }
-      participants {
-        id
-        isViewer
         name
       }
     }
