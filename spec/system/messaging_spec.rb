@@ -174,14 +174,14 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     visit("/messages/#{conversation2.uid}")
     expect(page).to have_content("Upcoming calls")
     expect(page).to have_content("You don't have any upcoming calls with #{dwight.first_name}")
-    expect(page).to have_content("Request a call")
+    expect(page).to have_content("Schedule a call")
   end
 
   it "requests and confirm a call from a client to specialist" do
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(michael.user)
     visit("/messages/#{conversation2.uid}")
-    click_on("Request a call")
+    click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{dwight.first_name}")
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
@@ -211,17 +211,17 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("You scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{michael.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
     authenticate_as(michael.user)
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{michael.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
   end
 
   it "requests and confirm a call from a specialist to client" do
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    click_on("Request a call")
+    click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{michael.first_name}")
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
@@ -251,17 +251,17 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("You scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{michael.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
   end
 
   it "requests and confirm a call from a specialist to specialist" do
     conversation2 = conversation_with_participants([jim, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    click_on("Request a call")
+    click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{jim.first_name}")
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
@@ -291,10 +291,10 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("You scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{jim.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
   end
 
   it "doesn't show upcoming calls section in a group chat" do
