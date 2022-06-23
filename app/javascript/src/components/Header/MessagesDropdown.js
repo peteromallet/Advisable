@@ -50,7 +50,7 @@ function Conversation({ conversation }) {
             <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
               <div
                 aria-label={tooltipContent}
-                className="items-center justify-center hidden xl:flex min-w-[16px] h-[16px] hover:opacity-100 opacity-70"
+                className="items-center justify-center hidden xl:flex max-w-[16px] h-[16px] hover:opacity-100 opacity-70"
               >
                 <Calendar className="fill-neutral700" />
               </div>
@@ -78,7 +78,7 @@ function NoMessages() {
       />
       <span className="text-neutral900 font-medium">No Messages</span>
       <p className="text-neutral700 text-sm">
-        You aren't part of any conversation yet.
+        You aren&apos;t part of any conversation yet.
       </p>
     </div>
   );
