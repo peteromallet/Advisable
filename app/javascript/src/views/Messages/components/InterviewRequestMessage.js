@@ -85,8 +85,7 @@ function AcceptInterviewRequest({ message, onDecline }) {
           New call request
         </h4>
         <p className="text-lg leading-normal">
-          {sender} has requested a 30 minute call with you. After speaking with
-          them you will be able to send them a request to work together.
+          {sender} has requested a 30 minute call with you.
         </p>
       </div>
       <div className="flex gap-3">
