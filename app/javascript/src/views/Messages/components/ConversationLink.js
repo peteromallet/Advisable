@@ -149,7 +149,7 @@ export default function ConversationLink({ conversation }) {
             <Tooltip placement="bottom" maxWidth={200} content={tooltipContent}>
               <div
                 aria-label={tooltipContent}
-                className="items-center justify-center hidden xl:flex max-w-[16px] h-[16px] hover:opacity-100 opacity-70"
+                className="items-center justify-center hidden xl:flex w-[16px] h-[16px] hover:opacity-100 opacity-70"
               >
                 <Calendar className="fill-neutral700" />
               </div>
