@@ -11,6 +11,7 @@ import {
   useUpdateAvailability,
   useRequestCall,
 } from "../queries";
+import commaSeparated from "src/utilities/commaSeparated";
 import TimezoneSelect from "src/components/ConnectModal/TimezoneSelect";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
@@ -42,7 +43,9 @@ function AvailabilityForm({ data, onSubmit }) {
             onChange={setAvailability}
             events={data.viewer.interviews?.map((i) => ({
               time: i.startsAt,
-              label: `Interview with ${i.specialist.firstName}`,
+              label: `Call with ${commaSeparated(
+                i.participants.map((p) => p.firstName),
+              )}`,
             }))}
           />
         ) : (
