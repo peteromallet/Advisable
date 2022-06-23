@@ -9,6 +9,11 @@ class TobyController < ApplicationController
     prefetch_query("TobyProvider/tobyQuery.graphql", per_account: true)
   end
 
+  def download
+    attachment = ActiveStorage::Attachment.find(params[:id])
+    redirect_to(attachment.url, allow_other_host: true)
+  end
+
   private
 
   def prefetch_query(path, per_account: false)

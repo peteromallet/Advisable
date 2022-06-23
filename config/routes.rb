@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   mount PgHero::Engine, at: "/pghero", constraints: AdminConstraint.new
 
   post "/toby_graphql", to: "graphql#toby"
+  get "/toby/download/:id", to: "toby#download"
   get "/toby", to: "toby#index"
   get "/toby/*toby", to: "toby#index"
 

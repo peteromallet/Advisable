@@ -12,6 +12,7 @@ module Toby
       attribute :kind, Attributes::Select, options: ["", "system"]
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+      attribute :attachments, Attributes::Attachments, readonly: true
 
       def self.label(record, _context)
         record.kind.present? ? "#{record.uid} (#{record.kind})" : record.uid
