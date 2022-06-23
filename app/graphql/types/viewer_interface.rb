@@ -57,7 +57,7 @@ module Types
 
     field :interviews, [Types::Interview], null: true do
       argument :status, String, required: false
-      authorize :user?
+      authorize :current_user?
     end
     def interviews(status: nil)
       interviews = account.interviews

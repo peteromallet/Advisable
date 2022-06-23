@@ -10,7 +10,6 @@ module Types
 
     field :id, ID, null: false, method: :uid
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
-    field :availability, [GraphQL::Types::ISO8601DateTime], null: false
     field :status, String, null: true
     field :starts_at, GraphQL::Types::ISO8601DateTime, null: true
     field :user, Types::User, null: false
