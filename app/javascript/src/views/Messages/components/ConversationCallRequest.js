@@ -80,15 +80,15 @@ function AvailabilityForm({ data, onSubmit }) {
   );
 }
 
-function AvailabilityStep({ specialist, onSubmit }) {
+function AvailabilityStep({ account, onSubmit }) {
   const { data, loading, error } = useAvailability();
   return (
     <div>
       <h3 className="text-3xl text-neutral900 font-semibold tracking-tight mb-1">
-        Request a call with {specialist.firstName}
+        Request a call with {account.firstName}
       </h3>
       <p className="text-neutral700 text-base mb-6">
-        Request a 30 minute call with {specialist.firstName} to talk about your
+        Request a 30 minute call with {account.firstName} to talk about your
         project. Please select your available times below.
       </p>
       {loading && <Loading />}
@@ -102,14 +102,14 @@ const validationSchema = object({
   message: string(),
 });
 
-function MessageStep({ specialist, onSubmit }) {
+function MessageStep({ account, onSubmit }) {
   const [requestCall] = useRequestCall();
 
   const handleSubmit = async (values) => {
     await requestCall({
       variables: {
         input: {
-          accounts: [specialist.id],
+          accounts: [account.id],
           message: values.message,
         },
       },
@@ -172,22 +172,20 @@ function MessageStep({ specialist, onSubmit }) {
   );
 }
 
-export default function ConversationCallRequest({ specialist, modal }) {
+export default function ConversationCallRequest({ account, modal }) {
   const [step, setStep] = useState("AVAILABILITY");
 
   switch (step) {
     case "AVAILABILITY":
       return (
         <AvailabilityStep
-          specialist={specialist}
+          account={account}
           onSubmit={() => setStep("MESSAGE")}
         />
       );
     case "MESSAGE":
-      return (
-        <MessageStep specialist={specialist} onSubmit={() => setStep("SENT")} />
-      );
+      return <MessageStep account={account} onSubmit={() => setStep("SENT")} />;
     default:
-      return <CallRequested specialist={specialist} modal={modal} />;
+      return <CallRequested account={account} modal={modal} />;
   }
 }

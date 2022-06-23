@@ -60,7 +60,7 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
   );
 }
 
-export function CallRequested({ specialist, modal }) {
+export function CallRequested({ account, modal }) {
   return (
     <div className="text-center pb-3">
       <MessagesIllustration
@@ -71,8 +71,8 @@ export function CallRequested({ specialist, modal }) {
       />
       <h5 className="font-medium text-xl mb-1">Request sent</h5>
       <SubHeading>
-        Your request has been sent to {specialist.firstName}. We will let you
-        know when they respond.
+        Your request has been sent to {account.firstName}. We will let you know
+        when they respond.
       </SubHeading>
       <Button variant="secondary" onClick={modal.hide}>
         Okay
@@ -86,9 +86,7 @@ export default function RequestCall({ modal, specialist, onBack, article }) {
 
   return (
     <>
-      {step === "SENT" && (
-        <CallRequested modal={modal} specialist={specialist} />
-      )}
+      {step === "SENT" && <CallRequested modal={modal} account={specialist} />}
       {step === "AVAILABILITY" && (
         <Availability
           specialist={specialist}

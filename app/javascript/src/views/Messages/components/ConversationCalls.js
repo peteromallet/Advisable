@@ -76,7 +76,7 @@ export default function ConversationCalls({ conversation }) {
         modal={modal}
         label={`Request consultation with ${other.name}`}
       >
-        <ConversationCallRequest specialist={other} modal={modal} />
+        <ConversationCallRequest account={other} modal={modal} />
       </Modal>
       <DialogDisclosure
         {...modal}
