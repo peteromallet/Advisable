@@ -5,7 +5,7 @@ class GoogleCalendarEventsController < ApplicationController
 
   def create
     interview = Interview.find_by!(google_calendar_id: request.headers["X-Goog-Channel-Id"])
-    GoogleCalendar.new.reschedule(interview)
+    GoogleCalendar.new.handle_change(interview)
     head :ok
   end
 end

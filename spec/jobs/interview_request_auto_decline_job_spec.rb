@@ -5,12 +5,8 @@ require "rails_helper"
 RSpec.describe InterviewRequestAutoDeclineJob do
   let(:status) { "Call Reminded" }
   let(:created_at) { 5.days.ago }
-  let(:conversation) { create(:conversation) }
+  let(:conversation) { Conversation.by_accounts(interview.accounts) }
   let!(:interview) { create(:interview, :with_specialist_and_user, created_at:, status:) }
-
-  before do
-    create(:message, interview:, conversation:)
-  end
 
   it "sends reminder only once" do
     expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist

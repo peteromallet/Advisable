@@ -17,7 +17,7 @@ class Interview < ApplicationRecord
   PRE_START_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added"].freeze
   SCHEDULABLE_STATUSES = PRE_START_STATUSES + ["Client Requested Reschedule", "Specialist Requested Reschedule"].freeze
   RESCHEDULABLE_STATUSES = SCHEDULABLE_STATUSES + ["Call Scheduled"]
-  DECLINABLE_STATUSES = PRE_START_STATUSES + ["Need More Time Options"].freeze
+  DECLINABLE_STATUSES = RESCHEDULABLE_STATUSES + ["Need More Time Options"].freeze
 
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
   belongs_to :requested_by, optional: true, class_name: "Account"
@@ -68,6 +68,16 @@ class Interview < ApplicationRecord
 
     update!(starts_at:)
     conversation.new_message!(kind: "InterviewRescheduled", interview: self, send_emails: false, metadata: {starts_at: starts_at.iso8601})
+  end
+
+  def auto_decline!
+    return unless DECLINABLE_STATUSES.include?(status)
+
+    update!(status: "Auto Declined")
+    conversation.new_message!(kind: "InterviewAutoDeclined", interview: self, send_emails: false)
+    SpecialistMailer.interview_request_auto_declined(self).deliver_later
+    UserMailer.interview_request_auto_declined(self).deliver_later
+    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The consultation request to #{specialist.name} from #{user.name_with_company} was auto declined.")
   end
 end
 
