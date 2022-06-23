@@ -27,7 +27,7 @@ function UpcomingCall({ interview }) {
       className="ring-1 ring-neutral200 hover:ring-2 hover:ring-blue400 transition-shadow p-4 rounded-sm block bg-white"
     >
       <div className="flex gap-2 items-center pb-0.5">
-        <div className="min-w-[32px] color-blue200 bg-blue50 h-[32px] p-2 flex rounded-full">
+        <div className="max-w-[32px] color-blue200 bg-blue50 h-[32px] p-2 flex rounded-full">
           <VideoCamera className="fill-blue400" />
         </div>
         <div>
@@ -45,7 +45,7 @@ function RequestCallAction() {
   return (
     <div className="border-2 border-dashed border-neutral100 rounded-sm p-4 hover:bg-white hover:border-blue400 hover:border-solid">
       <div className="flex gap-2 items-center pb-0.5">
-        <div className="min-w-[32px] bg-neutral100 h-[32px] p-2 flex rounded-full">
+        <div className="max-w-[32px] bg-neutral100 h-[32px] p-2 flex rounded-full">
           <PlusSm className="stroke-neutral700" />
         </div>
         <div className="font-medium text-neutral800 leading-none">
