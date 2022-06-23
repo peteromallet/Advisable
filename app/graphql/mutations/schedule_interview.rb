@@ -21,11 +21,7 @@ module Mutations
       interview = Interview.find_by!(uid: args[:id])
       specialist = interview.specialist
       current_account_responsible_for do
-        interview.update!(
-          starts_at: args[:starts_at],
-          call_scheduled_at: Time.current,
-          status: "Call Scheduled"
-        )
+        interview.update!(starts_at: args[:starts_at], call_scheduled_at: Time.current, status: "Call Scheduled")
       end
 
       conversation = Conversation.by_accounts(interview.accounts)

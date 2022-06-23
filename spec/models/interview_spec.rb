@@ -69,4 +69,37 @@ RSpec.describe Interview, type: :model do
       end
     end
   end
+
+  describe "#auto_decline!" do
+    let(:status) { "Call Reminded" }
+    let(:created_at) { 5.days.ago }
+    let(:conversation) { Conversation.by_accounts(interview.accounts) }
+    let!(:interview) { create(:interview, :with_specialist_and_user, created_at:, status:) }
+
+    it "marks it auto declined and informs all parties" do
+      expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
+
+      interview.auto_decline!
+      interview.reload
+      expect(interview.status).to eq("Auto Declined")
+      expect(conversation.messages.where(kind: "InterviewAutoDeclined")).to exist
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", {args: [interview]}).once
+      expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", {args: [interview]}).once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "The consultation request to #{interview.specialist.name} from #{interview.user.name_with_company} was auto declined.").once
+    end
+
+    context "when the interview isn't declinable" do
+      let(:status) { "Declined" }
+
+      it "does nothing" do
+        interview.auto_decline!
+        interview.reload
+        expect(interview.status).to eq("Declined")
+        expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
+        expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", anything)
+        expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", anything)
+        expect(SlackMessageJob).not_to have_been_enqueued.with("consultation_requests", anything)
+      end
+    end
+  end
 end

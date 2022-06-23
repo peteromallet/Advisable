@@ -7,9 +7,9 @@ RSpec.describe GoogleCalendarEventsController do
     let!(:interview) { create(:interview, status: "Call Scheduled", starts_at: 1.hour.from_now, google_calendar_id: "gcal-1") }
     let!(:interview2) { create(:interview, status: "Call Scheduled", starts_at: 1.hour.from_now, google_calendar_id: "gcal-2") }
 
-    it "calls GoogleCalendar with reschedule" do
-      expect_any_instance_of(GoogleCalendar).to receive(:reschedule).with(interview)
-      expect_any_instance_of(GoogleCalendar).not_to receive(:reschedule).with(interview2)
+    it "calls GoogleCalendar with handle_change" do
+      expect_any_instance_of(GoogleCalendar).to receive(:handle_change).with(interview)
+      expect_any_instance_of(GoogleCalendar).not_to receive(:handle_change).with(interview2)
 
       request.headers["X-Goog-Channel-Id"] = "gcal-1"
       post :create
