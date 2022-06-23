@@ -49,7 +49,7 @@ function RequestCallAction() {
           <PlusSm className="stroke-neutral700" />
         </div>
         <div className="font-medium text-neutral800 leading-none">
-          Request a call
+          Schedule a call
         </div>
       </div>
     </div>
