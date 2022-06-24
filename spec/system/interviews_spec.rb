@@ -13,7 +13,7 @@ RSpec.describe "Interviews", type: :system do
   end
   let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
   let(:user) { create(:user, account:) }
-  let(:specialist) { create(:specialist) }
+  let(:specialist) { create(:specialist, account: create(:account)) }
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
@@ -75,6 +75,19 @@ RSpec.describe "Interviews", type: :system do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
     click_on "Request To Reschedule"
     expect(page).to have_content("You have requested to reschedule your call")
+  end
+
+  it "excludes previously scheduled call slots from availability list" do
+    times = [{hour: 10, min: 0}, {hour: 10, min: 30}, {hour: 11, min: 0}, {hour: 11, min: 30}, {hour: 12, min: 0}, {hour: 12, min: 30}]
+    availability = times.map { |t| next_work_day.change(hour: t[:hour], min: t[:min]) }
+    specialist.account.update(availability:)
+    create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", starts_at: next_work_day.change(hour: 10, min: 30))
+    requested_call = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested", requested_by: specialist.account)
+    authenticate_as(user)
+    visit("/interview_request/#{requested_call.uid}")
+    click_on(next_work_day.strftime("%-d %b %Y"))
+    expect(page).to have_content("Select a time for your call")
+    expect(page).not_to have_content("11:30 AM - 12:00 PM")
   end
 
   context "when the client has requested to reschedule" do
