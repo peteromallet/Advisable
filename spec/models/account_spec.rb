@@ -29,6 +29,16 @@ RSpec.describe Account, type: :model do
       expect(account.availability).to include(future)
     end
 
+    it "excludes times that are already in use" do
+      account = create(:account)
+      time_a = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
+      time_b = 2.days.from_now.change({hour: 10, min: 0, sec: 0})
+      account.update(availability: [time_a, time_b])
+      interview = create(:interview, starts_at: time_a)
+      interview.accounts << account
+      expect(account.availability).not_to include(time_a)
+    end
+
     context "when new account" do
       it "returns blank array" do
         account = described_class.new

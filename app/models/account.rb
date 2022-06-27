@@ -73,7 +73,8 @@ class Account < ApplicationRecord
   end
 
   def availability
-    (super.presence || []).select(&:future?)
+    scheduled = interviews.scheduled.map(&:starts_at)
+    (super.presence || []).select(&:future?).reject { |t| scheduled.include?(t) }
   end
 
   def cached_avatar_url
