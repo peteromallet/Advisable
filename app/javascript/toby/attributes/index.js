@@ -15,6 +15,7 @@ import TextArrayAttribute from "./textArray";
 import BelongsToAttribute from "./belongsTo";
 import IntegerAttribute from "./integer";
 import LongTextAttribute from "./longText";
+import AttachmentsAttribute from "./attachments";
 
 const ATTRIBUTES = {
   IdAttribute,
@@ -32,6 +33,7 @@ const ATTRIBUTES = {
   HasManyThroughAttribute: HasManyAttribute,
   SelectAttribute,
   LongTextAttribute,
+  AttachmentsAttribute,
 };
 
 export function handlerForAttribute(attribute) {
