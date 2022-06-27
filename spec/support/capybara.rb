@@ -23,10 +23,4 @@ RSpec.configure do |config|
       driven_by :selenium, using: "headless_#{browser}".to_sym
     end
   end
-
-  if ENV["LOG_JS_ERRORS"]
-    config.after(type: :system) do
-      puts page.driver.browser.manage.logs.get(:browser)
-    end
-  end
 end
