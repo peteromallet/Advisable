@@ -25,6 +25,10 @@ class AccountMailerPreview < ActionMailer::Preview
     AccountMailer.interview_request(accounts.sample, random_interview, requester, random_message)
   end
 
+  def interview_declined
+    AccountMailer.interview_declined(Interview.order("RANDOM()").first, Message.order("RANDOM()").first)
+  end
+
   private
 
   def random_interview

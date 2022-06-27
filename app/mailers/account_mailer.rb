@@ -60,4 +60,25 @@ class AccountMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def interview_declined(interview, message)
+    @message = message
+    @declined_by = message.author
+    @account = (interview.accounts - [@declined_by]).first
+    @sales_person = consultations_sales_person(interview.user.company)
+    @declined_by_specialist = @declined_by == interview.specialist.account
+
+    if @declined_by_specialist
+      article = interview.article || interview.specialist.articles.searchable.by_score.first
+      @similar_articles = article.similar(exclude_specialist: interview.specialist.id) if article
+    end
+
+    mail(
+      to: @account.email,
+      from: @sales_person.email_with_name,
+      subject: "Call Request Declined by #{@declined_by.name}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
 end

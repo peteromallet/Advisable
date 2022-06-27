@@ -109,11 +109,6 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def interview_declined(interview, message)
-    @message = message
-    declined_interview_email(interview)
-  end
-
   def interview_request_auto_declined(interview)
     declined_interview_email(interview)
   end
