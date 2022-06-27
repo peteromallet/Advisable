@@ -71,7 +71,7 @@ const SelectDay = ({ name, availability, timeZone }) => {
           </Text>
 
           <RequestMore onClick={modal.show}>
-            Request more availability
+            Suggest alternative times
           </RequestMore>
         </>
       )}
