@@ -1,22 +1,19 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
 import { Card } from "@advisable/donut";
 import { Route, useParams, Routes, Navigate } from "react-router-dom";
 import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
-import { FETCH_INTERVIEW } from "./queries";
 import InterviewConfirmed from "./InterviewConfirmed";
 import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import AccessDenied, { isNotAuthorized } from "../AccessDenied";
+import { useFetchInterview } from "./queries";
 
 export default function InterviewRequestView() {
   const { interviewID } = useParams();
-  const { loading, data, error } = useQuery(FETCH_INTERVIEW, {
-    variables: { id: interviewID },
-  });
+  const { loading, data, error } = useFetchInterview(interviewID);
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;

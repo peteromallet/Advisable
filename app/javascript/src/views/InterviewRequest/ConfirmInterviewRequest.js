@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { Heading, Text, Box, Button } from "@advisable/donut";
-import { SCHEDULE_INTERVIEW } from "./queries";
+import SCHEDULE_INTERVIEW from "./queries/scheduleInterview.gql";
 import Event from "./Event";
 import BackButton from "src/components/BackButton";
 
