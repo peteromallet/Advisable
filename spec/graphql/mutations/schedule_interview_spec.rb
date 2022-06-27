@@ -43,7 +43,7 @@ RSpec.describe Mutations::ScheduleInterview do
     response = AdvisableSchema.execute(query, context: {current_user:})
     interview = Interview.find_by(uid: response["data"]["scheduleInterview"]["interview"]["id"])
     expect(interview.status).to eq("Call Scheduled")
-    expect(interview.starts_at).to eq(user.availability.first)
+    expect(interview.starts_at).to eq(starts_at)
     expect(interview.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
     expect(interview.video_call).to be_present
   end
@@ -126,7 +126,7 @@ RSpec.describe Mutations::ScheduleInterview do
       response = AdvisableSchema.execute(query, context: {current_user:})
       interview = Interview.find_by(uid: response["data"]["scheduleInterview"]["interview"]["id"])
       expect(interview.status).to eq("Call Scheduled")
-      expect(interview.starts_at).to eq(user.availability.first)
+      expect(interview.starts_at).to eq(starts_at)
       expect(interview.call_scheduled_at).to be_within(1.second).of(Time.zone.now)
       expect(interview.video_call).to be_present
     end
