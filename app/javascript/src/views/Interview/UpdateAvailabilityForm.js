@@ -68,7 +68,7 @@ function UpdateAvailabilityForm({
     return data.viewer.interviews.map((interview) => ({
       time: interview.startsAt,
       label: `Call with ${commaSeparated(
-        interview.participants.map((p) => p.firstName),
+        interview.accounts.map((p) => p.firstName),
       )}`,
     }));
   }, [data]);

@@ -8,7 +8,7 @@ export const GET_AVAILABILITY = gql`
       interviews {
         id
         startsAt
-        participants {
+        accounts {
           id
           firstName
         }

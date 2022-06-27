@@ -13,7 +13,7 @@ const interviewFields = gql`
       avatar
       location
     }
-    participants {
+    accounts {
       id
       firstName
     }
@@ -80,7 +80,7 @@ export const GET_AVAILABILITY = gql`
       interviews(status: "Call Scheduled") {
         id
         startsAt
-        participants {
+        accounts {
           id
           firstName
         }

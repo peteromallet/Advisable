@@ -40,7 +40,7 @@ function AvailabilityForm({ data, onSubmit }) {
             events={data.viewer.interviews?.map((i) => ({
               time: i.startsAt,
               label: `Call with ${commaSeparated(
-                i.participants.map((p) => p.firstName),
+                i.accounts.map((p) => p.firstName),
               )}`,
             }))}
           />
