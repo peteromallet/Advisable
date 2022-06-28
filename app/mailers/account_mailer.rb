@@ -4,11 +4,11 @@ class AccountMailer < ApplicationMailer
   def reset_password(id:, token:)
     @account = Account.find(id)
     @token = token
-    mail(to: @account.email, subject: "Reset password")
+    mail(to: @account.email_with_name, subject: "Reset password")
   end
 
   def zapier_email(account, subject, body)
-    mail(to: account.email, subject:) do |f|
+    mail(to: account.email_with_name, subject:) do |f|
       f.html { body }
     end
   end
@@ -19,7 +19,7 @@ class AccountMailer < ApplicationMailer
     @messages = Message.where(id: message_ids).order(:created_at)
     reply_to = "#{conversation.uid}@#{ENV.fetch("MESSAGE_REPLIES_DOMAIN", nil)}"
 
-    mail(to: @account.email, reply_to:, subject: "New messages in conversation") do |f|
+    mail(to: @account.email_with_name, reply_to:, subject: "New messages in conversation") do |f|
       f.html { render(layout: "email_v2") }
     end
   end
@@ -74,43 +74,49 @@ class AccountMailer < ApplicationMailer
     end
 
     mail(
-      to: @account.email,
+      to: @account.email_with_name,
       from: @sales_person.email_with_name,
+      bcc: @sales_person.email_with_name,
       subject: "Call Request Declined by #{@declined_by.name}"
     ) do |format|
       format.html { render layout: false }
     end
   end
 
-  def interview_auto_declined_to_requestor(_account, interview)
-    # user
-    return
-    @account = interview.user.account
-    @specialist = interview.specialist
+  def interview_auto_declined_to_requestor(account, interview)
+    @account = account
+    @interview = interview
     @sales_person = consultations_sales_person(interview.user&.company)
-    article = interview.article || @specialist.articles.searchable.by_score.first
-    @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
+    @other_account = (interview.accounts - [@account]).first
+    @requested_by_user = interview.requested_by == interview.user.account
+
+    if @requested_by_user
+      article = interview.article || interview.specialist.articles.searchable.by_score.first
+      @similar_articles = article.similar(exclude_specialist: interview.specialist.id) if article
+    end
 
     mail(
-      to: @account.email,
       from: @sales_person.email_with_name,
-      subject: "Consultation Request Declined: #{@specialist.account.name}"
+      to: @account.email_with_name,
+      bcc: @sales_person.email_with_name,
+      subject: "Call Request Auto Declined: #{@other_account.name_with_company}"
     ) do |format|
       format.html { render layout: false }
     end
   end
 
-  def interview_auto_declined_to_participant(_account, interview)
-    # specialist
-    return
+  def interview_auto_declined_to_participant(account, interview)
+    @account = account
     @interview = interview
-    @conversation = Conversation.by_accounts([interview.specialist.account, interview.user.account])
-    @sales_person = specialist_sales_person(interview.user&.company)
+    @sales_person = consultations_sales_person(interview.user&.company)
+    @other_account = (interview.accounts - [@account]).first
+    @account_class = @account.specialist_or_user.class.name
+
     mail(
       from: @sales_person.email_with_name,
-      to: interview.specialist.account.email,
+      to: @account.email_with_name,
       bcc: @sales_person.email_with_name,
-      subject: "No response received for consultation request from #{interview.user&.company&.name}"
+      subject: "No response received for call request from #{@interview.requested_by.name_with_company}"
     ) do |format|
       format.html { render layout: false }
     end

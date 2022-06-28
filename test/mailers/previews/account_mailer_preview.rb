@@ -30,11 +30,11 @@ class AccountMailerPreview < ActionMailer::Preview
   end
 
   def interview_auto_declined_to_participant
-    AccountMailer.interview_auto_declined_to_participant(random_account, random_interview)
+    AccountMailer.interview_auto_declined_to_participant(random_interview.accounts.sample, random_interview)
   end
 
   def interview_auto_declined_to_requestor
-    AccountMailer.interview_auto_declined_to_requestor(random_account, random_interview)
+    AccountMailer.interview_auto_declined_to_requestor(random_interview.accounts.sample, random_interview)
   end
 
   private

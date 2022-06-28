@@ -83,7 +83,7 @@ class Interview < ApplicationRecord
     (accounts - [requested_by]).each do |account|
       AccountMailer.interview_auto_declined_to_participant(account, self).deliver_later
     end
-    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The consultation request to #{specialist.name} from #{user.name_with_company} was auto declined.")
+    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request to #{specialist.name} from #{user.name_with_company} was auto declined.")
   end
 end
 
