@@ -84,10 +84,12 @@ RSpec.describe "Interviews", type: :system do
     create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", starts_at: next_work_day.change(hour: 10, min: 30))
     requested_call = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested", requested_by: specialist.account)
     authenticate_as(user)
-    visit("/interview_request/#{requested_call.uid}")
-    click_on(next_work_day.strftime("%-d %b %Y"))
-    expect(page).to have_content("Select a time for your call")
-    expect(page).not_to have_content("11:30 AM - 12:00 PM")
+    with_timezone("UTC") do
+      visit("/interview_request/#{requested_call.uid}")
+      click_on(next_work_day.strftime("%-d %b %Y"))
+      expect(page).to have_content("Select a time for your call")
+      expect(page).not_to have_content("10:30 AM - 11:00 AM")
+    end
   end
 
   context "when the client has requested to reschedule" do
