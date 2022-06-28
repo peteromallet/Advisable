@@ -151,7 +151,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     authenticate_as(interview.user)
     visit("/")
     find("*[aria-label='Messages dropdown']").click
-    expect(page).to have_content("Messages")
+    expect(page).to have_content("Dwight")
     find("*[aria-label='1 upcoming call']").hover
     expect(page).to have_content("1 upcoming call")
     visit("/messages")
@@ -218,6 +218,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   end
 
   it "requests and confirm a call from a specialist to client" do
+    skip("Enable again once freelancers can request calls")
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
@@ -258,6 +259,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   end
 
   it "requests and confirm a call from a specialist to specialist" do
+    skip("Enable again once freelancers can request calls")
     conversation2 = conversation_with_participants([jim, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")

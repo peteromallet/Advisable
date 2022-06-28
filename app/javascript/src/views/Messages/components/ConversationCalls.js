@@ -5,6 +5,7 @@ import { PlusSm } from "@styled-icons/heroicons-outline";
 import { VideoCamera } from "@styled-icons/heroicons-solid";
 import { Modal, useModal, DialogDisclosure } from "@advisable/donut";
 import ConversationCallRequest from "./ConversationCallRequest";
+import useViewer from "src/hooks/useViewer";
 
 function EmptyState({ firstName }) {
   return (
@@ -57,6 +58,7 @@ function RequestCallAction() {
 }
 
 export default function ConversationCalls({ conversation }) {
+  const viewer = useViewer();
   const other = conversation.participants.find((p) => !p.isViewer);
   const calls = other.upcomingInterviews;
   const modal = useModal();
@@ -71,20 +73,25 @@ export default function ConversationCalls({ conversation }) {
         ))}
       </div>
       {calls.length === 0 && <EmptyState firstName={other.firstName} />}
-      <Modal
-        width={600}
-        modal={modal}
-        label={`Request consultation with ${other.name}`}
-      >
-        <ConversationCallRequest account={other} modal={modal} />
-      </Modal>
-      <DialogDisclosure
-        {...modal}
-        className="w-full"
-        aria-label="Request a call"
-      >
-        <RequestCallAction />
-      </DialogDisclosure>
+      {/* Temporarily limit requesting calls to clients */}
+      {viewer.isClient && (
+        <>
+          <Modal
+            width={600}
+            modal={modal}
+            label={`Request consultation with ${other.name}`}
+          >
+            <ConversationCallRequest account={other} modal={modal} />
+          </Modal>
+          <DialogDisclosure
+            {...modal}
+            className="w-full"
+            aria-label="Request a call"
+          >
+            <RequestCallAction />
+          </DialogDisclosure>
+        </>
+      )}
     </div>
   );
 }
