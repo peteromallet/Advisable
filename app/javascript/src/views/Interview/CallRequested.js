@@ -1,18 +1,18 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { theme, Box, Card, Text, Paragraph } from "@advisable/donut";
-import useViewer from "../../hooks/useViewer";
 import CalendarIllustration from "src/illustrations/zest/calendar";
 import BackButton from "src/components/BackButton";
 import InviteToInterview from "./InviteToInterview";
 
 export default function CallRequested({ interview }) {
-  const { id } = interview;
-  const { isSpecialist } = useViewer();
+  const { id, requestedBy, participants } = interview;
 
-  if (isSpecialist) {
+  if (!requestedBy.isViewer) {
     return <Navigate replace to={`/interview_request/${id}`} />;
   }
+
+  const other = participants.find((p) => !p.isViewer);
 
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
@@ -28,12 +28,11 @@ export default function CallRequested({ interview }) {
           letterSpacing="-0.02em"
           marginBottom="sm"
         >
-          You have requested a call with {interview.specialist.firstName}
+          You have requested a call with {other.firstName}
         </Text>
         <Paragraph>
-          We have sent your availability to {interview.specialist.firstName}. We
-          will let you know once they have scheduled a call for one of these
-          times.
+          We have sent your availability to {other.firstName}. We will let you
+          know once they have scheduled a call for one of these times.
         </Paragraph>
 
         <InviteToInterview interview={interview} />

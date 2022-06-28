@@ -5,13 +5,13 @@ import sortBy from "lodash/sortBy";
 import { Heading, Text, Modal, useModal } from "@advisable/donut";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
-import RequestMoreAvailability from "./RequestMoreAvailability";
-import { useParams, useLocation } from "react-router";
+import { useLocation } from "react-router";
+import SuggestAlternativeTimes from "./SuggestAlternativeTimes";
 
-const SelectDay = ({ name, availability, timeZone }) => {
+const SelectDay = ({ account, availability, timeZone }) => {
   const modal = useModal();
   const location = useLocation();
-  const params = useParams();
+  const { name } = account;
 
   const dates = reduce(
     availability,
@@ -37,12 +37,8 @@ const SelectDay = ({ name, availability, timeZone }) => {
         below.
       </Text>
 
-      <Modal label="Request more availability" modal={modal}>
-        <RequestMoreAvailability
-          name={name}
-          interviewID={params.interviewID}
-          onCancel={modal.hide}
-        />
+      <Modal label="Suggest alternative times" modal={modal} width={600}>
+        <SuggestAlternativeTimes account={account} modal={modal} />
       </Modal>
 
       {dates.length > 0 && (

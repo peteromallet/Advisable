@@ -57,7 +57,7 @@ export default function InterviewRequestView() {
               <SelectDay
                 timeZone={interview.timeZone}
                 availability={interview.requestedBy.availability}
-                name={interview.requestedBy.name}
+                account={interview.requestedBy}
               />
             }
           />

@@ -6,6 +6,10 @@ const interviewFields = gql`
     status
     startsAt
     timeZone
+    requestedBy {
+      id
+      isViewer
+    }
     specialist {
       id
       firstName
@@ -16,6 +20,7 @@ const interviewFields = gql`
     accounts {
       id
       firstName
+      isViewer
     }
     user {
       id
