@@ -3,7 +3,6 @@ import { Reorder, useDragControls } from "framer-motion";
 import React from "react";
 import { Box, Text } from "@advisable/donut";
 import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useFetchResources } from "../../utilities";
 import {
   StyledHeaderRow,
@@ -16,6 +15,7 @@ import Loading from "./Loading";
 import useColumnSizes from "./useColumnSizes";
 import DragHandle from "./DragHandle";
 import useColumnOrder from "./useColumnOrder";
+import EndlessScroll from "./EndlessScroll";
 
 function APIError() {
   return (
@@ -79,17 +79,17 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
     sortOrder,
   );
 
-  const scrollRef = useBottomScrollListener(() => {
-    if (!loading && !hasNextPage) return;
-    fetchMore({ variables: { cursor: endCursor } });
-  });
-
   const hasNextPage = data?.records.pageInfo.hasNextPage;
   const endCursor = data?.records.pageInfo.endCursor;
   const edges = data?.records.edges || [];
 
+  const handleLoadMore = async () => {
+    if (!loading && !hasNextPage) return;
+    fetchMore({ variables: { cursor: endCursor } });
+  };
+
   return (
-    <StyledScrollContainer ref={scrollRef}>
+    <StyledScrollContainer>
       {/* Dear future developer. I know this inline-block looks random. But its important. */}
       <Box display="inline-block" minWidth="100vw">
         <StyledHeaderRow>
@@ -113,12 +113,15 @@ export default function Records({ resource, filters, sortBy, sortOrder }) {
           {error ? (
             <APIError />
           ) : (
-            <Rows
-              edges={edges}
-              resource={resource}
-              sizeForColumn={sizeForColumn}
-              attributes={orderedAttributes}
-            />
+            <>
+              <Rows
+                edges={edges}
+                resource={resource}
+                sizeForColumn={sizeForColumn}
+                attributes={orderedAttributes}
+              />
+              <EndlessScroll onLoadMore={handleLoadMore} />
+            </>
           )}
           {loading && (
             <Loading
