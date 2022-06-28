@@ -15,6 +15,7 @@ module Types
     field :user, Types::User, null: false
     field :specialist, Types::SpecialistType, null: true
     field :requested_by, Types::Account, null: true
+    field :conversation, Types::Conversation, null: true
 
     field :time_zone, String, null: true
     def time_zone
