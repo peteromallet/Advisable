@@ -81,4 +81,38 @@ class AccountMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def interview_auto_declined_to_requestor(_account, interview)
+    # user
+    return
+    @account = interview.user.account
+    @specialist = interview.specialist
+    @sales_person = consultations_sales_person(interview.user&.company)
+    article = interview.article || @specialist.articles.searchable.by_score.first
+    @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
+
+    mail(
+      to: @account.email,
+      from: @sales_person.email_with_name,
+      subject: "Consultation Request Declined: #{@specialist.account.name}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
+  def interview_auto_declined_to_participant(_account, interview)
+    # specialist
+    return
+    @interview = interview
+    @conversation = Conversation.by_accounts([interview.specialist.account, interview.user.account])
+    @sales_person = specialist_sales_person(interview.user&.company)
+    mail(
+      from: @sales_person.email_with_name,
+      to: interview.specialist.account.email,
+      bcc: @sales_person.email_with_name,
+      subject: "No response received for consultation request from #{interview.user&.company&.name}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
 end

@@ -109,10 +109,6 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def interview_request_auto_declined(interview)
-    declined_interview_email(interview)
-  end
-
   def new_agreement(agreement)
     agreement_mail(agreement, "#{agreement.specialist.account.name} has requested to work together on Advisable")
   end
@@ -174,22 +170,6 @@ class UserMailer < ApplicationMailer
       subject:
     ) do |format|
       format.html { render layout: "email_v2" }
-    end
-  end
-
-  def declined_interview_email(interview)
-    @account = interview.user.account
-    @specialist = interview.specialist
-    @sales_person = consultations_sales_person(interview.user&.company)
-    article = interview.article || @specialist.articles.searchable.by_score.first
-    @similar_articles = article.similar(exclude_specialist: @specialist.id) if article
-
-    mail(
-      to: @account.email,
-      from: @sales_person.email_with_name,
-      subject: "Consultation Request Declined: #{@specialist.account.name}"
-    ) do |format|
-      format.html { render layout: false }
     end
   end
 end

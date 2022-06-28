@@ -46,20 +46,6 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def interview_request_auto_declined(interview)
-    @interview = interview
-    @conversation = Conversation.by_accounts([interview.specialist.account, interview.user.account])
-    @sales_person = specialist_sales_person(interview.user&.company)
-    mail(
-      from: @sales_person.email_with_name,
-      to: interview.specialist.account.email,
-      bcc: @sales_person.email_with_name,
-      subject: "No response received for consultation request from #{interview.user&.company&.name}"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def first_interview_scheduled(interview)
     @interview = interview
     @user = interview.user
