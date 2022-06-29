@@ -61,10 +61,10 @@ class AccountMailer < ApplicationMailer
     end
   end
 
-  def interview_declined(interview, message)
+  def interview_declined(account, interview, message)
+    @account = account
     @message = message
     @declined_by = message.author
-    @account = (interview.accounts - [@declined_by]).first
     @sales_person = consultations_sales_person(interview.user.company)
     @declined_by_specialist = @declined_by == interview.specialist.account
 
@@ -110,7 +110,6 @@ class AccountMailer < ApplicationMailer
     @interview = interview
     @sales_person = consultations_sales_person(interview.user&.company)
     @other_account = (interview.accounts - [@account]).first
-    @account_class = @account.specialist_or_user.class.name
 
     mail(
       from: @sales_person.email_with_name,

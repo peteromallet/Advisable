@@ -42,6 +42,10 @@ class Interview < ApplicationRecord
     accounts
   end
 
+  def guests
+    accounts - [requested_by]
+  end
+
   def conversation
     Conversation.by_accounts(accounts)
   end
@@ -80,11 +84,10 @@ class Interview < ApplicationRecord
     update!(status: "Auto Declined")
     conversation.new_message!(kind: "InterviewAutoDeclined", interview: self, send_emails: false)
     AccountMailer.interview_auto_declined_to_requestor(requested_by, self).deliver_later
-    other_accounts = accounts - [requested_by]
-    other_accounts.each do |account|
+    guests.each do |account|
       AccountMailer.interview_auto_declined_to_participant(account, self).deliver_later
     end
-    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request by #{requested_by.name_with_company} with #{other_accounts.map(&:name_with_company).to_sentence} was auto declined.")
+    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request by #{requested_by.name_with_company} with #{guests.map(&:name_with_company).to_sentence} was auto declined.")
   end
 end
 
