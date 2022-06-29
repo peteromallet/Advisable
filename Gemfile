@@ -7,7 +7,6 @@ ruby "~> 3.1.2"
 
 gem "airrecord"
 gem "analytics-ruby", require: "segment/analytics"
-gem "app_profiler"
 gem "aws-sdk-s3"
 gem "barnes"
 gem "bcrypt"
@@ -54,6 +53,9 @@ gem "sidekiq-scheduler"
 gem "slim"
 gem "stripe"
 gem "twilio-ruby"
+
+gem "rack-mini-profiler"
+gem "stackprof"
 
 group :development, :test do
   gem "database_cleaner-active_record"
