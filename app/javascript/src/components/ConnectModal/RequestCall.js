@@ -6,15 +6,15 @@ import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
 import SubHeading from "./SubHeading";
 import ModalHeading from "./ModalHeading";
-import { useRequestInterview } from "./queries";
+import { useRequestCall } from "./queries";
 import MessagesIllustration from "src/illustrations/zest/messages";
 import Button from "../Button";
 
 function RequestCallMessage({ specialist, onBack, onComplete, article }) {
-  const [requestInterview] = useRequestInterview();
+  const [requestCall] = useRequestCall();
 
   const handleSubmit = async (values) => {
-    await requestInterview({
+    await requestCall({
       variables: {
         input: {
           article: article?.id,
@@ -26,7 +26,7 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
         cache.modify({
           id: cache.identify(specialist),
           fields: {
-            interview: () => result.data.requestInterview.interview,
+            interview: () => result.data.requestCall.interview,
           },
         });
       },
