@@ -9,12 +9,14 @@ import ModalHeading from "./ModalHeading";
 import { useRequestCall } from "./queries";
 import MessagesIllustration from "src/illustrations/zest/messages";
 import Button from "../Button";
+import { useNotifications } from "../Notifications";
 
 function RequestCallMessage({ specialist, onBack, onComplete, article }) {
+  const { error } = useNotifications();
   const [requestCall] = useRequestCall();
 
   const handleSubmit = async (values) => {
-    await requestCall({
+    const response = await requestCall({
       variables: {
         input: {
           article: article?.id,
@@ -32,7 +34,11 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
       },
     });
 
-    onComplete();
+    if (response.errors) {
+      error("Something went wrong, please try again.");
+    } else {
+      onComplete();
+    }
   };
 
   return (
