@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  self.ignored_columns += %i[notifiable_type notifiable_id actor_id]
-
   ACTION_TYPES = %w[suggested_post send_agreement].freeze
 
   belongs_to :guild_post, optional: true, class_name: "Guild::Post"
@@ -30,14 +28,11 @@ end
 # Indexes
 #
 #  index_notifications_on_account_id     (account_id)
-#  index_notifications_on_actor_id       (actor_id)
 #  index_notifications_on_guild_post_id  (guild_post_id)
 #  index_notifications_on_interview_id   (interview_id)
-#  index_notifications_on_notifiable     (notifiable_type,notifiable_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (actor_id => accounts.id)
 #  fk_rails_...  (guild_post_id => guild_posts.id)
 #
