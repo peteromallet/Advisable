@@ -22,10 +22,14 @@ module Mutations
       conversation.new_message!(kind: "InterviewDeclined", interview:, send_emails: false)
       if reason.present?
         message = conversation.new_message!(author: current_account, content: reason, send_emails: false)
-        UserMailer.interview_declined(interview, message).deliver_later
+        AccountMailer.interview_declined(interview, message).deliver_later
+        other_accounts = interview.accounts - [current_user.account]
+        other_accounts.each do |account|
+          AccountMailer.interview_declined(account, interview, message).deliver_later
+        end
       end
       interview.update(status: "Declined", reason:)
-      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name} declined a consultation request from #{interview.user.name_with_company}. They provided the following reason: \"#{reason}\".")
+      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name} declined a call request from #{interview.requested_by.name_with_company}. They provided the following reason: \"#{reason}\".")
       {interview:}
     end
   end

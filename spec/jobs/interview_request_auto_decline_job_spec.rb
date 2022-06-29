@@ -15,8 +15,8 @@ RSpec.describe InterviewRequestAutoDeclineJob do
     described_class.perform_now
     described_class.perform_now
 
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", {args: [interview]}).once
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", {args: [interview]}).once
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_participant", "deliver_now", {args: [interview.specialist.account, interview]}).once
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_requestor", "deliver_now", {args: [interview.user.account, interview]}).once
     expect(conversation.messages.where(kind: "InterviewAutoDeclined")).to exist
   end
 
@@ -25,8 +25,8 @@ RSpec.describe InterviewRequestAutoDeclineJob do
 
     it "does not send reminder" do
       described_class.perform_now
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", any_args)
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_participant", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_requestor", "deliver_now", any_args)
       expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
     end
   end
@@ -36,9 +36,9 @@ RSpec.describe InterviewRequestAutoDeclineJob do
 
     it "does not send reminder" do
       described_class.perform_now
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_auto_declined", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_participant", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_requestor", "deliver_now", any_args)
       expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "interview_request_auto_declined", "deliver_now", any_args)
     end
   end
 end

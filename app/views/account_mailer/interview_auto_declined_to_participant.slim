@@ -1,0 +1,19 @@
+p Hi #{@account.first_name},
+
+- if @account.specialist
+  p We didn't receive a response to the call request from  #{@other_account.name_with_company} within 4 days and as a result, it was automatically declined (stating that you are currently unavailable).
+  p As a reminder, call requests that are automatically declined can negatively affect your case study ranking and the chances of you being recommended in the future.
+  p
+    ' If you are currently not available for new projects or call requests you can
+    a clicktracking="off" href="#{magic_link(@account, settings_url)}" set yourself as unavailable in your account settings
+    '  to prevent this.
+- elsif @account.user
+  p We didn't receive a response to the call request from  #{@other_account.name_with_company} within 4 days and as a result, it was automatically declined.
+
+p If you are in fact available and would still like to schedule a call with #{@other_account.first_name} you can do so <a clicktracking="off" href="#{app_host}/messages/#{@interview.conversation.uid}">here</a>.
+p Let me know if you have any questions, I'll be happy to assist!
+
+p
+  ' Best,
+  br
+  = @sales_person.first_name

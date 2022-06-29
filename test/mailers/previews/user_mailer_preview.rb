@@ -24,10 +24,6 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.payment_receipt(Payment.order("RANDOM()").first)
   end
 
-  def interview_declined
-    UserMailer.interview_declined(Interview.order("RANDOM()").first, Message.order("RANDOM()").first)
-  end
-
   def new_agreement
     agreement = Agreement.order("RANDOM()").first
     UserMailer.new_agreement(agreement)
@@ -45,7 +41,7 @@ class UserMailerPreview < ActionMailer::Preview
     end
   end
 
-  %i[interview_reschedule_request need_more_time_options interview_reminder post_interview interview_request_auto_declined].each do |method|
+  %i[interview_reschedule_request need_more_time_options interview_reminder post_interview].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_interview)
     end
