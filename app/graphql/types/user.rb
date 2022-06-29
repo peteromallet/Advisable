@@ -6,6 +6,8 @@ module Types
 
     description "Represents a user"
     implements Types::ViewerInterface
+
+    field :id, ID, null: false, method: :uid
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :application_stage, String, null: true, method: :application_status
 
@@ -133,18 +135,6 @@ module Types
       Stripe::Invoice.list(customer: company.stripe_customer_id).reject do |invoice|
         invoice.status == "draft"
       end
-    end
-
-    field :id, ID, null: false, method: :uid
-
-    field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
-      argument :exclude_conflicts, Boolean, required: false, description: "Exclude any times that conflict with scheduled interviews"
-    end
-    def availability(exclude_conflicts: false)
-      return account.availability unless exclude_conflicts
-
-      interviews = account.interviews.scheduled.map(&:starts_at)
-      account.availability.reject { |t| interviews.include?(t) }
     end
 
     field :agreement, Types::Agreement, null: true

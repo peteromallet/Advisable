@@ -8,13 +8,15 @@ RSpec.describe Mutations::RequestCall do
   let(:current_user) { user }
   let(:accounts) { [specialist.account.uid] }
   let(:context) { {current_user:} }
+  let(:extra_args) { "" }
 
   let(:query) do
     <<-GRAPHQL
     mutation {
       requestCall(input: {
         accounts: #{accounts},
-        message: "Wanna chat?"
+        message: "Wanna chat?",
+        #{extra_args}
       }) {
         interview {
           id
@@ -47,6 +49,18 @@ RSpec.describe Mutations::RequestCall do
       expect(MessageNotifierJob).not_to have_been_enqueued
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_request", "deliver_now", {args: [specialist.account, interview, user.account, message]}).once
       expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{user.name_with_company} has requested a call with #{specialist.name}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
+    end
+
+    context "when an article is passed in" do
+      let(:article) { create(:case_study_article) }
+      let(:extra_args) { "article: \"#{article.uid}\"" }
+
+      it "stores it on the interview record" do
+        response = AdvisableSchema.execute(query, context:)
+        uid = response["data"]["requestCall"]["interview"]["id"]
+        interview = Interview.find_by!(uid:)
+        expect(interview.article).to eq(article)
+      end
     end
   end
 
