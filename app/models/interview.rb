@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns += %i[specialist_id user_id call_requested_at]
-
   extend Memoist
   include Uid
 
