@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include CurrentUser
 
+  before_action :profiling
   before_action :set_sentry_context
   before_action :prefetch_viewer
   before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
@@ -44,6 +45,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def profiling
+    Rack::MiniProfiler.authorize_request if current_account&.admin?
+  end
 
   def admin?
     redirect_to("/") unless current_account&.admin?

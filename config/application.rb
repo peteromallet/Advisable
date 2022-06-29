@@ -8,11 +8,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require_relative "../app/lib/app_profiler"
-
 module Advisable
   class Application < Rails::Application
-    ORIGIN_HOST = ENV["ORIGIN"] || "https://#{ENV["HEROKU_APP_NAME"]}.herokuapp.com"
+    ORIGIN_HOST = ENV.fetch("ORIGIN") { "https://#{ENV.fetch("HEROKU_APP_NAME", nil)}.herokuapp.com" }
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults(7.0)
     config.add_autoload_paths_to_load_path = false
@@ -23,11 +21,6 @@ module Advisable
     config.action_mailer.preview_path = Rails.root.join("test/mailers/previews")
     config.action_mailbox.ingress = :sendgrid
     config.active_storage.variant_processor = :vips
-
-    config.app_profiler.middleware = AppProfilerAuthorizedMiddleware
-    config.app_profiler.storage = AppProfiler::Storage::S3Storage
-    # Uncomment this if you want to test s3 uploads in development
-    # config.app_profiler.middleware_action = AppProfiler::Middleware::UploadAction
 
     # Do not load log_data columns unless needed
     config.logidze.ignore_log_data_by_default = true

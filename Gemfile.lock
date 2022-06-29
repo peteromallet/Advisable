@@ -76,11 +76,6 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
-    app_profiler (0.1.1)
-      activesupport (>= 5.2)
-      rack
-      railties (>= 5.2)
-      stackprof (~> 0.2)
     ast (2.4.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.601.0)
@@ -121,8 +116,7 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
-    countries (5.0.2)
-      i18n_data (~> 0.16.0)
+    countries (5.1.0)
       sixarm_ruby_unaccent (~> 1.1)
     crack (0.4.5)
       rexml
@@ -243,8 +237,6 @@ GEM
     httpclient (2.8.3)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
-    i18n_data (0.16.0)
-      simple_po_parser (~> 1.1)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
@@ -252,6 +244,7 @@ GEM
     irb (1.4.1)
       reline (>= 0.3.0)
     jmespath (1.6.1)
+    json (2.6.2)
     jwt (2.4.1)
     launchy (2.5.0)
       addressable (~> 2.7)
@@ -367,11 +360,13 @@ GEM
     rack (2.2.3.1)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
+    rack-mini-profiler (3.0.0)
+      rack (>= 1.2.0)
     rack-protection (2.2.0)
       rack
     rack-proxy (0.7.2)
       rack
-    rack-test (2.0.0)
+    rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.3)
       actioncable (= 7.0.3)
@@ -442,7 +437,8 @@ GEM
     rspec-support (3.11.0)
     rspec_junit_formatter (0.5.1)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.30.1)
+    rubocop (1.31.1)
+      json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -504,7 +500,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-scheduler (4.0.1)
+    sidekiq-scheduler (4.0.2)
       redis (>= 4.2.0)
       rufus-scheduler (~> 3.2)
       sidekiq (>= 4)
@@ -514,7 +510,6 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    simple_po_parser (1.1.6)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -582,7 +577,6 @@ DEPENDENCIES
   airrecord
   analytics-ruby
   annotate
-  app_profiler
   aws-sdk-s3
   barnes
   bcrypt
@@ -629,6 +623,7 @@ DEPENDENCIES
   puma
   pundit
   rack-attack
+  rack-mini-profiler
   rails (~> 7.0.0)
   rspec-github
   rspec-rails
@@ -653,6 +648,7 @@ DEPENDENCIES
   simplecov
   slim
   sql_spy
+  stackprof
   stripe
   stripe-ruby-mock
   timecop
