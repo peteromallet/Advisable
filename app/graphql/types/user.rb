@@ -5,7 +5,9 @@ module Types
     delegate :account, :company, to: :object
 
     description "Represents a user"
-    implements Types::AccountInterface
+    implements Types::ViewerInterface
+
+    field :id, ID, null: false, method: :uid
     field :airtable_id, String, null: true, deprecation_reason: "We're moving away from Airtable. Please stop using Airtable IDs."
     field :application_stage, String, null: true, method: :application_status
 
@@ -32,9 +34,12 @@ module Types
       object.company.name
     end
 
-    field :time_zone, String, null: true
-    field :company, Types::CompanyType, null: true
+    field :time_zone, String, null: true, deprecation_reason: "Use timezone from Account instead"
+    def time_zone
+      account.timezone
+    end
 
+    field :company, Types::CompanyType, null: true
     field :industry, Types::IndustryType, null: true
 
     # TODO: Teams - frontend should not query for user industry, instead it should
@@ -87,17 +92,6 @@ module Types
 
     field :country, Types::CountryType, null: true
 
-    field :interviews, [Types::Interview], null: true do
-      argument :status, String, required: false
-      authorize :user?
-    end
-
-    def interviews(status: nil)
-      interviews = object.account.interviews
-      interviews = interviews.where(status:) if status
-      interviews
-    end
-
     field :city, String, null: true
 
     def city
@@ -141,25 +135,6 @@ module Types
       Stripe::Invoice.list(customer: company.stripe_customer_id).reject do |invoice|
         invoice.status == "draft"
       end
-    end
-
-    field :id, ID, null: false, method: :uid
-
-    field :availability, [GraphQL::Types::ISO8601DateTime], null: false do
-      argument :exclude_conflicts,
-               Boolean,
-               required: false,
-               description:
-                 "Exclude any times that conflict with scheduled interviews"
-    end
-
-    def availability(exclude_conflicts: false)
-      times = object.availability || []
-      if exclude_conflicts
-        interviews = object.account.interviews.scheduled.map(&:starts_at)
-        times.reject! { |t| interviews.include?(t) }
-      end
-      times
     end
 
     field :agreement, Types::Agreement, null: true

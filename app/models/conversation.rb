@@ -14,12 +14,14 @@ class Conversation < ApplicationRecord
   end
 
   def self.find_existing_with(*accounts)
-    account_ids = Account.ids_from(accounts)
-    joins(:participants).
-      where(participants: {account_id: account_ids}).
-      group(:id).
-      having("COUNT(participants.id) = ?", account_ids.size).
-      first
+    account_ids = Account.ids_from(accounts).sort
+    conversations_ids = joins(:participants).where(participants: {account_id: account_ids}).distinct.pluck(:id)
+    id = ConversationParticipant.
+      where(conversation_id: conversations_ids).
+      pluck(:conversation_id, :account_id).
+      each_with_object({}) { |(c_id, acc_id), group| (group[c_id] ||= []) << acc_id }.
+      find { |_, acc_ids| acc_ids.sort == account_ids }&.first
+    find_by(id:)
   end
 
   def self.create_new_with(*accounts, &block)

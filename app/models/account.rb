@@ -26,9 +26,12 @@ class Account < ApplicationRecord
   has_many :conversations, through: :conversation_participants
   has_many :interview_participants, dependent: :destroy
   has_many :interviews, through: :interview_participants
+  has_many :requested_interviews, class_name: "Interview", foreign_key: :requested_by_id, dependent: :nullify, inverse_of: :requested_by
 
   has_one_attached :avatar
   resize avatar: {resize_to_limit: [400, 400]}
+
+  attribute :availability, :datetime, default: -> { [] }, array: true
 
   has_secure_password validations: false
   validates :password, length: {minimum: 8}, allow_blank: true, confirmation: true
@@ -67,6 +70,11 @@ class Account < ApplicationRecord
 
   def name_with_company
     user.nil? ? name : user.name_with_company
+  end
+
+  def availability
+    scheduled = interviews.scheduled.map(&:starts_at)
+    (super.presence || []).select(&:future?).reject { |t| scheduled.include?(t) }
   end
 
   def cached_avatar_url
@@ -172,6 +180,7 @@ end
 # Table name: accounts
 #
 #  id                  :bigint           not null, primary key
+#  availability        :text
 #  completed_tutorials :jsonb
 #  confirmation_digest :string
 #  confirmation_token  :string

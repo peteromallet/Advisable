@@ -3,7 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Mutations::UpdateAvailability do
-  let(:user) { create(:user, availability: []) }
+  let(:account) { create(:account, availability: []) }
+  let(:user) { create(:user, account:) }
   let(:current_user) { user }
   let(:context) { {current_user:} }
   let(:time) { 2.days.from_now.utc.iso8601 }
@@ -14,7 +15,7 @@ RSpec.describe Mutations::UpdateAvailability do
       updateAvailability(input: {
         availability: ["#{time}"]
       }) {
-        user {
+        viewer {
           id
           availability
         }
@@ -26,7 +27,7 @@ RSpec.describe Mutations::UpdateAvailability do
   it "updates the users availability" do
     expect(user.reload.availability).to be_empty
     response = AdvisableSchema.execute(query, context:)
-    availability = response["data"]["updateAvailability"]["user"]["availability"]
+    availability = response["data"]["updateAvailability"]["viewer"]["availability"]
     expect(availability).to include(time)
   end
 
@@ -43,10 +44,11 @@ RSpec.describe Mutations::UpdateAvailability do
   context "when the current user is a user" do
     let(:current_user) { create(:specialist) }
 
-    it "returns an error" do
+    it "updates the specialists availability" do
+      expect(user.reload.availability).to be_empty
       response = AdvisableSchema.execute(query, context:)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("MUST_BE_USER")
+      availability = response["data"]["updateAvailability"]["viewer"]["availability"]
+      expect(availability).to include(time)
     end
   end
 end

@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
 
 export const GET_AVAILABILITY = gql`
-  query client($id: ID!) {
-    user(id: $id) {
+  query GetAvailability {
+    viewer {
       id
       availability
       interviews {
         id
         startsAt
-        specialist {
+        accounts {
           id
           firstName
         }
@@ -20,7 +20,7 @@ export const GET_AVAILABILITY = gql`
 export const UPDATE_AVAILABILITY = gql`
   mutation UpdateAvailability($input: UpdateAvailabilityInput!) {
     updateAvailability(input: $input) {
-      user {
+      viewer {
         id
         availability
       }

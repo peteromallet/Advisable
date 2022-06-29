@@ -7,6 +7,7 @@ import Loading from "components/Loading";
 import { useNotifications } from "components/Notifications";
 import AvailabilityDesktop from "components/AvailabilityInput";
 import TimeZoneSelect from "components/TimeZoneSelect";
+import commaSeparated from "src/utilities/commaSeparated";
 import { useUpdateAvailability, useAvailability } from "./queries";
 
 export default function UpdateAvailabilityFormContainer(props) {
@@ -66,7 +67,9 @@ function UpdateAvailabilityForm({
   const events = React.useMemo(() => {
     return data.viewer.interviews.map((interview) => ({
       time: interview.startsAt,
-      label: `Interview with ${interview.specialist.firstName}`,
+      label: `Call with ${commaSeparated(
+        interview.accounts.map((p) => p.firstName),
+      )}`,
     }));
   }, [data]);
 

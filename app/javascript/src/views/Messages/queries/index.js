@@ -7,12 +7,15 @@ import {
 import { matchPath, useLocation } from "react-router-dom";
 import CONVERSATIONS from "./conversations.gql";
 import MESSAGES from "./messages.gql";
+import REQUEST_CALL from "./requestCall.gql";
 import SEND_MESSAGE from "./sendMessage.gql";
+import AVAILABILITY from "./availability.gql";
 import UPDATE_LAST_READ from "./updateLastRead.gql";
 import RECEIVED_MESSAGE from "./receivedMessage.gql";
 import ACCEPT_AGREEMENT from "./acceptAgreement.gql";
 import DECLINE_AGREEMENT from "./declineAgreement.gql";
 import SETUP_PAYMENTS_DATA from "./setupPaymentsData.gql";
+import UPDATE_AVAILABILITY from "./updateAvailability.gql";
 import UPDATE_INVOICE_SETTINGS from "./updateInvoiceSettings.gql";
 import DECLINE_INTERVIEW from "./declineInterview.gql";
 import AGREEMENT_FIELDS from "./agreementFields.gql";
@@ -23,6 +26,18 @@ export function useConversations() {
 
 export function useMessages(opts) {
   return useQuery(MESSAGES, opts);
+}
+
+export function useAvailability() {
+  return useQuery(AVAILABILITY);
+}
+
+export function useUpdateAvailability() {
+  return useMutation(UPDATE_AVAILABILITY);
+}
+
+export function useRequestCall() {
+  return useMutation(REQUEST_CALL);
 }
 
 export function useSendMessage(conversation) {

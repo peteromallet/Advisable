@@ -3,9 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "Accept interview request", type: :system do
-  let(:specialist) { create(:specialist) }
-  let(:user) do
-    create(:user, {
+  let(:account) do
+    create(:account, {
       availability: [
         2.days.from_now.change({hour: 10, min: 0, secs: 0}),
         2.days.from_now.change({hour: 10, min: 30, secs: 0}),
@@ -14,9 +13,9 @@ RSpec.describe "Accept interview request", type: :system do
       ]
     })
   end
-  let(:interview) do
-    create(:interview, status: "Call Requested", accounts: [specialist.account, user.account])
-  end
+  let(:user) { create(:user, account:) }
+  let(:specialist) { create(:specialist) }
+  let(:interview) { create(:interview, status: "Call Requested", accounts: [specialist.account, user.account], requested_by: user.account) }
 
   it "Accepts an interview request" do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)

@@ -12,6 +12,7 @@ export default function Event({ date, zone }) {
       display="flex"
       alignItems="center"
       padding="s"
+      textAlign="left"
     >
       <Circle bg="blue800" color="blue100" size={40} mr="s">
         <Calendar size={20} strokeWidth={2} />

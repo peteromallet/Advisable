@@ -12,7 +12,7 @@ export default function SelectTime(props) {
   const params = useParams();
   const location = useLocation();
   const localTimezone = DateTime.local().zoneName;
-  const { availability, timeZone, clientName } = props;
+  const { availability, timeZone, name } = props;
   const [selectedTimeZone, setTimezone] = React.useState(
     localTimezone || timeZone,
   );
@@ -37,7 +37,7 @@ export default function SelectTime(props) {
       />
       <Heading mb={2}>{date.toFormat("cccc, dd LLL yyyy")}</Heading>
       <Text fontSize="l" lineHeight="24px" color="neutral800">
-        Select a time for your call with {clientName}
+        Select a time for your call with {name}
       </Text>
       <Times>
         {times.map((time) => {

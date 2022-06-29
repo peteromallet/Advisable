@@ -6,15 +6,17 @@ import ConnectedAvatars from "./ConnectedAvatars";
 import MessageForm from "./MessageForm";
 import SubHeading from "./SubHeading";
 import ModalHeading from "./ModalHeading";
-import { useRequestInterview } from "./queries";
+import { useRequestCall } from "./queries";
 import MessagesIllustration from "src/illustrations/zest/messages";
 import Button from "../Button";
+import { useNotifications } from "../Notifications";
 
 function RequestCallMessage({ specialist, onBack, onComplete, article }) {
-  const [requestInterview] = useRequestInterview();
+  const { error } = useNotifications();
+  const [requestCall] = useRequestCall();
 
   const handleSubmit = async (values) => {
-    await requestInterview({
+    const response = await requestCall({
       variables: {
         input: {
           article: article?.id,
@@ -26,13 +28,17 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
         cache.modify({
           id: cache.identify(specialist),
           fields: {
-            interview: () => result.data.requestInterview.interview,
+            interview: () => result.data.requestCall.interview,
           },
         });
       },
     });
 
-    onComplete();
+    if (response.errors) {
+      error("Something went wrong, please try again.");
+    } else {
+      onComplete();
+    }
   };
 
   return (
@@ -60,7 +66,7 @@ function RequestCallMessage({ specialist, onBack, onComplete, article }) {
   );
 }
 
-function CallRequested({ specialist, modal }) {
+export function CallRequested({ account, modal }) {
   return (
     <div className="text-center pb-3">
       <MessagesIllustration
@@ -71,8 +77,8 @@ function CallRequested({ specialist, modal }) {
       />
       <h5 className="font-medium text-xl mb-1">Request sent</h5>
       <SubHeading>
-        Your request has been sent to {specialist.firstName}. We will let you
-        know when they respond.
+        Your request has been sent to {account.firstName}. We will let you know
+        when they respond.
       </SubHeading>
       <Button variant="secondary" onClick={modal.hide}>
         Okay
@@ -86,9 +92,7 @@ export default function RequestCall({ modal, specialist, onBack, article }) {
 
   return (
     <>
-      {step === "SENT" && (
-        <CallRequested modal={modal} specialist={specialist} />
-      )}
+      {step === "SENT" && <CallRequested modal={modal} account={specialist} />}
       {step === "AVAILABILITY" && (
         <Availability
           specialist={specialist}

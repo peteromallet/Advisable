@@ -43,8 +43,8 @@ export default function InterviewRequestView() {
             element={
               <SelectTime
                 timeZone={interview.timeZone}
-                clientName={interview.user.companyName}
-                availability={interview.user.availability}
+                name={interview.requestedBy.name}
+                availability={interview.requestedBy.availability}
               />
             }
           />
@@ -59,8 +59,8 @@ export default function InterviewRequestView() {
             element={
               <SelectDay
                 timeZone={interview.timeZone}
-                availability={interview.user.availability}
-                clientName={interview.user.companyName}
+                availability={interview.requestedBy.availability}
+                name={interview.requestedBy.name}
               />
             }
           />
@@ -76,11 +76,11 @@ export default function InterviewRequestView() {
         <InterviewConfirmed
           startsAt={interview.startsAt}
           timeZone={interview.timeZone}
-          clientName={interview.user.companyName}
+          name={interview.requestedBy.name}
         />
       )}
       {interview.status === "Need More Time Options" && (
-        <MoreTimesRequested clientName={interview.user.companyName} />
+        <MoreTimesRequested name={interview.requestedBy.name} />
       )}
     </Card>
   );

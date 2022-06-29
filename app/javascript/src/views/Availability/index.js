@@ -8,15 +8,14 @@ import AvailabilityInput from "src/components/AvailabilityInput";
 import TimeZoneSelect from "src/components/TimeZoneSelect";
 import { useNotifications } from "src/components/Notifications";
 import useWindowSize from "src/utilities/useWindowSize";
+import commaSeparated from "src/utilities/commaSeparated";
 
 import { Container, Form, Header, Body, Footer } from "./styles";
 import { GET_AVAILABILITY, UPDATE_AVAILABILITY } from "./queries";
-import { useParams } from "react-router-dom";
 
 const DEFAULT_TIMEZONE = DateTime.local().zoneName || "UTC";
 
 const AvailabilityView = () => {
-  const { userID } = useParams();
   const notifications = useNotifications();
   const windowSize = useWindowSize();
   const sup = useBreakpoint("sUp");
@@ -26,9 +25,7 @@ const AvailabilityView = () => {
     label: DEFAULT_TIMEZONE,
   });
 
-  const { data, loading } = useQuery(GET_AVAILABILITY, {
-    variables: { id: userID },
-  });
+  const { data, loading } = useQuery(GET_AVAILABILITY);
 
   return (
     <Container height={windowSize.height}>
@@ -44,7 +41,7 @@ const AvailabilityView = () => {
             notifications.notify("Your availability has been updated");
           }}
           initialValues={{
-            availability: data.user.availability,
+            availability: data.viewer.availability,
           }}
         >
           {(formik) => (
@@ -73,9 +70,11 @@ const AvailabilityView = () => {
                     onChange={(times) => {
                       formik.setFieldValue("availability", times);
                     }}
-                    events={data.user.interviews?.map((i) => ({
+                    events={data.viewer.interviews?.map((i) => ({
                       time: i.startsAt,
-                      label: `Interview with ${i.specialist.firstName}`,
+                      label: `Call with ${commaSeparated(
+                        i.accounts.map((p) => p.firstName),
+                      )}`,
                     }))}
                   />
                 ) : (

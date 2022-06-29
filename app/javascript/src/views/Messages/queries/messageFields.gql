@@ -130,10 +130,9 @@ fragment MessageFields on MessageInterface {
     startsAt
     interview {
       id
-      status
-      specialist {
+      requestedBy {
         id
-        firstName
+        name
       }
     }
   }

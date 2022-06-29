@@ -2,23 +2,19 @@
 
 module Mutations
   class UpdateAvailability < Mutations::BaseMutation
-    argument :id, ID, required: false, deprecation_reason: "Do not provide this anymore"
-    argument :availability, [String], required: true, description: "The clients availability. Should be an array of ISO strings"
-    argument :time_zone, String, required: false
-
-    field :user, Types::User, null: true
+    argument :availability, [String], required: true, description: "An array of ISO strings"
+    field :viewer, Types::ViewerInterface, null: true
 
     def authorized?(**_args)
-      requires_client!
+      requires_current_user!
     end
 
-    def resolve(**args)
-      current_user.update!(
-        availability: args[:availability],
-        time_zone: args[:time_zone]
-      )
+    def resolve(availability:)
+      current_account_responsible_for do
+        current_user.account.update!(availability:)
+      end
 
-      {user: current_user}
+      {viewer: current_user}
     end
   end
 end

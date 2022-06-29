@@ -8,7 +8,7 @@ import NoAvailability from "./NoAvailability";
 import RequestMoreAvailability from "./RequestMoreAvailability";
 import { useParams, useLocation } from "react-router";
 
-const SelectDay = ({ clientName, availability, timeZone }) => {
+const SelectDay = ({ name, availability, timeZone }) => {
   const modal = useModal();
   const location = useLocation();
   const params = useParams();
@@ -30,16 +30,16 @@ const SelectDay = ({ clientName, availability, timeZone }) => {
   return (
     <>
       <Heading as="h1" mb={2}>
-        Call with {clientName}
+        Call with {name}
       </Heading>
       <Text fontSize="l" lineHeight="24px" color="neutral800" mb={8}>
-        {clientName} has requested a call with you! Please select an available
-        day below.
+        {name} has requested a call with you! Please select an available day
+        below.
       </Text>
 
       <Modal label="Request more availability" modal={modal}>
         <RequestMoreAvailability
-          clientName={clientName}
+          name={name}
           interviewID={params.interviewID}
           onCancel={modal.hide}
         />

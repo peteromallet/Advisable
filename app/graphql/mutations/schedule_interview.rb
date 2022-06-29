@@ -7,25 +7,22 @@ module Mutations
 
     field :interview, Types::Interview, null: true
 
-    def authorized?(id:, **args)
-      requires_specialist!
-      interview = Interview.find_by!(uid: id)
+    def authorized?(**args)
+      requires_current_user!
+      interview = Interview.find_by!(uid: args[:id])
       policy = InterviewPolicy.new(current_user, interview)
       ApiError.not_authorized("You do not have permission to schedule this interview") unless policy.schedule?
-      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless Interview::SCHEDULABLE_STATUSES.include?(interview.status)
-      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.user.availability.include?(args[:starts_at])
       true
     end
 
     def resolve(**args)
       interview = Interview.find_by!(uid: args[:id])
+      ApiError.invalid_request("INTERVIEW_IS_NOT_SCHEDULABLE", "Interview is not in a schedulable state.") unless Interview::SCHEDULABLE_STATUSES.include?(interview.status)
+      ApiError.invalid_request("STARTS_AT_NOT_AVAILABLE_ON_CLIENT", "Argument `starts_at` is not inside of the client's availability.") unless interview.requested_by.availability.include?(args[:starts_at])
+
       specialist = interview.specialist
       current_account_responsible_for do
-        interview.update!(
-          starts_at: args[:starts_at],
-          call_scheduled_at: Time.current,
-          status: "Call Scheduled"
-        )
+        interview.update!(starts_at: args[:starts_at], call_scheduled_at: Time.current, status: "Call Scheduled")
       end
 
       conversation = Conversation.by_accounts(interview.accounts)

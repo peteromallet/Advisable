@@ -3,17 +3,17 @@
 require "rails_helper"
 
 RSpec.describe "Interviews", type: :system do
-  let(:specialist) { create(:specialist) }
-  let(:user) do
-    create(:user, availability:
-      [
-        2.days.from_now.change({hour: 10, min: 0, secs: 0}),
-        2.days.from_now.change({hour: 10, min: 30, secs: 0}),
-        2.days.from_now.change({hour: 11, min: 0, secs: 0}),
-        2.days.from_now.change({hour: 11, min: 30, secs: 0})
-      ])
+  let(:account) do
+    create(:account, availability: [
+             2.days.from_now.change({hour: 10, min: 0, secs: 0}),
+             2.days.from_now.change({hour: 10, min: 30, secs: 0}),
+             2.days.from_now.change({hour: 11, min: 0, secs: 0}),
+             2.days.from_now.change({hour: 11, min: 30, secs: 0})
+           ])
   end
   let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
+  let(:user) { create(:user, account:) }
+  let(:specialist) { create(:specialist, account: create(:account)) }
 
   before do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
@@ -77,9 +77,24 @@ RSpec.describe "Interviews", type: :system do
     expect(page).to have_content("You have requested to reschedule your call")
   end
 
+  it "excludes previously scheduled call slots from availability list" do
+    times = [{hour: 10, min: 0}, {hour: 10, min: 30}, {hour: 11, min: 0}, {hour: 11, min: 30}, {hour: 12, min: 0}, {hour: 12, min: 30}]
+    availability = times.map { |t| next_work_day.change(hour: t[:hour], min: t[:min]) }
+    specialist.account.update(availability:)
+    create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", starts_at: next_work_day.change(hour: 10, min: 30))
+    requested_call = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested", requested_by: specialist.account)
+    authenticate_as(user)
+    with_timezone("UTC") do
+      visit("/interview_request/#{requested_call.uid}")
+      click_on(next_work_day.strftime("%-d %b %Y"))
+      expect(page).to have_content("Select a time for your call")
+      expect(page).not_to have_content("10:30 AM - 11:00 AM")
+    end
+  end
+
   context "when the client has requested to reschedule" do
     it "the specialist can schedule the interview" do
-      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
+      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")
@@ -117,7 +132,7 @@ RSpec.describe "Interviews", type: :system do
 
   context "when more time options have been added" do
     it "allows the specialist can schedule the call" do
-      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
+      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
       authenticate_as interview.specialist
       visit "/interviews/#{interview.uid}"
       click_on user.availability[0].strftime("%A")

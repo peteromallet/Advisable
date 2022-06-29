@@ -11,7 +11,6 @@ module Toby
       attribute :accounts, Attributes::HasManyThrough
       attribute :agreement, Lookups::Interviews::Agreement
       attribute :availability_note, Attributes::String
-      attribute :call_requested_at, Attributes::DateTime
       attribute :call_scheduled_at, Attributes::DateTime
       attribute :time_zone, Attributes::String
       attribute :zoom_meeting_id, Attributes::String
@@ -25,9 +24,9 @@ module Toby
       action :decline, label: "Decline", if: ->(interview) { interview.pending? }
 
       def self.decline(object, _context)
-        return unless object.pending?
+        return unless Interview::DECLINABLE_STATUSES.include?(object.status)
 
-        object.update(status: "Specialist Declined")
+        object.update(status: "Declined")
         return if object.messages.none?
 
         object.messages.first.conversation.new_message!(kind: "InterviewDeclined", interview: object, send_emails: false)

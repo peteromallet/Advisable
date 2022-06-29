@@ -11,6 +11,7 @@ import { useAvailability, useUpdateAvailability } from "./queries";
 import AvailabilityInput from "../AvailabilityInput";
 import TimezoneSelect from "./TimezoneSelect";
 import SubHeading from "./SubHeading";
+import commaSeparated from "src/utilities/commaSeparated";
 
 function AvailabilityForm({ data, onSubmit }) {
   const sup = useBreakpoint("sUp");
@@ -38,7 +39,9 @@ function AvailabilityForm({ data, onSubmit }) {
             onChange={setAvailability}
             events={data.viewer.interviews?.map((i) => ({
               time: i.startsAt,
-              label: `Interview with ${i.specialist.firstName}`,
+              label: `Call with ${commaSeparated(
+                i.accounts.map((p) => p.firstName),
+              )}`,
             }))}
           />
         ) : (

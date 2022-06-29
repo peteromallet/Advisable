@@ -7,10 +7,10 @@ export const FETCH_INTERVIEW = gql`
       status
       startsAt
       timeZone
-      user {
+      requestedBy {
         id
-        companyName
-        availability(excludeConflicts: true)
+        name
+        availability
       }
     }
   }

@@ -25,7 +25,7 @@ RSpec.describe InterviewRequestReminderJob do
   end
 
   context "when the interview isn't scheduled" do
-    let(:status) { "Specialist Declined" }
+    let(:status) { "Declined" }
 
     it "does not send reminder" do
       described_class.perform_now

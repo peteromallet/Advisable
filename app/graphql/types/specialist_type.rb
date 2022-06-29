@@ -5,7 +5,7 @@ module Types
     include ActionView::Helpers::DateHelper
     delegate :account, to: :object
 
-    implements Types::AccountInterface
+    implements Types::ViewerInterface
 
     description <<~HEREDOC
       Represents a freelancer. The Specialist type is also a type of viewer. It

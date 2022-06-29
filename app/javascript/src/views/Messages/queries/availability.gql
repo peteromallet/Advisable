@@ -2,7 +2,7 @@ query Availability {
   viewer {
     id
     availability
-    interviews {
+    interviews(status: "Call Scheduled") {
       id
       startsAt
       accounts {

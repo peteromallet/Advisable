@@ -110,7 +110,7 @@ const ApplicationRoutes = () => {
             <Route
               path="/interview_request/:interviewID/*"
               element={
-                <RequireAuthentication specialistOnly>
+                <RequireAuthentication>
                   <InterviewRequest />
                 </RequireAuthentication>
               }

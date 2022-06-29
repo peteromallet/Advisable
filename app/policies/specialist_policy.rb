@@ -6,7 +6,8 @@
 
 class SpecialistPolicy < BasePolicy
   # Checks if the specialist is the current user
-  def specialist?
+  def current_user?
     record == current_user
   end
+  alias specialist? current_user?
 end

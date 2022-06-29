@@ -21,7 +21,7 @@ RSpec.describe Conversation, type: :model do
         conversation.participants.create!(account: specialist.account)
       end
 
-      it "returns a conversation when passed user or specialist" do
+      it "returns a conversation when passed user and specialist" do
         con = described_class.by_accounts(user, specialist)
         expect(con.id).to eq(conversation.id)
         expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
@@ -53,7 +53,7 @@ RSpec.describe Conversation, type: :model do
     end
 
     context "when conversation does not exist" do
-      it "creates a conversation when passed user or specialist" do
+      it "creates a conversation when passed user and specialist" do
         con = described_class.by_accounts(user, specialist)
         expect(con.id).not_to eq(conversation.id)
         expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
@@ -69,6 +69,49 @@ RSpec.describe Conversation, type: :model do
         con = described_class.by_accounts([user.account, specialist.account])
         expect(con.id).not_to eq(conversation.id)
         expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+    end
+
+    context "when conversation with 3 exists" do
+      let(:another_user) { create(:user) }
+
+      before do
+        conversation.participants.create!(account: user.account)
+        conversation.participants.create!(account: specialist.account)
+        conversation.participants.create!(account: another_user.account)
+      end
+
+      it "creates a conversation when passed user and specialist" do
+        con = described_class.by_accounts(user, specialist)
+        expect(con.id).not_to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "returns existing conversation when passed all 3 accounts" do
+        con = described_class.by_accounts(another_user, user, specialist)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id, another_user.account_id])
+      end
+    end
+
+    context "when conversations with another specialist exists" do
+      let(:another_specialist) { create(:specialist) }
+
+      before do
+        conversation.participants.create!(account: user.account)
+        conversation.participants.create!(account: another_specialist.account)
+      end
+
+      it "creates a conversation when passed user and specialist" do
+        con = described_class.by_accounts(user, specialist)
+        expect(con.id).not_to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, specialist.account_id])
+      end
+
+      it "returns a conversation when passed user and another specialist" do
+        con = described_class.by_accounts(user, another_specialist)
+        expect(con.id).to eq(conversation.id)
+        expect(con.participants.pluck(:account_id)).to match_array([user.account_id, another_specialist.account_id])
       end
     end
   end

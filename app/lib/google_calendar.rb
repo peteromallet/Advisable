@@ -15,21 +15,18 @@ class GoogleCalendar
   def schedule_for_interview(interview)
     set_up_service
     interview.google_calendar_id.blank? ? create_event(interview) : reschedule_event(interview)
-    watch(interview)
+    watch_event(interview)
   end
 
-  def watch(interview)
-    set_up_service
-    raise GoogleCalendarError, "Can't watch event that does not exist in Google Calendar" if interview.google_calendar_id.blank?
-
-    channel = Google::Apis::CalendarV3::Channel.new(address: "#{app_host}/google_calendar_events", id: interview.google_calendar_id, type: "webhook")
-    service.watch_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), channel)
-  end
-
-  def reschedule(interview)
+  def handle_change(interview)
     set_up_service
     event = service.get_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), interview.google_calendar_id)
-    interview.reschedule!(event.start.date_time)
+
+    if event.attendees.any? { |a| a.response_status == "declined" }
+      interview.auto_decline!
+    else
+      interview.reschedule!(event.start.date_time)
+    end
   end
 
   private
@@ -51,7 +48,7 @@ class GoogleCalendar
   # TODO: Need to update this to work with interviews that are other combos besides user and specialist
   def create_event(interview)
     description = <<~DESCRIPTION.strip
-      You can use the following link for you call: #{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}.\n
+      You can use the following link for you call: #{app_host}/calls/#{interview.video_call.uid}.\n
       Please sign in to your Advisable account to join this call.\n
       If you'd like to reschedule, please email #{interview.user.company.sales_person.name} at #{interview.user.company.sales_person.email}.
     DESCRIPTION
@@ -59,7 +56,7 @@ class GoogleCalendar
     event = Google::Apis::CalendarV3::Event.new(
       start: Google::Apis::CalendarV3::EventDateTime.new(date_time: interview.starts_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name),
       end: Google::Apis::CalendarV3::EventDateTime.new(date_time: ends_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name),
-      location: "#{ApplicationMailer.default_url_options[:host]}/calls/#{interview.video_call.uid}",
+      location: "#{app_host}/calls/#{interview.video_call.uid}",
       reminders: Google::Apis::CalendarV3::Event::Reminders.new(use_default: true),
       summary: "Call with #{interview.user.name_with_company} and #{interview.specialist.account.name}",
       description:,
@@ -83,5 +80,12 @@ class GoogleCalendar
       Google::Apis::CalendarV3::EventAttendee.new(email: interview.specialist.account.email, response_status: "needsAction")
     ]
     service.update_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), event.id, event, send_updates: "all")
+  end
+
+  def watch_event(interview)
+    raise GoogleCalendarError, "Can't watch event that does not exist in Google Calendar" if interview.google_calendar_id.blank?
+
+    channel = Google::Apis::CalendarV3::Channel.new(address: "#{app_host}/google_calendar_events", id: interview.google_calendar_id, type: "webhook")
+    service.watch_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), channel)
   end
 end

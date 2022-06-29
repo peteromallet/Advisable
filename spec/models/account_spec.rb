@@ -18,6 +18,35 @@ RSpec.describe Account, type: :model do
     expect(account).to be_valid
   end
 
+  describe "#availability" do
+    it "shows only availabilities in the future" do
+      account = create(:account)
+      past = 1.day.ago.change({hour: 10, min: 0, sec: 0})
+      future = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
+      account.update(availability: [past, future])
+      expect(account.read_attribute(:availability)).to match_array([past, future])
+      expect(account.availability).not_to include(past)
+      expect(account.availability).to include(future)
+    end
+
+    it "excludes times that are already in use" do
+      account = create(:account)
+      time_a = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
+      time_b = 2.days.from_now.change({hour: 10, min: 0, sec: 0})
+      account.update(availability: [time_a, time_b])
+      interview = create(:interview, starts_at: time_a)
+      interview.accounts << account
+      expect(account.availability).not_to include(time_a)
+    end
+
+    context "when new account" do
+      it "returns blank array" do
+        account = described_class.new
+        expect(account.availability).to eq([])
+      end
+    end
+  end
+
   describe "#has_password?" do
     it "returns true when there is a password_digest" do
       inst = create(factory, password: "testing123")

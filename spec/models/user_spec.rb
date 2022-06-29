@@ -11,25 +11,6 @@ RSpec.describe(User, type: :model) do
     expect(build(:user)).to be_valid
   end
 
-  describe "#availability" do
-    it "shows only availabilities in the future" do
-      user = create(:user)
-      past = 1.day.ago.change({hour: 10, min: 0, sec: 0})
-      future = 1.day.from_now.change({hour: 10, min: 0, sec: 0})
-      user.update(availability: [past, future])
-      expect(user.read_attribute(:availability)).to match_array([past, future])
-      expect(user.availability).not_to include(past)
-      expect(user.availability).to include(future)
-    end
-
-    context "when new user" do
-      it "returns blank array" do
-        user = described_class.new
-        expect(user.availability).to eq([])
-      end
-    end
-  end
-
   describe "#name_with_company" do
     let(:account) { create(:account, first_name: "Bob", last_name: "Vance") }
     let(:company) { create(:company, name: "Vance Refrigeration") }
@@ -146,7 +127,7 @@ RSpec.describe(User, type: :model) do
       timestamp = user.application_accepted_at.to_i
       user.update(application_status: "Submitted")
       expect(user.reload.application_accepted_at.to_i).to eq(timestamp)
-      user.update(availability: "I'm a new availability")
+      user.update(campaign_name: "New campaign")
       expect(user.reload.application_accepted_at.to_i).to eq(timestamp)
     end
 

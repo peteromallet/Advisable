@@ -91,5 +91,5 @@ Rails.application.configure do
   end
 
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = {host: ENV["ORIGIN"]}
+  config.action_mailer.default_url_options = {host: ENV.fetch("ORIGIN", nil)}
 end

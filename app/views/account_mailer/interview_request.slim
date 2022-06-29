@@ -1,0 +1,19 @@
+p Hi #{@account.first_name},
+
+p This is #{@sales_person.first_name} from Advisable.com.
+
+p #{@requester.name_with_company} requested a 30-minute call with #{@participants}.
+
+p This is a great opportunity for you to understand their requirements and figure out how you can work together.
+
+- if @message.content.present?
+  p #{@requester.name_with_company} left the following message:
+
+  p "#{@message.content}"
+
+p You can accept or decline their request <a clicktracking=off href="#{magic_link(@account, interview_request_url(@message.conversation))}">here</a>.
+
+p
+  ' Best,
+  br
+  = @sales_person.first_name
