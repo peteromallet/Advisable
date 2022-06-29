@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_29_084633) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_29_085134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -855,7 +855,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_29_084633) do
 
   create_table "users", force: :cascade do |t|
     t.string "airtable_id"
-    t.text "availability"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "uid", null: false
@@ -870,7 +869,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_29_084633) do
     t.string "pid"
     t.string "rid"
     t.string "gclid"
-    t.string "time_zone"
     t.string "campaign_medium"
     t.string "contact_status"
     t.string "fid"
