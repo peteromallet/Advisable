@@ -7,8 +7,12 @@ query interview($id: ID!) {
     requestedBy {
       id
       name
+      isViewer
       firstName
       availability
+    }
+    conversation {
+      id
     }
   }
 }

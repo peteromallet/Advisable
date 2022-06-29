@@ -5,7 +5,7 @@ query Availability {
     interviews(status: "Call Scheduled") {
       id
       startsAt
-      participants {
+      accounts {
         id
         firstName
       }

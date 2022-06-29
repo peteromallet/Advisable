@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DateTime } from "luxon";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import Button from "src/components/Button";
@@ -46,7 +46,7 @@ function AvailabilityForm({ data, onSubmit }) {
             events={data.viewer.interviews?.map((i) => ({
               time: i.startsAt,
               label: `Call with ${commaSeparated(
-                i.participants.map((p) => p.firstName),
+                i.accounts.map((p) => p.firstName),
               )}`,
             }))}
           />
@@ -106,22 +106,17 @@ const validationSchema = object({
   message: string().required("Please include a message"),
 });
 
-function MessageStep({ account, onSubmit, interviewID }) {
+function MessageStep({ account, interviewID }) {
+  const navigate = useNavigate();
   const [requestCall] = useRequestCall();
-  const [declineInterview] = useDeclineInterview(interviewID);
+  const [declineInterview] = useDeclineInterview();
   const { error } = useNotifications();
 
   const initialValues = {
     message: `Hey ${account.firstName}. Unfortunately, none of these times work for me. I have suggested a few alternatives that will hopefully work for you!`,
   };
 
-  const handleSubmit = async (values) => {
-    const declineRes = await declineInterview();
-    if (declineRes.errors) {
-      error("Something went wrong. Please try again.");
-      return;
-    }
-
+  const requestNewCall = async (values) => {
     const res = await requestCall({
       variables: {
         input: {
@@ -134,8 +129,16 @@ function MessageStep({ account, onSubmit, interviewID }) {
       error("Something went wrong. Please try again.");
       return;
     }
+    const { id } = res.data.requestCall.interview;
+    navigate(`/interviews/${id}`);
+  };
 
-    onSubmit();
+  const handleSubmit = async (values) => {
+    await declineInterview({
+      variables: { input: { interview: interviewID } },
+      onCompleted: () => requestNewCall(values),
+      onError: () => error("Something went wrong. Please try again."),
+    });
   };
 
   return (
@@ -179,51 +182,15 @@ function MessageStep({ account, onSubmit, interviewID }) {
   );
 }
 
-function CallRequested({ account }) {
-  const handleBack = () => {
-    if (window.history.length > 2) {
-      window.history.back();
-    }
-  };
-
-  return (
-    <div className="text-center">
-      <h5 className="font-medium text-xl mb-1">Request sent</h5>
-      <p className="text-center mb-8 max-w-[400px] mx-auto">
-        Your suggestion has been sent to {account.firstName}. We will let you
-        know when they respond.
-      </p>
-      <Button variant="secondary" onClick={handleBack}>
-        {window.history.length <= 2 && <Link to="/" />}
-        Okay
-      </Button>
-    </div>
-  );
-}
-
 export default function SuggestAlternativeTimes({ account }) {
   const [step, setStep] = useState("AVAILABILITY");
   const params = useParams();
 
-  switch (step) {
-    case "AVAILABILITY":
-      return (
-        <AvailabilityStep
-          account={account}
-          onSubmit={() => setStep("MESSAGE")}
-        />
-      );
-    case "MESSAGE":
-      return (
-        <MessageStep
-          interviewID={params.interviewID}
-          account={account}
-          onSubmit={() => setStep("SENT")}
-        />
-      );
-    default:
-      return (
-        <CallRequested interviewID={params.interviewID} account={account} />
-      );
+  if (step === "AVAILABILITY") {
+    return (
+      <AvailabilityStep account={account} onSubmit={() => setStep("MESSAGE")} />
+    );
+  } else {
+    return <MessageStep interviewID={params.interviewID} account={account} />;
   }
 }

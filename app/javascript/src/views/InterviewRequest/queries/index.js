@@ -29,10 +29,8 @@ export function useScheduleInterview() {
   return useMutation(SCHEDULE_INTERVIEW);
 }
 
-export function useDeclineInterview(id) {
-  return useMutation(DECLINE_INTERVIEW, {
-    variables: { input: { interview: id } },
-  });
+export function useDeclineInterview() {
+  return useMutation(DECLINE_INTERVIEW);
 }
 
 export function useRequestMoreTimes() {
