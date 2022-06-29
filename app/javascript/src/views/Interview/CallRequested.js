@@ -6,19 +6,19 @@ import BackButton from "src/components/BackButton";
 import InviteToInterview from "./InviteToInterview";
 
 export default function CallRequested({ interview }) {
-  const { id, requestedBy, participants } = interview;
+  const { id, requestedBy, accounts, conversation } = interview;
 
   if (!requestedBy.isViewer) {
     return <Navigate replace to={`/interview_request/${id}`} />;
   }
 
-  const other = participants.find((p) => !p.isViewer);
+  const other = accounts.find((p) => !p.isViewer);
 
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
       <Card padding={["xl", "2xl"]}>
         <Box marginBottom={2}>
-          <BackButton to="/messages" />
+          <BackButton to={`/messages/${conversation.id}`} />
         </Box>
         <CalendarIllustration width="200px" color={theme.colors.blue200} />
         <Text

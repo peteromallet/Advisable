@@ -17,6 +17,9 @@ const interviewFields = gql`
       avatar
       location
     }
+    conversation {
+      id
+    }
     accounts {
       id
       firstName
