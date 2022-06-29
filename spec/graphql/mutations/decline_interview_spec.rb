@@ -6,7 +6,7 @@ RSpec.describe Mutations::DeclineInterview do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Requested") }
+  let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Requested", requested_by: user.account) }
   let(:context) { {current_user:} }
 
   let(:query) do

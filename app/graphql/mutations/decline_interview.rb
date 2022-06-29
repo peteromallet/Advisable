@@ -25,7 +25,7 @@ module Mutations
         AccountMailer.interview_declined(interview, message).deliver_later
       end
       interview.update(status: "Declined", reason:)
-      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name} declined a call request from #{interview.user.name_with_company}. They provided the following reason: \"#{reason}\".")
+      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name} declined a call request from #{interview.requested_by.name_with_company}. They provided the following reason: \"#{reason}\".")
       {interview:}
     end
   end
