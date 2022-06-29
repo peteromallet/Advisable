@@ -2,10 +2,11 @@ import React from "react";
 import { Badge } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import { ExclamationCircle } from "@styled-icons/heroicons-solid";
+import { shouldShowPastDue } from "./utilities";
 
 export default function PaymentRequestPastDue({ paymentRequest }) {
   const viewer = useViewer();
-  if (!paymentRequest.pastDue) return null;
+  if (!shouldShowPastDue(paymentRequest)) return null;
 
   const { company, specialist } = paymentRequest;
 

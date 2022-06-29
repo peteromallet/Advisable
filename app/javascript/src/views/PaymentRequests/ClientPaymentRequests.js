@@ -8,8 +8,7 @@ import PaymentRequestStatus from "./PaymentRequestStatus";
 import NoPaymentRequests from "./NoPaymentRequests";
 import { Loading } from "src/components";
 import { ExclamationCircle } from "@styled-icons/heroicons-solid";
-
-const PAYABLE_STATUSES = ["pending", "approved"];
+import { shouldShowPastDue } from "./utilities";
 
 export default function ClientPaymentRequests() {
   const { data, loading, error, fetchMore } = useClientPaymentRequests();
@@ -51,7 +50,7 @@ export default function ClientPaymentRequests() {
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
             <Table.Cell className="flex items-center flex-1">
-              {pr.pastDue && PAYABLE_STATUSES.includes(pr.status) && (
+              {shouldShowPastDue(pr) && (
                 <ExclamationCircle className="w-5 h-5 text-red-800 mr-2" />
               )}
 
