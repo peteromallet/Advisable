@@ -54,14 +54,13 @@ gem "slim"
 gem "stripe"
 gem "twilio-ruby"
 
-gem "rack-mini-profiler"
-gem "stackprof"
-
 group :development, :test do
   gem "database_cleaner-active_record"
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "parallel_tests"
+  gem "rack-mini-profiler"
+  gem "stackprof"
 end
 
 group :development do
