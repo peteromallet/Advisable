@@ -100,7 +100,9 @@ function FeedItem({ article, interest }) {
         <Link
           to={`/articles/${article.slug || article.id}`}
           className="group"
-          state={{ ...location.state, back: true }}
+          state={{
+            backgroundLocation: location.state?.backgroundLocation || location,
+          }}
         >
           <h3 className="block text-xl md:text-[24px] md:leading-8 font-[650] tracking-tight mb-5 text-neutral900 group-hover:underline">
             {article.title}

@@ -10,7 +10,6 @@ import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
 import SpecialistBar from "./components/SpecialistBar";
 import Footer from "src/components/Footer";
-import useScrollToTop from "src/hooks/useScrollToTop";
 import ArticleEvents from "./components/ArticleEvents";
 
 const SectionWrapper = ({ children, className, ...props }) => (
@@ -35,8 +34,7 @@ const SectionWrapper = ({ children, className, ...props }) => (
   </div>
 );
 
-export default function ShortlistArticle() {
-  useScrollToTop();
+export default function CaseStudyArticle({ topbarOffset }) {
   useBackground("beige");
   const { data, loading, error } = useArticle();
 
@@ -51,7 +49,7 @@ export default function ShortlistArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <SpecialistBar article={data.caseStudy} />
+      <SpecialistBar article={data.caseStudy} offset={topbarOffset} />
       <div className="pt-10 pb-36">
         <SectionWrapper className="items-start">
           <SpecialistCard
