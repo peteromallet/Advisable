@@ -155,7 +155,7 @@ function MessageStep({ account, interviewID }) {
         validateOnMount
       >
         <Form>
-          <div className="mb-8">
+          <div className="mb-6">
             <FormField
               autoFocus
               as={Textarea}
