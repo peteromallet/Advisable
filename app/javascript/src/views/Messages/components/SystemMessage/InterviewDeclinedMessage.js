@@ -2,7 +2,8 @@ import React from "react";
 import possessive from "src/utilities/possesive";
 
 export default function InterviewDeclinedMessage({ message }) {
-  const { user, specialist } = message.interview || {};
+  const { accounts, requestedBy } = message.interview || {};
+  const other = accounts.find((a) => a.id !== requestedBy.id);
 
   return (
     <div
@@ -10,7 +11,7 @@ export default function InterviewDeclinedMessage({ message }) {
       data-status={message.status}
       className="text-center p-4 rounded-xl border-2 border-solid border-neutral100"
     >
-      {specialist?.firstName} declined {possessive(user?.firstName)} call
+      {other?.firstName} declined {possessive(requestedBy?.firstName)} call
       request
     </div>
   );

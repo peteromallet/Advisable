@@ -49,11 +49,11 @@ fragment MessageFields on MessageInterface {
   ... on InterviewDeclinedMessage {
     interview {
       id
-      specialist {
+      accounts {
         id
         firstName
       }
-      user {
+      requestedBy {
         id
         firstName
       }
