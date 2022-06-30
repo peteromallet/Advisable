@@ -26,6 +26,10 @@ export default function InterviewRequestView() {
     return <Navigate replace to={`/interviews/${interviewID}`} />;
   }
 
+  if (interview.status === "Declined") {
+    return <Navigate replace to={`/messages/${interview.conversation.id}`} />;
+  }
+
   return (
     <Card
       mx="auto"
