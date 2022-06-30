@@ -1,24 +1,24 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { theme, Box, Card, Text, Paragraph } from "@advisable/donut";
+import useViewer from "../../hooks/useViewer";
 import CalendarIllustration from "src/illustrations/zest/calendar";
 import BackButton from "src/components/BackButton";
 import InviteToInterview from "./InviteToInterview";
 
 export default function CallRequested({ interview }) {
-  const { id, requestedBy, accounts, conversation } = interview;
+  const { id } = interview;
+  const { isSpecialist } = useViewer();
 
-  if (!requestedBy.isViewer) {
+  if (isSpecialist) {
     return <Navigate replace to={`/interview_request/${id}`} />;
   }
-
-  const other = accounts.find((p) => !p.isViewer);
 
   return (
     <Box maxWidth="500px" marginX="auto" paddingY="xl">
       <Card padding={["xl", "2xl"]}>
         <Box marginBottom={2}>
-          <BackButton to={`/messages/${conversation.id}`} />
+          <BackButton to="/messages" />
         </Box>
         <CalendarIllustration width="200px" color={theme.colors.blue200} />
         <Text
@@ -28,11 +28,12 @@ export default function CallRequested({ interview }) {
           letterSpacing="-0.02em"
           marginBottom="sm"
         >
-          You have requested a call with {other.firstName}
+          You have requested a call with {interview.specialist.firstName}
         </Text>
         <Paragraph>
-          We have sent your availability to {other.firstName}. We will let you
-          know once they have scheduled a call for one of these times.
+          We have sent your availability to {interview.specialist.firstName}. We
+          will let you know once they have scheduled a call for one of these
+          times.
         </Paragraph>
 
         <InviteToInterview interview={interview} />

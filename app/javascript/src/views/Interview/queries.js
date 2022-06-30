@@ -6,10 +6,6 @@ const interviewFields = gql`
     status
     startsAt
     timeZone
-    requestedBy {
-      id
-      isViewer
-    }
     specialist {
       id
       firstName
@@ -17,13 +13,9 @@ const interviewFields = gql`
       avatar
       location
     }
-    conversation {
-      id
-    }
     accounts {
       id
       firstName
-      isViewer
     }
     user {
       id
