@@ -9,7 +9,6 @@ import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import AccessDenied, { isNotAuthorized } from "../AccessDenied";
-import BackButton from "src/components/BackButton";
 import { useFetchInterview } from "./queries";
 
 export default function InterviewRequestView() {
@@ -39,9 +38,6 @@ export default function InterviewRequestView() {
       padding={{ _: "l", md: "xl" }}
       borderRadius="24px"
     >
-      <div className="mb-2">
-        <BackButton to={`/messages/${interview?.conversation?.id}`} />
-      </div>
       {[
         "Call Requested",
         "More Time Options Added",
@@ -71,6 +67,7 @@ export default function InterviewRequestView() {
                 timeZone={interview.timeZone}
                 availability={interview.requestedBy.availability}
                 account={interview.requestedBy}
+                conversationId={interview.conversation.id}
               />
             }
           />

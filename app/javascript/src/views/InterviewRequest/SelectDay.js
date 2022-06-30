@@ -3,12 +3,13 @@ import { DateTime } from "luxon";
 import reduce from "lodash/reduce";
 import sortBy from "lodash/sortBy";
 import { Heading, Text, Modal, useModal } from "@advisable/donut";
+import BackButton from "src/components/BackButton";
 import { Day, RequestMore } from "./styles";
 import NoAvailability from "./NoAvailability";
 import { useLocation } from "react-router";
 import SuggestAlternativeTimes from "./SuggestAlternativeTimes";
 
-const SelectDay = ({ account, availability, timeZone }) => {
+const SelectDay = ({ account, availability, timeZone, conversationId }) => {
   const modal = useModal();
   const location = useLocation();
   const { name } = account;
@@ -29,6 +30,9 @@ const SelectDay = ({ account, availability, timeZone }) => {
 
   return (
     <>
+      <div className="mb-2">
+        <BackButton to={`/messages/${conversationId}`} />
+      </div>
       <Heading as="h1" mb={2}>
         Call with {name}
       </Heading>
