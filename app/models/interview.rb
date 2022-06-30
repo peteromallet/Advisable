@@ -97,6 +97,7 @@ end
 #  availability_note                  :string
 #  call_scheduled_at                  :datetime
 #  client_requested_reschedule_at     :datetime
+#  kind                               :string
 #  more_time_options_added_at         :datetime
 #  reason                             :string
 #  requested_more_time_options_at     :datetime
