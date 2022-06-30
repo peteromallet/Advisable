@@ -129,8 +129,8 @@ function MessageStep({ account, interviewID }) {
       error("Something went wrong. Please try again.");
       return;
     }
-    const { id } = res.data.requestCall.interview;
-    navigate(`/interviews/${id}`);
+    const id = res.data.requestCall.interview.conversation?.id;
+    navigate(`/messages/${id}`);
   };
 
   const handleSubmit = async (values) => {
