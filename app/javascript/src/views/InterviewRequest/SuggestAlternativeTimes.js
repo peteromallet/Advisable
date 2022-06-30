@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DateTime } from "luxon";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import Button from "src/components/Button";
@@ -107,7 +107,6 @@ const validationSchema = object({
 });
 
 function MessageStep({ account, interviewID }) {
-  const navigate = useNavigate();
   const [requestCall] = useRequestCall();
   const [declineInterview] = useDeclineInterview();
   const { error } = useNotifications();
@@ -129,8 +128,6 @@ function MessageStep({ account, interviewID }) {
       error("Something went wrong. Please try again.");
       return;
     }
-    const id = res.data.requestCall.interview.conversation?.id;
-    navigate(`/messages/${id}`);
   };
 
   const handleSubmit = async (values) => {
