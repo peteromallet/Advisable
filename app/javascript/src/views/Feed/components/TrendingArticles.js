@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SpecialistCompanyRelation from "src/views/CaseStudyArticle/components/SpecialistCompanyRelation";
 import useTrending from "../queries";
 
 function CaseStudyCard({ article }) {
+  const location = useLocation();
+  const backgroundLocation = location.state?.backgroundLocation || location;
   return (
-    <Link to={article.path} state={{ back: true }}>
+    <Link to={article.path} state={{ backgroundLocation }}>
       <div className="w-full h-[320px] rounded-lg bg-white shadow-lg p-6 transition-all hover:-translate-y-1 hover:shadow-xl">
         <SpecialistCompanyRelation
           company={article.company}
@@ -23,7 +25,7 @@ function CaseStudyCard({ article }) {
 }
 
 export default function TrendingArticles() {
-  const { loading, data } = useTrending();
+  const { data } = useTrending();
   const articles = data?.topCaseStudies || [];
 
   return (
