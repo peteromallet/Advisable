@@ -2,6 +2,7 @@
 
 class Interview < ApplicationRecord
   extend Memoist
+  include Participants
   include Uid
 
   has_logidze
@@ -22,8 +23,8 @@ class Interview < ApplicationRecord
 
   has_one :video_call, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :interview_participants, dependent: :destroy
-  has_many :accounts, through: :interview_participants
+  has_many :participants, class_name: "InterviewParticipant", dependent: :destroy
+  has_many :accounts, through: :participants
 
   scope :scheduled, -> { where(status: "Call Scheduled") }
   scope :requested, -> { where(status: "Call Requested") }
@@ -32,13 +33,6 @@ class Interview < ApplicationRecord
   scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
   validates :status, inclusion: {in: VALID_STATUSES}
-
-  def participants
-    raise "Interview#participants is deprecated. Use Interview#accounts instead." unless Rails.env.production?
-
-    Sentry.capture_message("Something is still calling Interview#participants! Stop it!", level: "debug")
-    accounts
-  end
 
   def guests
     accounts - [requested_by]
