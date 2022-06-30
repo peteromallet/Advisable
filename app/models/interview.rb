@@ -7,6 +7,7 @@ class Interview < ApplicationRecord
 
   has_logidze
 
+  VALID_KINDS = %w[Consultation Interview].freeze
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
     "Need More Time Options", "More Time Options Added", "Specialist Requested Reschedule",
@@ -33,6 +34,7 @@ class Interview < ApplicationRecord
   scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
   validates :status, inclusion: {in: VALID_STATUSES}
+  validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
   def guests
     accounts - [requested_by]
@@ -40,10 +42,6 @@ class Interview < ApplicationRecord
 
   def conversation
     Conversation.by_accounts(accounts)
-  end
-
-  def specialist_and_user?
-    !!(accounts.size == 2 && specialist && user)
   end
 
   def specialist

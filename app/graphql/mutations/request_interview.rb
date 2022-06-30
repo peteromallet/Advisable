@@ -15,10 +15,8 @@ module Mutations
 
     def resolve(**args)
       article = ::CaseStudy::Article.find_by(uid: args[:article]) if args[:article]
-      accounts = Array(args[:accounts]).map { |uid| Account.find_by!(uid:) }
-      accounts += [Specialist.find_by(uid: args[:specialist])&.account, current_user.account]
-      accounts = accounts.compact.uniq
-      interview = Interview.create!(accounts:, article:, status: "Call Requested", requested_by: current_account)
+      accounts = (Array(args[:accounts]).map { |uid| Account.find_by!(uid:) } + [Specialist.find_by(uid: args[:specialist])&.account, current_user.account]).compact.uniq
+      interview = Interview.create!(status: "Call Requested", requested_by: current_account, kind: get_kind(accounts), accounts:, article:)
       Conversation.by_accounts(accounts).new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
 
       if interview.specialist_and_user?
@@ -28,6 +26,20 @@ module Mutations
       end
 
       {interview:}
+    end
+
+    private
+
+    def get_kind(accounts)
+      if specialist_and_user?(accounts) && !Interview.find_existing_with(*accounts)
+        "Consultation"
+      else
+        "Interview"
+      end
+    end
+
+    def specialist_and_user?(accounts)
+      !!(accounts.size == 2 && accounts.any?(&:specialist) && accounts.any?(&:user))
     end
   end
 end

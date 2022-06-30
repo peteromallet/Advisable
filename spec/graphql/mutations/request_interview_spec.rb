@@ -65,6 +65,8 @@ RSpec.describe Mutations::RequestInterview do
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, current_user.account])
       expect(interview.requested_by).to eq(current_user.account)
+      expect(interview.status).to eq("Call Requested")
+      expect(interview.kind).to eq("Consultation")
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")
@@ -72,6 +74,23 @@ RSpec.describe Mutations::RequestInterview do
 
       expect(MessageNotifierJob).not_to have_been_enqueued
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request", "deliver_now", {args: [an_instance_of(Interview)]}).once
+    end
+
+    context "when an interview between these accounts already exists" do
+      let(:extra_args) { "accounts: [\"#{specialist.account.uid}\"]" }
+
+      it "creates a new interview of Interview kind" do
+        create(:interview, accounts: [specialist.account, current_user.account])
+        c_count = Interview.count
+        response = AdvisableSchema.execute(query, context:)
+        expect(Interview.count).to eq(c_count + 1)
+
+        uid = response["data"]["requestInterview"]["interview"]["id"]
+        interview = Interview.find_by!(uid:)
+        expect(interview.accounts).to match_array([specialist.account, current_user.account])
+        expect(interview.status).to eq("Call Requested")
+        expect(interview.kind).to eq("Interview")
+      end
     end
   end
 
