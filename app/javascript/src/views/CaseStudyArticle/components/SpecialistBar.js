@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import { useBreakpoint, useModal, DialogDisclosure } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
@@ -10,7 +10,7 @@ import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
 import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
-import { ChatAlt } from "@styled-icons/heroicons-solid";
+import { ChatAlt, X } from "@styled-icons/heroicons-solid";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -31,7 +31,8 @@ export default function SpecialistBar({
   const viewer = useViewer();
   const location = useLocation();
   const modal = useModal();
-  const { back } = location.state || {};
+  const navigate = useNavigate();
+  const { back, backgroundLocation } = location.state || {};
   const { specialist } = article;
   const sUp = useBreakpoint("sUp");
   const TalkButton = sUp ? Button : CircularButton;
@@ -88,6 +89,13 @@ export default function SpecialistBar({
                 </DialogDisclosure>
               </>
             )}
+          {backgroundLocation && (
+            <CircularButton
+              aria-label="Close modal"
+              icon={X}
+              onClick={() => navigate(backgroundLocation)}
+            />
+          )}
         </div>
       </div>
     </div>
