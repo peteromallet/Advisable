@@ -15,6 +15,8 @@ class CompanyFaviconFinderJob < ApplicationJob
 
     find_favicon if icons.any?
     try_favicon_ico if company.favicon.blank?
+  rescue URI::InvalidURIError
+    Sentry.capture_message("Invalid URL", level: "debug", extra: {url: company.website})
   end
 
   def icons_from_meta
