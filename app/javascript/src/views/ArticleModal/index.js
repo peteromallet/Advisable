@@ -75,6 +75,7 @@ export default function ArticleModal() {
         initial={{ y: 200, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
+        data-testid="articleModal"
       >
         <CaseStudyArticle topbarOffset={0} />
       </motion.div>

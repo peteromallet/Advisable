@@ -39,7 +39,7 @@ export default function SpecialistBar({
 
   return (
     <div
-      className="sticky left-0 right-0 bg-white h-[72px] shadow transition-all z-10"
+      className="sticky left-0 right-0 bg-white h-[72px] shadow transition-all z-20"
       style={{
         top: offset,
       }}
