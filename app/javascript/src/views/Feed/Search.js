@@ -1,5 +1,6 @@
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import Searchbox from "./components/Searchbox";
 import FeedContainer from "./components/FeedContainer";
 import TrendingArticles from "./components/TrendingArticles";
@@ -8,10 +9,11 @@ import DiamondGrid from "./components/DiamondGrid";
 import SuggestedInterests from "./components/SuggestedInterests";
 
 export default function Search() {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("q");
+  const location = useLocation();
+  const { search } = location?.state?.backgroundLocation || location;
+  const query = queryString.parse(search);
 
-  if (query) {
+  if (query.q) {
     return <SearchResults />;
   }
 

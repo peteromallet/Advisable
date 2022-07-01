@@ -1,7 +1,8 @@
+import queryString from "query-string";
 import { motion } from "framer-motion";
 import { ArrowSmRight, Search } from "@styled-icons/heroicons-solid";
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useMemo, useEffect, useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 
 const iconClasses = composeStyles({
@@ -73,13 +74,19 @@ const buttonClasses = composeStyles({
 export default function Searchbox({ className, ...props }) {
   const inputRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
   const [focused, setFocused] = useState(false);
-  const [searchParams] = useSearchParams();
-  const [value, setValue] = useState(searchParams.get("q") || "");
+
+  const query = useMemo(() => {
+    const { search } = location?.state?.backgroundLocation || location;
+    return queryString.parse(search);
+  }, [location]);
+
+  const [value, setValue] = useState(query.q || "");
 
   useEffect(() => {
-    setValue(searchParams.get("q") || "");
-  }, [searchParams]);
+    setValue(query.q || "");
+  }, [query]);
 
   const handleClick = () => {
     inputRef.current.focus();
