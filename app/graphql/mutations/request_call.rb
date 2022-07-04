@@ -16,7 +16,9 @@ module Mutations
       article = ::CaseStudy::Article.find_by(uid: args[:article]) if args[:article]
       other_accounts = Array(args[:accounts]).map { |uid| Account.find_by!(uid:) }
       accounts = [current_user.account, *other_accounts].compact.uniq
-      interview = Interview.create!(status: "Call Requested", requested_by: current_account, kind: get_kind(accounts), accounts:, article:)
+      interview = Interview.new(status: "Call Requested", requested_by: current_account, accounts:, article:)
+      interview.set_kind
+      interview.save!
       message = Conversation.by_accounts(accounts).new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
 
       SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.account.name_with_company} has requested a call with #{other_accounts.map(&:name_with_company).to_sentence}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)")
@@ -24,20 +26,6 @@ module Mutations
       track_event("Requested Consultation", {other_accounts: args[:accounts]})
 
       {interview:}
-    end
-
-    private
-
-    def get_kind(accounts)
-      if specialist_and_user?(accounts) && !Interview.find_existing_with(*accounts)
-        "Consultation"
-      else
-        "Interview"
-      end
-    end
-
-    def specialist_and_user?(accounts)
-      !!(accounts.size == 2 && accounts.any?(&:specialist) && accounts.any?(&:user))
     end
   end
 end

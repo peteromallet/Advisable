@@ -4,8 +4,26 @@
 module Participants
   extend ActiveSupport::Concern
 
+  # returns an array of accounts that are participants in the conversation
+  # works with CollectionProxy regardless if the main record is persisted or not
+  def account_records
+    accounts.records
+  end
+
   def specialist_and_user?
-    !!(accounts.size == 2 && accounts.any?(&:specialist) && accounts.any?(&:user))
+    !!(account_records.size == 2 && specialist && user)
+  end
+
+  def guests
+    account_records - [requested_by]
+  end
+
+  def specialist
+    Specialist.find_by(account: account_records)
+  end
+
+  def user
+    User.find_by(account: account_records)
   end
 
   class_methods do

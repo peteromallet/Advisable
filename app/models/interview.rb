@@ -36,20 +36,8 @@ class Interview < ApplicationRecord
   validates :status, inclusion: {in: VALID_STATUSES}
   validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
-  def guests
-    accounts - [requested_by]
-  end
-
   def conversation
     Conversation.by_accounts(accounts)
-  end
-
-  def specialist
-    Specialist.find_by(account: accounts)
-  end
-
-  def user
-    User.find_by(account: accounts)
   end
 
   def requested_by
@@ -78,6 +66,14 @@ class Interview < ApplicationRecord
       AccountMailer.interview_auto_declined_to_participant(account, self).deliver_later
     end
     SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request by #{requested_by.name_with_company} with #{guests.map(&:name_with_company).to_sentence} was auto declined.")
+  end
+
+  def set_kind
+    self.kind = if specialist_and_user? && !Agreement.exists?(specialist:, user:)
+                  "Consultation"
+                else
+                  "Interview"
+                end
   end
 end
 

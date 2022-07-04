@@ -65,15 +65,13 @@ RSpec.describe Mutations::RequestCall do
       end
     end
 
-    context "when an interview between these accounts already exists" do
+    context "when an agreement between these accounts exists" do
       let(:current_user) { user }
       let(:accounts) { [specialist.account.uid] }
 
       it "creates a new interview of Interview kind" do
-        create(:interview, accounts: [specialist.account, user.account])
-        c_count = Interview.count
+        create(:agreement, specialist:, user:)
         response = AdvisableSchema.execute(query, context:)
-        expect(Interview.count).to eq(c_count + 1)
 
         uid = response["data"]["requestCall"]["interview"]["id"]
         interview = Interview.find_by!(uid:)
