@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_29_085251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -470,11 +470,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
     t.string "time_zone"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "user_id"
     t.string "availability_note"
     t.string "zoom_meeting_id"
     t.string "uid", null: false
-    t.datetime "call_requested_at", precision: nil
     t.datetime "call_scheduled_at", precision: nil
     t.datetime "requested_more_time_options_at", precision: nil
     t.datetime "more_time_options_added_at", precision: nil
@@ -482,15 +480,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
     t.datetime "specialist_requested_reschedule_at", precision: nil
     t.jsonb "log_data"
     t.string "google_calendar_id"
-    t.bigint "specialist_id"
     t.string "reason"
     t.bigint "article_id"
     t.bigint "requested_by_id"
     t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["requested_by_id"], name: "index_interviews_on_requested_by_id"
-    t.index ["specialist_id"], name: "index_interviews_on_specialist_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
-    t.index ["user_id"], name: "index_interviews_on_user_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -569,20 +564,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.bigint "actor_id"
     t.string "action", null: false
-    t.string "notifiable_type"
-    t.uuid "notifiable_id"
     t.datetime "read_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "guild_post_id"
     t.bigint "interview_id"
     t.index ["account_id"], name: "index_notifications_on_account_id"
-    t.index ["actor_id"], name: "index_notifications_on_actor_id"
     t.index ["guild_post_id"], name: "index_notifications_on_guild_post_id"
     t.index ["interview_id"], name: "index_notifications_on_interview_id"
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
   end
 
   create_table "payment_requests", force: :cascade do |t|
@@ -860,7 +850,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
 
   create_table "users", force: :cascade do |t|
     t.string "airtable_id"
-    t.text "availability"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "uid", null: false
@@ -875,7 +864,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
     t.string "pid"
     t.string "rid"
     t.string "gclid"
-    t.string "time_zone"
     t.string "campaign_medium"
     t.string "contact_status"
     t.string "fid"
@@ -970,8 +958,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
   add_foreign_key "interview_participants", "interviews"
   add_foreign_key "interviews", "accounts", column: "requested_by_id"
   add_foreign_key "interviews", "case_study_articles", column: "article_id"
-  add_foreign_key "interviews", "specialists"
-  add_foreign_key "interviews", "users"
   add_foreign_key "invoices", "companies"
   add_foreign_key "labelings", "guild_posts"
   add_foreign_key "labelings", "labels"
@@ -984,7 +970,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_120939) do
   add_foreign_key "messages", "guild_posts"
   add_foreign_key "messages", "payment_requests"
   add_foreign_key "notifications", "accounts"
-  add_foreign_key "notifications", "accounts", column: "actor_id"
   add_foreign_key "notifications", "guild_posts"
   add_foreign_key "payment_requests", "agreements"
   add_foreign_key "payment_requests", "companies"
