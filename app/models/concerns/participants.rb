@@ -14,10 +14,6 @@ module Participants
     !!(account_records.size == 2 && specialist && user)
   end
 
-  def guests
-    account_records - [requested_by]
-  end
-
   def specialist
     Specialist.find_by(account: account_records)
   end
