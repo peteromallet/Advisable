@@ -8,6 +8,8 @@
     "@babel/preset-env": "7",
     "@babel/preset-react": "^7.16.7",
     "@babel/runtime": "7.18.0",
+    "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/turbo-rails": "^7.1.1",
     "@popperjs/core": "^2.11.2",
     "@rails/actioncable": "^7.0.1",
     "@rails/activestorage": "^7.0.1",
@@ -151,6 +153,7 @@
     ]
   },
   "browserslist": [
-    "defaults"
+    "defaults",
+    "not IE 11"
   ]
 }

@@ -2,6 +2,8 @@
 
 module CaseStudy
   class Article < ApplicationRecord
+    COMPANY_TYPES = ["Government", "Growth-Stage Startup", "Individual Entrepreneur", "Major Corporation", "Medium-Sized Business", "Small Business", "Startup"].freeze
+
     include SoftDeletable
     include Uid
     uid_prefix "csa"
@@ -29,6 +31,7 @@ module CaseStudy
     scope :published, -> { where.not(published_at: nil) }
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
+    scope :reverse_chronological, -> { order(published_at: :desc) }
     scope :for_feed, -> { searchable.trending }
     scope :available_specialists, -> { joins(:specialist).merge(Specialist.available).joins(specialist: :account).merge(Account.active) }
 
@@ -46,6 +49,10 @@ module CaseStudy
 
     def slug_or_uid
       slug || uid
+    end
+
+    def company_type
+      super.presence || []
     end
 
     def embedding
