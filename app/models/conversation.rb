@@ -1,39 +1,13 @@
 # frozen_string_literal: true
 
 class Conversation < ApplicationRecord
+  include Participants
   include Uid
   uid_prefix "cnv"
 
   has_many :messages, dependent: :destroy
   has_many :participants, class_name: "ConversationParticipant", dependent: :destroy
   has_many :accounts, through: :participants
-
-  def self.by_accounts(*accounts, &)
-    account_ids = Account.ids_from(accounts)
-    find_existing_with(account_ids) || create_new_with(account_ids, &)
-  end
-
-  def self.find_existing_with(*accounts)
-    account_ids = Account.ids_from(accounts).sort
-    conversations_ids = joins(:participants).where(participants: {account_id: account_ids}).distinct.pluck(:id)
-    id = ConversationParticipant.
-      where(conversation_id: conversations_ids).
-      pluck(:conversation_id, :account_id).
-      each_with_object({}) { |(c_id, acc_id), group| (group[c_id] ||= []) << acc_id }.
-      find { |_, acc_ids| acc_ids.sort == account_ids }&.first
-    find_by(id:)
-  end
-
-  def self.create_new_with(*accounts, &block)
-    conversation = create!
-    Account.ids_from(accounts).each { |id| conversation.participants.create!(account_id: id) }
-    yield(conversation) if block
-    conversation
-  end
-
-  def specialist_and_user?
-    !!(accounts.size == 2 && accounts.any?(&:specialist) && accounts.any?(&:user))
-  end
 
   def mark_as_read_for!(account)
     return if account.blank?

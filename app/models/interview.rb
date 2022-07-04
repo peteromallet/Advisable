@@ -2,10 +2,12 @@
 
 class Interview < ApplicationRecord
   extend Memoist
+  include Participants
   include Uid
 
   has_logidze
 
+  VALID_KINDS = %w[Consultation Interview].freeze
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
     "Need More Time Options", "More Time Options Added", "Specialist Requested Reschedule",
@@ -22,8 +24,8 @@ class Interview < ApplicationRecord
 
   has_one :video_call, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :interview_participants, dependent: :destroy
-  has_many :accounts, through: :interview_participants
+  has_many :participants, class_name: "InterviewParticipant", dependent: :destroy
+  has_many :accounts, through: :participants
 
   scope :scheduled, -> { where(status: "Call Scheduled") }
   scope :requested, -> { where(status: "Call Requested") }
@@ -31,37 +33,21 @@ class Interview < ApplicationRecord
   scope :upcoming, -> { scheduled.where(starts_at: Time.zone.now..) }
   scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
+  before_save :set_kind, if: -> { kind.blank? }
+
   validates :status, inclusion: {in: VALID_STATUSES}
-
-  def participants
-    raise "Interview#participants is deprecated. Use Interview#accounts instead." unless Rails.env.production?
-
-    Sentry.capture_message("Something is still calling Interview#participants! Stop it!", level: "debug")
-    accounts
-  end
-
-  def guests
-    accounts - [requested_by]
-  end
+  validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
   def conversation
     Conversation.by_accounts(accounts)
   end
 
-  def specialist_and_user?
-    !!(accounts.size == 2 && specialist && user)
-  end
-
-  def specialist
-    Specialist.find_by(account: accounts)
-  end
-
-  def user
-    User.find_by(account: accounts)
-  end
-
   def requested_by
     super.presence || messages.find_by(kind: "InterviewRequest")&.author
+  end
+
+  def guests
+    account_records - [requested_by]
   end
 
   def pending?
@@ -87,6 +73,14 @@ class Interview < ApplicationRecord
     end
     SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request by #{requested_by.name_with_company} with #{guests.map(&:name_with_company).to_sentence} was auto declined.")
   end
+
+  def set_kind
+    self.kind = if specialist_and_user? && !Agreement.exists?(specialist:, user:)
+                  "Consultation"
+                else
+                  "Interview"
+                end
+  end
 end
 
 # == Schema Information
@@ -97,6 +91,7 @@ end
 #  availability_note                  :string
 #  call_scheduled_at                  :datetime
 #  client_requested_reschedule_at     :datetime
+#  kind                               :string
 #  more_time_options_added_at         :datetime
 #  reason                             :string
 #  requested_more_time_options_at     :datetime

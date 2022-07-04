@@ -40,6 +40,8 @@ RSpec.describe Mutations::RequestCall do
       uid = response["data"]["requestCall"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, user.account])
+      expect(interview.status).to eq("Call Requested")
+      expect(interview.kind).to eq("Consultation")
 
       message = interview.messages.first
       expect(message.kind).to eq("InterviewRequest")
@@ -62,6 +64,22 @@ RSpec.describe Mutations::RequestCall do
         expect(interview.article).to eq(article)
       end
     end
+
+    context "when an agreement between these accounts exists" do
+      let(:current_user) { user }
+      let(:accounts) { [specialist.account.uid] }
+
+      it "creates a new interview of Interview kind" do
+        create(:agreement, specialist:, user:)
+        response = AdvisableSchema.execute(query, context:)
+
+        uid = response["data"]["requestCall"]["interview"]["id"]
+        interview = Interview.find_by!(uid:)
+        expect(interview.accounts).to match_array([specialist.account, user.account])
+        expect(interview.status).to eq("Call Requested")
+        expect(interview.kind).to eq("Interview")
+      end
+    end
   end
 
   context "when the current user is a specialist" do
@@ -78,6 +96,7 @@ RSpec.describe Mutations::RequestCall do
       uid = response["data"]["requestCall"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, user.account])
+      expect(interview.kind).to eq("Consultation")
 
       message = interview.messages.first
       expect(message.kind).to eq("InterviewRequest")
@@ -106,6 +125,7 @@ RSpec.describe Mutations::RequestCall do
       uid = response["data"]["requestCall"]["interview"]["id"]
       interview = Interview.find_by!(uid:)
       expect(interview.accounts).to match_array([specialist.account, user.account, another_specialist.account, another_user.account])
+      expect(interview.kind).to eq("Interview")
 
       message = interview.messages.first
       expect(message.content).to eq("Wanna chat?")

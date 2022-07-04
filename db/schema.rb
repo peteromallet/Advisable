@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_29_085251) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_30_075549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -483,6 +483,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_29_085251) do
     t.string "reason"
     t.bigint "article_id"
     t.bigint "requested_by_id"
+    t.string "kind"
     t.index ["article_id"], name: "index_interviews_on_article_id"
     t.index ["requested_by_id"], name: "index_interviews_on_requested_by_id"
     t.index ["uid"], name: "index_interviews_on_uid", unique: true
