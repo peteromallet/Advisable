@@ -1,6 +1,6 @@
 // ApplicationRoutes renders the routes that should be rendered with a header
 import React, { Suspense, lazy } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/Loading";
@@ -11,6 +11,7 @@ import EditPost from "./views/EditPost";
 import Feed from "./views/Feed";
 import Article from "./views/CaseStudyArticle";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ArticleModal from "./views/ArticleModal";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -36,6 +37,7 @@ function RedirectToFreelancerProfile() {
 
 const ApplicationRoutes = () => {
   const viewer = useViewer();
+  const location = useLocation();
   const isClient = viewer && viewer.__typename === "User";
 
   return (
@@ -43,7 +45,13 @@ const ApplicationRoutes = () => {
       <Header />
       <ErrorBoundary>
         <Suspense fallback={<Loading />}>
-          <Routes>
+          {location.state?.backgroundLocation && (
+            <Routes>
+              <Route path="/articles/:slug" element={<ArticleModal />} />
+            </Routes>
+          )}
+
+          <Routes location={location.state?.backgroundLocation || location}>
             {isClient && (
               <Route
                 path="/"

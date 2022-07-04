@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import queryString from "query-string";
+import { Link, useLocation } from "react-router-dom";
 import FeedItem from "./components/FeedItem";
 import FeedContainer from "./components/FeedContainer";
 import FeedItemSkeleton from "./components/FeedItemSkeleton";
@@ -8,9 +9,10 @@ import AddInterestPreviewButton from "./components/AddInterestPreviewButton";
 import NoResults from "./components/NoResults";
 
 export default function SearchResults() {
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const { search } = location?.state?.backgroundLocation || location;
+  const query = queryString.parse(search).q;
   const [createSearch, { data, loading }] = useCreateSearch();
-  const query = searchParams.get("q");
 
   useEffect(() => {
     createSearch({

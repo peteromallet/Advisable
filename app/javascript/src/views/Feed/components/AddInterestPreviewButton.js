@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import React, { useMemo } from "react";
 import Button from "src/components/Button";
 import { Check, PlusSm } from "@styled-icons/heroicons-solid";
@@ -6,19 +7,24 @@ import {
   useDeleteInterest,
   useInterests,
 } from "../queries";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function AddInterestPreviewButton() {
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
   const { data: interestsData } = useInterests();
   const [createInterests, createInterestsState] = useCreateInterests();
+
+  const query = useMemo(() => {
+    const { search } = location?.state?.backgroundLocation || location;
+    return queryString.parse(search);
+  }, [location]);
 
   const subscribedInterest = useMemo(() => {
     const interests = interestsData?.interests || [];
     return interests.find(
-      (i) => i.term.toLowerCase() === searchParams.get("q").toLowerCase(),
+      (i) => i.term.toLowerCase() === query.q.toLowerCase(),
     );
-  }, [interestsData, searchParams]);
+  }, [interestsData, query]);
 
   const [removeInterest, removeInterestState] =
     useDeleteInterest(subscribedInterest);
@@ -33,7 +39,7 @@ export default function AddInterestPreviewButton() {
       await createInterests({
         variables: {
           input: {
-            terms: [searchParams.get("q")],
+            terms: [query.q],
           },
         },
       });

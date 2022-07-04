@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useViewer from "src/hooks/useViewer";
 import { useBreakpoint, useModal, DialogDisclosure } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
@@ -10,7 +10,7 @@ import ShareArticleButton from "./ShareArticleButton";
 import Avatar from "src/components/Avatar";
 import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
-import { ChatAlt } from "@styled-icons/heroicons-solid";
+import { ChatAlt, X } from "@styled-icons/heroicons-solid";
 
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
@@ -24,17 +24,26 @@ const Availability = ({ unavailableUntil }) => {
   );
 };
 
-export default function SpecialistBar({ article }) {
+export default function SpecialistBar({
+  article,
+  offset = "var(--header-height)",
+}) {
   const viewer = useViewer();
   const location = useLocation();
   const modal = useModal();
-  const { back } = location.state || {};
+  const navigate = useNavigate();
+  const { back, backgroundLocation } = location.state || {};
   const { specialist } = article;
   const sUp = useBreakpoint("sUp");
   const TalkButton = sUp ? Button : CircularButton;
 
   return (
-    <div className="sticky top-[var(--header-height)] left-0 right-0 bg-white h-[72px] shadow transition-all z-10">
+    <div
+      className="sticky left-0 right-0 bg-white h-[72px] shadow transition-all z-20"
+      style={{
+        top: offset,
+      }}
+    >
       <div className="px-6 sm:px-8 md:px-0 w-full md:max-w-[696px] lg:max-w-[960px] xl:max-w-[1198px] h-full mx-auto flex items-center justify-between">
         <div className="flex items-center">
           {back && (
@@ -80,6 +89,13 @@ export default function SpecialistBar({ article }) {
                 </DialogDisclosure>
               </>
             )}
+          {backgroundLocation && (
+            <CircularButton
+              aria-label="Close modal"
+              icon={X}
+              onClick={() => navigate(backgroundLocation)}
+            />
+          )}
         </div>
       </div>
     </div>

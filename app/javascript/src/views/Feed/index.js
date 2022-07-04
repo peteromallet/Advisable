@@ -1,6 +1,6 @@
 import React from "react";
 import { useBackground } from "@advisable/donut";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import FeedSidebar from "./components/FeedSidebar";
 import Interest from "./Interest";
 import MainFeed from "./MainFeed";
@@ -23,6 +23,7 @@ function FeedViewFailed() {
 
 export default function Feed() {
   useBackground("beige");
+  const location = useLocation();
   const onboarding = useTutorial("onboarding");
 
   if (!onboarding.isComplete) {
@@ -36,7 +37,7 @@ export default function Feed() {
       <div className="flex-1 w-full flex flex-col">
         <div className="flex-1 w-full">
           <ErrorBoundary FallbackComponent={FeedViewFailed}>
-            <Routes>
+            <Routes location={location.state?.backgroundLocation || location}>
               <Route index element={<MainFeed />} />
               <Route path="search" element={<Search />} />
               <Route path=":interest" element={<Interest />} />
