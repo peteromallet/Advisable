@@ -19,14 +19,9 @@ RSpec.describe Interview, type: :model do
   end
 
   describe "#specialist and #user" do
-    let(:interview) { create(:interview) }
     let(:specialist_participant) { create(:specialist) }
     let(:user_participant) { create(:user) }
-
-    before do
-      create(:interview_participant, interview:, account: user_participant.account)
-      create(:interview_participant, interview:, account: specialist_participant.account)
-    end
+    let(:interview) { create(:interview, accounts: [specialist_participant.account, user_participant.account]) }
 
     it "returns the account who responds to a called method" do
       expect(interview.specialist).to eq(specialist_participant)

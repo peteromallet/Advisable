@@ -33,6 +33,8 @@ class Interview < ApplicationRecord
   scope :upcoming, -> { scheduled.where(starts_at: Time.zone.now..) }
   scope :with_accounts, ->(accounts) { joins(:accounts).where(accounts:).group(:id).having("COUNT(accounts.id) = ?", accounts.size) }
 
+  before_save :set_kind, if: -> { kind.blank? }
+
   validates :status, inclusion: {in: VALID_STATUSES}
   validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
 
