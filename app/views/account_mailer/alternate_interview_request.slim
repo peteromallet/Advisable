@@ -1,0 +1,17 @@
+p Hi #{@account.first_name},
+
+p This is #{@sales_person.first_name} from Advisable.com.
+
+p #{@requester.name_with_company} suggested alternative times for your call as they aren't available for any of the times you provided.
+
+- if @reason.present?
+  p They left the following message:
+
+  p "#{@reason}"
+
+p Please accept or decline the alternative request <a clicktracking=off href="#{magic_link(@account, interview_request_url(@interview.conversation))}">here</a>.
+
+p
+  ' Best,
+  br
+  = @sales_person.first_name
