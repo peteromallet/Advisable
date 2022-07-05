@@ -7,7 +7,7 @@ require "zip"
 class TestData
   DATA_DIR = "db/seeds/data"
   PRUNED_DIR = "#{DATA_DIR}/pruned".freeze
-  ZIP_NAME = "test_data_2022_05_v1.zip"
+  ZIP_NAME = "test_data_2022_06_v1.zip"
   ZIP_PATH = "#{DATA_DIR}/#{ZIP_NAME}".freeze
   IMAGES_PATH = "db/seeds/assets/images/"
   AMOUNT_OF_RANDOM_IMAGES = 100
@@ -39,7 +39,7 @@ class TestData
       obj.download_file(ZIP_PATH)
     end
 
-    FileUtils.remove_dir(PRUNED_DIR) if File.exist?(PRUNED_DIR)
+    FileUtils.rm_rf(PRUNED_DIR)
     FileUtils.mkdir(PRUNED_DIR)
     Zip::File.open(ZIP_PATH) do |zip_file|
       zip_file.each { |entry| entry.extract("#{PRUNED_DIR}/#{entry.name}") }
