@@ -4,7 +4,7 @@ class CaseStudyArticleRoundupJob < ApplicationJob
   AMOUNT_OF_ARTICLES = 3
   MIN_SCORE = 60
 
-  queue_as :default
+  queue_as :case_studies
 
   def perform
     account_ids = CaseStudy::Interest.all.distinct.pluck(:account_id)

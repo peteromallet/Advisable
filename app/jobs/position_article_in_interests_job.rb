@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PositionArticleInInterestsJob < ApplicationJob
-  queue_as :default
+  queue_as :case_studies
 
   def perform(article)
     embedding = CaseStudy::Embedding.for_article(article, refresh: true)

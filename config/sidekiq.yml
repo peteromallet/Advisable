@@ -5,6 +5,7 @@ production:
   - critical
   - default
   - mailers
+  - case_studies
   - active_storage_purge
   - active_storage_analysis
   - action_mailbox_routing
