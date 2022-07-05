@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DateTime } from "luxon";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
 import AvailabilityInput from "src/components/AvailabilityInput";
 import Button from "src/components/Button";
@@ -13,8 +13,7 @@ import commaSeparated from "src/utilities/commaSeparated";
 import Loading from "src/components/Loading";
 import {
   useAvailability,
-  useDeclineInterview,
-  useRequestCall,
+  useRequestAlternateCall,
   useUpdateAvailability,
 } from "./queries";
 import FormField from "src/components/FormField";
@@ -107,35 +106,31 @@ const validationSchema = object({
 });
 
 function MessageStep({ account, interviewID }) {
-  const [requestCall] = useRequestCall();
-  const [declineInterview] = useDeclineInterview();
+  const navigate = useNavigate();
+  const [requestAlternateCall] = useRequestAlternateCall();
   const { error } = useNotifications();
 
   const initialValues = {
     message: `Hey ${account.firstName}. Unfortunately, none of these times work for me. I have suggested a few alternatives that will hopefully work for you!`,
   };
 
-  const requestNewCall = async (values) => {
-    const res = await requestCall({
+  const handleSubmit = async (values) => {
+    const res = await requestAlternateCall({
       variables: {
         input: {
-          accounts: [account.id],
-          message: values.message,
+          interview: interviewID,
+          reason: values.message,
         },
       },
     });
+
     if (res.errors) {
       error("Something went wrong. Please try again.");
       return;
     }
-  };
 
-  const handleSubmit = async (values) => {
-    await declineInterview({
-      variables: { input: { interview: interviewID } },
-      onCompleted: () => requestNewCall(values),
-      onError: () => error("Something went wrong. Please try again."),
-    });
+    const { conversation } = res.data.requestAlternateCall.interview;
+    navigate(`/messages/${conversation.id}`);
   };
 
   return (
