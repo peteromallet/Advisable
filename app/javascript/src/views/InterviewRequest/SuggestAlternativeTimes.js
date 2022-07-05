@@ -1,88 +1,14 @@
 import React, { useState } from "react";
-import { DateTime } from "luxon";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNotifications } from "src/components/Notifications";
-import AvailabilityInput from "src/components/AvailabilityInput";
-import Button from "src/components/Button";
 import SubmitButton from "src/components/SubmitButton";
-import { Availability, Textarea, useBreakpoint } from "@advisable/donut";
-import TimezoneSelect from "src/components/ConnectModal/TimezoneSelect";
-import commaSeparated from "src/utilities/commaSeparated";
+import { Textarea } from "@advisable/donut";
 import Loading from "src/components/Loading";
-import {
-  useAvailability,
-  useRequestAlternateCall,
-  useUpdateAvailability,
-} from "./queries";
+import { useAvailability, useRequestAlternateCall } from "./queries";
 import FormField from "src/components/FormField";
-
-function AvailabilityForm({ data, onSubmit }) {
-  const sup = useBreakpoint("sUp");
-  const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
-  const [updateAvailability, { loading }] = useUpdateAvailability();
-  const [availability, setAvailability] = useState(
-    data.viewer.availability || [],
-  );
-
-  const handleSubmit = async () => {
-    await updateAvailability({
-      variables: { input: { availability } },
-    });
-    onSubmit();
-  };
-
-  return (
-    <>
-      <div className="mb-6">
-        {sup ? (
-          <AvailabilityInput
-            maxHeight="40vh"
-            value={availability}
-            timezone={timezone}
-            onChange={setAvailability}
-            events={data.viewer.interviews?.map((i) => ({
-              time: i.startsAt,
-              label: `Call with ${commaSeparated(
-                i.accounts.map((p) => p.firstName),
-              )}`,
-            }))}
-          />
-        ) : (
-          <div className="mb-8">
-            <Availability
-              timezone={timezone}
-              value={availability}
-              onChange={setAvailability}
-            />
-          </div>
-        )}
-        <div className="pt-4 pb-2">
-          <TimezoneSelect
-            value={timezone}
-            onChange={(e) => setTimezone(e.target.value)}
-          />
-        </div>
-      </div>
-      {availability.length < 6 ? (
-        <p className="text-neutral600 mt-5 tracking-tight">
-          Please select at least 6 available times to continue
-        </p>
-      ) : (
-        <Button
-          size="lg"
-          className="w-full"
-          variant="primary"
-          onClick={handleSubmit}
-          loading={loading}
-        >
-          Continue
-        </Button>
-      )}
-    </>
-  );
-}
+import AvailabilityForm from "src/components/AvailabilityForm";
 
 function AvailabilityStep({ account, onSubmit }) {
   const { data, loading, error } = useAvailability();

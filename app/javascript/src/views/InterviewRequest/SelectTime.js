@@ -6,7 +6,7 @@ import { Box, Heading, Text } from "@advisable/donut";
 import { Times, Time } from "./styles";
 import { useParams, useLocation } from "react-router";
 import BackButton from "src/components/BackButton";
-import TimezoneSelect from "src/components/ConnectModal/TimezoneSelect";
+import TimezoneSelect from "src/components/AvailabilityForm/TimezoneSelect";
 
 export default function SelectTime(props) {
   const params = useParams();
