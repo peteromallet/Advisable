@@ -2,7 +2,6 @@
 
 module Mutations
   class RequestAlternateCall < Mutations::BaseMutation
-    argument :availability, [String], required: true, description: "An array of ISO strings"
     argument :interview, ID, required: true
     argument :reason, String, required: false
 
@@ -17,10 +16,9 @@ module Mutations
       true
     end
 
-    def resolve(interview:, availability:, reason: nil)
+    def resolve(interview:, reason: nil)
       interview = Interview.find_by!(uid: interview)
       interview.decline!(current_user.account, reason, send_emails: false)
-      current_account_responsible_for { current_user.account.update!(availability:) }
 
       alternate = Interview.create!(status: "Call Requested", requested_by: current_user.account, accounts: interview.accounts)
       alternate.conversation.new_message!(author: current_user.account, kind: "InterviewRequest", interview: alternate, send_emails: false)
