@@ -25,6 +25,12 @@ class AccountMailerPreview < ActionMailer::Preview
     AccountMailer.interview_request(accounts.sample, random_interview, requester, random_message)
   end
 
+  def alternate_interview_request
+    accounts = random_interview.accounts.order("RANDOM()").to_a
+    requester = accounts.pop
+    AccountMailer.alternate_interview_request(accounts.sample, random_interview, requester, "I just can't")
+  end
+
   def interview_declined
     AccountMailer.interview_declined(random_account, random_interview, random_message)
   end

@@ -61,6 +61,23 @@ class AccountMailer < ApplicationMailer
     end
   end
 
+  def alternate_interview_request(account, interview, requester, reason)
+    @account = account
+    @interview = interview
+    @requester = requester
+    @reason = reason
+    @sales_person = consultations_sales_person(interview.user&.company)
+
+    mail(
+      from: @sales_person.email_with_name,
+      to: @account.email_with_name,
+      bcc: @sales_person.email_with_name,
+      subject: "Alternate interview request from #{@requester.name_with_company}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   def interview_declined(account, interview, message)
     @account = account
     @message = message
