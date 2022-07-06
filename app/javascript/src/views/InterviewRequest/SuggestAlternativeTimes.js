@@ -9,17 +9,21 @@ import Loading from "src/components/Loading";
 import { useAvailability, useRequestAlternateCall } from "./queries";
 import FormField from "src/components/FormField";
 import AvailabilityForm from "src/components/AvailabilityForm";
+import CircularButton from "src/components/CircularButton";
+import { ArrowLeft } from "@styled-icons/heroicons-solid";
 
-function AvailabilityStep({ account, onSubmit }) {
+function AvailabilityStep({ onSubmit }) {
   const { data, loading, error } = useAvailability();
   return (
     <div>
-      <h3 className="text-3xl text-neutral900 font-semibold tracking-tight mb-1">
-        Suggest alternative times for a call with {account.firstName}
-      </h3>
-      <p className="text-neutral700 text-base mb-6">
-        Please update your available times below.
-      </p>
+      <div className="text-center">
+        <h3 className="text-3xl text-neutral900 font-semibold tracking-tight mb-1">
+          Suggest alternative times
+        </h3>
+        <p className="text-neutral700 text-base mb-6">
+          Please select your available times below.
+        </p>
+      </div>
       {loading && <Loading />}
       {!loading && data && <AvailabilityForm data={data} onSubmit={onSubmit} />}
       {error && <>Failed to load availability</>}
@@ -31,7 +35,8 @@ const validationSchema = object({
   message: string().required("Please include a message"),
 });
 
-function MessageStep({ account, interviewID }) {
+function MessageStep({ account, onBack }) {
+  const { interviewID } = useParams();
   const navigate = useNavigate();
   const [requestAlternateCall] = useRequestAlternateCall();
   const { error } = useNotifications();
@@ -61,9 +66,12 @@ function MessageStep({ account, interviewID }) {
 
   return (
     <>
-      <div className="pb-6 pr-4">
+      <div className="absolute top-3 left-3">
+        <CircularButton icon={ArrowLeft} onClick={onBack} />
+      </div>
+      <div className="pb-6 pr-4 text-center">
         <h3 className="text-3xl text-neutral900 font-semibold tracking-tight mb-1">
-          Attach a message
+          Include a message
         </h3>
         <p className="text-neutral700 tracking-tight">
           Write a short message to include in your request
@@ -102,13 +110,14 @@ function MessageStep({ account, interviewID }) {
 
 export default function SuggestAlternativeTimes({ account }) {
   const [step, setStep] = useState("AVAILABILITY");
-  const params = useParams();
 
   if (step === "AVAILABILITY") {
     return (
       <AvailabilityStep account={account} onSubmit={() => setStep("MESSAGE")} />
     );
   } else {
-    return <MessageStep interviewID={params.interviewID} account={account} />;
+    return (
+      <MessageStep account={account} onBack={() => setStep("AVAILABILITY")} />
+    );
   }
 }
