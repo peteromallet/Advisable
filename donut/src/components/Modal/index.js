@@ -32,6 +32,11 @@ function Modal({
 }) {
   usePreventBodyScroll(modal.visible);
 
+  const handleClose = (e) => {
+    e.stopPropagation();
+    modal.hide();
+  };
+
   return (
     <DialogBackdrop {...modal}>
       {(backdrop) => (
@@ -63,7 +68,7 @@ function Modal({
                   >
                     {showCloseButton ? (
                       <Box position="absolute" top="12px" right="12px">
-                        <CircularButton onClick={modal.hide} icon={X} />
+                        <CircularButton onClick={handleClose} icon={X} />
                       </Box>
                     ) : null}
                     {children}
