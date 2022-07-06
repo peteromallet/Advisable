@@ -12,7 +12,6 @@ RSpec.describe PostInterviewJob do
     described_class.perform_now
     interview.reload
     expect(interview.status).to eq("Call Completed")
-    expect(PostInterviewReminderJob).to have_been_enqueued.with(interview).at(interview.starts_at + 1.day)
   end
 
   describe "sending notifications" do

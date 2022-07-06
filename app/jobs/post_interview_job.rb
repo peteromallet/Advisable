@@ -8,7 +8,6 @@ class PostInterviewJob < ApplicationJob
 
       SpecialistMailer.post_interview(interview).deliver_later
       UserMailer.post_interview(interview).deliver_later
-      PostInterviewReminderJob.set(wait_until: interview.starts_at + 1.day).perform_later(interview)
       Notification.create!(account: interview.specialist.account, action: "send_agreement", interview:) unless Agreement.exists?(company: interview.user.company, specialist: interview.specialist)
     end
   end
