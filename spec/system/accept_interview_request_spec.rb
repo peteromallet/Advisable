@@ -43,7 +43,7 @@ RSpec.describe "Accept interview request", type: :system do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on("Continue")
+    click_on("Next")
     expect(page).to have_content(/unfortunately, none of these times work for me/i)
     click_button("Send Request")
     expect(page).to have_content("#{specialist.first_name} declined #{user.first_name}’s call request")
@@ -64,7 +64,7 @@ RSpec.describe "Accept interview request", type: :system do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on("Continue")
+    click_on("Next")
     expect(page).to have_content(/unfortunately, none of these times work for me/i)
     click_button("Send Request")
     expect(page).to have_content("#{user.first_name} declined #{specialist.first_name}’s call request")
