@@ -54,6 +54,15 @@ RSpec.describe PostInterviewJob do
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("UserMailer", "post_interview", "deliver_now", {args: [interview]}).once
   end
 
+  context "when there is already an agreement" do
+    it "does not send emails" do
+      create(:agreement, company: interview.user.company, specialist: interview.specialist)
+      described_class.perform_now
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "post_interview", "deliver_now", anything)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("UserMailer", "post_interview", "deliver_now", anything)
+    end
+  end
+
   context "when too far in the past" do
     let(:starts_at) { 35.minutes.ago }
 
