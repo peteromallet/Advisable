@@ -218,7 +218,6 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   end
 
   it "requests and confirm a call from a specialist to client" do
-    skip("Enable again once freelancers can request calls")
     conversation2 = conversation_with_participants([michael, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
@@ -230,7 +229,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on("Continue")
+    click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")
     expect(page).to have_content("Request sent")
@@ -259,7 +258,6 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
   end
 
   it "requests and confirm a call from a specialist to specialist" do
-    skip("Enable again once freelancers can request calls")
     conversation2 = conversation_with_participants([jim, dwight])
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
@@ -271,7 +269,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on("Continue")
+    click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")
     expect(page).to have_content("Request sent")
