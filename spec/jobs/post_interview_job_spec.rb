@@ -64,7 +64,7 @@ RSpec.describe PostInterviewJob do
   end
 
   context "when too far in the past" do
-    let(:starts_at) { 35.minutes.ago }
+    let(:starts_at) { 2.days.ago }
 
     it "does not send post interview" do
       described_class.perform_now
