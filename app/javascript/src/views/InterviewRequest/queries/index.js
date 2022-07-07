@@ -3,7 +3,6 @@ import REQUEST_CALL from "./requestCall.gql";
 import AVAILABILITY from "./availability.gql";
 import FETCH_INTERVIEW from "./fetchInterview.gql";
 import SCHEDULE_INTERVIEW from "./scheduleInterview.gql";
-import REQUEST_MORE_TIMES from "./requestMoreInterviewTimes.gql";
 import UPDATE_AVAILABILITY from "./updateAvailability.gql";
 import DECLINE_INTERVIEW from "./declineInterview.gql";
 import REQUEST_ALTERNATE_CALL from "./requestAlternateCall.gql";
@@ -32,10 +31,6 @@ export function useScheduleInterview() {
 
 export function useDeclineInterview() {
   return useMutation(DECLINE_INTERVIEW);
-}
-
-export function useRequestMoreTimes() {
-  return useMutation(REQUEST_MORE_TIMES);
 }
 
 export function useRequestAlternateCall() {

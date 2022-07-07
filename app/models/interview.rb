@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
+  self.ignored_columns = %w(more_time_options_added_at requested_more_time_options_at)
   extend Memoist
   include Participants
   include Uid
@@ -10,14 +11,14 @@ class Interview < ApplicationRecord
   VALID_KINDS = %w[Consultation Interview].freeze
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
-    "Need More Time Options", "More Time Options Added", "Specialist Requested Reschedule",
+    "Specialist Requested Reschedule",
     "Client Requested Reschedule", "Auto Declined", "Declined"
   ].freeze
 
-  PRE_START_STATUSES = ["Call Requested", "Call Reminded", "More Time Options Added"].freeze
+  PRE_START_STATUSES = ["Call Requested", "Call Reminded"].freeze
   SCHEDULABLE_STATUSES = PRE_START_STATUSES + ["Client Requested Reschedule", "Specialist Requested Reschedule"].freeze
   RESCHEDULABLE_STATUSES = SCHEDULABLE_STATUSES + ["Call Scheduled"]
-  DECLINABLE_STATUSES = RESCHEDULABLE_STATUSES + ["Need More Time Options"].freeze
+  DECLINABLE_STATUSES = RESCHEDULABLE_STATUSES
 
   belongs_to :article, optional: true, class_name: "::CaseStudy::Article"
   belongs_to :requested_by, optional: true, class_name: "Account"
@@ -107,9 +108,7 @@ end
 #  call_scheduled_at                  :datetime
 #  client_requested_reschedule_at     :datetime
 #  kind                               :string
-#  more_time_options_added_at         :datetime
 #  reason                             :string
-#  requested_more_time_options_at     :datetime
 #  specialist_requested_reschedule_at :datetime
 #  starts_at                          :datetime
 #  status                             :string

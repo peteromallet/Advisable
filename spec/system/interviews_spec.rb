@@ -126,19 +126,7 @@ RSpec.describe "Interviews", type: :system do
       find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
       find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
       click_on "Update Availability"
-      expect(page).to have_content("We have sent your availability")
-    end
-  end
-
-  context "when more time options have been added" do
-    it "allows the specialist can schedule the call" do
-      interview = create(:interview, status: "More Time Options Added", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
-      authenticate_as interview.specialist
-      visit "/interviews/#{interview.uid}"
-      click_on user.availability[0].strftime("%A")
-      find_all("a[class^=styles__Time]").first.click
-      click_on "Confirm Call"
-      expect(page).to have_content("has been scheduled!")
+      expect(page).to have_content(/updated availability/i)
     end
   end
 
@@ -162,19 +150,5 @@ RSpec.describe "Interviews", type: :system do
     fill_in("email", with: "jim@dundermifflin.com")
     click_on("Invite")
     expect(page).to have_content("Invite sent")
-  end
-
-  it "resends the interview request" do
-    interview = create(:interview, :with_specialist_and_user, status: "Need More Time Options")
-    authenticate_as interview.user
-    visit "/interviews/#{interview.uid}"
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on "Update Availability"
-    expect(page).to have_content("We have sent your updated availability")
   end
 end
