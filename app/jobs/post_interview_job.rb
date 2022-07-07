@@ -2,7 +2,7 @@
 
 class PostInterviewJob < ApplicationJob
   def perform
-    Interview.scheduled.where(starts_at: (30.minutes.ago..Time.current)).each do |interview|
+    Interview.scheduled.where(starts_at: (1.day.ago..Time.current)).each do |interview|
       interview.update(status: "Call Completed")
       next if !interview.specialist_and_user? || Agreement.exists?(specialist: interview.specialist, company: interview.user.company)
 
