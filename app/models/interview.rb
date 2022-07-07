@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns = %w(more_time_options_added_at requested_more_time_options_at)
+  self.ignored_columns = %w[more_time_options_added_at requested_more_time_options_at]
   extend Memoist
   include Participants
   include Uid
