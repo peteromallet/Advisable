@@ -39,7 +39,7 @@ export const Day = styled(Link)`
   }
 `;
 
-export const RequestMore = styled.a`
+export const RequestMore = styled.button`
   color: #202a4e;
   font-size: 15px;
   font-weight: 500;

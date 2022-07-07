@@ -18,7 +18,7 @@ module Mutations
 
     def resolve(interview:, reason: nil)
       interview = Interview.find_by!(uid: interview)
-      interview.decline!(current_user.account, reason, send_emails: true)
+      interview.decline!(current_user.account, reason, notify: true)
       {interview:}
     end
   end

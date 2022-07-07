@@ -189,7 +189,7 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
     find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on("Continue")
+    click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")
     expect(page).to have_content("Request sent")
@@ -245,17 +245,17 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     click_on(next_work_day.strftime("%-d %b %Y"))
     expect(page).to have_content("Select a time for your call")
     click_on("10:00 AM - 10:30 AM")
-    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content(next_work_day.strftime("%A, %d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     click_button("Confirm Call")
     expect(page).to have_content("Call Scheduled")
-    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content(next_work_day.strftime("%A, %d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%d %B %Y")} at 10:00AM")
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%d %B %Y")} at 10:00AM")
   end
 
   it "requests and confirm a call from a specialist to specialist" do
@@ -286,17 +286,17 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     click_on(next_work_day.strftime("%-d %b %Y"))
     expect(page).to have_content("Select a time for your call")
     click_on("10:00 AM - 10:30 AM")
-    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content(next_work_day.strftime("%A, %d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     click_button("Confirm Call")
     expect(page).to have_content("Call Scheduled")
-    expect(page).to have_content(next_work_day.strftime("%A, %-d %B"))
+    expect(page).to have_content(next_work_day.strftime("%A, %d %B"))
     expect(page).to have_content("10:00 AM - 10:30 AM")
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%d %B %Y")} at 10:00AM")
     authenticate_as(dwight.specialist)
     visit("/messages/#{conversation2.uid}")
-    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%-d %B %Y")} at 10:00AM")
+    expect(page).to have_content("#{dwight.name} scheduled a call for #{next_work_day.strftime("%d %B %Y")} at 10:00AM")
   end
 
   it "doesn't show upcoming calls section in a group chat" do

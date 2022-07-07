@@ -1,0 +1,10 @@
+mutation RequestCall($input: RequestCallInput!) {
+  requestCall(input: $input) {
+    interview {
+      id
+      conversation {
+        id
+      }
+    }
+  }
+}

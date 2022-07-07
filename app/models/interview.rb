@@ -62,17 +62,15 @@ class Interview < ApplicationRecord
     conversation.new_message!(kind: "InterviewRescheduled", interview: self, send_emails: false, metadata: {starts_at: starts_at.iso8601})
   end
 
-  def decline!(declined_by, reason, send_emails: true)
+  def decline!(declined_by, reason, notify: true)
     return unless DECLINABLE_STATUSES.include?(status)
 
     conversation.new_message!(kind: "InterviewDeclined", interview: self, send_emails: false)
-    if reason.present?
+    if notify && reason.present?
       message = conversation.new_message!(author: declined_by, content: reason, send_emails: false)
-      if send_emails
-        other_accounts = accounts - [declined_by]
-        other_accounts.each do |account|
-          AccountMailer.interview_declined(account, self, message).deliver_later
-        end
+      other_accounts = accounts - [declined_by]
+      other_accounts.each do |account|
+        AccountMailer.interview_declined(account, self, message).deliver_later
       end
     end
     update(status: "Declined", reason:)

@@ -1,0 +1,10 @@
+mutation RequestAlternateCall($input: RequestAlternateCallInput!) {
+  requestAlternateCall(input: $input) {
+    interview {
+      id
+      conversation {
+        id
+      }
+    }
+  }
+}

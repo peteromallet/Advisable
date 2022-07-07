@@ -1,0 +1,14 @@
+query Availability {
+  viewer {
+    id
+    availability
+    interviews(status: "Call Scheduled") {
+      id
+      startsAt
+      accounts {
+        id
+        firstName
+      }
+    }
+  }
+}

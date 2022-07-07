@@ -1,0 +1,9 @@
+mutation scheduleInterview($input: ScheduleInterviewInput!) {
+  scheduleInterview(input: $input) {
+    interview {
+      id
+      status
+      startsAt
+    }
+  }
+}

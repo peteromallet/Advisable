@@ -3,15 +3,17 @@ import { DateTime } from "luxon";
 import reduce from "lodash/reduce";
 import sortBy from "lodash/sortBy";
 import { Heading, Text, Modal, useModal } from "@advisable/donut";
-import { Day, RequestMore } from "./styles";
+import BackButton from "src/components/BackButton";
 import NoAvailability from "./NoAvailability";
-import RequestMoreAvailability from "./RequestMoreAvailability";
-import { useParams, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import SuggestAlternativeTimes from "./SuggestAlternativeTimes";
+import Day from "./Day";
 
-const SelectDay = ({ name, availability, timeZone }) => {
+const SelectDay = ({ account, availability, timeZone, conversationId }) => {
   const modal = useModal();
   const location = useLocation();
-  const params = useParams();
+  const navigate = useNavigate();
+  const { name } = account;
 
   const dates = reduce(
     availability,
@@ -29,6 +31,9 @@ const SelectDay = ({ name, availability, timeZone }) => {
 
   return (
     <>
+      <div className="mb-2">
+        <BackButton to={`/messages/${conversationId}`} />
+      </div>
       <Heading as="h1" mb={2}>
         Call with {name}
       </Heading>
@@ -37,43 +42,31 @@ const SelectDay = ({ name, availability, timeZone }) => {
         below.
       </Text>
 
-      <Modal label="Request more availability" modal={modal}>
-        <RequestMoreAvailability
-          name={name}
-          interviewID={params.interviewID}
-          onCancel={modal.hide}
-        />
+      <Modal label="Suggest alternative times" modal={modal} width={600}>
+        <SuggestAlternativeTimes account={account} modal={modal} />
       </Modal>
 
       {dates.length > 0 && (
-        <>
+        <div className="space-y-2">
           {sorted.map((d) => {
             const date = DateTime.fromISO(d, { zone: timeZone });
 
             return (
               <Day
                 key={d}
-                to={{
-                  ...location,
-                  pathname: d,
-                }}
-              >
-                <h4>{date.toFormat("cccc")}</h4>
-                <span>{date.toFormat("dd MMM yyyy")}</span>
-                <svg width={10} height={18} fill="none">
-                  <path d="M1 17l8-8-8-8" stroke="#929DC1" />
-                </svg>
-              </Day>
+                onClick={() => navigate({ ...location, pathname: d })}
+                title={date.toFormat("cccc")}
+                subText={date.toFormat("dd MMM yyyy")}
+              />
             );
           })}
-          <Text color="neutral900" mb="xxs" mt="l">
-            None of these dates work for you?
-          </Text>
 
-          <RequestMore onClick={modal.show}>
-            Request more availability
-          </RequestMore>
-        </>
+          <Day
+            title="None of these dates work for you?"
+            subText="Suggest alternative times"
+            onClick={modal.show}
+          />
+        </div>
       )}
 
       {dates.length === 0 && <NoAvailability onRequestMoreTimes={modal.show} />}

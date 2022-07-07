@@ -6,7 +6,6 @@ RSpec.describe Mutations::RequestAlternateCall do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
   let(:current_user) { specialist }
-  let(:time) { 2.days.from_now.utc.iso8601 }
   let(:interview) { create(:interview, accounts: [specialist.account, user.account], status: "Call Requested", requested_by: user.account) }
   let(:context) { {current_user:} }
 
@@ -15,7 +14,6 @@ RSpec.describe Mutations::RequestAlternateCall do
     mutation {
       requestAlternateCall(input: {
         interview: "#{interview.uid}",
-        availability: ["#{time}"],
         reason: "Not interested"
       }) {
         interview {
@@ -28,14 +26,12 @@ RSpec.describe Mutations::RequestAlternateCall do
 
   it "sets the interview status to 'Declined' and creates a new one" do
     expect(interview.status).to eq("Call Requested")
-    expect(specialist.account.availability).not_to include(time)
     response = AdvisableSchema.execute(query, context:)
     alternate = Interview.find_by(uid: response.dig("data", "requestAlternateCall", "interview", "id"))
 
     expect(interview.reload.status).to eq("Declined")
     expect(alternate.accounts).to match_array(interview.accounts)
     expect(alternate.status).to eq("Call Requested")
-    expect(specialist.account.availability).to include(time)
     expect(alternate.requested_by).to eq(specialist.account)
     expect(alternate.conversation.messages.last.kind).to eq("InterviewRequest")
     expect(alternate.conversation.messages.last.interview).to eq(alternate)

@@ -1,0 +1,8 @@
+mutation UpdateAvailability($input: UpdateAvailabilityInput!) {
+  updateAvailability(input: $input) {
+    viewer {
+      id
+      availability
+    }
+  }
+}
