@@ -23,7 +23,7 @@ const MINUTES = Array(6)
   .map((_, i) => ({ value: `${i}0`, label: `${i}0` }));
 
 const validationSchema = object().shape({
-  comment: string().required("Please write a comment"),
+  comment: string(),
   date: string().required("Please select a date"),
   hour: object().required("Select an hour"),
   minutes: object().required("Select minutes"),
@@ -72,8 +72,8 @@ export default function CallRescheduleModal({ modal, interview }) {
         Reschedule the call
       </h2>
       <p className="mb-4 font-neutral900">
-        Please provide new time and date for the call and include a message
-        explaining why you reschedule the call.
+        Please provide new time and date for the call. You may also add a
+        comment to provide details.
       </p>
       <Formik
         initialValues={initialValues}
