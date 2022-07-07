@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Modal, Label, Textarea, Combobox, InputError } from "@advisable/donut";
 import DatePicker from "src/components/DatePicker";
 import FormField from "src/components/FormField";
-import TimezoneSelect from "src/components/ConnectModal/TimezoneSelect";
+import TimezoneSelect from "src/components/AvailabilityForm/TimezoneSelect";
 import SubmitButton from "src/components/SubmitButton";
 import { DateTime } from "luxon";
 import { useRescheduleInterview } from "./queries";
@@ -63,7 +63,7 @@ export default function CallRescheduleModal({ modal, interview }) {
       setStatus("Something went wront. Please try again.");
       return;
     }
-    navigate(`/messages/`);
+    navigate(`/messages/${interview.conversation?.id}`);
   };
 
   return (

@@ -1,6 +1,5 @@
 import React from "react";
 import { DateTime } from "luxon";
-import { useLocation } from "react-router-dom";
 import {
   Box,
   Card,
@@ -19,8 +18,6 @@ export default function CallScheduled({ interview }) {
   const viewer = useViewer();
   const modal = useModal();
   const isSpecialist = viewer.isSpecialist;
-  const location = useLocation();
-  const { back } = location.state || {};
   const datetime = DateTime.fromISO(interview.startsAt).toFormat(
     "cccc, dd LLLL y 'at' hh:mm a",
   );
@@ -34,7 +31,10 @@ export default function CallScheduled({ interview }) {
       <Box maxWidth="500px" marginX="auto" paddingY="4xl">
         <Card padding={["xl", "2xl"]} borderRadius="20px">
           <Box>
-            <BackButton to={!back && "/messages"} marginBottom={2} />
+            <BackButton
+              to={`/messages/${interview.conversation?.id}`}
+              marginBottom={2}
+            />
             <Box marginBottom="xl">
               <CalendarIllustration
                 width="200px"
