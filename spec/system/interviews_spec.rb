@@ -126,4 +126,56 @@ RSpec.describe "Interviews", type: :system do
     click_on("Invite")
     expect(page).to have_content("Invite sent")
   end
+
+  it "resends the interview request" do
+    interview = create(:interview, :with_specialist_and_user, status: "Need More Time Options")
+    authenticate_as interview.user
+    visit "/interviews/#{interview.uid}"
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
+    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    click_on "Update Availability"
+    expect(page).to have_content("We have sent your updated availability")
+  end
+
+  it "allows the client to reschedule a call" do
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
+    authenticate_as(user)
+    visit "/interviews/#{interview.uid}"
+    click_on "Reschedule the call"
+    expect(page).to have_content("Reschedule the call")
+    find("[aria-label='Date picker']").click
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    hour = find_field("hour")
+    hour.send_keys(:down, :enter)
+    minutes = find_field("minutes")
+    minutes.send_keys(:down, :enter)
+    fill_in("comment", with: "New times are better")
+    click_button("Submit")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
+    expect(page).to have_content(user.name)
+    expect(page).to have_content("New times are better")
+  end
+
+  it "allows the requestor to reschedule a call" do
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
+    authenticate_as(specialist)
+    visit "/interviews/#{interview.uid}"
+    click_on "Reschedule the call"
+    expect(page).to have_content("Reschedule the call")
+    find("[aria-label='Date picker']").click
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    hour = find_field("hour")
+    hour.send_keys(:down, :enter)
+    minutes = find_field("minutes")
+    minutes.send_keys(:down, :enter)
+    fill_in("comment", with: "New times are better")
+    click_button("Submit")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
+    expect(page).to have_content(specialist.name)
+    expect(page).to have_content("New times are better")
+  end
 end
