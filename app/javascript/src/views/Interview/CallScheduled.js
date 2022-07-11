@@ -48,7 +48,7 @@ export default function CallScheduled({ interview }) {
             <Box marginBottom={4}>
               <DialogDisclosure {...modal}>
                 <Button as="span" variant="dark">
-                  Reschedule the call
+                  Reschedule
                 </Button>
               </DialogDisclosure>
             </Box>

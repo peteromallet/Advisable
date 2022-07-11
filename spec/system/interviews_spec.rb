@@ -145,8 +145,8 @@ RSpec.describe "Interviews", type: :system do
     interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
     authenticate_as(user)
     visit "/interviews/#{interview.uid}"
-    click_on "Reschedule the call"
-    expect(page).to have_content("Reschedule the call")
+    click_on "Reschedule"
+    expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     hour = find_field("hour")
@@ -154,7 +154,9 @@ RSpec.describe "Interviews", type: :system do
     minutes = find_field("minutes")
     minutes.send_keys(:down, :enter)
     fill_in("comment", with: "New times are better")
-    click_button("Submit")
+    within("*[role='dialog']") do
+      click_button("Reschedule")
+    end
     expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
     expect(page).to have_content(user.name)
     expect(page).to have_content("New times are better")
@@ -164,8 +166,8 @@ RSpec.describe "Interviews", type: :system do
     interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
     authenticate_as(specialist)
     visit "/interviews/#{interview.uid}"
-    click_on "Reschedule the call"
-    expect(page).to have_content("Reschedule the call")
+    click_on "Reschedule"
+    expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     hour = find_field("hour")
@@ -173,7 +175,9 @@ RSpec.describe "Interviews", type: :system do
     minutes = find_field("minutes")
     minutes.send_keys(:down, :enter)
     fill_in("comment", with: "New times are better")
-    click_button("Submit")
+    within("*[role='dialog']") do
+      click_button("Reschedule")
+    end
     expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
     expect(page).to have_content(specialist.name)
     expect(page).to have_content("New times are better")

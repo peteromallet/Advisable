@@ -90,12 +90,11 @@ export default function CallRescheduleModal({ modal, interview }) {
 
   return (
     <Modal modal={modal} label="Reschedule the call" width={600}>
-      <h2 className="text-3xl font-semibold text-neutral900 tracking-tight mb-1">
-        Reschedule the call
+      <h2 className="mb-1 text-3xl font-semibold tracking-tight text-neutral900">
+        Reschedule
       </h2>
       <p className="mb-4 font-neutral900">
-        Please provide new time and date for the call. You may also add a
-        comment to provide details.
+        Please provide a new date and time for your call.
       </p>
       <Formik
         initialValues={initialValues}
@@ -153,10 +152,10 @@ export default function CallRescheduleModal({ modal, interview }) {
               as={Textarea}
               name="comment"
               marginBottom={6}
-              placeholder="Add a comment"
+              placeholder="Include a message"
               label="Comment"
             />
-            <SubmitButton>Submit</SubmitButton>
+            <SubmitButton>Reschedule</SubmitButton>
           </Form>
         )}
       </Formik>
