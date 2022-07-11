@@ -1,6 +1,6 @@
 import React from "react";
 import Autocomplete from "./index";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { act, render, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 const OPTIONS = [
@@ -28,6 +28,7 @@ test("selecting an option", async () => {
   fireEvent.change(input, { target: { value: "Mich" } });
   fireEvent.keyDown(input, { key: "ArrowDown", keyCode: 40 });
   fireEvent.keyDown(input, { key: "Return", keyCode: 13 });
+
   expect(changeHandler).toHaveBeenCalledWith(
     expect.objectContaining({
       label: "Michael",
@@ -49,9 +50,9 @@ test("selecting option with mouse", async () => {
   );
 
   const input = screen.getByPlaceholderText(/select option/i);
-  userEvent.type(input, "Mich");
-  const option = screen.getByRole("option", { name: /michael/i });
-  fireEvent.click(option);
+  userEvent.type(input, "Mich")
+  await screen.findByRole("option", { name: /michael/i });
+  fireEvent.click(screen.getByRole("option", { name: /michael/i }));
   expect(changeHandler).toHaveBeenCalled();
 });
 
@@ -147,9 +148,9 @@ test("Async options", async () => {
 
   const input = screen.getByPlaceholderText(/select option/i);
   fireEvent.change(input, { target: { value: "Two" } });
-  screen.getByText(/loading/i);
-  const option = await screen.findByRole("option", { name: /two/i });
-  fireEvent.click(option);
+  await screen.findByText(/loading/i);
+  await screen.findByRole("option", { name: /two/i });
+  fireEvent.click(screen.getByRole("option", { name: /two/i }));
   expect(changeHandler).toHaveBeenCalledWith(
     expect.objectContaining({
       label: "Two",
