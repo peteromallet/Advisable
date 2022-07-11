@@ -19,7 +19,7 @@ module.exports = {
     "\\.(css|scss)$": "<rootDir>/app/javascript/src/__mocks__/styleMock.js",
   },
   transform: {
-    "\\.(gql|graphql)$": "jest-transform-graphql",
+    "\\.(gql|graphql)$": "./app/javascript/src/testHelpers/graphqlTransformer",
     ".*": "babel-jest",
   },
   snapshotSerializers: ["jest-styled-components"],
