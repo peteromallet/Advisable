@@ -10,13 +10,16 @@ import { DateTime } from "luxon";
 import { useRescheduleInterview } from "./queries";
 import { useNavigate } from "react-router-dom";
 
-const HOURS = Array(24)
-  .fill(0)
-  .map((_, i) => {
-    let string = i.toString();
-    string = string.length === 2 ? string : "0" + string;
-    return { value: string, label: string };
-  });
+const getHoursList = (from) => {
+  return Array(24 - from)
+    .fill(0)
+    .map((_, i) => {
+      let hour = from + i;
+      let string = hour.toString();
+      string = string.length === 2 ? string : "0" + string;
+      return { value: string, label: string };
+    });
+};
 
 const MINUTES = Array(6)
   .fill(0)
@@ -31,6 +34,9 @@ const validationSchema = object().shape({
 
 export default function CallRescheduleModal({ modal, interview }) {
   const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
+  const now = DateTime.now().setZone(timezone);
+  const currentDate = new Date(now.year, now.month - 1, now.day);
+  const [hoursList, setHoursList] = useState(getHoursList(0));
   const [rescheduleInterview] = useRescheduleInterview();
   const navigate = useNavigate();
   const initialValues = {
@@ -38,6 +44,22 @@ export default function CallRescheduleModal({ modal, interview }) {
     hour: "",
     minutes: "",
     comment: "",
+  };
+
+  const setDate = (formik) => (pickedDate) => {
+    formik.setFieldValue("date", pickedDate);
+    const pickedDay = Number(pickedDate.split("-")[2]);
+    const pickedHour = Number(formik.values.hour?.value);
+    const pickedDayIsToday = pickedDay === now.day;
+    const pickedHourIsPast = pickedDayIsToday && pickedHour <= now.hour;
+    if (pickedHourIsPast) {
+      pickedHourIsPast && formik.setFieldValue("hour", "");
+      pickedHourIsPast && setHoursList(getHoursList(now.hour + 1));
+    } else if (!pickedHourIsPast && pickedDayIsToday) {
+      setHoursList(getHoursList(now.hour + 1));
+    } else {
+      hoursList.length < 24 && setHoursList(getHoursList(0));
+    }
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -87,8 +109,16 @@ export default function CallRescheduleModal({ modal, interview }) {
               <div>
                 <DatePicker.Input
                   value={formik.values.date}
-                  onChange={(date) => formik.setFieldValue("date", date)}
+                  onChange={setDate(formik)}
                   placeholder="Date"
+                  fromDay={currentDate}
+                  fromMonth={currentDate}
+                  disabledDays={[
+                    {
+                      from: new Date(now.year, now.month - 1, 0),
+                      to: new Date(now.year, now.month - 1, now.day - 1),
+                    },
+                  ]}
                   className="sm:min-w-[300px]"
                   error={formik.errors.date}
                   aria-label="Date picker"
@@ -100,7 +130,7 @@ export default function CallRescheduleModal({ modal, interview }) {
                 name="hour"
                 placeholder="Hour"
                 onChange={(s) => formik.setFieldValue("hour", s)}
-                options={HOURS}
+                options={hoursList}
                 aria-label="Hour picker"
               />
               <FormField

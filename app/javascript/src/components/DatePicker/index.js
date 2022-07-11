@@ -20,6 +20,8 @@ DatePicker.Input = function DatePickerInput({
   label,
   onChange,
   clearable,
+  fromDay,
+  fromMonth,
   ...props
 }) {
   const popover = usePopoverState({ placement: "bottom-start", gutter: 0 });
@@ -61,6 +63,8 @@ DatePicker.Input = function DatePickerInput({
             selectedDays={selected || []}
             disabledDays={disabledDays}
             onDayClick={handleSelection}
+            fromDay={fromDay}
+            fromMonth={fromMonth}
           />
           {clearable && (
             <Button
