@@ -22,7 +22,10 @@ function renderTestCase(viewer, initialPath, component) {
       <Routes>
         <Route path="*" element={<LocationDisplay />} />
       </Routes>
-      <Routes>{React.cloneElement(component)}</Routes>
+      <Routes>
+        {React.cloneElement(component)}
+        <Route path="*" element={null} />
+      </Routes>
     </>,
     {
       route: initialPath,
