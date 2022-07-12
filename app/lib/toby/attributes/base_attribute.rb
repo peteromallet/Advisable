@@ -56,6 +56,8 @@ module Toby
       end
 
       def read(object)
+        return resource.public_send(name, object) if resource.respond_to?(name)
+
         object.public_send(name)
       end
 

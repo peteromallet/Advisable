@@ -14,11 +14,16 @@ module Toby
       attribute :vat_amount, Attributes::Currency, readonly: true
       attribute :total_with_vat, Attributes::Currency, readonly: true
       attribute :status, Attributes::Select, options: ::Payment::VALID_STATUSES
+      attribute :pdf_url, Attributes::Url, readonly: true
       attribute :payment_method, Attributes::Select, options: ::Payment::VALID_PAYMENT_METHODS
       attribute :payment_intent_id, Attributes::String, readonly: true
       attribute :charged_at, Attributes::DateTime, readonly: true
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
+
+      def self.pdf_url(object)
+        object.pdf_url(allow_nil: true)
+      end
 
       action :mark_as_successful, label: "Mark as successful", if: ->(payment) { !payment.paid? }
       action :retry_payment, label: "Retry payment", if: ->(payment) { !payment.paid? }

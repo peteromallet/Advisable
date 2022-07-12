@@ -45,7 +45,9 @@ class Payment < ApplicationRecord
     status == "succeeded"
   end
 
-  def pdf_url(regenerate: false)
+  def pdf_url(regenerate: false, allow_nil: false)
+    return nil if pdf_key.blank? && allow_nil
+
     self.pdf_key = nil if regenerate
     GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
     obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: pdf_key)
