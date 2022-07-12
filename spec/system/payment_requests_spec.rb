@@ -182,7 +182,7 @@ RSpec.describe "Payment requests", type: :system do
   end
 
   context "when status is 'paid'" do
-    let(:status) { "paid" }
+    let(:status) { "pending" }
 
     before do
       create(:payment, payment_request:, company:, specialist:)
