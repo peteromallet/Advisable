@@ -45,6 +45,8 @@ class PaymentRequest < ApplicationRecord
   end
 
   def mark_paid!
+    return if status == "paid"
+
     update!(status: "paid")
     conversation = Conversation.by_accounts(specialist, agreement.user)
     conversation.new_message!(kind: "PaymentRequestCompleted", payment_request: self, send_emails: false)
