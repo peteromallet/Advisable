@@ -21,7 +21,7 @@ module Toby
       attribute :created_at, Attributes::DateTime, readonly: true
       attribute :updated_at, Attributes::DateTime, readonly: true
 
-      def self.pdf_url(object)
+      def self.read_pdf_url(object)
         object.pdf_url(allow_nil: true)
       end
 
