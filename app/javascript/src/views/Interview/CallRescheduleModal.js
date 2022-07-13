@@ -69,6 +69,13 @@ export default function CallRescheduleModal({ modal, interview }) {
     }
   };
 
+  const changeTimezone = (formik) => (event) => {
+    formik.setFieldValue("date", "");
+    formik.setFieldValue("hour", "");
+    formik.setFieldValue("minute", "");
+    setTimezone(event.target.value);
+  };
+
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
     const [year, month, day] = values.date.split("-");
@@ -159,7 +166,7 @@ export default function CallRescheduleModal({ modal, interview }) {
             <div className="pb-5">
               <TimezoneSelect
                 value={timezone}
-                onChange={(e) => setTimezone(e.target.value)}
+                onChange={changeTimezone(formik)}
               />
             </div>
             <FormField
