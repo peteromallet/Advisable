@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { object, string } from "yup";
-import { Formik, Form } from "formik";
-import { Modal, Label, Textarea, Combobox, InputError } from "@advisable/donut";
+import { Formik, Form, Field } from "formik";
+import {
+  Modal,
+  Label,
+  Textarea,
+  InputError,
+  Select,
+  Error,
+} from "@advisable/donut";
 import DatePicker from "src/components/DatePicker";
 import FormField from "src/components/FormField";
 import TimezoneSelect from "src/components/AvailabilityForm/TimezoneSelect";
@@ -28,8 +35,8 @@ const MINUTES = Array(6)
 const validationSchema = object().shape({
   comment: string(),
   date: string().required("Please select a date"),
-  hour: object().required("Select an hour"),
-  minutes: object().required("Select minutes"),
+  hour: string().required("Select an hour"),
+  minutes: string().required("Select minutes"),
 });
 
 export default function CallRescheduleModal({ modal, interview }) {
@@ -53,8 +60,8 @@ export default function CallRescheduleModal({ modal, interview }) {
     const pickedDayIsToday = pickedDay === now.day;
     const pickedHourIsPast = pickedDayIsToday && pickedHour <= now.hour;
     if (pickedHourIsPast) {
-      pickedHourIsPast && formik.setFieldValue("hour", "");
-      pickedHourIsPast && setHoursList(getHoursList(now.hour + 1));
+      formik.setFieldValue("hour", "");
+      setHoursList(getHoursList(now.hour + 1));
     } else if (!pickedHourIsPast && pickedDayIsToday) {
       setHoursList(getHoursList(now.hour + 1));
     } else {
@@ -70,8 +77,8 @@ export default function CallRescheduleModal({ modal, interview }) {
         year,
         day,
         month,
-        hour: values.hour.value,
-        minute: values.minutes.value,
+        hour: values.hour,
+        minute: values.minutes,
       },
       { zone: timezone },
     ).toString();
@@ -124,22 +131,30 @@ export default function CallRescheduleModal({ modal, interview }) {
                 />
                 <InputError mt="xs">{formik.errors.date}</InputError>
               </div>
-              <FormField
-                as={Combobox}
+              <Field
+                as={Select}
                 name="hour"
                 placeholder="Hour"
-                onChange={(s) => formik.setFieldValue("hour", s)}
-                options={hoursList}
                 aria-label="Hour picker"
-              />
-              <FormField
-                as={Combobox}
+              >
+                {hoursList.map((hour) => (
+                  <option key={hour.value} value={hour.value}>
+                    {hour.label}
+                  </option>
+                ))}
+              </Field>
+              <Field
+                as={Select}
                 name="minutes"
                 placeholder="Min"
-                onChange={(s) => formik.setFieldValue("minutes", s)}
-                options={MINUTES}
                 aria-label="Minutes picker"
-              />
+              >
+                {MINUTES.map((minute) => (
+                  <option key={minute.value} value={minute.value}>
+                    {minute.label}
+                  </option>
+                ))}
+              </Field>
             </div>
             <div className="pb-5">
               <TimezoneSelect
@@ -151,11 +166,12 @@ export default function CallRescheduleModal({ modal, interview }) {
               minRows={8}
               as={Textarea}
               name="comment"
-              marginBottom={6}
+              marginBottom={3}
               placeholder="Include a message"
               label="Comment"
             />
-            <SubmitButton>Reschedule</SubmitButton>
+            <Error>{formik.status}</Error>
+            <SubmitButton className="mt-3">Reschedule</SubmitButton>
           </Form>
         )}
       </Formik>
