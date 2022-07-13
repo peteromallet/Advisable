@@ -28,7 +28,7 @@ const getHoursList = (from) => {
     });
 };
 
-const MINUTES = Array(6)
+const MINUTE = Array(6)
   .fill(0)
   .map((_, i) => ({ value: `${i}0`, label: `${i}0` }));
 
@@ -36,7 +36,7 @@ const validationSchema = object().shape({
   comment: string(),
   date: string().required("Please select a date"),
   hour: string().required("Select an hour"),
-  minutes: string().required("Select minutes"),
+  minute: string().required("Select minutes"),
 });
 
 export default function CallRescheduleModal({ modal, interview }) {
@@ -46,17 +46,12 @@ export default function CallRescheduleModal({ modal, interview }) {
   const [hoursList, setHoursList] = useState(getHoursList(0));
   const [rescheduleInterview] = useRescheduleInterview();
   const navigate = useNavigate();
-  const initialValues = {
-    date: "",
-    hour: "",
-    minutes: "",
-    comment: "",
-  };
+  const initialValues = { date: "", hour: "", minute: "", comment: "" };
 
   const setDate = (formik) => (pickedDate) => {
     formik.setFieldValue("date", pickedDate);
     const pickedDay = Number(pickedDate.split("-")[2]);
-    const pickedHour = Number(formik.values.hour?.value);
+    const pickedHour = Number(formik.values.hour);
     const pickedDayIsToday = pickedDay === now.day;
     const pickedHourIsPast = pickedDayIsToday && pickedHour <= now.hour;
     if (pickedHourIsPast) {
@@ -78,20 +73,16 @@ export default function CallRescheduleModal({ modal, interview }) {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const [year, month, day] = values.date.split("-");
+    const { date, hour, minute, comment } = values;
+    const [year, month, day] = date.split("-");
     const startsAt = DateTime.fromObject(
-      {
-        year,
-        day,
-        month,
-        hour: values.hour,
-        minute: values.minutes,
-      },
+      { year, day, month, hour, minute },
       { zone: timezone },
     ).toString();
+
     const res = await rescheduleInterview({
       variables: {
-        input: { interview: interview.id, message: values.comment, startsAt },
+        input: { interview: interview.id, message: comment, startsAt },
       },
     });
 
@@ -143,6 +134,7 @@ export default function CallRescheduleModal({ modal, interview }) {
                 name="hour"
                 placeholder="Hour"
                 aria-label="Hour picker"
+                error={formik.errors.hour}
               >
                 {hoursList.map((hour) => (
                   <option key={hour.value} value={hour.value}>
@@ -152,11 +144,12 @@ export default function CallRescheduleModal({ modal, interview }) {
               </Field>
               <Field
                 as={Select}
-                name="minutes"
+                name="minute"
                 placeholder="Min"
-                aria-label="Minutes picker"
+                aria-label="Minute picker"
+                error={formik.errors.minute}
               >
-                {MINUTES.map((minute) => (
+                {MINUTE.map((minute) => (
                   <option key={minute.value} value={minute.value}>
                     {minute.label}
                   </option>

@@ -149,10 +149,8 @@ RSpec.describe "Interviews", type: :system do
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
-    hour = find_field("hour")
-    hour.send_keys(:down, :enter)
-    minutes = find_field("minutes")
-    minutes.send_keys(:down, :enter)
+    select("01", from: "hour")
+    select("10", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
@@ -170,10 +168,8 @@ RSpec.describe "Interviews", type: :system do
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
-    hour = find_field("hour")
-    hour.send_keys(:down, :enter)
-    minutes = find_field("minutes")
-    minutes.send_keys(:down, :enter)
+    select("01", from: "hour")
+    select("10", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
