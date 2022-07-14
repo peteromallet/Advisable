@@ -81,6 +81,12 @@ function HourAndMinuteSelection({ timezone }) {
   );
 }
 
+function getDateFromFormik(values, zone) {
+  const { date, hour, minute } = values;
+  const [year, month, day] = date.split("-");
+  return DateTime.fromObject({ year, day, month, hour, minute }, { zone });
+}
+
 export default function CallRescheduleModal({ modal, interview }) {
   const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
   const now = DateTime.now().setZone(timezone);
@@ -97,12 +103,8 @@ export default function CallRescheduleModal({ modal, interview }) {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const { date, hour, minute, comment } = values;
-    const [year, month, day] = date.split("-");
-    const startsAt = DateTime.fromObject(
-      { year, day, month, hour, minute },
-      { zone: timezone },
-    ).toString();
+    const { comment } = values;
+    const startsAt = getDateFromFormik(values, timezone).toString();
 
     const res = await rescheduleInterview({
       variables: {
@@ -170,7 +172,15 @@ export default function CallRescheduleModal({ modal, interview }) {
               label="Comment"
             />
             <Error>{formik.status}</Error>
-            <SubmitButton className="mt-3">Reschedule</SubmitButton>
+            <SubmitButton
+              disabled={
+                getDateFromFormik(formik.values, timezone).toMillis() ===
+                startsAt.toMillis()
+              }
+              className="mt-3"
+            >
+              Reschedule
+            </SubmitButton>
           </Form>
         )}
       </Formik>
