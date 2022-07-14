@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { object, string } from "yup";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormikContext } from "formik";
 import {
   Modal,
   Label,
@@ -17,20 +17,11 @@ import { DateTime } from "luxon";
 import { useRescheduleInterview } from "./queries";
 import { useNavigate } from "react-router-dom";
 
-const getHoursList = (from) => {
-  return Array(24 - from)
-    .fill(0)
-    .map((_, i) => {
-      let hour = from + i;
-      let string = hour.toString();
-      string = string.length === 2 ? string : "0" + string;
-      return { value: string, label: string };
-    });
-};
-
-const MINUTE = Array(6)
-  .fill(0)
-  .map((_, i) => ({ value: `${i}0`, label: `${i}0` }));
+const MINUTES = ["00", "30"];
+const HOURS = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  22, 23,
+];
 
 const validationSchema = object().shape({
   comment: string(),
@@ -39,36 +30,69 @@ const validationSchema = object().shape({
   minute: string().required("Select minutes"),
 });
 
+function HourAndMinuteSelection({ timezone }) {
+  const formik = useFormikContext();
+  const hours = useMemo(() => {
+    const now = DateTime.now().setZone(timezone);
+    const startsAt = DateTime.fromISO(formik.values.date, { zone: timezone });
+    return HOURS.reduce((collection, hour) => {
+      const atHour = startsAt.set({ hour });
+      if (atHour <= now) return collection;
+      return [...collection, atHour.toFormat("HH")];
+    }, []);
+  }, [formik, timezone]);
+
+  useEffect(() => {
+    const selectedHour = formik.values.hour;
+    if (!hours.includes(String(selectedHour))) {
+      formik.setFieldValue("hour", hours[0]);
+    }
+  }, [formik, hours]);
+
+  return (
+    <>
+      <Field
+        as={Select}
+        name="hour"
+        placeholder="Hour"
+        aria-label="Hour picker"
+        error={formik.errors.hour}
+      >
+        {hours.map((hour) => (
+          <option key={hour} value={hour}>
+            {hour}
+          </option>
+        ))}
+      </Field>
+      <Field
+        as={Select}
+        name="minute"
+        placeholder="Min"
+        aria-label="Minute picker"
+        error={formik.errors.minute}
+      >
+        {MINUTES.map((minute) => (
+          <option key={minute} value={minute}>
+            {minute}
+          </option>
+        ))}
+      </Field>
+    </>
+  );
+}
+
 export default function CallRescheduleModal({ modal, interview }) {
   const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
   const now = DateTime.now().setZone(timezone);
-  const currentDate = new Date(now.year, now.month - 1, now.day);
-  const [hoursList, setHoursList] = useState(getHoursList(0));
+  const startsAt =
+    DateTime.fromISO(interview.startsAt, { zone: timezone }) || now;
   const [rescheduleInterview] = useRescheduleInterview();
   const navigate = useNavigate();
-  const initialValues = { date: "", hour: "", minute: "", comment: "" };
-
-  const setDate = (formik) => (pickedDate) => {
-    formik.setFieldValue("date", pickedDate);
-    const pickedDay = Number(pickedDate.split("-")[2]);
-    const pickedHour = Number(formik.values.hour);
-    const pickedDayIsToday = pickedDay === now.day;
-    const pickedHourIsPast = pickedDayIsToday && pickedHour <= now.hour;
-    if (pickedHourIsPast) {
-      formik.setFieldValue("hour", "");
-      setHoursList(getHoursList(now.hour + 1));
-    } else if (!pickedHourIsPast && pickedDayIsToday) {
-      setHoursList(getHoursList(now.hour + 1));
-    } else {
-      hoursList.length < 24 && setHoursList(getHoursList(0));
-    }
-  };
-
-  const changeTimezone = (formik) => (event) => {
-    formik.setFieldValue("date", "");
-    formik.setFieldValue("hour", "");
-    formik.setFieldValue("minute", "");
-    setTimezone(event.target.value);
+  const initialValues = {
+    date: startsAt.toISODate(),
+    hour: startsAt.toFormat("HH"),
+    minute: String(startsAt.minute),
+    comment: "",
   };
 
   const handleSubmit = async (values, { setStatus }) => {
@@ -113,10 +137,10 @@ export default function CallRescheduleModal({ modal, interview }) {
               <div>
                 <DatePicker.Input
                   value={formik.values.date}
-                  onChange={setDate(formik)}
+                  onChange={(d) => formik.setFieldValue("date", d)}
                   placeholder="Date"
-                  fromDay={currentDate}
-                  fromMonth={currentDate}
+                  fromDay={now.toJSDate()}
+                  fromMonth={now.toJSDate()}
                   disabledDays={[
                     {
                       from: new Date(now.year, now.month - 1, 0),
@@ -129,37 +153,12 @@ export default function CallRescheduleModal({ modal, interview }) {
                 />
                 <InputError mt="xs">{formik.errors.date}</InputError>
               </div>
-              <Field
-                as={Select}
-                name="hour"
-                placeholder="Hour"
-                aria-label="Hour picker"
-                error={formik.errors.hour}
-              >
-                {hoursList.map((hour) => (
-                  <option key={hour.value} value={hour.value}>
-                    {hour.label}
-                  </option>
-                ))}
-              </Field>
-              <Field
-                as={Select}
-                name="minute"
-                placeholder="Min"
-                aria-label="Minute picker"
-                error={formik.errors.minute}
-              >
-                {MINUTE.map((minute) => (
-                  <option key={minute.value} value={minute.value}>
-                    {minute.label}
-                  </option>
-                ))}
-              </Field>
+              <HourAndMinuteSelection timezone={timezone} />
             </div>
             <div className="pb-5">
               <TimezoneSelect
                 value={timezone}
-                onChange={changeTimezone(formik)}
+                onChange={(e) => setTimezone(e.target.value)}
               />
             </div>
             <FormField
