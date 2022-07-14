@@ -69,18 +69,6 @@ class UserMailer < ApplicationMailer
     )
   end
 
-  def need_more_time_options(interview)
-    @interview = interview
-    @sales_person = consultations_sales_person(interview.user&.company)
-    mail(
-      from: @sales_person.email_with_name,
-      to: interview.user.account.email,
-      subject: "Need More Time Options"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def interview_reminder(interview)
     @interview = interview
     @sales_person = consultations_sales_person(interview.user&.company)

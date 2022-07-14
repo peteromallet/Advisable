@@ -41,7 +41,7 @@ class UserMailerPreview < ActionMailer::Preview
     end
   end
 
-  %i[interview_reschedule_request need_more_time_options interview_reminder post_interview].each do |method|
+  %i[interview_reschedule_request interview_reminder post_interview].each do |method|
     define_method(method) do
       UserMailer.public_send(method, random_interview)
     end

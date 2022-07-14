@@ -5,7 +5,6 @@ import Loading from "src/components/Loading";
 import SelectDay from "./SelectDay";
 import SelectTime from "./SelectTime";
 import InterviewConfirmed from "./InterviewConfirmed";
-import MoreTimesRequested from "./MoreTimesRequested";
 import ConfirmInterviewRequest from "./ConfirmInterviewRequest";
 import NotFound, { isNotFound } from "src/views/NotFound";
 import AccessDenied, { isNotAuthorized } from "../AccessDenied";
@@ -38,11 +37,9 @@ export default function InterviewRequestView() {
       padding={{ _: "l", md: "xl" }}
       borderRadius="24px"
     >
-      {[
-        "Call Requested",
-        "More Time Options Added",
-        "Client Requested Reschedule",
-      ].indexOf(interview.status) > -1 && (
+      {["Call Requested", "Client Requested Reschedule"].indexOf(
+        interview.status,
+      ) > -1 && (
         <Routes>
           <Route
             path=":date"
@@ -85,9 +82,6 @@ export default function InterviewRequestView() {
           timeZone={interview.timeZone}
           name={interview.requestedBy.name}
         />
-      )}
-      {interview.status === "Need More Time Options" && (
-        <MoreTimesRequested name={interview.requestedBy.name} />
       )}
     </Card>
   );

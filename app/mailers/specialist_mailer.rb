@@ -21,18 +21,6 @@ class SpecialistMailer < ApplicationMailer
     end
   end
 
-  def more_time_options_added(interview)
-    @interview = interview
-    @sales_person = specialist_sales_person(interview.user&.company)
-    mail(
-      from: @sales_person.email_with_name,
-      to: interview.specialist.account.email,
-      subject: "More times added: Introductory call with #{interview.user.name_with_company}"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def interview_reminder(interview)
     @interview = interview
     @sales_person = specialist_sales_person(interview.user&.company)
