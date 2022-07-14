@@ -87,11 +87,17 @@ function getDateFromFormik(values, zone) {
   return DateTime.fromObject({ year, day, month, hour, minute }, { zone });
 }
 
+function getInitialStartsAt(interview, zone) {
+  const now = DateTime.now().setZone(zone);
+  if (!interview.startsAt) return now;
+  const datetime = DateTime.fromISO(interview.startsAt, { zone });
+  return datetime <= now ? now : datetime;
+}
+
 export default function CallRescheduleModal({ modal, interview }) {
   const [timezone, setTimezone] = useState(DateTime.local().zoneName || "UTC");
   const now = DateTime.now().setZone(timezone);
-  const startsAt =
-    DateTime.fromISO(interview.startsAt, { zone: timezone }) || now;
+  const startsAt = getInitialStartsAt(interview, timezone);
   const [rescheduleInterview] = useRescheduleInterview();
   const navigate = useNavigate();
   const initialValues = {
