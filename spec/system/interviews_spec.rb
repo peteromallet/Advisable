@@ -150,12 +150,12 @@ RSpec.describe "Interviews", type: :system do
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     select("01", from: "hour")
-    select("10", from: "minute")
+    select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
     expect(page).to have_content(user.name)
     expect(page).to have_content("New times are better")
   end
@@ -169,12 +169,12 @@ RSpec.describe "Interviews", type: :system do
     find("[aria-label='Date picker']").click
     find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     select("01", from: "hour")
-    select("10", from: "minute")
+    select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:10AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
     expect(page).to have_content(specialist.name)
     expect(page).to have_content("New times are better")
   end
