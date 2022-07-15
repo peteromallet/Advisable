@@ -11,12 +11,11 @@ class Interview < ApplicationRecord
   VALID_KINDS = %w[Consultation Interview].freeze
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
-    "Specialist Requested Reschedule",
-    "Client Requested Reschedule", "Auto Declined", "Declined"
+    "Auto Declined", "Declined"
   ].freeze
 
   PRE_START_STATUSES = ["Call Requested", "Call Reminded"].freeze
-  SCHEDULABLE_STATUSES = PRE_START_STATUSES + ["Client Requested Reschedule", "Specialist Requested Reschedule"].freeze
+  SCHEDULABLE_STATUSES = PRE_START_STATUSES
   RESCHEDULABLE_STATUSES = SCHEDULABLE_STATUSES + ["Call Scheduled"]
   DECLINABLE_STATUSES = RESCHEDULABLE_STATUSES
 

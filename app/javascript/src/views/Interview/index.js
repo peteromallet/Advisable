@@ -6,9 +6,6 @@ import Loading from "src/components/Loading";
 import { useInterview } from "./queries";
 import CallScheduled from "./CallScheduled";
 import CallRequested from "./CallRequested";
-import ClientRequestedReschedule from "./ClientRequestedReschedule";
-import SpecialistRequestedReschedule from "./SpecialistRequestedReschedule";
-import RescheduleInterview from "./RescheduleInterview";
 
 function InterviewState({ interview }) {
   switch (interview.status) {
@@ -22,14 +19,6 @@ function InterviewState({ interview }) {
 
     case "Call Completed": {
       return <CallScheduled interview={interview} />;
-    }
-
-    case "Client Requested Reschedule": {
-      return <ClientRequestedReschedule interview={interview} />;
-    }
-
-    case "Specialist Requested Reschedule": {
-      return <SpecialistRequestedReschedule interview={interview} />;
     }
 
     default: {
@@ -50,10 +39,6 @@ export default function Interview() {
 
   return (
     <Routes>
-      <Route
-        path="reschedule"
-        element={<RescheduleInterview interview={interview} />}
-      />
       <Route path="*" element={<InterviewState interview={interview} />} />
     </Routes>
   );
