@@ -98,7 +98,7 @@ jobs:
         if: always()
         with:
           name: screenshots
-          path: tmp/screenshots
+          path: tmp/capybara
 
       # - name: Cypress screenshots
       #   uses: actions/upload-artifact@v2

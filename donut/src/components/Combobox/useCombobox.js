@@ -111,6 +111,11 @@ export default function useCombobox({
     }
   }, [state.selectionIndex]);
 
+  useEffect(() => {
+    if (loadOptions) return;
+    dispatch({ type: UPDATE_OPTIONS, options });
+  }, [loadOptions, options]);
+
   // When searchValue changes trigger the loadOptions function if its defined
   useEffect(() => {
     if (!loadOptions) return;

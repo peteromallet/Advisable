@@ -62,21 +62,6 @@ RSpec.describe "Interviews", type: :system do
     expect(page).to have_content(/declined .* call request/i)
   end
 
-  it "allows the client to request to reschedule a call" do
-    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled")
-    authenticate_as(interview.user)
-    visit "/interviews/#{interview.uid}"
-    click_on "Request To Reschedule"
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-    click_on "Request To Reschedule"
-    expect(page).to have_content("You have requested to reschedule your call")
-  end
-
   it "excludes previously scheduled call slots from availability list" do
     times = [{hour: 10, min: 0}, {hour: 10, min: 30}, {hour: 11, min: 0}, {hour: 11, min: 30}, {hour: 12, min: 0}, {hour: 12, min: 30}]
     availability = times.map { |t| next_work_day.change(hour: t[:hour], min: t[:min]) }
@@ -102,16 +87,6 @@ RSpec.describe "Interviews", type: :system do
       click_on "Confirm Call"
       expect(page).to have_content("has been scheduled!")
     end
-  end
-
-  it "allows the specialist to request to reschedule a call" do
-    interview = create(:interview, status: "Call Scheduled", starts_at: 2.days.from_now, accounts: [specialist.account, user.account])
-    authenticate_as interview.specialist
-    visit "/interviews/#{interview.uid}"
-    click_on "Request To Reschedule"
-    fill_in "note", with: "No can do"
-    click_on "Reschedule"
-    expect(page).to have_content("You have requested to reschedule your call")
   end
 
   context "when specialist has requested to reschedule" do
@@ -150,5 +125,43 @@ RSpec.describe "Interviews", type: :system do
     fill_in("email", with: "jim@dundermifflin.com")
     click_on("Invite")
     expect(page).to have_content("Invite sent")
+  end
+
+  it "allows the client to reschedule a call" do
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
+    authenticate_as(user)
+    visit "/interviews/#{interview.uid}"
+    click_on "Reschedule"
+    expect(page).to have_content("Reschedule")
+    find("[aria-label='Date picker']").click
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    select("01", from: "hour")
+    select("30", from: "minute")
+    fill_in("comment", with: "New times are better")
+    within("*[role='dialog']") do
+      click_button("Reschedule")
+    end
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content(user.name)
+    expect(page).to have_content("New times are better")
+  end
+
+  it "allows the requestor to reschedule a call" do
+    interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
+    authenticate_as(specialist)
+    visit "/interviews/#{interview.uid}"
+    click_on "Reschedule"
+    expect(page).to have_content("Reschedule")
+    find("[aria-label='Date picker']").click
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    select("01", from: "hour")
+    select("30", from: "minute")
+    fill_in("comment", with: "New times are better")
+    within("*[role='dialog']") do
+      click_button("Reschedule")
+    end
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content(specialist.name)
+    expect(page).to have_content("New times are better")
   end
 end
