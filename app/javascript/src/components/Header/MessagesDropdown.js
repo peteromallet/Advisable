@@ -32,7 +32,7 @@ function Conversation({ conversation }) {
   return (
     <Link
       to={`/messages/${conversation.id}`}
-      className="flex items-center gap-2 p-3 hover:bg-neutral50"
+      className="flex items-center p-3 gap-2 hover:bg-neutral50"
     >
       <div className="shrink-0">
         <StyledAvatars data-count={others.length}>
@@ -41,8 +41,8 @@ function Conversation({ conversation }) {
           ))}
         </StyledAvatars>
       </div>
-      <div className="min-w-0 w-full">
-        <div className="flex items-center gap-1 mb-1">
+      <div className="w-full min-w-0">
+        <div className="flex items-center mb-1 gap-1">
           <p className="font-medium leading-none truncate">
             {commaSeparated(others.map((p) => p.firstName))}
           </p>
@@ -57,12 +57,12 @@ function Conversation({ conversation }) {
             </Tooltip>
           )}
         </div>
-        <p className="text-neutral600 text-sm leading-4 truncate">
+        <p className="text-sm truncate text-neutral600 leading-4">
           {conversation.lastMessage?.content || "-"}
         </p>
       </div>
       {conversation.unreadCount > 0 && (
-        <div className="w-2 h-2 mr-2 bg-blue500 rounded-full shrink-0" />
+        <div className="w-2 h-2 mr-2 rounded-full bg-blue500 shrink-0" />
       )}
     </Link>
   );
@@ -70,14 +70,14 @@ function Conversation({ conversation }) {
 
 function NoMessages() {
   return (
-    <div className="text-center p-8">
+    <div className="p-8 text-center">
       <MessagesIllustration
         width="120px"
-        className="mb-4 mx-auto"
+        className="mx-auto mb-4"
         color="var(--color-blue100)"
       />
-      <span className="text-neutral900 font-medium">No Messages</span>
-      <p className="text-neutral700 text-sm">
+      <span className="font-medium text-neutral900">No Messages</span>
+      <p className="text-sm text-neutral700">
         You aren&apos;t part of any conversation yet.
       </p>
     </div>
@@ -100,6 +100,7 @@ export default function MessagesDropdown() {
   return (
     <Popover
       state={popover}
+      label="Messages"
       disclosure={
         <HeaderButton
           aria-label="Messages dropdown"
@@ -109,7 +110,7 @@ export default function MessagesDropdown() {
       }
     >
       <div className="w-[400px]">
-        <h5 className="py-3 px-4 border-b border-solid border-neutral100 text-lg font-medium">
+        <h5 className="px-4 py-3 text-lg font-medium border-b border-solid border-neutral100">
           Messages
         </h5>
         <div>
@@ -128,7 +129,7 @@ export default function MessagesDropdown() {
         {hasConversations && (
           <Link
             to="/messages"
-            className="text-sm font-medium p-3 border-t border-solid border-neutral100 text-center block text-neutral600 hover:text-blue700"
+            className="block p-3 text-sm font-medium text-center border-t border-solid border-neutral100 text-neutral600 hover:text-blue700"
             onClick={popover.hide}
           >
             View all messages

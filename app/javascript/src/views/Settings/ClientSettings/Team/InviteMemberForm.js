@@ -50,10 +50,8 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
         Enter the name and email of the person you want to invite to your team
       </Text>
       <Formik
-        validateOnMount
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={validationSchema}
       >
         {(formik) => (
           <Form>

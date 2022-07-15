@@ -58,6 +58,7 @@ export const user = (fields = {}) => {
       },
       account: account(),
       country: country(),
+      company: company(),
     },
     fields,
   );

@@ -1,6 +1,6 @@
 import "intersection-observer"; // Intersection observer polyfill
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import Root from "./Root";
 import * as Sentry from "@sentry/react";
 import "simplebar/dist/simplebar.min.css";
@@ -56,8 +56,9 @@ if (process.env.SENTRY_FRONTEND_DSN) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const root = document.createElement("div");
-  root.id = "AppRoot";
-  document.body.appendChild(root);
-  ReactDOM.render(<Root />, root);
+  const container = document.createElement("div");
+  container.id = "AppRoot";
+  document.body.appendChild(container);
+  const root = createRoot(container);
+  root.render(<Root />);
 });

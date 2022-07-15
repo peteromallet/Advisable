@@ -20,6 +20,7 @@ const AutocompleteOption = React.forwardRef(function AutocompleteOption(
     <StyledAutocompleteMenuItem
       ref={ref}
       role="option"
+      data-testid="comboxBoxOption"
       aria-selected={selected}
       $isValue={isValue}
       {...props}
