@@ -46,7 +46,7 @@ class Payment < ApplicationRecord
   end
 
   def pdf_url(regenerate: false, allow_nil: false)
-    return nil if pdf_key.blank? && allow_nil
+    return if pdf_key.blank? && allow_nil
 
     self.pdf_key = nil if regenerate
     GeneratePaymentInvoiceJob.perform_now(self) if pdf_key.blank?
