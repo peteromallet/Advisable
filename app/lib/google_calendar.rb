@@ -16,6 +16,8 @@ class GoogleCalendar
     set_up_service
     interview.google_calendar_id.blank? ? create_event(interview) : reschedule_event(interview)
     watch_event(interview)
+  rescue GoogleCalendarError => e
+    raise e unless ENV["GOOGLE_CALENDAR_SKIP"] == "true"
   end
 
   def handle_change(interview)
@@ -27,6 +29,8 @@ class GoogleCalendar
     else
       interview.reschedule!(event.start.date_time)
     end
+  rescue GoogleCalendarError => e
+    raise e unless ENV["GOOGLE_CALENDAR_SKIP"] == "true"
   end
 
   private
