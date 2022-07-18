@@ -39,6 +39,7 @@ export default function SpecialistBar({
 
   return (
     <div
+      data-testid="specialistBar"
       className="sticky left-0 right-0 bg-white h-[72px] shadow transition-all z-20"
       style={{
         top: offset,
