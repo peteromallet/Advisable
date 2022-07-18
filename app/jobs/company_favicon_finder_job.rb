@@ -23,6 +23,8 @@ class CompanyFaviconFinderJob < ApplicationJob
     res = Faraday.new(url: company_website) { |f| f.use(FaradayMiddleware::FollowRedirects) }.get
     doc = Nokogiri::HTML(res.body)
     doc.xpath('//link[@rel="icon" or @rel="shortcut icon" or @rel="apple-touch-icon" or @rel="apple-touch-icon-precomposed"]')
+  rescue Faraday::ConnectionFailed
+    []
   end
 
   def find_favicon
