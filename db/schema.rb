@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_110346) do
 
   create_table "case_study_insights", force: :cascade do |t|
     t.string "uid", null: false
+    t.string "airtable_id", null: false
     t.bigint "article_id", null: false
     t.string "title"
     t.text "description"
