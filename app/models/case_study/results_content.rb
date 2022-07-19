@@ -5,7 +5,9 @@ module CaseStudy
     uid_prefix "csc"
 
     def to_text
-      content["results"].join("\n")
+      results = content["results"]
+      results = results.map { |r| r["context"] } if results.first.is_a?(Hash)
+      results.join("\n")
     end
 
     private
