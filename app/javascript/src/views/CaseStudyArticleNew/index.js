@@ -1,19 +1,13 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import queryString from "query-string";
 import { useArticle } from "./queries";
-import { useLocation } from "react-router-dom";
 import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
-import SpecialistCard from "./components/SpecialistCard";
-import ArticleIntro from "./components/ArticleIntro";
 import ArticleContent from "./components/ArticleContent";
-import SpecialistBar from "./components/SpecialistBar";
-import Footer from "src/components/Footer";
 import ArticleEvents from "./components/ArticleEvents";
-import CaseStudyArticleNew from "../CaseStudyArticleNew";
+import Footer from "src/components/Footer";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -37,16 +31,12 @@ const SectionWrapper = ({ children, className, ...props }) => (
   </div>
 );
 
-export default function CaseStudyArticle({ topbarOffset }) {
+export default function CaseStudyArticle() {
   useBackground("beige");
-  const location = useLocation();
-  const { cs } = queryString.parse(location.search);
   const { data, loading, error } = useArticle();
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
-
-  if (cs == 2) return <CaseStudyArticleNew />;
 
   return (
     <ErrorBoundary>
@@ -56,15 +46,7 @@ export default function CaseStudyArticle({ topbarOffset }) {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <SpecialistBar article={data.caseStudy} offset={topbarOffset} />
       <div className="pt-10 pb-36">
-        <SectionWrapper className="items-start">
-          <SpecialistCard
-            specialist={data.caseStudy.specialist}
-            article={data.caseStudy}
-          />
-          <ArticleIntro caseStudy={data.caseStudy} />
-        </SectionWrapper>
         <hr className="border-neutral200 pb-[3px] my-20" />
         <SectionWrapper id="content">
           <ArticleContent caseStudy={data.caseStudy} />
