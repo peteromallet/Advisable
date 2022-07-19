@@ -52,7 +52,7 @@ RSpec.describe Mutations::CreateConversation do
 
     it "sends a slack message" do
       AdvisableSchema.execute(query, context:)
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{current_user.name_with_company} has connected with #{specialist.account.name} via messaging.").once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "#{current_user.name_with_company} has connected with #{specialist.account.name} via messaging.").once
     end
   end
 

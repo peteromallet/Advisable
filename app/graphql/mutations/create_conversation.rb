@@ -24,12 +24,7 @@ module Mutations
 
       conversation = Conversation.by_accounts(accounts) do |cnv|
         track_event("Created Conversation", {accounts: accounts.map(&:uid)})
-        if cnv.specialist_and_user?
-          SlackMessageJob.perform_later(
-            channel: "consultation_requests",
-            text: "#{current_user.name_with_company} has connected with #{participant_accounts.first.name} via messaging."
-          )
-        end
+        SlackMessageJob.perform_later(channel: "client_activity", text: "#{current_user.name_with_company} has connected with #{participant_accounts.first.name} via messaging.") if cnv.specialist_and_user?
       end
       message = conversation.new_message!(author: current_account, content:, attachments:)
 

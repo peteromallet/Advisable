@@ -25,7 +25,7 @@ module Mutations
       conversation = Conversation.by_accounts(agreement.specialist, current_user.account)
       conversation.new_message!(kind: "AgreementDeclined", agreement:, send_emails: false)
       conversation.new_message!(author: current_account, content: args[:message], send_emails: false) if args[:message].present?
-      SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{current_user.name_with_company} has declined #{agreement.specialist.account.name} agreement (#{agreement.uid}). They provided the following reason: \"#{args[:message]}\".")
+      SlackMessageJob.perform_later(channel: "client_activity", text: "#{current_user.name_with_company} has declined #{agreement.specialist.account.name} agreement (#{agreement.uid}). They provided the following reason: \"#{args[:message]}\".")
 
       {agreement:}
     end

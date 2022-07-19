@@ -35,7 +35,7 @@ module Mutations
       )
 
       UserMailer.new_agreement(agreement).deliver_later
-      SlackMessageJob.perform_later(channel: "consultation_requests", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been created!")
+      SlackMessageJob.perform_later(channel: "client_activity", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been created!")
 
       {agreement:, conversation:}
     end
