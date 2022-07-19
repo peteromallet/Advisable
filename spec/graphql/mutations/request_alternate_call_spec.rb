@@ -37,7 +37,7 @@ RSpec.describe Mutations::RequestAlternateCall do
     expect(alternate.conversation.messages.last.interview).to eq(alternate)
     expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_declined", "deliver_now", anything)
     expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "alternate_interview_request", "deliver_now", args: [user.account, alternate, specialist.account, "Not interested"])
-    expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{specialist.account.name} has requested an alternate call with #{user.account.name_with_company}. (<https://app.advisable.com/toby/interviews/#{alternate.id}|View in Toby>)").once
+    expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "#{specialist.account.name} has requested an alternate call with #{user.account.name_with_company}. (<https://app.advisable.com/toby/interviews/#{alternate.id}|View in Toby>)").once
   end
 
   context "when a message exists" do

@@ -26,7 +26,7 @@ module Mutations
         track_event("Created Conversation", {accounts: accounts.map(&:uid)})
         if cnv.specialist_and_user?
           SlackMessageJob.perform_later(
-            channel: "consultation_requests",
+            channel: "client_activity",
             text: "#{current_user.name_with_company} has connected with #{participant_accounts.first.name} via messaging."
           )
         end

@@ -25,7 +25,7 @@ module Mutations
       conversation = Conversation.by_accounts(agreement.specialist, current_user.account)
       conversation.new_message!(kind: "AgreementAccepted", agreement:, send_emails: false)
       SpecialistMailer.agreement_accepted(agreement).deliver_later
-      SlackMessageJob.perform_later(channel: "consultation_requests", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been accepted!")
+      SlackMessageJob.perform_later(channel: "client_activity", text: "The Agreement #{agreement.uid} between #{agreement.specialist.account.name} and #{agreement.company.name} has been accepted!")
       track_event("Hired Freelancer", {agreement: agreement.uid})
 
       {agreement:}

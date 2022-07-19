@@ -75,7 +75,7 @@ class Interview < ApplicationRecord
       end
     end
     update(status: "Declined", reason:)
-    SlackMessageJob.perform_later(channel: "consultation_requests", text: "#{declined_by.name} declined a call request from #{requested_by.name_with_company}. They provided the following reason: \"#{reason}\".")
+    SlackMessageJob.perform_later(channel: "client_activity", text: "#{declined_by.name} declined a call request from #{requested_by.name_with_company}. They provided the following reason: \"#{reason}\".")
   end
 
   def auto_decline!
@@ -87,7 +87,7 @@ class Interview < ApplicationRecord
     guests.each do |account|
       AccountMailer.interview_auto_declined_to_participant(account, self).deliver_later
     end
-    SlackMessageJob.perform_later(channel: "consultation_requests", text: "The call request by #{requested_by.name_with_company} with #{guests.map(&:name_with_company).to_sentence} was auto declined.")
+    SlackMessageJob.perform_later(channel: "client_activity", text: "The call request by #{requested_by.name_with_company} with #{guests.map(&:name_with_company).to_sentence} was auto declined.")
   end
 
   def set_kind

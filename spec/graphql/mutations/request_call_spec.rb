@@ -50,7 +50,7 @@ RSpec.describe Mutations::RequestCall do
 
       expect(MessageNotifierJob).not_to have_been_enqueued
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_request", "deliver_now", {args: [specialist.account, interview, user.account, message]}).once
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{user.name_with_company} has requested a call with #{specialist.name}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "#{user.name_with_company} has requested a call with #{specialist.name}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
     end
 
     context "when an article is passed in" do
@@ -121,7 +121,7 @@ RSpec.describe Mutations::RequestCall do
 
       expect(MessageNotifierJob).not_to have_been_enqueued
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_request", "deliver_now", {args: [user.account, interview, specialist.account, message]}).once
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{specialist.name} has requested a call with #{user.name_with_company}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "#{specialist.name} has requested a call with #{user.name_with_company}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
     end
   end
 
@@ -152,7 +152,7 @@ RSpec.describe Mutations::RequestCall do
       other.each do |acc|
         expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_request", "deliver_now", {args: [acc, interview, specialist.account, message]}).once
       end
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "#{specialist.name} has requested a call with #{other.map(&:name_with_company).to_sentence}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "#{specialist.name} has requested a call with #{other.map(&:name_with_company).to_sentence}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)").once
     end
   end
 

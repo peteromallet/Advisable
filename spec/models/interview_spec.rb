@@ -85,7 +85,7 @@ RSpec.describe Interview, type: :model do
       expect(conversation.messages.where(kind: "InterviewDeclined")).to exist
       reason_message = conversation.messages.last
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_declined", "deliver_now", {args: [interview.accounts.last, interview, reason_message]}).once
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: /declined/i).once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: /declined/i).once
     end
 
     it "doesn't send emails or create messages if notify is false" do
@@ -115,7 +115,7 @@ RSpec.describe Interview, type: :model do
       expect(conversation.messages.where(kind: "InterviewAutoDeclined")).to exist
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_requestor", "deliver_now", {args: [interview.requested_by, interview]}).once
       expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_participant", "deliver_now", {args: [interview.specialist.account, interview]}).once
-      expect(SlackMessageJob).to have_been_enqueued.with(channel: "consultation_requests", text: "The call request by #{interview.requested_by.name_with_company} with #{interview.specialist.account.name} was auto declined.").once
+      expect(SlackMessageJob).to have_been_enqueued.with(channel: "client_activity", text: "The call request by #{interview.requested_by.name_with_company} with #{interview.specialist.account.name} was auto declined.").once
     end
 
     context "when the interview isn't declinable" do
@@ -128,7 +128,7 @@ RSpec.describe Interview, type: :model do
         expect(conversation.messages.where(kind: "InterviewAutoDeclined")).not_to exist
         expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_participant", "deliver_now", anything)
         expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_auto_declined_to_requestor", "deliver_now", anything)
-        expect(SlackMessageJob).not_to have_been_enqueued.with("consultation_requests", anything)
+        expect(SlackMessageJob).not_to have_been_enqueued.with("client_activity", anything)
       end
     end
   end
