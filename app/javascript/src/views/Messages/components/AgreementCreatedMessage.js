@@ -319,12 +319,12 @@ export default function AgreementCreatedMessage({ message }) {
   );
 
   useEffect(() => {
-    if (isPending) {
+    if (isPending && viewer.isClient) {
       show();
     } else {
       dismiss();
     }
-  }, [show, dismiss, isPending]);
+  }, [show, dismiss, isPending, viewer.isClient]);
 
   return (
     <BaseMessage message={message} highlight={highlight}>
