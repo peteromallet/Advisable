@@ -13,6 +13,8 @@ module CaseStudy
     private
 
     # { type: "results", content: { results: ["1", "2", "3"] } }
+    # or
+    # { type: "results", content: { results: [{context: "1", callout: "1", category: "1"}, {context: "2", callout: "2", category: "2"}] } }
     def valid_content
       return if content.keys.size == 1 && content["results"].present?
 
