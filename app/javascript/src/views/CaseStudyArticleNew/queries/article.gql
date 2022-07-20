@@ -8,6 +8,9 @@ query Article($slug: ID!) {
     subtitle
     editorUrl
     companyType
+    resultsContent {
+      results
+    }
     comment
     isFavorited
     industries {
