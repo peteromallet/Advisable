@@ -9,16 +9,9 @@ import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
 
 const topicClasses = composeStyles({
-  base: "topic shrink-0 flex flex-col items-center",
+  base: "topic",
   variants: {
     active: "active",
-  },
-});
-
-const iconClasses = composeStyles({
-  base: `topic-icon bg-white rounded-full shadow-md mb-2 grid place-items-center`,
-  variants: {
-    active: ``,
   },
 });
 
@@ -36,7 +29,7 @@ function Topic({ to, name, icon, delay }) {
 
   return (
     <Link to={to} className={topicClasses({ active })}>
-      <div className={iconClasses({ active })}>
+      <div className="topic-icon">
         <motion.svg
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -52,7 +45,7 @@ function Topic({ to, name, icon, delay }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay }}
-        className="text-xs text-center text-neutral-500"
+        className="topic-label"
       >
         {renderLineBreaks(name)}
       </motion.span>
@@ -75,7 +68,7 @@ function TopicSkeleton() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <div className={iconClasses()}>
+      <div className="topic-icon">
         <div className="w-5 h-5 rounded-md bg-neutral-200 animate-pulse" />
       </div>
       <div className="w-[32px] h-[8px] bg-neutral-200 rounded animate-pulse my-1 mb-1.5" />
