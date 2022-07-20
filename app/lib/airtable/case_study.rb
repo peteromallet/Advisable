@@ -9,6 +9,8 @@ module Airtable
     self.base_key = ENV.fetch("AIRTABLE_DATABASE_KEY", nil)
     self.table_name = "Case Studies"
 
+    has_many :insights, class: "Airtable::CaseStudyInsight", column: "Insights 2"
+
     def article_record
       ::CaseStudy::Article.find_or_create_by(airtable_id: id) do |article|
         article.specialist = ::Specialist.find_by!(airtable_id: fields["Specialist"].first)
@@ -82,7 +84,7 @@ module Airtable
         attach_results(outcome, fields)
         attach_paragraph(outcome, fields["Outcome Text"])
         attach_images(outcome, Array(fields["Outcome Images"]))
-        attach_links(background, Array(fields["Outcome Links"]))
+        attach_links(outcome, Array(fields["Outcome Links"]))
 
         article.title = fields["Title"]
         article.subtitle = fields["Subtitle"]
@@ -97,6 +99,8 @@ module Airtable
         article.published_at = Time.zone.now
         article.hide_from_search = fields["Hidden from Search"] == "Yes"
         article.save!
+
+        attach_insights!(article)
 
         AttachCoverToArticleJob.perform_later(article)
 
@@ -169,6 +173,15 @@ module Airtable
 
     def increment_content_position
       @content_position += 1
+    end
+
+    def attach_insights!(article)
+      insights.each do |air_insight|
+        insight = article.insights.find_or_initialize_by(airtable_id: air_insight.id)
+        insight.title = air_insight.fields["Insight Title"]
+        insight.description = air_insight.fields["Insight Body"]
+        insight.save!
+      end
     end
   end
 end
