@@ -8,6 +8,10 @@ import NotFound, { isNotFound } from "src/views/NotFound";
 import ArticleContent from "./components/ArticleContent";
 import ArticleEvents from "./components/ArticleEvents";
 import Footer from "src/components/Footer";
+import CompanyDetails from "./components/CompanyDetails";
+import { ChartBar } from "@styled-icons/heroicons-outline";
+import Results from "./components/Results";
+import SpecialistSection from "./components/SpecialistSection";
 
 const SectionWrapper = ({ children, className, ...props }) => (
   <div
@@ -46,8 +50,25 @@ export default function CaseStudyArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <div className="pt-10 pb-36">
-        <hr className="border-neutral200 pb-[3px] my-20" />
+      <div className="pb-36">
+        <div className="flex mx-auto w-full xl:w-[1320px]">
+          <SpecialistSection article={data.caseStudy} />
+          <div className="p-10 relative w-full border-solid border-neutral100 border-l">
+            <h1 className="text-4xl font-semibold text-blue900">
+              {data.caseStudy.title}
+            </h1>
+            <div className="flex gap-10">
+              <div>
+                <p>{data.caseStudy.subtitle}</p>
+              </div>
+              <div>
+                <Results results={data.caseStudy.resultsContent?.results} />
+                <CompanyDetails caseStudy={data.caseStudy} />
+              </div>
+            </div>
+            <hr className="absolute bottom-0 left-0 w-[100vw] border-neutral100 " />
+          </div>
+        </div>
         <SectionWrapper id="content">
           <ArticleContent caseStudy={data.caseStudy} />
         </SectionWrapper>
