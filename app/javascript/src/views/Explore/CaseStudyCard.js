@@ -91,9 +91,11 @@ export default function CaseStudyCard({ article, delay }) {
           }}
           className="flex-1"
         >
-          <div className="mb-1 text-xs font-medium text-indigo-700 uppercase">
-            Content Creation
-          </div>
+          {article.primarySkill && (
+            <div className="mb-1 text-xs font-medium text-indigo-700 uppercase">
+              {article.primarySkill.name}
+            </div>
+          )}
           <h4 className="font-serif text-[22px] font-semibold tracking-tight mb-8 leading-snug">
             {article.title}
           </h4>

@@ -6,6 +6,10 @@ fragment ArticleFields on CaseStudyArticle {
   subtitle
   isFavorited
   companyType
+  primarySkill {
+    id
+    name
+  }
   industries {
     id
     industry {
