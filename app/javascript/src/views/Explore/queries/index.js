@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import FEED from "./feed.gql";
+import TOPICS from "./topics.gql";
 import { useLocation } from "react-router-dom";
 
 export function useFeed() {
@@ -9,4 +10,8 @@ export function useFeed() {
     fetchPolicy: fetchPolicy || "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
+}
+
+export function useTopics() {
+  return useQuery(TOPICS);
 }

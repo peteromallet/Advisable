@@ -44,8 +44,15 @@
 }
 
 .topic {
+  width: 40px;
+  height: 80px;
   --stroke: var(--color-blue-900);
   --fill: var(--color-blue-50);
+
+  .topic-icon {
+    width: 40px;
+    height: 40px;
+  }
 
   &.active {
     --stroke: white;
