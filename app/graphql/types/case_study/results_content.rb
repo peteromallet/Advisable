@@ -7,7 +7,7 @@ module Types
       description "Type definition for CaseStudy::ResultsContent"
       implements Types::CaseStudy::ContentInterface
 
-      field :results, [String], null: true
+      field :results, [GraphQL::Types::JSON], null: true
       def results
         (object.content["results"] || []).select(&:present?)
       end

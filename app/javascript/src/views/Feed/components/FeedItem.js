@@ -5,6 +5,7 @@ import { withErrorBoundary } from "react-error-boundary";
 import Avatar from "src/components/Avatar";
 import Favicon from "src/components/Favicon";
 import FavoriteArticleButton from "./FavoriteArticleButton";
+import { extractResult } from "../utilities";
 
 function Attribute({ label, value }) {
   return (
@@ -12,7 +13,7 @@ function Attribute({ label, value }) {
       <h5 className="text-[11px] uppercase text-neutral500 tracking-wider font-medium leading-none mb-1">
         {label}
       </h5>
-      <p className="font-inter text-sm text-neutral900 leading-normal">
+      <p className="text-sm leading-normal font-inter text-neutral900">
         {value}
       </p>
     </div>
@@ -22,9 +23,9 @@ function Attribute({ label, value }) {
 const Availability = ({ unavailableUntil }) => {
   const color = unavailableUntil ? "bg-neutral600" : "bg-blue500";
   return (
-    <div className="flex justify-items-center items-center">
+    <div className="flex items-center justify-items-center">
       <div className={`h-[6px] w-[6px] ${color} rounded-full mr-1`} />
-      <div className="text-sm font-inter text-neutral600 leading-none line-clamp-1 pr-2">
+      <div className="pr-2 text-sm leading-none font-inter text-neutral600 line-clamp-1">
         {unavailableUntil ? "Unavailable for hire" : "Available to hire"}
       </div>
     </div>
@@ -44,7 +45,7 @@ function ArticleResults({ article }) {
 
   return (
     <div>
-      <h5 className="text-xs font-semibold uppercase leading-none mb-3 text-neutral500">
+      <h5 className="mb-3 text-xs font-semibold leading-none uppercase text-neutral500">
         Results
       </h5>
       <ul className="space-y-2">
@@ -53,10 +54,10 @@ function ArticleResults({ article }) {
             key={result}
             className="flex align-start gap-2 font-inter text-[15px] text-neutral800"
           >
-            <div className="w-5 h-5 rounded-full bg-blue100 text-blue800 font-semibold grid place-items-center text-xs flex-shrink-0">
+            <div className="flex-shrink-0 w-5 h-5 text-xs font-semibold rounded-full bg-blue100 text-blue800 grid place-items-center">
               {index + 1}
             </div>
-            {result}
+            {extractResult(result)}
           </li>
         ))}
       </ul>
@@ -76,7 +77,7 @@ function FeedItem({ article, interest }) {
     >
       <div>
         <div
-          className="flex items-center gap-3 mb-4"
+          className="flex items-center mb-4 gap-3"
           data-walkthrough="feed-item-author"
         >
           <Avatar
@@ -94,7 +95,7 @@ function FeedItem({ article, interest }) {
           <FavoriteArticleButton
             size="sm"
             article={article}
-            className="flex lg:hidden ml-auto"
+            className="flex ml-auto lg:hidden"
           />
         </div>
         <Link
@@ -110,7 +111,7 @@ function FeedItem({ article, interest }) {
           <ArticleResults article={article} />
         </Link>
 
-        <div className="flex flex-nowrap pt-6 items-center justify-between">
+        <div className="flex items-center justify-between pt-6 flex-nowrap">
           {interest && (
             <Link
               onClick={scrollToTop}
@@ -136,18 +137,18 @@ function FeedItem({ article, interest }) {
           <div className="flex-shrink-0">
             <Favicon src={article.company?.favicon} />
           </div>
-          <div className="flex flex-col min-w-0 w-full">
-            <div className="font-medium leading-none pb-1 min-w-0 truncate">
+          <div className="flex flex-col w-full min-w-0">
+            <div className="min-w-0 pb-1 font-medium leading-none truncate">
               {article.company?.name || (
                 <span className="text-neutral500">Company hidden</span>
               )}
             </div>
-            <span className="text-xs font-inter leading-none text-neutral500 min-w-0 truncate">
+            <span className="min-w-0 text-xs leading-none truncate font-inter text-neutral500">
               {article.company?.website || "Website hidden"}
             </span>
           </div>
         </div>
-        <div className="hidden md:block border-t border-solid border-neutral200 mt-5 pt-5 space-y-5">
+        <div className="hidden pt-5 mt-5 border-t border-solid md:block border-neutral200 space-y-5">
           {article.industries.length > 0 && (
             <Attribute
               label="Industry"

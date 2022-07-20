@@ -19,7 +19,16 @@ FactoryBot.define do
 
   factory :case_study_results_content, parent: :case_study_content, class: "CaseStudy::ResultsContent" do
     type { "CaseStudy::ResultsContent" }
-    content { {results: %w[1 2 3]} }
+    content { {results: ["Successful company rebranding and repositioning with full acceptance inside and out", "Changed strategy, methodology, mindset & vision to fit a SaaS company"]} }
+
+    trait :with_category do
+      content do
+        {results: [
+          {category: "Big Win", context: "Successful company rebranding and repositioning with full acceptance inside and out", callout: "Successful rebranding"},
+          {category: "Adjusted Strategy", context: "Changed strategy, methodology, mindset & vision to fit a SaaS company", callout: "Changed strategy, methodology, mindset & vision"}
+        ]}
+      end
+    end
   end
 
   factory :case_study_links_content, parent: :case_study_content, class: "CaseStudy::LinksContent" do

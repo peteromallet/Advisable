@@ -5,12 +5,16 @@ module CaseStudy
     uid_prefix "csc"
 
     def to_text
-      content["results"].join("\n")
+      results = content["results"]
+      results = results.map { |r| r["context"] } if results.first.is_a?(Hash)
+      results.join("\n")
     end
 
     private
 
     # { type: "results", content: { results: ["1", "2", "3"] } }
+    # or
+    # { type: "results", content: { results: [{context: "1", callout: "1", category: "1"}, {context: "2", callout: "2", category: "2"}] } }
     def valid_content
       return if content.keys.size == 1 && content["results"].present?
 

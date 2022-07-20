@@ -6,7 +6,7 @@ module Airtable
   class CaseStudy < Airrecord::Table
     attr_reader :content_position
 
-    self.base_key = ENV["AIRTABLE_DATABASE_KEY"]
+    self.base_key = ENV.fetch("AIRTABLE_DATABASE_KEY", nil)
     self.table_name = "Case Studies"
 
     def article_record
@@ -79,7 +79,7 @@ module Airtable
 
         outcome = article.sections.new(type: "outcome", position: 2)
         attach_heading(outcome, fields["Outcome Title"])
-        attach_results(outcome, [fields["Key Result 1"], fields["Key Result 2"], fields["Key Result 3"]])
+        attach_results(outcome, fields)
         attach_paragraph(outcome, fields["Outcome Text"])
         attach_images(outcome, Array(fields["Outcome Images"]))
         attach_links(background, Array(fields["Outcome Links"]))
@@ -134,7 +134,13 @@ module Airtable
       increment_content_position
     end
 
-    def attach_results(section, results)
+    def attach_results(section, fields)
+      results = []
+      if fields["Key Result 1 Context"].present?
+        1.upto(3).each { |i| results << {category: fields["Key Result #{i} Category"].strip, context: fields["Key Result #{i} Context"].strip, callout: fields["Key Result #{i} Callout"].strip} }
+      else
+        1.upto(3).each { |i| results << fields["Key Result #{i}"].strip }
+      end
       section.contents.new(type: "CaseStudy::ResultsContent", content: {results:}, position: content_position)
       increment_content_position
     end
