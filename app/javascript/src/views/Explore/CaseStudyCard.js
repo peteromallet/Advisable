@@ -67,7 +67,7 @@ function Result({ callout, context }) {
       </div>
       <div>
         <h5 className="font-semibold">{callout}</h5>
-        <p className="text-neutral-600 font-light">{context}</p>
+        <p className="font-light text-neutral-600">{context}</p>
       </div>
     </li>
   );
@@ -82,7 +82,7 @@ export default function CaseStudyCard({ article, delay }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay }}
-        className="h-full flex flex-col"
+        className="flex flex-col h-full"
       >
         <Link
           to={article.path}
@@ -91,7 +91,7 @@ export default function CaseStudyCard({ article, delay }) {
           }}
           className="flex-1"
         >
-          <div className="text-xs font-medium mb-1 uppercase text-indigo-700">
+          <div className="mb-1 text-xs font-medium text-indigo-700 uppercase">
             Content Creation
           </div>
           <h4 className="font-serif text-[22px] font-semibold tracking-tight mb-8 leading-snug">

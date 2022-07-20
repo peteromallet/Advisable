@@ -1,0 +1,7 @@
+#import "./articleFields.gql"
+
+query TrendingArticles {
+  topCaseStudies(limit: 30) {
+    ...ArticleFields
+  }
+}

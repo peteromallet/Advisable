@@ -45,7 +45,7 @@ function Topic({ to, name, icon, delay }) {
           height="20"
           viewBox="0 0 20 20"
         >
-          <use href={`${inbox}#icon`} />
+          <use href={`${icon || inbox}#icon`} />
         </motion.svg>
       </div>
       <motion.span
@@ -115,15 +115,15 @@ export default function TopicsBar() {
             <>
               <Topic name={`Your\nFeed`} to="/explore" />
               <Topic
-                name={`Your\nFeed`}
+                name={`Trending\nProjects`}
                 to="/explore/trending"
                 icon={lightbulb}
                 delay={ANIMATION_DELAY}
               />
               <Topic
-                name={`Your\nFeed`}
-                to="/explore/favorites"
+                name={`Your\nFavourites`}
                 icon={favorites}
+                to="/explore/favorites"
                 delay={ANIMATION_DELAY * 2}
               />
               {[...Array(16)].map((_, i) => (

@@ -1,0 +1,15 @@
+#import "./articleFields.gql"
+
+query FavoritedArticles($cursor: String) {
+  favoritedArticles(after: $cursor, first: 15) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      node {
+        ...ArticleFields
+      }
+    }
+  }
+}
