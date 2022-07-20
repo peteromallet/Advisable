@@ -71,6 +71,8 @@ module Types
       def results_content
         object.contents.find_by(type: "CaseStudy::ResultsContent")
       end
+
+      field :insights, [Types::CaseStudy::Insight], null: true
     end
   end
 end
