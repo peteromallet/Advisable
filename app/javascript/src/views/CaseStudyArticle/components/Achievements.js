@@ -1,4 +1,5 @@
 import React from "react";
+import { extractResult } from "src/views/Feed/utilities";
 
 const NUM_TO_WORD = ["first", "second", "third", "fourth", "fifth", "sixth"];
 
@@ -22,7 +23,7 @@ export default function Achievements({ sections }) {
               {NUM_TO_WORD[index]} achievement
             </div>
             <p className="font-inter text-base leading-5 py-0 sm:text-lg sm:leading-6 sm:pt-px sm:pb-[3px] xl:leading-7 xl:pt-[3px] xl:pb-px text-neutral900 ">
-              {achievement}
+              {extractResult(achievement)}
             </p>
           </div>
         </div>
