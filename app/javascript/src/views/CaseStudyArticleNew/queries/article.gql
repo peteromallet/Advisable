@@ -45,6 +45,7 @@ query Article($slug: ID!) {
       profilePath
       unavailableUntil
       location
+      hourlyRate
       conversation {
         id
       }
