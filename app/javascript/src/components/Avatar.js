@@ -15,6 +15,16 @@ const avatarStyles = composeStyles({
   `,
   variants: {
     size: {
+      xs: `
+        w-[28px]
+        h-[28px]
+        text-xs
+      `,
+      sm: `
+        w-[36px]
+        h-[36px]
+        text-xs
+      `,
       md: `
         w-[40px]
         h-[40px]

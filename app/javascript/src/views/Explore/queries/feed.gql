@@ -1,0 +1,22 @@
+#import "./articleFields.gql"
+
+query Feed($cursor: String) {
+  feed(after: $cursor, first: 15) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        interest {
+          id
+          term
+        }
+        article {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

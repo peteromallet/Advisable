@@ -1,0 +1,33 @@
+fragment ArticleFields on CaseStudyArticle {
+  id
+  slug
+  title
+  path
+  subtitle
+  isFavorited
+  companyType
+  industries {
+    id
+    industry {
+      id
+      name
+    }
+  }
+  specialist {
+    id
+    name
+    avatar
+    unavailableUntil
+  }
+  company {
+    id
+    name
+    website
+    favicon
+    businessType
+  }
+  resultsContent {
+    id
+    results
+  }
+}

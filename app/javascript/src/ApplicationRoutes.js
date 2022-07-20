@@ -12,6 +12,8 @@ import Feed from "./views/Feed";
 import Article from "./views/CaseStudyArticle";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
+import { Versioned } from "./components/Versioned";
+import Explore from "./views/Explore";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -146,7 +148,13 @@ const ApplicationRoutes = () => {
               path="/explore/*"
               element={
                 <RequireAuthentication clientOnly>
-                  <Feed />
+                  <Versioned
+                    name="explore"
+                    versions={{
+                      2: <Explore />,
+                    }}
+                    fallback={<Feed />}
+                  />
                 </RequireAuthentication>
               }
             />
