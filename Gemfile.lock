@@ -373,8 +373,6 @@ GEM
     rack (2.2.4)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
-    rack-mini-profiler (3.0.0)
-      rack (>= 1.2.0)
     rack-protection (2.2.1)
       rack
     rack-proxy (0.7.2)
@@ -534,7 +532,6 @@ GEM
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
     sql_spy (0.4.0)
-    stackprof (0.2.19)
     statsd-ruby (1.5.0)
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
@@ -648,7 +645,6 @@ DEPENDENCIES
   puma
   pundit
   rack-attack
-  rack-mini-profiler
   rails (~> 7.0.0)
   rspec-github
   rspec-rails
@@ -673,7 +669,6 @@ DEPENDENCIES
   simplecov
   slim
   sql_spy
-  stackprof
   stripe
   stripe-ruby-mock
   super_diff
