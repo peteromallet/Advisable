@@ -18,6 +18,15 @@ module CaseStudy
       end
     end
 
+    def icon_url
+      return if icon.blank?
+
+      Rails.cache.fetch("topic_#{uid}_icon_url", expires_in: 1.week) do
+        obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: icon)
+        obj.presigned_url(:get, expires_in: 1.week.to_i)
+      end
+    end
+
     def move_to!(position)
       ids_by_position = self.class.by_position.where.not(id:).pluck(:id)
       ids_by_position.insert(position.to_i - 1, id)

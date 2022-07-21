@@ -41,9 +41,8 @@ module Admin
     end
 
     def destroy
-      # TODO
       @topic.destroy
-      redirect_to admin_topics_path, notice: "Topic was successfully destroyed."
+      redirect_to admin_topics_path, notice: "Topic was successfully deleted."
     end
 
     private

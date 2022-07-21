@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
   include CurrentUser
 
-  before_action :set_sentry_context, except: [:topic_icon]
+  before_action :set_sentry_context
   before_action :prefetch_viewer, only: %i[frontend guild_post]
   before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
 
@@ -41,15 +41,6 @@ class ApplicationController < ActionController::Base
     else
       Sentry.set_user(id: nil)
     end
-  end
-
-  def topic_icon
-    topic = CaseStudy::Topic.find_by!(uid: params[:uid])
-    return unless stale?(topic)
-
-    s3 = Aws::S3::Client.new
-    resp = s3.get_object(bucket: ENV.fetch("AWS_S3_BUCKET", nil), key: topic.icon)
-    send_data(resp.body.read, type: "image/svg+xml", disposition: "inline")
   end
 
   private

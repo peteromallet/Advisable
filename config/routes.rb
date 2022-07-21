@@ -60,8 +60,6 @@ Rails.application.routes.draw do
 
   get "/posts/:id", to: "application#guild_post", as: :guild_post
 
-  get "/topic_icon/:uid", to: "application#topic_icon", as: :topic_icon
-
   get "accounts/me"
   post "accounts/user"
   post "accounts/specialist"
