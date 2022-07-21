@@ -128,8 +128,8 @@ export default function ArticleSidebar({ elements }) {
   }, [callback]);
 
   return (
-    <div className="hidden lg:block">
-      <div className="min-w-[264px] xl:min-w-[320px] sticky top-[164px] pt-px pb-[3px]">
+    <div className="hidden lg:block p-10 min-w-[348px] w-[348px]">
+      <div className="sticky top-[164px] pt-px pb-[3px]">
         <div className="absolute top-1 bottom-2 w-0.5 bg-gray-200">
           <div
             style={{

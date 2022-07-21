@@ -9,31 +9,9 @@ import ArticleContent from "./components/ArticleContent";
 import ArticleEvents from "./components/ArticleEvents";
 import Footer from "src/components/Footer";
 import CompanyDetails from "./components/CompanyDetails";
-import { ChartBar } from "@styled-icons/heroicons-outline";
 import Results from "./components/Results";
 import SpecialistSection from "./components/SpecialistSection";
-
-const SectionWrapper = ({ children, className, ...props }) => (
-  <div
-    className={`
-          flex
-          mx-auto
-          px-6
-          sm:px-8
-          md:px-0
-          lg:gap-10
-          xl:gap-20
-          w-full
-          md:w-[696px]
-          lg:w-[960px]
-          xl:w-[1198px]
-          ${className}
-        `}
-    {...props}
-  >
-    {children}
-  </div>
-);
+import KeyTakeaways from "./components/KeyTakeaways";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
@@ -53,13 +31,15 @@ export default function CaseStudyArticle() {
       <div className="pb-36">
         <div className="flex mx-auto w-full xl:w-[1320px]">
           <SpecialistSection article={data.caseStudy} />
-          <div className="p-10 relative w-full border-solid border-neutral100 border-l">
-            <h1 className="text-4xl font-semibold text-blue900">
+          <div className="pl-12 pr-15 py-12 relative w-full border-solid border-neutral100 border-l">
+            <h1 className="text-4xl font-bold text-blue900 mb-4">
               {data.caseStudy.title}
             </h1>
             <div className="flex gap-10">
               <div>
-                <p>{data.caseStudy.subtitle}</p>
+                <p className="leading-7 text-neutral900 mb-10">
+                  {data.caseStudy.subtitle}
+                </p>
                 <KeyTakeaways />
               </div>
               <div>
@@ -70,9 +50,9 @@ export default function CaseStudyArticle() {
             <hr className="absolute bottom-0 left-0 w-[100vw] border-neutral100 " />
           </div>
         </div>
-        <SectionWrapper id="content">
+        <div className="flex mx-auto w-full xl:w-[1320px]">
           <ArticleContent caseStudy={data.caseStudy} />
-        </SectionWrapper>
+        </div>
       </div>
       <Footer />
     </ErrorBoundary>
