@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Avatar from "src/components/Avatar";
 import FavoriteButton from "./FavoriteButton";
+import composeStyles from "src/utilities/composeStyles";
 import chess from "src/icons/chess.svg";
 import coins from "src/icons/coins.svg";
 import rocket from "src/icons/rocket.svg";
@@ -39,6 +40,25 @@ function Result({ category, callout, context }) {
   );
 }
 
+const skillClasses = composeStyles({
+  base: "mb-1 text-xs font-medium uppercase",
+  variants: {
+    color: {
+      red: "text-red-700",
+      orange: "text-orange-700",
+      amber: "text-amber-700",
+      green: "text-green-700",
+      emerald: "text-emerald-700",
+      teal: "text-teal-700",
+      cyan: "text-cyan-700",
+      blue: "text-blue-700",
+      indigo: "text-indigo-700",
+      violet: "text-violet-700",
+      pink: "text-pink-700",
+    },
+  },
+});
+
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
 
@@ -58,7 +78,9 @@ export default function CaseStudyCard({ article, delay }) {
           className="flex-1"
         >
           {article.primarySkill && (
-            <div className="mb-1 text-xs font-medium text-indigo-700 uppercase">
+            <div
+              className={skillClasses({ color: article.primarySkill.color })}
+            >
               {article.primarySkill.name}
             </div>
           )}
