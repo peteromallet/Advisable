@@ -10,6 +10,8 @@ module CaseStudy
 
     validates :name, :term, presence: true
 
+    scope :by_position, -> { order("position ASC NULLS LAST") }
+
     def results
       Rails.cache.fetch("topic_#{uid}_results", expires_in: 1.week) do
         articles_for_interest.pluck(:article_id)

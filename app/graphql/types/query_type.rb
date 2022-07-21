@@ -317,7 +317,7 @@ module Types
     field :topics, [Types::CaseStudy::Topic], null: true
     def topics
       requires_client!
-      ::CaseStudy::Topic.all.order(:position)
+      ::CaseStudy::Topic.by_position
     end
 
     field :topic, Types::CaseStudy::Topic, null: true do
