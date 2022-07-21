@@ -43,8 +43,8 @@ export function useFavoriteArticle(article) {
           favoritedArticles: {
             ...favoritedArticles,
             edges: [
-              ...favoritedArticles.edges,
               { node: { ...article, isFavorited: true } },
+              ...favoritedArticles.edges,
             ],
           },
         },
