@@ -17,6 +17,12 @@ module CaseStudy
         articles_for_interest.pluck(:article_id)
       end
     end
+
+    def move_to!(position)
+      ids_by_position = self.class.by_position.where.not(id:).pluck(:id)
+      ids_by_position.insert(position.to_i - 1, id)
+      ActiveRecord::Base.connection.execute("UPDATE case_study_topics SET position = array_position(array[#{ids_by_position.join(',')}]::bigint[], id)")
+    end
   end
 end
 

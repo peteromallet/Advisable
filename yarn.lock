@@ -8497,6 +8497,11 @@ stickybits@^3.7.9:
   resolved "https://registry.yarnpkg.com/stickybits/-/stickybits-3.7.11.tgz#4609f3a91ef4209987c1a45b313e5f682b248bf6"
   integrity sha512-WO+ns7BYZqGS4jWVTg5JNhIvNV4LGbUtNTSck4zAkWRQzA1IfxwIkMGc0BbdGy4PGIjK7kKo5CZcN6Sd5dHVlw==
 
+stimulus-sortable@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/stimulus-sortable/-/stimulus-sortable-3.2.0.tgz#16927f72b22d8e103a0102b2ed52a502d708fff7"
+  integrity sha512-hA1/jggRIOy7UK+BsKRNzfFNguWKo8yD64Oi6Y/n9qELm+G5sE4buuMK8ebAIU01kL5w8jGalPnpKAQkX/q9ZA==
+
 strict-uri-encode@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
