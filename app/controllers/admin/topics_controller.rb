@@ -3,6 +3,7 @@
 module Admin
   class TopicsController < AdminController
     before_action :set_topic, only: %i[edit update destroy move]
+    before_action :fetch_icons, only: %i[new edit]
 
     def index
       @topics = CaseStudy::Topic.by_position
@@ -20,6 +21,7 @@ module Admin
       if @topic.save
         redirect_to admin_topics_path, notice: "Topic was successfully created."
       else
+        fetch_icons
         render :new, status: :unprocessable_entity
       end
     end
@@ -28,6 +30,7 @@ module Admin
       if @topic.update(admin_topic_params)
         redirect_to admin_topics_path, notice: "Topic was successfully updated."
       else
+        fetch_icons
         render :edit, status: :unprocessable_entity
       end
     end
@@ -44,6 +47,16 @@ module Admin
     end
 
     private
+
+    def fetch_icons
+      client = Aws::S3::Client.new
+      objects = client.list_objects(prefix: "topic-icons/", bucket: ENV.fetch("AWS_S3_BUCKET", nil))
+      @icons = objects.contents.filter_map do |o|
+        next unless o.key.ends_with?(".svg")
+
+        [o.key[%r{topic-icons/(.*)\.svg}, 1], o.key]
+      end
+    end
 
     def set_topic
       @topic = CaseStudy::Topic.find(params[:id])
