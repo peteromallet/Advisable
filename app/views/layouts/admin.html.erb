@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title><%= (yield :title).presence || "Advisable Admin" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_pack_tag "admin" %>

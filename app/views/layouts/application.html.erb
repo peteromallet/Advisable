@@ -11,9 +11,9 @@
       <!-- End Google Tag Manager -->
     <% end %>
 
-    <title><%= yield :title || "Advisable" %></title>
-    <%= csrf_meta_tags %> <%= csp_meta_tag %>
-
+    <title><%= (yield :title).presence || "Advisable" %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <%= yield :meta_tags %>
 
     <link rel="icon" href="/favicon-32.png" sizes="32x32" />
