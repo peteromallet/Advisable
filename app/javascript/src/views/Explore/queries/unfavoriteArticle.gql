@@ -1,0 +1,8 @@
+mutation UnfavoriteArticle($input: UnfavoriteCaseStudyArticleInput!) {
+  unfavoriteCaseStudyArticle(input: $input) {
+    article {
+      id
+      isFavorited
+    }
+  }
+}

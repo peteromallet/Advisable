@@ -8,4 +8,14 @@
   .h-viewport {
     height: calc(100vh - var(--header-height));
   }
+
+  .icon-duo-neutral {
+    --stroke: theme("colors.neutral.800");
+    --fill: theme("colors.neutral.100");
+  }
+
+  .icon-solid-red {
+    --stroke: theme("colors.red.700");
+    --fill: theme("colors.red.200");
+  }
 }

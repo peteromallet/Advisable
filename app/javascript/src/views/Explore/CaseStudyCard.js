@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Avatar from "src/components/Avatar";
+import FavoriteButton from "./FavoriteButton";
 
 function Result({ callout, context }) {
   return (
@@ -112,7 +113,7 @@ export default function CaseStudyCard({ article, delay }) {
           </ul>
         </Link>
 
-        <div>
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar
               size="xs"
@@ -120,6 +121,9 @@ export default function CaseStudyCard({ article, delay }) {
               name={article.specialist.name}
             />
             <span className="font-medium">{article.specialist.name}</span>
+          </div>
+          <div>
+            <FavoriteButton article={article} />
           </div>
         </div>
       </motion.div>

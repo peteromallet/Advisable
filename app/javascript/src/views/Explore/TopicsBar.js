@@ -4,7 +4,7 @@ import { Link, matchPath, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
 import inbox from "./svg/inbox.svg";
-import favorites from "./svg/favorites.svg";
+import favorites from "src/icons/favorites.svg";
 import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
 
