@@ -60,6 +60,7 @@ export default function CaseStudyArticle() {
             <div className="flex gap-10">
               <div>
                 <p>{data.caseStudy.subtitle}</p>
+                <KeyTakeaways />
               </div>
               <div>
                 <Results results={data.caseStudy.resultsContent?.results} />
