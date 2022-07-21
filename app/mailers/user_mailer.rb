@@ -7,12 +7,6 @@ class UserMailer < ApplicationMailer
     mail(to: @user.account.email, subject: "Account Confirmation")
   end
 
-  def interview_reschedule_request(interview)
-    @interview = interview
-    @sales_person = consultations_sales_person(interview.user&.company)
-    mail(from: @sales_person.email_with_name, to: interview.user.account.email, subject: "Interview Reschedule Request")
-  end
-
   def invited_by_manager(manager, user)
     @manager = manager
     @user = user

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Interview < ApplicationRecord
-  self.ignored_columns = %w[more_time_options_added_at requested_more_time_options_at]
+  self.ignored_columns = %w[more_time_options_added_at requested_more_time_options_at specialist_requested_reschedule_at client_requested_reschedule_at]
   extend Memoist
   include Participants
   include Uid
@@ -11,12 +11,11 @@ class Interview < ApplicationRecord
   VALID_KINDS = %w[Consultation Interview].freeze
   VALID_STATUSES = [
     "Call Scheduled", "Call Completed", "Call Requested", "Call Reminded",
-    "Specialist Requested Reschedule",
-    "Client Requested Reschedule", "Auto Declined", "Declined"
+    "Auto Declined", "Declined"
   ].freeze
 
   PRE_START_STATUSES = ["Call Requested", "Call Reminded"].freeze
-  SCHEDULABLE_STATUSES = PRE_START_STATUSES + ["Client Requested Reschedule", "Specialist Requested Reschedule"].freeze
+  SCHEDULABLE_STATUSES = PRE_START_STATUSES
   RESCHEDULABLE_STATUSES = SCHEDULABLE_STATUSES + ["Call Scheduled"]
   DECLINABLE_STATUSES = RESCHEDULABLE_STATUSES
 
@@ -103,23 +102,21 @@ end
 #
 # Table name: interviews
 #
-#  id                                 :bigint           not null, primary key
-#  availability_note                  :string
-#  call_scheduled_at                  :datetime
-#  client_requested_reschedule_at     :datetime
-#  kind                               :string
-#  reason                             :string
-#  specialist_requested_reschedule_at :datetime
-#  starts_at                          :datetime
-#  status                             :string
-#  time_zone                          :string
-#  uid                                :string           not null
-#  created_at                         :datetime         not null
-#  updated_at                         :datetime         not null
-#  article_id                         :bigint
-#  google_calendar_id                 :string
-#  requested_by_id                    :bigint
-#  zoom_meeting_id                    :string
+#  id                 :bigint           not null, primary key
+#  availability_note  :string
+#  call_scheduled_at  :datetime
+#  kind               :string
+#  reason             :string
+#  starts_at          :datetime
+#  status             :string
+#  time_zone          :string
+#  uid                :string           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  article_id         :bigint
+#  google_calendar_id :string
+#  requested_by_id    :bigint
+#  zoom_meeting_id    :string
 #
 # Indexes
 #

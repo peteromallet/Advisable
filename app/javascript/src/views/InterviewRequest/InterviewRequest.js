@@ -37,9 +37,7 @@ export default function InterviewRequestView() {
       padding={{ _: "l", md: "xl" }}
       borderRadius="24px"
     >
-      {["Call Requested", "Client Requested Reschedule"].indexOf(
-        interview.status,
-      ) > -1 && (
+      {["Call Requested", "Call Reminded"].indexOf(interview.status) > -1 && (
         <Routes>
           <Route
             path=":date"

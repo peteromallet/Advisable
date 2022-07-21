@@ -9,18 +9,6 @@ class SpecialistMailer < ApplicationMailer
     mail(to: @specialist.account.email, subject: "Account Confirmation")
   end
 
-  def interview_reschedule_request(interview)
-    @interview = interview
-    @sales_person = specialist_sales_person(interview.user&.company)
-    mail(
-      from: @sales_person.email_with_name,
-      to: interview.specialist.account.email,
-      subject: "Interview Reschedule Request"
-    ) do |format|
-      format.html { render layout: false }
-    end
-  end
-
   def interview_reminder(interview)
     @interview = interview
     @sales_person = specialist_sales_person(interview.user&.company)

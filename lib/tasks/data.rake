@@ -50,11 +50,7 @@ namespace :data do
     end
   end
 
-  task interview_declined: :environment do
-    Interview.where(status: "Specialist Declined").update_all(status: "Declined")
-  end
-
-  task migrate_request_more_times: :environment do
-    Interview.where(status: ["Need More Time Options", "More Time Options Added"]).update_all(status: "Declined")
+  task migrate_reschedule_request_statuses: :environment do
+    Interview.where(status: ["Specialist Requested Reschedule", "Client Requested Reschedule"]).update_all(status: "Declined")
   end
 end

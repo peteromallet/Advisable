@@ -77,34 +77,6 @@ RSpec.describe "Interviews", type: :system do
     end
   end
 
-  context "when the client has requested to reschedule" do
-    it "the specialist can schedule the interview" do
-      interview = create(:interview, status: "Client Requested Reschedule", starts_at: 2.days.from_now, accounts: [specialist.account, user.account], requested_by: user.account)
-      authenticate_as interview.specialist
-      visit "/interviews/#{interview.uid}"
-      click_on user.availability[0].strftime("%A")
-      find_all("a[class^=styles__Time]").first.click
-      click_on "Confirm Call"
-      expect(page).to have_content("has been scheduled!")
-    end
-  end
-
-  context "when specialist has requested to reschedule" do
-    it "the client can update their availability" do
-      interview = create(:interview, accounts: [specialist.account, user.account], status: "Specialist Requested Reschedule")
-      authenticate_as interview.user
-      visit "/interviews/#{interview.uid}"
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-      find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
-      click_on "Update Availability"
-      expect(page).to have_content(/updated availability/i)
-    end
-  end
-
   it "allows the user to invite a member of their team" do
     interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Requested")
     create(:user, account: create(:account, first_name: "Thomas"), company: user.company)
