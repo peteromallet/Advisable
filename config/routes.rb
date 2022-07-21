@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     resources :articles do
       get :search, on: :collection
     end
-    resources :topics do
+    resources :topics, except: [:show] do
       patch :move, on: :member
     end
   end

@@ -2,13 +2,11 @@
 
 module Admin
   class TopicsController < AdminController
-    before_action :set_topic, only: %i[show edit update destroy move]
+    before_action :set_topic, only: %i[edit update destroy move]
 
     def index
       @topics = CaseStudy::Topic.by_position
     end
-
-    def show; end
 
     def new
       @topic = CaseStudy::Topic.new
@@ -20,9 +18,17 @@ module Admin
       @topic = CaseStudy::Topic.new(admin_topic_params)
 
       if @topic.save
-        redirect_to @topic, notice: "Topic was successfully created."
+        redirect_to admin_topics_path, notice: "Topic was successfully created."
       else
         render :new, status: :unprocessable_entity
+      end
+    end
+
+    def update
+      if @topic.update(admin_topic_params)
+        redirect_to admin_topics_path, notice: "Topic was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
       end
     end
 
@@ -31,17 +37,10 @@ module Admin
       head :ok
     end
 
-    def update
-      if @topic.update(admin_topic_params)
-        redirect_to @topic, notice: "Topic was successfully updated."
-      else
-        render :edit, status: :unprocessable_entity
-      end
-    end
-
     def destroy
+      # TODO
       @topic.destroy
-      redirect_to admin_topics_url, notice: "Topic was successfully destroyed."
+      redirect_to admin_topics_path, notice: "Topic was successfully destroyed."
     end
 
     private
@@ -51,7 +50,7 @@ module Admin
     end
 
     def admin_topic_params
-      params.fetch(:admin_topic, {})
+      params.require(:case_study_topic).permit(:name, :term, :icon)
     end
   end
 end
