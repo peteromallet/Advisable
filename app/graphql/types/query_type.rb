@@ -331,8 +331,8 @@ module Types
     field :favorited_articles, Types::CaseStudy::Article.connection_type, null: true
     def favorited_articles
       requires_client!
-      favorited = ::CaseStudy::FavoritedArticle.where(account: current_user.account).pluck(:article_id)
-      ::CaseStudy::Article.searchable.where(id: favorited).in_order_of(:id, favorited.reverse)
+      favorited = ::CaseStudy::FavoritedArticle.where(account: current_user.account).order(created_at: :desc).pluck(:article_id)
+      ::CaseStudy::Article.searchable.where(id: favorited).in_order_of(:id, favorited)
     end
   end
 end
