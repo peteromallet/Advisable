@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import FEED from "./feed.gql";
+import TOPIC from "./topic.gql";
 import TOPICS from "./topics.gql";
 import TRENDING from "./trending.gql";
 import FAVORITES from "./favorites.gql";
@@ -74,5 +75,13 @@ export function useUnfavoriteArticle(article) {
         },
       });
     },
+  });
+}
+
+export function useTopic(slug) {
+  return useQuery(TOPIC, {
+    variables: { slug },
+    returnPartialData: true,
+    notifyOnNetworkStatusChange: true,
   });
 }

@@ -61,6 +61,28 @@ const createCache = () => {
               id: args.id,
             });
           },
+          topic: {
+            read(_, { args, toReference, cache }) {
+              const topic = Object.values(cache.data.data).find((record) => {
+                return (
+                  record.__typename === "CaseStudyTopic" &&
+                  record.slug === args.slug
+                );
+              });
+
+              if (topic) {
+                return toReference({
+                  id: topic.id,
+                  __typename: "CaseStudyTopic",
+                });
+              }
+            },
+          },
+        },
+      },
+      CaseStudyTopic: {
+        fields: {
+          articles: relayStylePagination(),
         },
       },
       CaseStudyInterest: {
@@ -98,11 +120,6 @@ const createCache = () => {
           },
         },
       },
-      // CaseStudySearch: {
-      //   fields: {
-
-      //   }
-      // },
       Project: {
         fields: {
           deposit: {

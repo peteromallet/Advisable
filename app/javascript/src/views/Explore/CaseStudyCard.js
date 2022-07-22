@@ -89,9 +89,9 @@ export default function CaseStudyCard({ article, delay }) {
           </h4>
 
           <ul className="space-y-8">
-            {(article.resultsContent || []).results.map((r) => (
+            {(article.resultsContent || []).results.map((r, i) => (
               <Result
-                key={r.id}
+                key={i}
                 callout={r.callout}
                 context={r.context}
                 category={r.category}

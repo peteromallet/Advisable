@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
-import inbox from "./svg/inbox.svg";
-import favorites from "src/icons/favorites.svg";
+import home from "./svg/home.svg";
+import heart from "./svg/heart.svg";
 import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
 
@@ -30,16 +30,16 @@ function Topic({ to, name, icon, delay }) {
   return (
     <Link to={to} className={topicClasses({ active })}>
       <div className="topic-icon">
-        <motion.svg
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay }}
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-        >
-          <use href={`${icon || inbox}#icon`} />
-        </motion.svg>
+          className="w-5 h-5"
+          style={{
+            backgroundImage: `url(${icon || home})`,
+            backgroundPositionX: active ? -20 : 0,
+          }}
+        />
       </div>
       <motion.span
         initial={{ opacity: 0 }}
@@ -81,7 +81,7 @@ const ANIMATION_DELAY = 0.025;
 
 export default function TopicsBar() {
   const scrollRef = useRef();
-  const { loading } = useTopics();
+  const { data, loading } = useTopics();
   const [scrollLeft, setScrollLeft] = useState(false);
   const [scrollRight, setScrollRight] = useState(false);
 
@@ -93,6 +93,8 @@ export default function TopicsBar() {
   };
 
   useLayoutEffect(calculateScrolls, [loading]);
+
+  const topics = data?.topics || [];
 
   return (
     <div className={topicsBarClasses({ scrollLeft, scrollRight })}>
@@ -115,15 +117,16 @@ export default function TopicsBar() {
               />
               <Topic
                 name={`Your\nFavourites`}
-                icon={favorites}
+                icon={heart}
                 to="/explore/favorites"
                 delay={ANIMATION_DELAY * 2}
               />
-              {[...Array(16)].map((_, i) => (
+              {topics.map((topic, i) => (
                 <Topic
-                  name={`Email\nMarketing`}
-                  to={`/explore/${i}`}
-                  key={i}
+                  key={topic.id}
+                  icon={topic.icon}
+                  name={topic.name}
+                  to={`/explore/${topic.slug}`}
                   delay={ANIMATION_DELAY * 2 + ANIMATION_DELAY * i}
                 />
               ))}

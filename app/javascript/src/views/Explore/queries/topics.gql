@@ -1,5 +1,9 @@
 query Topics {
-  events {
+  topics {
     id
+    slug
+    icon
+    name
+    description
   }
 }

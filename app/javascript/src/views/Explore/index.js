@@ -7,6 +7,7 @@ import Feed from "./Feed";
 import Trending from "./Trending";
 import Favorites from "./Favorites";
 import ScrollToTop from "./ScrollToTop";
+import Topic from "./Topic";
 
 export default function Explore() {
   const location = useLocation();
@@ -21,6 +22,7 @@ export default function Explore() {
           <Route index element={<Feed />} />
           <Route path="trending" element={<Trending />} />
           <Route path="favorites" element={<Favorites />} />
+          <Route path=":slug" element={<Topic />} />
         </Routes>
       </div>
       <Footer />

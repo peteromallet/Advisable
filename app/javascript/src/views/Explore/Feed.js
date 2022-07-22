@@ -4,8 +4,6 @@ import { useFeed } from "./queries";
 import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
 
-const PAGE_SIZE = 15;
-
 export default function Explore() {
   const { loading, data, fetchMore } = useFeed();
   const pageInfo = data?.feed?.pageInfo;
