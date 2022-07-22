@@ -78,10 +78,10 @@ RSpec.describe Airtable::Specialist do
       }, id: specialist.airtable_id)
     end
 
-    it "stores it as a minor currency" do
+    it "translates it to price_range" do
       expect { airtable.sync }.to change {
-        specialist.reload.hourly_rate
-      }.from(nil).to(87_00)
+        specialist.reload.price_range
+      }.from(nil).to("medium")
     end
   end
 
@@ -160,7 +160,7 @@ RSpec.describe Airtable::Specialist do
       before { allow(airtable).to receive(:save) }
 
       it "syncs over unsubscriptions to account" do
-        expect(airtable.fields["Unsubscribe - SMS Alerts"]).to eq(nil)
+        expect(airtable.fields["Unsubscribe - SMS Alerts"]).to be_nil
         airtable.push(specialist)
         expect(airtable.fields["Unsubscribe - SMS Alerts"]).to eq("Yes")
       end
@@ -249,16 +249,6 @@ RSpec.describe Airtable::Specialist do
             airtable.fields["Okay To Use Publicly"]
           }.from(nil).to("No")
         end
-      end
-    end
-
-    context "when there is an hourly_rate" do
-      let(:specialist) { create(:specialist, hourly_rate: 76_00) }
-
-      it "syncs it as a non minor currency" do
-        expect { airtable.push(specialist) }.to change {
-          airtable.fields["Typical Hourly Rate"]
-        }.from(nil).to(76)
       end
     end
 
