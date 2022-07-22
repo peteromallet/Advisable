@@ -6,7 +6,7 @@
   </td>
   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex">
     <% if topic.icon.present? %>
-      <div style="background-image: url('<%= topic.icon_url %>')" class="h-5 w-5 mr-1"></div>
+      <div style="background-image: url('<%= topic.icon.url %>')" class="h-5 w-5 mr-1"></div>
     <% end %>
     <%= topic.name %>
   </td>

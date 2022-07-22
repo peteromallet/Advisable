@@ -8,6 +8,8 @@ module CaseStudy
     include Uid
     uid_prefix "cst"
 
+    has_one_attached :icon
+
     validates :name, :term, presence: true
 
     scope :by_position, -> { order("position ASC NULLS LAST") }
@@ -15,15 +17,6 @@ module CaseStudy
     def results
       Rails.cache.fetch("topic_#{uid}_results", expires_in: 1.week) do
         articles_for_interest.pluck(:article_id)
-      end
-    end
-
-    def icon_url
-      return if icon.blank?
-
-      Rails.cache.fetch("topic_#{uid}_icon_url", expires_in: 1.week) do
-        obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: icon)
-        obj.presigned_url(:get, expires_in: 1.week.to_i)
       end
     end
 
@@ -41,7 +34,6 @@ end
 #
 #  id          :bigint           not null, primary key
 #  description :text
-#  icon        :string
 #  name        :string
 #  position    :integer
 #  slug        :string           not null

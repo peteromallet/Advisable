@@ -6,7 +6,6 @@ class CreateCaseStudyTopics < ActiveRecord::Migration[7.0]
       t.string :uid, null: false
       t.string :slug, null: false
       t.string :name
-      t.string :icon
       t.integer :position
       t.text :description
       t.citext :term

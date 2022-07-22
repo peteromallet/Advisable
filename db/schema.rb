@@ -326,7 +326,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_132632) do
     t.string "uid", null: false
     t.string "slug", null: false
     t.string "name"
-    t.string "icon"
     t.integer "position"
     t.text "description"
     t.citext "term"

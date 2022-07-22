@@ -10,7 +10,10 @@ module Types
       field :slug, String, null: false
       field :name, String, null: true
       field :description, String, null: true
-      field :icon, String, null: true, method: :icon_url
+      field :icon, String, null: true
+      def icon
+        icon.url
+      end
 
       field :articles, Article.connection_type, null: true
       def articles
