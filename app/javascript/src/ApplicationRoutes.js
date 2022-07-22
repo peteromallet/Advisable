@@ -14,6 +14,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
 import { Versioned } from "./components/Versioned";
 import Explore from "./views/Explore";
+import Search from "./views/Search";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -143,6 +144,8 @@ const ApplicationRoutes = () => {
                 </RequireAuthentication>
               }
             />
+
+            <Route path="/search" element={<Search />} />
 
             <Route
               path="/explore/*"

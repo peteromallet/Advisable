@@ -9,21 +9,20 @@ import Notifications from "./Notifications";
 export default function ClientHeader() {
   return (
     <HeaderBar>
-      <div className="w-full flex items-center">
+      <div className="flex items-center justify-start flex-1">
         <HeaderLogo />
-        <div className="px-6 flex-1">
-          <div
-            data-walkthrough="search"
-            className="hidden md:block max-w-[500px]"
-          >
-            <Searchbox name="headerSearch" />
-          </div>
+      </div>
+
+      <div className="flex items-center justify-center flex-1">
+        <div className="w-[500px] flex justify-center">
+          <Searchbox name="headerSearch" />
         </div>
-        <div className="flex items-center gap-3">
-          <MessagesDropdown />
-          <Notifications />
-          <CurrentUser />
-        </div>
+      </div>
+
+      <div className="flex items-center justify-end flex-1 ml-auto gap-3">
+        <MessagesDropdown />
+        <Notifications />
+        <CurrentUser />
       </div>
     </HeaderBar>
   );

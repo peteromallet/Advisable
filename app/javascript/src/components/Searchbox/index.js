@@ -101,7 +101,7 @@ export default function Searchbox({ className, ...props }) {
     if (value) {
       inputRef.current.blur();
       window.scrollTo(0, 0);
-      navigate(`/explore/search?q=${value}`);
+      navigate(`/search?q=${value}`);
     }
   };
 
@@ -112,7 +112,6 @@ export default function Searchbox({ className, ...props }) {
       className={searchBoxClasses({ className, focused })}
       initial={{ width: focused ? "100%" : "70%" }}
       animate={{ width: focused ? "100%" : "70%" }}
-      // transition={{ duration: 0.3 }}
     >
       <Search className={iconClasses({ focused })} />
       <input
@@ -123,7 +122,7 @@ export default function Searchbox({ className, ...props }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search projects..."
-        className="outline-none w-full bg-transparent placeholder:text-neutral-400"
+        className="w-full bg-transparent outline-none placeholder:text-neutral-400"
         {...props}
       />
       <button className={buttonClasses({ focused })}>
