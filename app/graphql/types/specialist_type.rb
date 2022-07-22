@@ -253,6 +253,15 @@ module Types
       object.price_range.presence || ::Specialist::VALID_PRICE_RANGES[2]
     end
 
+    field :collaboration_types, [String], null: true
+    def collaboration_types
+      types = []
+      ::Specialist::COLLABORATION_TYPES.each do |type|
+        types << type if object.public_send(type)
+      end
+      types
+    end
+
     field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true
     field :previous_work_description, String, null: true
     field :previous_work_results, String, null: true

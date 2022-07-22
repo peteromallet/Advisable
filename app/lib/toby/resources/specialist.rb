@@ -19,6 +19,9 @@ module Toby
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough
       attribute :price_range, Attributes::Select, options: ::Specialist::VALID_PRICE_RANGES
+      attribute :hands_on, Attributes::Boolean
+      attribute :consultancy, Attributes::Boolean
+      attribute :mentorship, Attributes::Boolean
       attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
       attribute :iban, Attributes::String
