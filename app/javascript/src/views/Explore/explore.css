@@ -17,6 +17,7 @@
     content: "";
     width: 130px;
     height: 100%;
+    z-index: 5;
     position: absolute;
     transform: scaleX(0);
     pointer-events: none;
@@ -52,8 +53,6 @@
   flex-shrink: 0;
   align-items: center;
   flex-direction: column;
-  --stroke: var(--color-blue-700);
-  --fill: var(--color-blue-50);
 
   .topic-icon {
     width: 40px;
@@ -64,6 +63,7 @@
     border-radius: 50%;
     margin-bottom: 8px;
     place-items: center;
+    opacity: 0.8;
     box-shadow: 0 1px 4px rgb(0 0 0 / 12%);
   }
 
@@ -75,8 +75,9 @@
   }
 
   &:hover {
-    --stroke: var(--color-neutral-900);
-    --fill: var(--color-blue-50);
+    .topic-icon {
+      opacity: 1;
+    }
 
     .topic-label {
       color: theme("colors.neutral.900");
@@ -84,10 +85,8 @@
   }
 
   &.active {
-    --stroke: white;
-    --fill: rgba(255, 255, 255, 0.32);
-
     .topic-icon {
+      opacity: 1;
       background: theme("colors.blue600");
     }
 
