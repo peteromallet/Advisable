@@ -2,6 +2,7 @@
   position: relative;
 
   .scroll-container {
+    overflow-y: hidden;
     overflow-x: scroll;
     scrollbar-width: none;
 
@@ -14,10 +15,11 @@
   &::after {
     top: 0;
     content: "";
-    width: 80px;
+    width: 130px;
     height: 100%;
     position: absolute;
     transform: scaleX(0);
+    pointer-events: none;
     transition: transform 300ms;
   }
 

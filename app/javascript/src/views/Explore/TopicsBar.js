@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import renderLineBreaks from "src/utilities/renderLineBreaks";
@@ -7,6 +7,7 @@ import home from "./svg/home.svg";
 import heart from "./svg/heart.svg";
 import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
+import { ArrowSmLeft, ArrowSmRight } from "@styled-icons/heroicons-solid";
 
 const topicClasses = composeStyles({
   base: "topic",
@@ -61,6 +62,22 @@ const topicsBarClasses = composeStyles({
   },
 });
 
+const topicBarNavButton = composeStyles({
+  base: `
+    w-8
+    h-8
+    grid  
+    z-10
+    top-12
+    absolute
+    rounded-full
+    bg-white
+    shadow-sm hover:shadow-md
+    place-items-center
+    text-neutral-800 hover:text-blue-600
+  `,
+});
+
 function TopicSkeleton() {
   return (
     <motion.div
@@ -96,6 +113,22 @@ export default function TopicsBar() {
 
   const topics = data?.topics || [];
 
+  const clickScrollRight = () => {
+    const el = scrollRef.current;
+    el.scrollTo({
+      left: el.scrollLeft + (el.clientWidth - 80),
+      behavior: "smooth",
+    });
+  };
+
+  const clickScrollLeft = () => {
+    const el = scrollRef.current;
+    el.scrollTo({
+      left: el.scrollLeft - (el.clientWidth - 80),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className={topicsBarClasses({ scrollLeft, scrollRight })}>
       <div
@@ -103,6 +136,38 @@ export default function TopicsBar() {
         ref={scrollRef}
         onScroll={calculateScrolls}
       >
+        <AnimatePresence>
+          {scrollLeft && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.1 }}
+              onClick={clickScrollLeft}
+              className={topicBarNavButton({
+                className: "left-0",
+              })}
+            >
+              <ArrowSmLeft className="w-4 h-4" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {scrollRight && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.1 }}
+              onClick={clickScrollRight}
+              className={topicBarNavButton({
+                className: "right-0",
+              })}
+            >
+              <ArrowSmRight className="w-4 h-4" />
+            </motion.button>
+          )}
+        </AnimatePresence>
         <div className="flex gap-12">
           {loading ? (
             [...Array(16)].map((_, i) => <TopicSkeleton key={i} />)
