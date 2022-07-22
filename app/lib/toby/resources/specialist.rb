@@ -18,7 +18,7 @@ module Toby
       attribute :username, Attributes::String
       attribute :skills, Attributes::HasManyThrough
       attribute :industries, Attributes::HasManyThrough
-      attribute :hourly_rate, Attributes::Currency
+      attribute :price_range, Attributes::Select, options: ::Specialist::VALID_PRICE_RANGES
       attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
       attribute :iban, Attributes::String

@@ -19,6 +19,7 @@ class Specialist < ApplicationRecord
   include ::Guild::SpecialistsConcern
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
+  VALID_PRICE_RANGES = ["low", "medium", "high", "very high"].freeze
   REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze
   DEFAULT_SOURCING_FEE = 800
 
@@ -54,6 +55,7 @@ class Specialist < ApplicationRecord
 
   validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
+  validates :price_range, inclusion: {in: VALID_PRICE_RANGES}, allow_blank: true
   validates :username, uniqueness: true, allow_blank: true
   validate :valid_username
 
@@ -162,6 +164,7 @@ end
 #  pid                               :string
 #  previous_work_description         :string
 #  previous_work_results             :string
+#  price_range                       :string
 #  primarily_freelance               :boolean
 #  project_count                     :integer
 #  public_use                        :boolean
