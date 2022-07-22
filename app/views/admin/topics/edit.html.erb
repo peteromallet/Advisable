@@ -1,0 +1,13 @@
+<% content_for :title, "Advisable Admin | Topics | #{@topic.name}" %>
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex">
+    <h1 class="text-3xl font-bold text-gray-900"><%= @topic.name %></h1>
+  </div>
+</header>
+<main>
+  <div class="max-w-7xl mx-auto">
+    <div class="py-8 px-4 sm:px-6 lg:px-8">
+      <%= render "form", topic: @topic, url: admin_topic_path(@topic) %>
+    </div>
+  </div>
+</main>

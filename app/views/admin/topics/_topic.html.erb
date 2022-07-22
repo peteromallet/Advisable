@@ -1,0 +1,21 @@
+<tr id="<%= dom_id topic %>" data-sortable-update-url="<%= move_admin_topic_path(topic) %>">
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="handle h-6 w-6 cursor-move" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex">
+    <% if topic.icon.present? %>
+      <div style="background-image: url('<%= topic.icon.url %>')" class="h-5 w-5 mr-1"></div>
+    <% end %>
+    <%= topic.name %>
+  </td>
+  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+    <%= topic.term %>
+  </td>
+  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex">
+    <div class="flex-grow"></div>
+    <%= link_to "Edit" , edit_admin_topic_path(topic), class: "text-emerald-600 hover:text-emerald-900 mr-4" %>
+    <%= button_to "Delete", admin_topic_path(topic), method: :delete, class: "text-red-600 hover:text-red-900", form: { data: { turbo_confirm: "Are you sure?" } } %>
+  </td>
+</tr>

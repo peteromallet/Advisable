@@ -62,8 +62,6 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "parallel_tests"
-  gem "rack-mini-profiler"
-  gem "stackprof"
 end
 
 group :development do

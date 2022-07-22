@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_19_110346) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_20_132632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -320,6 +320,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_110346) do
     t.index ["article_id"], name: "index_case_study_skills_on_article_id"
     t.index ["skill_id"], name: "index_case_study_skills_on_skill_id"
     t.index ["uid"], name: "index_case_study_skills_on_uid", unique: true
+  end
+
+  create_table "case_study_topics", force: :cascade do |t|
+    t.string "uid", null: false
+    t.string "slug", null: false
+    t.string "name"
+    t.integer "position"
+    t.text "description"
+    t.citext "term"
+    t.jsonb "term_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_case_study_topics_on_slug", unique: true
+    t.index ["uid"], name: "index_case_study_topics_on_uid", unique: true
   end
 
   create_table "companies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

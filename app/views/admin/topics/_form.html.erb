@@ -1,0 +1,44 @@
+<%= form_with(model: topic, url: url) do |form| %>
+  <% if topic.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(topic.errors.count, "error") %> prohibited this topic from being saved:</h2>
+      <ul>
+        <% topic.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+    <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= label_tag :name, "Name" %>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <%= form.text_field :name, class: "max-w-lg block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-sm" %>
+        </div>
+      </div>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= label_tag :term, "Term" %>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <%= form.text_field :term, class: "max-w-lg block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-sm" %>
+        </div>
+      </div>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= label_tag :icon, "Icon" %>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <%= form.file_field :icon %>
+        </div>
+      </div>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pt-5">
+    <div class="flex justify-end">
+      <%= link_to "Cancel", admin_topics_path, class: "bg-white py-2 px-4 border border-gray-300 rounded-sm shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+      <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">Save</button>
+    </div>
+  </div>
+<% end %>

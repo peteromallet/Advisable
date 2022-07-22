@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title><%= (yield :title).presence || "Advisable Admin" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_pack_tag "admin" %>
@@ -20,6 +21,7 @@
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                   <%= active_link_to "Dashboard", admin_dashboard_index_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+                  <%= active_link_to "Topics", admin_topics_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
                   <%= active_link_to "Articles", admin_articles_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
                   <%= active_link_to "Article Search", search_admin_articles_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
                 </div>
@@ -53,6 +55,7 @@
           <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <%= active_link_to "Dashboard", admin_dashboard_index_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+            <%= active_link_to "Topics", admin_topics_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
             <%= active_link_to "Articles", admin_articles_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
             <%= active_link_to "Article Search", search_admin_articles_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
           </div>

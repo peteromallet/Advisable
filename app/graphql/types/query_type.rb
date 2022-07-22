@@ -314,6 +314,20 @@ module Types
       current_user.account.interests.find_by!(uid: id)
     end
 
+    field :topics, [Types::CaseStudy::Topic], null: true
+    def topics
+      requires_client!
+      ::CaseStudy::Topic.by_position
+    end
+
+    field :topic, Types::CaseStudy::Topic, null: true do
+      argument :slug, String, required: true
+    end
+    def topic(slug:)
+      requires_client!
+      ::CaseStudy::Topic.find_by!(slug:)
+    end
+
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
     def feed
       requires_client!

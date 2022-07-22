@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
-  before_action :prefetch_viewer
+  before_action :prefetch_viewer, only: %i[frontend guild_post]
   before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
 
   def frontend

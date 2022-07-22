@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SpecialistsController < ApplicationController
-  before_action :prefetch_profile, only: %i[profile case_study]
+  before_action :prefetch_profile
 
   def profile
     @specialist = Specialist.accepted.find_by_username_or_id!(params[:username])
@@ -17,6 +17,7 @@ class SpecialistsController < ApplicationController
   private
 
   def prefetch_profile
+    prefetch_viewer
     prefetch_query("app/javascript/src/views/FreelancerProfile/queries/getProfileData.gql", variables: {
       id: params[:username]
     })

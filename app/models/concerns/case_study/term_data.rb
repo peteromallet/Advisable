@@ -5,6 +5,12 @@ module CaseStudy
     MIN_RESULTS = 5
     SIMILARITY_THRESHOLD = 0.3
 
+    extend ActiveSupport::Concern
+
+    included do
+      self.filter_attributes += %i[term_data]
+    end
+
     def articles_for_interest
       results = articles_by_relevancy.select { |a| a[:similarity] > SIMILARITY_THRESHOLD }
 
