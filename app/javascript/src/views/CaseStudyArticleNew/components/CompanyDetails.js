@@ -19,8 +19,10 @@ export default function CompanyDetails({ caseStudy }) {
 
   return (
     <div>
-      <div>Company details</div>
-      <div className="flex gap-2">
+      <div className="leading-none mb-1.5 uppercase text-xs font-semibold text-neutral500 tracking-wide">
+        Company details
+      </div>
+      <div className="flex gap-2 py-3 border-b border-b-neutral200 border-solid last:border-none">
         {favicon && <Favicon src={favicon} size="xs" />}
         {website ? (
           <a
@@ -40,20 +42,20 @@ export default function CompanyDetails({ caseStudy }) {
       </div>
 
       {companyType && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 py-3 border-b border-b-neutral200 border-solid last:border-none">
           <div className="min-w-[24px] h-[24px]">
-            <Truck />
+            <Truck className="stroke-neutral700" />
           </div>
-          <div>{companyType}</div>
+          <div className="text-neutral700 font-medium">{companyType}</div>
         </div>
       )}
 
       {businessType && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 py-3">
           <div className="min-w-[24px] h-[24px]">
-            <OfficeBuilding />
+            <OfficeBuilding className="stroke-neutral700" />
           </div>
-          <div>{businessType}</div>
+          <div className="text-neutral700 font-medium">{businessType}</div>
         </div>
       )}
     </div>
