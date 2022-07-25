@@ -248,7 +248,7 @@ module Types
       description "The account status for the specialist"
     end
 
-    field :price_range, Int, null: true
+    field :price_range, String, null: true
     def price_range
       object.price_range.presence || ::Specialist::VALID_PRICE_RANGES[2]
     end
