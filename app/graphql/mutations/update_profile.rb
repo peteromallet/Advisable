@@ -20,6 +20,7 @@ module Mutations
     argument :linkedin, String, required: false
     argument :medium, String, required: false
     argument :number_of_projects, String, required: false
+    argument :price_range, String, required: false
     argument :primarily_freelance, Boolean, required: false
     argument :public_use, Boolean, required: false
     argument :remote, Boolean, required: false
@@ -81,6 +82,7 @@ module Mutations
         :instagram,
         :public_use,
         :hourly_rate,
+        :price_range,
         :number_of_projects,
         :primarily_freelance,
         :previous_work_description,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_20_132632) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_22_093922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -836,6 +836,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_132632) do
     t.datetime "invited_to_interview_at", precision: nil
     t.datetime "interview_completed_at", precision: nil
     t.datetime "accepted_at", precision: nil
+    t.string "price_range"
     t.index ["account_id"], name: "index_specialists_on_account_id", unique: true
     t.index ["airtable_id"], name: "index_specialists_on_airtable_id"
     t.index ["country_id"], name: "index_specialists_on_country_id"

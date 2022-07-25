@@ -12,6 +12,29 @@ namespace :data do
     ProductionData.new.create_file!
   end
 
+  task migrate_hourly_rates: :environment do
+    specialists = Specialist.where.not(hourly_rate: nil)
+    progressbar = ProgressBar.create(format: "Migrating interviews: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: specialists.count)
+    specialists.each do |specialist|
+      hourly_rate = (specialist.hourly_rate / 100).round.to_i
+
+      price_range_index = case hourly_rate
+                          when (..75)
+                            0
+                          when 75..150
+                            1
+                          when 150..300
+                            2
+                          when (300..)
+                            3
+                          end
+      specialist.price_range = ::Specialist::VALID_PRICE_RANGES[price_range_index]
+
+      specialist.save
+      progressbar.increment
+    end
+  end
+
   task interview_participants: :environment do
     progressbar = ProgressBar.create(format: "Migrating interviews: %a %b\u{15E7}%i %p%% %e", progress_mark: " ", remainder_mark: "\u{FF65}", total: Interview.count)
     Interview.find_each do |interview|

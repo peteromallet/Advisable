@@ -61,10 +61,17 @@ module Airtable
       freelancing_status = fields["Freelancing Status"]
       specialist.primarily_freelance = freelancing_status.try(:include?, "Yes")
 
-      # sync the typical hourly rate. We store the horuly rate as a minor currency
-      # e.g $46.54 is stored as the int 4654
-      hourly_rate = fields["Typical Hourly Rate"]
-      specialist.hourly_rate = hourly_rate * 100 if hourly_rate
+      price_range_index = case fields["Typical Hourly Rate"].to_i
+                          when (..75)
+                            0
+                          when 75..150
+                            1
+                          when 150..300
+                            2
+                          when (300..)
+                            3
+                          end
+      specialist.price_range = ::Specialist::VALID_PRICE_RANGES[price_range_index]
 
       # to prevent making more requests than we need, first check if there is
       # an existing country record
@@ -140,8 +147,6 @@ module Airtable
         self["Specialist Bio Updated"] = "Yes"
         self["Advisable Score"] = nil
       end
-
-      self["Typical Hourly Rate"] = specialist.hourly_rate / 100.0 if specialist.hourly_rate
 
       if specialist.bank_holder_address
         self["Bank Holder Address"] =
