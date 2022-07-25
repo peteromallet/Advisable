@@ -1,21 +1,45 @@
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LightBulb,
   MinusCircle,
   PlusCircle,
 } from "@styled-icons/heroicons-solid";
-import React from "react";
 
 function Section({ index, title, children, isActive, closeTab, openTab }) {
   return (
-    <div>
+    <div className="border-b border-solid border-neutral100">
       <div
         onClick={() => (isActive ? closeTab() : openTab(index))}
-        className="flex"
+        className="flex gap-3 cursor-pointer py-4 items-center group"
       >
-        {isActive ? <MinusCircle size="20px" /> : <PlusCircle size="20px" />}
-        <div>{title}</div>
+        {isActive ? (
+          <MinusCircle
+            size="20px"
+            className="fill-neutral900 group-hover:fill-blue700"
+          />
+        ) : (
+          <PlusCircle
+            size="20px"
+            className="fill-neutral900 group-hover:fill-blue700"
+          />
+        )}
+        <div className="text-neutral900 font-medium line-clamp-1 group-hover:text-blue700">
+          {title}
+        </div>
       </div>
-      {isActive && <p>{children}</p>}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            className="overflow-hidden"
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            exit={{ height: 0 }}
+          >
+            <p className="pb-4 text-neutral900">{children}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -27,9 +51,9 @@ export default function KeyTakeaways() {
 
   return (
     <div>
-      <div className="flex gap-3 items-center">
-        <LightBulb size="20px" />
-        <div className="uppercase text-sm font-semibold leading-none">
+      <div className="flex gap-3 items-center border-b border-neutral100 border-solid pb-4">
+        <LightBulb size="20px" className="fill-neutral900" />
+        <div className="uppercase text-sm text-neutral900 font-semibold leading-none">
           Key Takeaways
         </div>
       </div>
@@ -40,9 +64,9 @@ export default function KeyTakeaways() {
         openTab={openTab}
         title="Retargeting ads can be a quick win"
       >
-        At first, the client wasn't doing anything with their
+        At first, the client wasn&apos;t doing anything with their
         bottom-of-the-funnel customers. The first thing I did was set up
-        retargeting ads for them. With clients that haven't done any paid
+        retargeting ads for them. With clients that haven&apos;t done any paid
         before, this is the first obvious step. You can often capture these
         customers for a reasonable price and build lookalike audiences from
         them.
@@ -54,9 +78,9 @@ export default function KeyTakeaways() {
         openTab={openTab}
         title="Geo-targeting is a powerful tool"
       >
-        At first, the client wasn't doing anything with their
+        At first, the client wasn&apos;t doing anything with their
         bottom-of-the-funnel customers. The first thing I did was set up
-        retargeting ads for them. With clients that haven't done any paid
+        retargeting ads for them. With clients that haven&apos;t done any paid
         before, this is the first obvious step. You can often capture these
         customers for a reasonable price and build lookalike audiences from
         them.
