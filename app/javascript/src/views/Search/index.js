@@ -1,32 +1,24 @@
-import React, { useEffect } from "react";
-import queryString from "query-string";
-import { useLocation } from "react-router-dom";
-import { useCreateSearch } from "./queries";
+import React, { useCallback } from "react";
+import { useSearch } from "./queries";
 import CaseStudyGrid from "../Explore/CaseStudyGrid";
 import ScrollToTop from "../Explore/ScrollToTop";
 import Footer from "src/components/Footer";
+import EndlessScroll from "../Explore/EndlessScroll";
 
 export default function Search() {
-  const location = useLocation();
-  const { search } = location?.state?.backgroundLocation || location;
-  const query = queryString.parse(search).q;
-  const [createSearch, { data, loading }] = useCreateSearch();
+  const { data, loading, fetchMore } = useSearch();
 
-  useEffect(() => {
-    createSearch({
+  const edges = data?.search?.articles?.edges || [];
+  const pageInfo = data?.search?.articles?.pageInfo || {};
+  const results = edges.map((e) => e.node);
+
+  const handleLoadMore = useCallback(() => {
+    fetchMore({
       variables: {
-        input: {
-          term: query,
-        },
+        cursor: data?.search?.articles?.pageInfo?.endCursor,
       },
     });
-  }, [createSearch, query]);
-
-  const isLoading = loading && !data;
-  const interestPreview = data?.createCaseStudyInterestPreview?.interestPreview;
-  const edges = interestPreview?.articles?.edges || [];
-  const results = edges.map((e) => e.node);
-  const hasResults = results.length > 0;
+  }, [fetchMore, data]);
 
   return (
     <>
@@ -34,6 +26,9 @@ export default function Search() {
         <ScrollToTop />
         <div className="py-8">
           <CaseStudyGrid loading={loading} results={results} />
+          {pageInfo.hasNextPage && (
+            <EndlessScroll onLoadMore={handleLoadMore} />
+          )}
         </div>
       </div>
       <Footer />

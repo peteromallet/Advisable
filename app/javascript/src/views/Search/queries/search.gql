@@ -1,15 +1,17 @@
 #import "../../Explore/queries/articleFields.gql"
 
-mutation CreateInterestSearch($input: CreateCaseStudyInterestPreviewInput!) {
-  createCaseStudyInterestPreview(input: $input) {
-    interestPreview {
-      id
-      term
-      articles {
-        edges {
-          node {
-            ...ArticleFields
-          }
+query InterestPreview($term: String!, $cursor: String) {
+  search(term: $term) {
+    id
+    term
+    articles(first: 15, after: $cursor) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...ArticleFields
         }
       }
     }

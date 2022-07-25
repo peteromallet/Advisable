@@ -44,7 +44,7 @@ class TestData
       icon_file = t["icon"] + ".svg"
       icon_path = File.join(ICONS_PATH, icon_file)
       icon = File.open(icon_path)
-      topic.icon.attach(io: icon, filename: icon_file )
+      topic.icon.attach(io: icon, filename: icon_file)
     end
   end
 
