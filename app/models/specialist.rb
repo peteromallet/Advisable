@@ -20,6 +20,7 @@ class Specialist < ApplicationRecord
 
   VALID_APPLICATION_STAGES = ["Started", "Submitted", "Invited To Interview", "Interview Scheduled", "Interview Completed", "Full Application", "On Hold", "Completed", "Accepted", "Rejected By Us", "Rejected By Them", "References Requested", "References Provided", "References Validated", "Kicked Off"].freeze
   VALID_PRICE_RANGES = ["low", "medium", "high", "very high"].freeze
+  COLLABORATION_TYPES = %w[hands_on consultancy mentorship].freeze
   REJECTED_STAGES = ["Rejected By Us", "Rejected By Them"].freeze
   DEFAULT_SOURCING_FEE = 800
 
@@ -146,10 +147,12 @@ end
 #  community_invited_to_call_at      :datetime
 #  community_score                   :integer
 #  community_status                  :string
+#  consultancy                       :boolean
 #  guild                             :boolean          default(FALSE)
 #  guild_calendly_link               :string
 #  guild_featured_member_at          :datetime
 #  guild_joined_date                 :datetime
+#  hands_on                          :boolean
 #  hourly_rate                       :integer
 #  iban                              :string
 #  ideal_project                     :string
@@ -160,6 +163,7 @@ end
 #  linkedin                          :string
 #  medium                            :string
 #  member_of_week_email              :integer
+#  mentorship                        :boolean
 #  number_of_projects                :string
 #  pid                               :string
 #  previous_work_description         :string

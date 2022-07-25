@@ -10,6 +10,7 @@ module Mutations
     argument :avatar, String, required: false
     argument :bio, String, required: false
     argument :city, String, required: false
+    argument :collaboration_types, [String], required: false
     argument :country, ID, required: false
     argument :email, String, required: false
     argument :first_name, String, required: false
@@ -52,6 +53,7 @@ module Mutations
       specialist.account.avatar.attach(attributes[:avatar]) if attributes[:avatar]
       specialist.resume.attach(attributes[:resume]) if attributes[:resume]
 
+      update_collaboration_types if attributes[:collaboration_types]
       update_skills if attributes[:skills]
       update_industries if attributes[:industries]
       update_country if attributes[:country]
@@ -93,6 +95,12 @@ module Mutations
 
     def account_assignable_attributes
       attributes.slice(:email, :first_name, :last_name)
+    end
+
+    def update_collaboration_types
+      ::Specialist::COLLABORATION_TYPES.each do |type|
+        specialist.public_send("#{type}=", attributes[:collaboration_types].include?(type))
+      end
     end
 
     def update_skills
