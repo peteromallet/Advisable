@@ -41,7 +41,7 @@ export default function SpecialistSection({ article }) {
   const modal = useModal();
 
   return (
-    <div className="p-10 min-w-[348px] w-[348px]">
+    <div className="p-14 min-w-[348px] w-[348px]">
       <div className="relative inline-block mb-2">
         <Link
           className="rounded-full overflow-hidden w-[104px] h-[104px] border-2 border-neutral100 border-solid hover:border-neutral300"

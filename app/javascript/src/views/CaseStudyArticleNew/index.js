@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useArticle } from "./queries";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
@@ -13,13 +12,19 @@ import CompanyDetails from "./components/CompanyDetails";
 import Results from "./components/Results";
 import SpecialistSection from "./components/SpecialistSection";
 import KeyTakeaways from "./components/KeyTakeaways";
+import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
+import ShareArticleButton from "./components/ShareArticleButton";
+import EditCaseStudyButton from "./components/EditCaseStudyButton";
 import CircularButton from "src/components/CircularButton";
 import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import { X } from "@styled-icons/heroicons-solid";
+import { useArticle } from "./queries";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
   const { data, loading, error } = useArticle();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { back, backgroundLocation } = location.state || {};
 
   if (loading) return <Loading />;
@@ -46,13 +51,21 @@ export default function CaseStudyArticle() {
           <EditCaseStudyButton article={data.caseStudy} />
           <ShareArticleButton slug={data.caseStudy.slug} />
           <FavoriteArticleButton article={data.caseStudy} />
+          {backgroundLocation && (
+            <CircularButton
+              aria-label="Close modal"
+              icon={X}
+              onClick={() => navigate(backgroundLocation)}
+            />
+          )}
+        </div>
         <div className="flex mx-auto w-full xl:w-[1320px]">
           <SpecialistSection article={data.caseStudy} />
-          <div className="pl-12 pr-15 py-12 relative w-full border-solid border-neutral100 border-l">
-            <h1 className="text-4xl font-bold text-blue900 mb-4">
+          <div className="pl-12 pr-14 py-11 relative w-full border-solid border-neutral100 border-l">
+            <h1 className="text-4xl font-bold text-blue900 mb-4 pr-24">
               {data.caseStudy.title}
             </h1>
-            <div className="flex gap-10">
+            <div className="flex gap-14">
               <div>
                 <p className="leading-7 text-neutral900 mb-10">
                   {data.caseStudy.subtitle}

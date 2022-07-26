@@ -50,7 +50,7 @@ export default function KeyTakeaways() {
   const openTab = (index) => setActiveTab(index);
 
   return (
-    <div>
+    <div className="min-h-[320px]">
       <div className="flex gap-3 items-center border-b border-neutral100 border-solid pb-4">
         <LightBulb size="20px" className="fill-neutral900" />
         <div className="uppercase text-sm text-neutral900 font-semibold leading-none">
