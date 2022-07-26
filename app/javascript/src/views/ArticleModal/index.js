@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Versioned } from "src/components/Versioned";
 import CaseStudyArticle from "../CaseStudyArticle";
+import CaseStudyArticleNew from "../CaseStudyArticleNew";
 
 const backdropClassName = `
   fixed
@@ -77,7 +79,12 @@ export default function ArticleModal() {
         transition={{ duration: 0.3 }}
         data-testid="articleModal"
       >
-        <CaseStudyArticle topbarOffset={0} />
+        <Versioned
+          versions={[
+            <CaseStudyArticle topbarOffset={0} key={0} />,
+            <CaseStudyArticleNew key={1} />,
+          ]}
+        />
       </motion.div>
     </motion.div>
   );

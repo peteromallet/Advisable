@@ -9,6 +9,7 @@ import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
 import Article from "./views/CaseStudyArticle";
+import ArticleNew from "./views/CaseStudyArticleNew";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
 import Explore from "./views/Explore";
@@ -17,6 +18,7 @@ import Feed from "./views/Explore/Feed";
 import Trending from "./views/Explore/Trending";
 import Favorites from "./views/Explore/Favorites";
 import Topic from "./views/Explore/Topic";
+import { Versioned } from "./components/Versioned";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -86,7 +88,15 @@ const ApplicationRoutes = () => {
               </Route>
             )}
 
-            <Route path="/articles/:slug" element={<Article />} />
+            <Route
+              path="/articles/:slug"
+              element={
+                <Versioned
+                  versions={[<Article key={0} />, <ArticleNew key={1} />]}
+                  fallback={<Article />}
+                />
+              }
+            />
 
             <Route
               path="/post"
