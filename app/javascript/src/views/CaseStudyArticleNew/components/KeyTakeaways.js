@@ -32,7 +32,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
         {isActive && (
           <motion.div
             className="overflow-hidden"
-            initial={{ height: 0 }}
+            initial={{ height: isActive ? "auto" : 0 }}
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
           >
@@ -45,7 +45,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
 }
 
 export default function KeyTakeaways() {
-  const [activeTab, setActiveTab] = React.useState(null);
+  const [activeTab, setActiveTab] = React.useState(0);
   const closeTab = () => setActiveTab(null);
   const openTab = (index) => setActiveTab(index);
 
