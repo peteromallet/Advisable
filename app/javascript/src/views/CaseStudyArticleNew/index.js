@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useArticle } from "./queries";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
@@ -12,10 +13,14 @@ import CompanyDetails from "./components/CompanyDetails";
 import Results from "./components/Results";
 import SpecialistSection from "./components/SpecialistSection";
 import KeyTakeaways from "./components/KeyTakeaways";
+import CircularButton from "src/components/CircularButton";
+import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
+import { X } from "@styled-icons/heroicons-solid";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
   const { data, loading, error } = useArticle();
+  const { back, backgroundLocation } = location.state || {};
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
@@ -28,7 +33,19 @@ export default function CaseStudyArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <div className="pb-36">
+      <div className="pb-36 relative">
+        {back && (
+          <CircularButton
+            aria-label="Go back"
+            icon={ArrowSmLeft}
+            className="mr-4 hidden sm:block"
+            onClick={() => window.history.back()}
+          />
+        )}
+        <div className="z-10 absolute right-0 top-0 inline-flex gap-2 p-5">
+          <EditCaseStudyButton article={data.caseStudy} />
+          <ShareArticleButton slug={data.caseStudy.slug} />
+          <FavoriteArticleButton article={data.caseStudy} />
         <div className="flex mx-auto w-full xl:w-[1320px]">
           <SpecialistSection article={data.caseStudy} />
           <div className="pl-12 pr-15 py-12 relative w-full border-solid border-neutral100 border-l">

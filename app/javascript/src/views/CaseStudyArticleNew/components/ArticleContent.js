@@ -29,7 +29,7 @@ export default function ArticleContent({ caseStudy }) {
   return (
     <>
       <ArticleSidebar elements={elements} />
-      <div className="p-12 w-full border-l border-solid border-neutral100">
+      <div className="p-12 pr-14 w-full border-l border-solid border-neutral100">
         {elements.map((element, index) => (
           <CaseStudyContentBlock
             element={element}

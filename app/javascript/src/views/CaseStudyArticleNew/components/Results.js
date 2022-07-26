@@ -1,5 +1,5 @@
-import { ChartBar, TrendingUp } from "@styled-icons/heroicons-outline";
 import React from "react";
+import { ChartBar, TrendingUp } from "@styled-icons/heroicons-outline";
 
 export default function Results({ results }) {
   if (!results) return null;
