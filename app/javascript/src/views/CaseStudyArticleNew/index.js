@@ -62,7 +62,7 @@ export default function CaseStudyArticle() {
         <div className="flex mx-auto w-full xl:w-[1320px]">
           <SpecialistSection article={data.caseStudy} />
           <div className="pl-12 pr-14 py-11 relative w-full border-solid border-neutral100 border-l">
-            <h1 className="text-4xl font-bold text-blue900 mb-4 pr-24">
+            <h1 className="text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
               {data.caseStudy.title}
             </h1>
             <div className="flex gap-14">
@@ -72,7 +72,7 @@ export default function CaseStudyArticle() {
                 </p>
                 <KeyTakeaways />
               </div>
-              <div>
+              <div className="pt-2">
                 <Results results={data.caseStudy.resultsContent?.results} />
                 <CompanyDetails caseStudy={data.caseStudy} />
               </div>
