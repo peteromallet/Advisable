@@ -3,7 +3,7 @@ import { Link, useModal, DialogDisclosure } from "@advisable/donut";
 import React from "react";
 import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
-import { LocationMarker } from "@styled-icons/heroicons-solid";
+import { BadgeCheck, LocationMarker } from "@styled-icons/heroicons-solid";
 
 const StyledIcon = ({ icon: Icon, color }) => {
   const bgColors = {
@@ -28,9 +28,11 @@ const StyledIcon = ({ icon: Icon, color }) => {
 };
 
 const StyledCategoryName = ({ children }) => (
-  <div className="text-xs font-medium text-neutral500 leading-none">
-    {children}
-  </div>
+  <div className="text-xs font-medium text-neutral500">{children}</div>
+);
+
+const StyledCategoryContent = ({ children }) => (
+  <div className="font-medium text-base leading-5 text-blue900">{children}</div>
 );
 
 export default function SpecialistSection({ article }) {
@@ -40,17 +42,22 @@ export default function SpecialistSection({ article }) {
 
   return (
     <div className="p-10 min-w-[348px] w-[348px]">
-      <Link
-        className="mb-2 mx-auto rounded-full overflow-hidden w-[104px] h-[104px] border-2 border-neutral100 border-solid hover:border-neutral300"
-        to={specialist.profilePath}
-      >
-        {specialist.avatar && (
-          <img
-            src={specialist.avatar}
-            className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
-          />
-        )}
-      </Link>
+      <div className="relative inline-block mb-2">
+        <Link
+          className="rounded-full overflow-hidden w-[104px] h-[104px] border-2 border-neutral100 border-solid hover:border-neutral300"
+          to={specialist.profilePath}
+        >
+          {specialist.avatar && (
+            <img
+              src={specialist.avatar}
+              className="h-full w-full object-cover rounded-full border-2 border-white border-solid"
+            />
+          )}
+        </Link>
+        <div className="flex justify-center items-center absolute bottom-2 right-1 rounded-full p-0.5 bg-white">
+          <BadgeCheck size={24} className="fill-blue500" />
+        </div>
+      </div>
 
       <Link to={specialist.profilePath} className="mb-2">
         <div className="text-2xl font-bold text-blue900 tracking-tight hover:underline decoration-blue200">
@@ -75,7 +82,9 @@ export default function SpecialistSection({ article }) {
             <StyledIcon icon={Tag} color="red" />
             <div>
               <StyledCategoryName>Hourly Rate</StyledCategoryName>
-              <div>${specialist.hourlyRate / 100}</div>
+              <StyledCategoryContent>
+                ${specialist.hourlyRate / 100}
+              </StyledCategoryContent>
             </div>
           </div>
         )}
@@ -84,17 +93,19 @@ export default function SpecialistSection({ article }) {
           <StyledIcon icon={Chat} color="purple" />
           <div>
             <StyledCategoryName>Available For</StyledCategoryName>
-            <div>Consultations, Mentoring and Hands-On Work</div>
+            <StyledCategoryContent>
+              Consultations, Mentoring and Hands-On Work
+            </StyledCategoryContent>
           </div>
         </div>
 
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <StyledIcon icon={Briefcase} color="cyan" />
           <div>
             <StyledCategoryName>Previous Roles</StyledCategoryName>
             <div>See work history</div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <ConnectModal modal={modal} specialist={specialist} article={article} />
