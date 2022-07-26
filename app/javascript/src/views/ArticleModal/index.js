@@ -21,7 +21,6 @@ const modalClassName = `
   bg-white
   relative
   shadow-2xl
-  overflow-y-scroll
   rounded-t-[32px]
 `;
 
@@ -79,13 +78,15 @@ export default function ArticleModal() {
         transition={{ duration: 0.3 }}
         data-testid="articleModal"
       >
-        <Versioned
-          name="explore"
-          versions={{
-            2: <CaseStudyArticleNew />,
-          }}
-          fallback={<CaseStudyArticle topbarOffset={0} />}
-        />
+        <div className="h-full overflow-y-scroll">
+          <Versioned
+            name="explore"
+            versions={{
+              2: <CaseStudyArticleNew />,
+            }}
+            fallback={<CaseStudyArticle topbarOffset={0} />}
+          />
+        </div>
       </motion.div>
     </motion.div>
   );

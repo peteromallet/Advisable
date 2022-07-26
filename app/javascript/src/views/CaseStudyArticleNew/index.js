@@ -38,6 +38,18 @@ export default function CaseStudyArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
+      <div className="z-10 absolute right-0 top-0 inline-flex gap-2 p-5">
+        <EditCaseStudyButton article={data.caseStudy} />
+        <ShareArticleButton slug={data.caseStudy.slug} />
+        <FavoriteArticleButton article={data.caseStudy} />
+        {backgroundLocation && (
+          <CircularButton
+            aria-label="Close modal"
+            icon={X}
+            onClick={() => navigate(backgroundLocation)}
+          />
+        )}
+      </div>
       <div className="pb-36 relative">
         {back && (
           <CircularButton
@@ -47,18 +59,6 @@ export default function CaseStudyArticle() {
             onClick={() => window.history.back()}
           />
         )}
-        <div className="z-10 absolute right-0 top-0 inline-flex gap-2 p-5">
-          <EditCaseStudyButton article={data.caseStudy} />
-          <ShareArticleButton slug={data.caseStudy.slug} />
-          <FavoriteArticleButton article={data.caseStudy} />
-          {backgroundLocation && (
-            <CircularButton
-              aria-label="Close modal"
-              icon={X}
-              onClick={() => navigate(backgroundLocation)}
-            />
-          )}
-        </div>
         <div className="flex mx-auto w-full xl:w-[1320px]">
           <SpecialistSection article={data.caseStudy} />
           <div className="pl-12 pr-14 py-11 relative w-full border-solid border-neutral100 border-l">
