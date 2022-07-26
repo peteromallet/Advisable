@@ -1,23 +1,23 @@
-import React from "react";
+import React, { createElement } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Avatar from "src/components/Avatar";
 import FavoriteButton from "./FavoriteButton";
 import composeStyles from "src/utilities/composeStyles";
-import chess from "src/icons/chess.svg";
-import coins from "src/icons/coins.svg";
-import rocket from "src/icons/rocket.svg";
-import target from "src/icons/target.svg";
-import sliders from "src/icons/sliders.svg";
-import multiply from "src/icons/multiply.svg";
-import paintbrush from "src/icons/paintbrush.svg";
+import Chess from "src/icons/duo/chess";
+import Coins from "src/icons/duo/coins";
+import rocket from "src/icons/duo/rocket";
+import target from "src/icons/duo/target";
+import sliders from "src/icons/duo/sliders";
+import multiply from "src/icons/duo/multiply";
+import paintbrush from "src/icons/duo/paintbrush";
 
 const CATEGORY_ICONS = {
-  revenue: coins,
+  strategy: Chess,
+  revenue: Coins,
   impact: target,
   multiply,
   creative: paintbrush,
-  strategy: chess,
   launch: rocket,
   optimise: sliders,
 };
@@ -26,11 +26,11 @@ function Result({ category, callout, context }) {
   return (
     <li className="flex gap-4">
       <div className="icon-duo-neutral">
-        <svg width="24" height="24">
-          <use
-            href={`${CATEGORY_ICONS[category] || CATEGORY_ICONS.revenue}#icon`}
-          />
-        </svg>
+        {createElement(CATEGORY_ICONS[category] || CATEGORY_ICONS.strategy, {
+          width: 24,
+          stroke: "var(--color-neutral-700)",
+          fill: "var(--color-neutral-200)"
+        })}
       </div>
       <div>
         <h5 className="mb-1 font-semibold leading-none">{callout}</h5>
