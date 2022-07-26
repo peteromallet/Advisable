@@ -92,7 +92,8 @@ const ApplicationRoutes = () => {
               path="/articles/:slug"
               element={
                 <Versioned
-                  versions={[<Article key={0} />, <ArticleNew key={1} />]}
+                  name="explore"
+                  versions={{ 2: <ArticleNew /> }}
                   fallback={<Article />}
                 />
               }

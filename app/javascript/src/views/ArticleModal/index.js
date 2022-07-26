@@ -80,10 +80,11 @@ export default function ArticleModal() {
         data-testid="articleModal"
       >
         <Versioned
-          versions={[
-            <CaseStudyArticle topbarOffset={0} key={0} />,
-            <CaseStudyArticleNew key={1} />,
-          ]}
+          name="explore"
+          versions={{
+            2: <CaseStudyArticleNew />,
+          }}
+          fallback={<CaseStudyArticle topbarOffset={0} />}
         />
       </motion.div>
     </motion.div>
