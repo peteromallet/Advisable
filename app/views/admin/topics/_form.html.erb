@@ -12,19 +12,25 @@
   <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
     <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= label_tag :name, "Name" %>
+        <%= label_tag :name, "Name", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
           <%= form.text_field :name, class: "max-w-lg block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-sm" %>
         </div>
       </div>
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= label_tag :term, "Term" %>
+        <%= label_tag :term, "Term", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
           <%= form.text_field :term, class: "max-w-lg block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-sm" %>
         </div>
       </div>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= label_tag :description, "Description", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          <%= form.text_area :description, rows: 5, class: "max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-sm" %>
+        </div>
+      </div>
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5">
-        <%= label_tag :icon, "Icon" %>
+        <%= label_tag :icon, "Icon", class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
           <%= form.file_field :icon %>
         </div>
