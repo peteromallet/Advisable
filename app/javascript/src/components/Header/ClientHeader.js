@@ -3,14 +3,16 @@ import HeaderLogo from "../HeaderLogo";
 import Searchbox from "../Searchbox";
 import CurrentUser from "./CurrentUser";
 import HeaderBar from "./HeaderBar";
+import HeaderToggle from "./HeaderToggle";
 import MessagesDropdown from "./MessagesDropdown";
 import Notifications from "./Notifications";
 
 export default function ClientHeader() {
   return (
     <HeaderBar>
-      <div className="flex items-center justify-start flex-1">
+      <div className="flex items-center justify-start flex-1 gap-4">
         <HeaderLogo />
+        <HeaderToggle />
       </div>
 
       <div className="flex items-center justify-center flex-1">
