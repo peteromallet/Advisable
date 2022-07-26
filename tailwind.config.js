@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ["Inter", ...defaultTheme.fontFamily.sans],
+        serif: ["p22-mackinac-pro", defaultTheme.fontFamily.serif],
       },
       colors: {
         neutral50: "#F9F9F9",
