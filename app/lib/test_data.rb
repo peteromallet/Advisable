@@ -7,7 +7,7 @@ require "zip"
 class TestData
   DATA_DIR = "db/seeds/data"
   PRUNED_DIR = "#{DATA_DIR}/pruned".freeze
-  ZIP_NAME = "test_data_2022_06_v1.zip"
+  ZIP_NAME = "test_data_2022_07_v1.zip"
   ZIP_PATH = "#{DATA_DIR}/#{ZIP_NAME}".freeze
   IMAGES_PATH = "db/seeds/assets/images/"
   AMOUNT_OF_RANDOM_IMAGES = 100

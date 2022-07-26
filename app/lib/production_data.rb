@@ -6,12 +6,14 @@ require "csv"
 # rubocop:disable Rails/SkipsModelValidations
 class ProductionData
   CLASSES = [
-    CaseStudy::Industry, CaseStudy::Skill, CaseStudy::Content, CaseStudy::Section, CaseStudy::Embedding,
+    CaseStudy::Industry, CaseStudy::Skill, CaseStudy::Insight, CaseStudy::Content, CaseStudy::Section, CaseStudy::Embedding,
     CaseStudy::Article, CaseStudy::Company, SkillCategorySkill, SkillCategory, Skill, Industry
   ].freeze
   TABLE_NAMES = CLASSES.map(&:table_name).freeze
 
   def create_file!
+    raise "Ensure insights and new results data is in production before removing"
+
     destroy_local_data
     PeopleData.new.seed!
     download_data_from_production
@@ -29,6 +31,7 @@ class ProductionData
     populate("case_study_embeddings", source_dir:)
     populate("case_study_sections", source_dir:)
     populate("case_study_contents", source_dir:)
+    populate("case_study_insights", source_dir:)
     populate("industries", source_dir:)
     populate("case_study_industries", source_dir:)
     populate("skills", source_dir:)
