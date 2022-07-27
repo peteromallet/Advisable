@@ -19,7 +19,7 @@ end
 #  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  airtable_id :string           not null
+#  airtable_id :string
 #  article_id  :bigint           not null
 #
 # Indexes

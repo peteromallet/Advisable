@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_22_112258) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_26_140635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -235,7 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_112258) do
 
   create_table "case_study_insights", force: :cascade do |t|
     t.string "uid", null: false
-    t.string "airtable_id", null: false
+    t.string "airtable_id"
     t.bigint "article_id", null: false
     t.string "title"
     t.text "description"

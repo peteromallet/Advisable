@@ -28,7 +28,10 @@ module Airtable
           existing&.update(email: "#{SecureRandom.hex}+#{existing.email}")
           airspecialist.sync
         end
-        Airtable::SalesPerson.find(fields["Interviewer"].first).sync if ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
+
+        if fields["Interviewer"].present? && ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
+          Airtable::SalesPerson.find(fields["Interviewer"].first).sync
+        end
 
         Array(fields["Industry"]).each do |airtable_id|
           Airtable::Industry.find(airtable_id).sync if ::Industry.find_by(airtable_id:).nil?
@@ -111,12 +114,17 @@ module Airtable
         end
 
         article.skills.destroy_all
-        Array(fields["Skills"]).each do |airtable_id|
-          skill = ::Skill.find_by!(airtable_id:)
+
+        skills = Array(fields["Skills"]).map do |airtable_id|
+          ::Skill.find_by!(airtable_id:)
+        end
+
+        skills.each do |skill|
           ::CaseStudy::Skill.find_or_create_by!(skill:, article:)
         end
 
-        primary_skill = ::Skill.find_by!(airtable_id: fields["Primary Skill"].first)
+        primary_skill_id = fields["Primary Skill"]&.first
+        primary_skill = primary_skill_id ? ::Skill.find_by!(airtable_id: primary_skill_id) : skills.first
         article.skills.find_by(skill: primary_skill).update!(primary: true)
         article
       end
@@ -141,9 +149,9 @@ module Airtable
     def attach_results(section, fields)
       results = []
       if fields["Key Result 1 Context"].present?
-        1.upto(3).each { |i| results << {category: fields["Key Result #{i} Category"].strip, context: fields["Key Result #{i} Context"].strip, callout: fields["Key Result #{i} Callout"].strip} }
+        1.upto(3).each { |i| results << {category: fields["Key Result #{i} Category"]&.strip, context: fields["Key Result #{i} Context"]&.strip, callout: fields["Key Result #{i} Callout"]&.strip} }
       else
-        1.upto(3).each { |i| results << fields["Key Result #{i}"].strip }
+        1.upto(3).each { |i| results << fields["Key Result #{i}"]&.strip }
       end
       section.contents.new(type: "CaseStudy::ResultsContent", content: {results:}, position: content_position)
       increment_content_position
@@ -177,6 +185,8 @@ module Airtable
 
     def attach_insights!(article)
       insights.each do |air_insight|
+        next if air_insight.fields["Insight Available"]&.strip != "Yes"
+
         insight = article.insights.find_or_initialize_by(airtable_id: air_insight.id)
         insight.title = air_insight.fields["Insight Title"]
         insight.description = air_insight.fields["Insight Body"]
