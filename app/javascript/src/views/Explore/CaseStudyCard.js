@@ -61,6 +61,7 @@ const skillClasses = composeStyles({
 
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
+  const results = (article.resultsContent?.results || []).slice(0, 2);
 
   return (
     <div className="w-full h-[500px] bg-white rounded-xl shadow-md p-6">
@@ -75,7 +76,7 @@ export default function CaseStudyCard({ article, delay }) {
           state={{
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
-          className="flex-1"
+          className="case-study-card-content"
         >
           {article.primarySkill && (
             <div
@@ -89,7 +90,7 @@ export default function CaseStudyCard({ article, delay }) {
           </h4>
 
           <ul className="space-y-8">
-            {(article.resultsContent || []).results.map((r, i) => (
+            {results.map((r, i) => (
               <Result
                 key={i}
                 callout={r.callout}
@@ -100,7 +101,7 @@ export default function CaseStudyCard({ article, delay }) {
           </ul>
         </Link>
 
-        <div className="flex items-center justify-between -m-1">
+        <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-3">
             <Avatar
               size="xs"

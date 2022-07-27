@@ -96,3 +96,21 @@
     }
   }
 }
+
+.case-study-card-content {
+  flex: 1;
+  min-height: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 120px;
+    background: linear-gradient(rgb(255 255 255 / 0), white);
+    position: absolute;
+  }
+}
