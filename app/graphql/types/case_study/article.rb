@@ -32,6 +32,12 @@ module Types
         object.skills.order(created_at: :asc)
       end
 
+      field :primary_skill, Types::Skill, null: true
+      def primary_skill
+        skills = object.skills
+        skills.find(&:primary)&.skill || skills.first&.skill
+      end
+
       field :cover_photo, String, null: true
       def cover_photo
         object.cover_photo.url
