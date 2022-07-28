@@ -9,14 +9,12 @@ class TestData
   PRUNED_DIR = "#{DATA_DIR}/pruned".freeze
   ZIP_NAME = "test_data_2022_08_v1.zip"
   ZIP_PATH = "#{DATA_DIR}/#{ZIP_NAME}".freeze
-  ICONS_PATH = "db/seeds/assets/icons/"
   IMAGES_PATH = "db/seeds/assets/images/"
   AMOUNT_OF_RANDOM_IMAGES = 100
 
   attr_reader :now
 
   def initialize
-    @test_data = YAML.load_file(Rails.root.join("db", "seeds", "test_data.yml"))
     @unsplash_images = Dir.glob("#{IMAGES_PATH}*.jpg")
     @now = Time.zone.now
   end
@@ -30,22 +28,7 @@ class TestData
       puts "Populating #{model.table_name}…"
       __send__("populate_#{model.table_name}")
     end
-    create_topics
     reset_pkey_sequences
-  end
-
-  def create_topics
-    @test_data["topics"].each do |t|
-      topic = CaseStudy::Topic.create({
-        name: t["name"],
-        term: t["term"],
-      })
-
-      icon_file = t["icon"] + ".svg"
-      icon_path = File.join(ICONS_PATH, icon_file)
-      icon = File.open(icon_path)
-      topic.icon.attach(io: icon, filename: icon_file)
-    end
   end
 
   private
