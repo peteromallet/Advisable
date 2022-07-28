@@ -15,7 +15,7 @@ class ProductionData
     raise "Ensure insights and new results data is in production before removing"
 
     destroy_local_data
-    PeopleData.new.seed!
+    FixturesData.new.seed!
     download_data_from_production
     populate_local_tables
     prune_data
@@ -25,7 +25,7 @@ class ProductionData
   end
 
   def populate_local_tables(source_dir: TestData::DATA_DIR)
-    PeopleData::TABLE_NAMES.reverse_each { |table| populate(table, source_dir:) } if Account.none?
+    FixturesData::TABLE_NAMES.reverse_each { |table| populate(table, source_dir:) } if Account.none?
     populate("case_study_companies", source_dir:)
     populate("case_study_articles", ignore_columns: ["interviewer_id"], map_columns: ["specialist_id"], source_dir:)
     populate("case_study_embeddings", source_dir:)
@@ -86,7 +86,7 @@ class ProductionData
   def prepare_file
     puts "Preparing file…"
 
-    FileUtils.remove_file(TestData::ZIP_PATH) if File.exist?(TestData::ZIP_PATH)
+    FileUtils.rm_f(TestData::ZIP_PATH)
     FileUtils.mkdir_p(TestData::PRUNED_DIR)
     TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
 
@@ -99,7 +99,7 @@ class ProductionData
 
   def upload_file
     puts "Uploading to S3…"
-    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key: TestData::ZIP_NAME)
+    obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key: TestData::ZIP_NAME)
     obj.upload_file(TestData::ZIP_PATH)
   end
 
