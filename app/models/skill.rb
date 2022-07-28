@@ -13,7 +13,7 @@ class Skill < ApplicationRecord
   has_many :skill_categories, through: :skill_category_skills
   has_one :label, required: false, dependent: :nullify
 
-  before_validation :set_color, on: :create
+  before_create :set_color, if: -> { color.blank? }
 
   validates :name, presence: true
   validates :airtable_id, presence: true
@@ -57,8 +57,6 @@ class Skill < ApplicationRecord
   private
 
   def set_color
-    return if color.present?
-
     self.color = COLORS.sample
   end
 end
