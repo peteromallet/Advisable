@@ -348,5 +348,16 @@ module Types
       favorited = ::CaseStudy::FavoritedArticle.where(account: current_user.account).order(created_at: :desc).pluck(:article_id)
       ::CaseStudy::Article.searchable.where(id: favorited).in_order_of(:id, favorited)
     end
+
+    field :search, Types::CaseStudy::InterestPreview, null: true do
+      argument :term, String, required: true
+    end
+    def search(term:)
+      requires_client!
+      interest_preview = ::CaseStudy::InterestPreview.find_or_create_by!(term:, account: current_user.account)
+      interest_preview.find_results!
+      track_event("Search", {term:})
+      interest_preview
+    end
   end
 end
