@@ -76,4 +76,11 @@ namespace :data do
   task migrate_reschedule_request_statuses: :environment do
     Interview.where(status: ["Specialist Requested Reschedule", "Client Requested Reschedule"]).update_all(status: "Declined")
   end
+
+  task generate_skill_colors: :environment do
+    Skill.find_each do |skill|
+      skill.__send__(:set_color)
+      skill.save
+    end
+  end
 end
