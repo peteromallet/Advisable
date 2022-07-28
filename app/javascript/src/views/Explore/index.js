@@ -14,7 +14,7 @@ export default function Explore() {
 
   return (
     <>
-      <div className="max-w-[1300px] mx-auto px-5 pb-10">
+      <div className="max-w-[1300px] mx-auto px-5 pb-10 min-h-[83vh]">
         <ScrollToTop />
         <TopicsBar />
         <div className="h-px mb-8 bg-neutral-200" />

@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
+import { motion } from "framer-motion";
 import EndlessScroll from "./EndlessScroll";
 import { useFavorites } from "./queries";
 import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
-
-const PAGE_SIZE = 15;
+import ArchiveIllustration from "src/illustrations/zest/archive";
+import ExploreViewHeading from "./ExploreViewHeading";
 
 export default function Favorites() {
   const { loading, data, fetchMore } = useFavorites();
@@ -20,15 +21,29 @@ export default function Favorites() {
     });
   }, [fetchMore, data]);
 
+  const isEmpty = !loading && results.length === 0;
+
   return (
     <>
-      <div className="mb-8">
-        <h1 className="mb-1 text-4xl font-bold tracking-tight text-neutral900">
-          Your Favorites
-        </h1>
-      </div>
+      {!isEmpty && (
+        <ExploreViewHeading title="Your Favorites" description="Your favorite projects" loading={loading} />
+      )}
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+
+      {isEmpty && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="py-16 text-center">
+          <ArchiveIllustration
+            primaryColor="var(--color-neutral-800)"
+            secondaryColor="var(--color-blue-200)"
+            width="200px" className="mx-auto mb-8" />
+          <h5 className="font-medium text-lg">No favourites</h5>
+          <p>You haven't favorited any projecs yet.</p>
+        </motion.div>
+      )}
     </>
   );
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useTrending } from "./queries";
 import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
+import ExploreViewHeading from "./ExploreViewHeading";
 
 export default function Explore() {
   const { loading, data } = useTrending();
@@ -9,14 +10,7 @@ export default function Explore() {
 
   return (
     <>
-      <div className="mb-8">
-        <h1 className="mb-1 text-4xl font-bold tracking-tight text-neutral900">
-          Trending
-        </h1>
-        <p className="text-lg text-neutral-500">
-          The latest and greatest projects in SaaS marketing.
-        </p>
-      </div>
+      <ExploreViewHeading title="Trending" description="The latest and greatest projects in SaaS marketing" />
       <CaseStudyGrid loading={loading} results={results} />
     </>
   );

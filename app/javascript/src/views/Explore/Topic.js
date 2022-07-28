@@ -4,6 +4,7 @@ import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
 import { useParams } from "react-router-dom";
 import EndlessScroll from "./EndlessScroll";
+import ExploreViewHeading from "./ExploreViewHeading";
 
 export default function Topic() {
   const { slug } = useParams();
@@ -28,22 +29,7 @@ export default function Topic() {
 
   return (
     <>
-      <div className="mb-8">
-        <div className="mb-1">
-          {!topic.name && loading ? (
-            <div className="max-w-[250px] h-[32px] bg-neutral-200 animate-pulse rounded-md mb-5" />
-          ) : (
-            <h1 className="text-4xl font-bold tracking-tight text-neutral900">
-              {topic?.name}
-            </h1>
-          )}
-        </div>
-        {!topic.description && loading ? (
-          <div className="max-w-[420px] h-[18px] bg-neutral-200 animate-pulse rounded-md" />
-        ) : (
-          <p className="text-lg text-neutral-500">{topic?.description}</p>
-        )}
-      </div>
+      <ExploreViewHeading title={topic.name} description={topic.description} loading={!topic.name && loading} />
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </>

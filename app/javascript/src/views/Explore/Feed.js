@@ -3,6 +3,7 @@ import EndlessScroll from "./EndlessScroll";
 import { useFeed } from "./queries";
 import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
+import ExploreViewHeading from "./ExploreViewHeading";
 
 export default function Explore() {
   const { loading, data, fetchMore } = useFeed();
@@ -18,14 +19,7 @@ export default function Explore() {
 
   return (
     <>
-      <div className="mb-8">
-        <h1 className="mb-1 text-4xl font-bold tracking-tight text-neutral900">
-          Your Feed
-        </h1>
-        <p className="text-lg text-neutral-500">
-          The best projects based on your interests.
-        </p>
-      </div>
+        <ExploreViewHeading title="Your Feed" description="The best projects based on your interests." />
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </>
