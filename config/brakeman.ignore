@@ -67,7 +67,7 @@
       "check_name": "ValidationRegex",
       "message": "Insufficient validation for `email` using `/@/`. Use `\\A` and `\\z` as anchors",
       "file": "app/models/account.rb",
-      "line": 34,
+      "line": 38,
       "link": "https://brakemanscanner.org/docs/warning_types/format_validation/",
       "code": null,
       "render_path": null,
@@ -106,7 +106,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/production_data.rb",
-      "line": 58,
+      "line": 61,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`heroku pg:psql -c \"\\copy (SELECT * FROM #{table}) TO #{source_dir}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -137,26 +137,6 @@
       },
       "user_input": "attribute.sql_name",
       "confidence": "Weak",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "50be0e392e8ea5e7d49dd80d74f28d6973643c3538c9d2c5be8b89d93cc6c45c",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/concerns/featurable.rb",
-      "line": 41,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "[Format Error]",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Featurable",
-        "method": "featurize"
-      },
-      "user_input": "column",
-      "confidence": "Medium",
       "note": ""
     },
     {
@@ -286,7 +266,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/production_data.rb",
-      "line": 88,
+      "line": 91,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -306,7 +286,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/graphql/mutations/update_profile.rb",
-      "line": 123,
+      "line": 133,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Label.where(\"#{type}_id\" => ids)",
       "render_path": null,
@@ -360,26 +340,6 @@
       "note": ""
     },
     {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "bf86f6bb2fb2d6d91507aa7c8626f9cb8afccfa2b2c757cd964786ab09cb3e01",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/lib/people_data.rb",
-      "line": 86,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "PeopleData",
-        "method": "dump_data"
-      },
-      "user_input": "table",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "c2cf48647b7691b75cd0886e059d4377f67fdf291a92391ab51d435c22a61cd3",
@@ -422,6 +382,26 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "d725d37ab4cf31d445ac3fdf1c1bb955eb40572e5632b52103f1760677c59bee",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/featurable.rb",
+      "line": 41,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"#{column} ? :feature\", :feature => feature)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Featurable",
+        "method": "featurize"
+      },
+      "user_input": "column",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "dd7bd0cdc81c7edf62c2303c749094cac15a0092442b868b5073b8c874390c80",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -458,8 +438,28 @@
       "user_input": "request.env[\"omniauth.origin\"]",
       "confidence": "High",
       "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "ed2a184d61026a82454bc491599e742d1eb795c4838e612d30cc14d2d64b0c09",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/fixtures_data.rb",
+      "line": 108,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "FixturesData",
+        "method": "dump_data"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2022-04-21 10:28:15 +0200",
-  "brakeman_version": "5.2.2"
+  "updated": "2022-07-28 12:34:42 +0200",
+  "brakeman_version": "5.2.3"
 }
