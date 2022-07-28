@@ -751,6 +751,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_140635) do
     t.integer "specialists_count", default: 0
     t.string "characteristic_placeholder"
     t.string "goal_placeholder"
+    t.string "color"
     t.index ["airtable_id"], name: "index_skills_on_airtable_id", unique: true
     t.index ["uid"], name: "index_skills_on_uid", unique: true
   end

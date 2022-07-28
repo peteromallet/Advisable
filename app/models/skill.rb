@@ -13,11 +13,15 @@ class Skill < ApplicationRecord
   has_many :skill_categories, through: :skill_category_skills
   has_one :label, required: false, dependent: :nullify
 
+  before_create :set_color, if: -> { color.blank? }
+
   validates :name, presence: true
   validates :airtable_id, presence: true
 
   scope :active, -> { where(active: true) }
   scope :popular, -> { order(projects_count: :desc, specialists_count: :desc) }
+
+  COLORS = %w[red orange amber green emerald teal cyan blue indigo violet pink].freeze
 
   # rubocop:disable Rails/SkipsModelValidations
   def merge_with!(duplicate:)
@@ -49,6 +53,12 @@ class Skill < ApplicationRecord
   def with_similar_skills(similarity = 50)
     SkillSimilarity.similar_to(self, similarity)
   end
+
+  private
+
+  def set_color
+    self.color = COLORS.sample
+  end
 end
 
 # == Schema Information
@@ -59,6 +69,7 @@ end
 #  active                     :boolean
 #  category                   :string
 #  characteristic_placeholder :string
+#  color                      :string
 #  goal_placeholder           :string
 #  name                       :string
 #  profile                    :boolean
