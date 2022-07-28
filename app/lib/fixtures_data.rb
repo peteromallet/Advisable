@@ -1,37 +1,50 @@
 # frozen_string_literal: true
 
 # rubocop:disable Rails/SkipsModelValidations
-class PeopleData
-  CLASSES = [User, Specialist, Account, Company, SalesPerson, Country].freeze
+class FixturesData
+  CLASSES = [User, Specialist, Account, Company, SalesPerson, Country, CaseStudy::Topic].freeze
   TABLE_NAMES = CLASSES.map(&:table_name).freeze
 
-  attr_reader :advisable_yml, :now
+  attr_reader :fixtures_yml, :now
 
   def initialize
-    @advisable_yml = YAML.load_file("db/seeds/people.yml")[:advisable]
+    @fixtures_yml = YAML.load_file("db/seeds/fixtures.yml")
     @now = Time.zone.now
   end
 
   def seed!
-    puts "Seeding people data..."
+    puts "Seeding fixtures data..."
     destroy_existing_data
     populate_sales_people
     populate_companies
     populate_countries
+    populate_topics
     populate_advisable
     dump_data
   end
 
+  def attach_images!
+    attach_avatars!
+    attach_topic_icons!
+  end
+
+  private
+
   def attach_avatars!
     puts "Attaching avatars..."
-    advisable_yml.each do |person|
+    fixtures_yml[:advisable].each do |person|
       path = "db/seeds/assets/avatars/#{person[:avatar]}"
       Account.find_by(email: person[:email]).avatar.attach(io: File.open(path), filename: person[:avatar])
       Account.find_by(email: person[:email].sub("@", "+specialist@")).avatar.attach(io: File.open(path), filename: person[:avatar])
     end
   end
 
-  private
+  def attach_topic_icons!
+    puts "Attaching topic icons..."
+    fixtures_yml[:topics].each do |topic|
+      CaseStudy::Topic.find_by(name: topic[:name]).icon.attach(io: File.open("db/seeds/assets/icons/#{topic[:icon]}.svg"), filename: topic[:icon])
+    end
+  end
 
   def destroy_existing_data
     Payment.delete_all
@@ -69,8 +82,16 @@ class PeopleData
     @country_ids = Country.insert_all(countries_data).pluck("id")
   end
 
+  def populate_topics
+    topics_data = fixtures_yml[:topics].map do |topic|
+      {uid: CaseStudy::Topic.generate_uid, name: topic[:name], term: topic[:term], slug: topic[:name].parameterize, created_at: now, updated_at: now}
+    end
+    CaseStudy::Topic.insert_all(topics_data).pluck("id")
+    CaseStudy::Topic.find_each(&:term_vector)
+  end
+
   def populate_advisable
-    advisable_data = parse_advisable_yml
+    advisable_data = parse_advisable_from_yml
     accounts = Account.upsert_all(advisable_data.pluck(:account), unique_by: :email).pluck("id")
     accounts.each_with_index do |account, i|
       key = i.even? ? :specialist : :user
@@ -87,8 +108,8 @@ class PeopleData
     TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
   end
 
-  def parse_advisable_yml
-    advisable_yml.flat_map do |advisable|
+  def parse_advisable_from_yml
+    fixtures_yml[:advisable].flat_map do |advisable|
       [
         {
           account: {

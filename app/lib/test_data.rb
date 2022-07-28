@@ -7,7 +7,7 @@ require "zip"
 class TestData
   DATA_DIR = "db/seeds/data"
   PRUNED_DIR = "#{DATA_DIR}/pruned".freeze
-  ZIP_NAME = "test_data_2022_07_v2.zip"
+  ZIP_NAME = "test_data_2022_07_v3.zip"
   ZIP_PATH = "#{DATA_DIR}/#{ZIP_NAME}".freeze
   IMAGES_PATH = "db/seeds/assets/images/"
   AMOUNT_OF_RANDOM_IMAGES = 100
@@ -78,7 +78,7 @@ class TestData
   def populate_pruned_data
     ProductionData.new.populate_local_tables(source_dir: PRUNED_DIR)
     LocalData.new.populate_local_tables(source_dir: PRUNED_DIR)
-    PeopleData.new.attach_avatars!
+    FixturesData.new.attach_images!
     attach_images_to_cs_contents
   end
 

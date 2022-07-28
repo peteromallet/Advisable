@@ -45,3 +45,55 @@
   :email: yurko.turskiy@advisable.com
   :avatar: yurko_turskiy.jpg
   :bio: Breadstick
+:topics:
+- :name: Email Marketing
+  :term: email marketing
+  :icon: inbox
+- :name: Improve SEO Rankings
+  :term: search engine optimization, SEO
+  :icon: seo
+- :name: Product Launches
+  :term: launching a product
+  :icon: launch
+- :name: Growth Marketing
+  :term: growth marketing
+  :icon: pulse
+- :name: Social Media
+  :term: Twitter, Facebook, Instagram, Linkedin, Google ads
+  :icon: twitter
+- :name: Event Marketing
+  :term: event marketing
+  :icon: calendar
+- :name: Fund Raising
+  :term: Raise funds
+  :icon: finance
+- :name: Viral Growth
+  :term: viral growth
+  :icon: viral
+- :name: Video Content
+  :term: video production, video content
+  :icon: video
+- :name: Public Relations
+  :term: public relations
+  :icon: globe
+- :name: Influencers Marketing
+  :term: influencer
+  :icon: influencer
+- :name: Market Research
+  :term: market research
+  :icon: users
+- :name: Direct Marketing
+  :term: direct marketing
+  :icon: target
+- :name: Audio Marketing
+  :term: audio, podcast
+  :icon: microphone
+- :name: Strategy Creation
+  :term: strategic marketing
+  :icon: chess
+- :name: Increase Traffic
+  :term: increase traffic
+  :icon: magnet
+- :name: Food industry
+  :term: food, restaurant
+  :icon: food
