@@ -12,7 +12,7 @@ module Types
       field :description, String, null: true
       field :icon, String, null: true
       def icon
-        icon.url
+        object.icon.url
       end
 
       field :articles, Article.connection_type, null: true
