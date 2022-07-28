@@ -66,12 +66,29 @@ export default function CaseStudyCard({ article, delay }) {
   const results = (article.resultsContent?.results || []).slice(0, 2);
 
   return (
-    <div className="w-full h-[500px] bg-white rounded-xl shadow-md p-6">
+    <motion.div whileHover="hover" whileTap="tap"
+      variants={{ hover: { y: -4 } }}
+      transition={{ duration: 0.2 }}
+      className="w-full h-[500px] p-6 relative">
+      <motion.div
+        initial={{
+          boxShadow: "0 4px 8px -2px rgba(0, 0, 0, 0.12)",
+        }}
+        variants={{
+          hover: {
+            scale: 1.01,
+            boxShadow: "0 8px 60px -12px rgba(0, 0, 0, 0.16)",
+          },
+          tap: {
+            scale: 1,
+          }
+        }}
+        className="absolute inset-0 bg-white rounded-xl" />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay }}
-        className="flex flex-col h-full"
+        className="flex flex-col h-full relative"
       >
         <Link
           to={article.path}
@@ -117,6 +134,6 @@ export default function CaseStudyCard({ article, delay }) {
           </div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

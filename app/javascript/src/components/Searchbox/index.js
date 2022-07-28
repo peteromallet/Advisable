@@ -7,15 +7,12 @@ import composeStyles from "src/utilities/composeStyles";
 
 const iconClasses = composeStyles({
   base: `
-    w-5
-    h-5
+    w-4
+    h-4
     ml-3 
     shrink-0
-    text-neutral-400
+    text-neutral-700
   `,
-  variants: {
-    focused: `!text-blue900`,
-  },
 });
 
 const searchBoxClasses = composeStyles({
