@@ -13,20 +13,22 @@ import multiply from "src/icons/duo/multiply";
 import paintbrush from "src/icons/duo/paintbrush";
 
 const CATEGORY_ICONS = {
-  strategy: Chess,
-  revenue: Coins,
-  impact: target,
-  multiply,
-  creative: paintbrush,
-  launch: rocket,
-  optimise: sliders,
+  "Strategy Development": Chess,
+  "More Revenue": Coins,
+  "Big Impact": target,
+  "Big Win": target,
+  "Number Multiplying": multiply,
+  "Increasing Number": multiply,
+  "Create Something": paintbrush,
+  "New Launch": rocket,
+  "Optimising Something": sliders,
 };
 
 function Result({ category, callout, context }) {
   return (
     <li className="flex gap-4">
       <div className="icon-duo-neutral">
-        {createElement(CATEGORY_ICONS[category] || CATEGORY_ICONS.strategy, {
+        {createElement(CATEGORY_ICONS[category] || CATEGORY_ICONS["Big Win"], {
           width: 24,
           stroke: "var(--color-neutral-700)",
           fill: "var(--color-neutral-200)"
