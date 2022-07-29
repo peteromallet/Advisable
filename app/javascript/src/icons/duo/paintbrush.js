@@ -3,6 +3,7 @@ import React from "react";
 function PaintbrushIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "#fff",
   ...props
 }) {
   return (
@@ -21,7 +22,7 @@ function PaintbrushIcon({
         d="M16.136 3.012l-7.288 9.11 3.03 3.03 9.11-7.288a3.452 3.452 0 10-4.852-4.852z"
       ></path>
       <path
-        fill="#fff"
+        fill={bg}
         stroke={stroke}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -33,4 +34,3 @@ function PaintbrushIcon({
 }
 
 export default PaintbrushIcon;
-

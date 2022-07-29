@@ -3,6 +3,7 @@ import React from "react";
 function RocketIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "#fff",
   ...props
 }) {
   return (
@@ -35,7 +36,7 @@ function RocketIcon({
         d="M17.143 13.714c.874 2.963 0 6.857-3.763 8.829l-2.69-4.867"
       ></path>
       <path
-        fill="#fff"
+        fill={bg}
         stroke={stroke}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -62,4 +63,3 @@ function RocketIcon({
 }
 
 export default RocketIcon;
-

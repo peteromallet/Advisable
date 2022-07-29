@@ -3,6 +3,7 @@ import React from "react";
 export default function ChessIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "#fff",
   ...props
 }) {
   return (
@@ -13,7 +14,7 @@ export default function ChessIcon({
       {...props}
     >
       <path
-        fill="#fff"
+        fill={bg}
         stroke={stroke}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -35,5 +36,5 @@ export default function ChessIcon({
         d="M3.604 19.88c-.1.788-.174 1.59-.174 2.406h14.818c0-.815-.074-1.618-.174-2.405-.207-1.634-1.579-2.909-3.22-3.05-1.305-.112-2.646-.21-4.015-.21-1.368 0-2.71.098-4.015.21-1.641.141-3.013 1.416-3.22 3.05z"
       ></path>
     </svg>
-  )
+  );
 }
