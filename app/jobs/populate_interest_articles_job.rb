@@ -3,7 +3,10 @@
 class PopulateInterestArticlesJob < ApplicationJob
   queue_as :case_studies
 
-  def perform(interest)
-    interest.find_articles!
+  def perform(interest_ids)
+    interests = CaseStudy::Interest.where(id: interest_ids)
+    account = interests.first.account
+    interests.each(&:find_articles!)
+    AdvisableSchema.subscriptions.trigger("feedUpdated", {}, {}, scope: account.id)
   end
 end

@@ -22,6 +22,8 @@ module Mutations
             ::CaseStudy::Interest.create!(term:, account: current_user.account)
           end
         end
+
+        PopulateInterestArticlesJob.perform_later(interests.map(&:id))
         {interests:}
       end
     end

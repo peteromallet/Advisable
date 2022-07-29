@@ -24,10 +24,11 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     GRAPHQL
   end
 
+  let(:request) { AdvisableSchema.execute(query, context:) }
+
   before { allow_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
 
-  it "creates a new interest" do
-    request = AdvisableSchema.execute(query, context:)
+  it "creates a new interest and enques populate interest articles job" do
     uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
     interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
     expect(interest.term).to eq("A Term")
@@ -40,6 +41,7 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     interest.interest_articles.reload
     expect(interest.interest_articles.pluck(:article_id)).to match_array([article1.id, article2.id])
     expect(interest.interest_articles.first.similarity.round(2)).to eq(0.61)
+    expect(PopulateInterestArticlesJob).to have_been_enqueued.with([interest.id])
   end
 
   context "when embedding data is under treshold" do
@@ -47,7 +49,6 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
 
     context "when fewer than MIN_RESULTS are found" do
       it "still includes the article" do
-        request = AdvisableSchema.execute(query, context:)
         uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
         interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
         expect(interest.interest_articles).to be_blank
@@ -60,7 +61,6 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
       before { CaseStudy::TermData::MIN_RESULTS.times { create(:case_study_embedding) } }
 
       it "does not include the article" do
-        request = AdvisableSchema.execute(query, context:)
         uid = request.dig("data", "createCaseStudyInterests", "interests").first["id"]
         interest = ::CaseStudy::Interest.with_log_data.find_by!(uid:)
         expect(interest.interest_articles).to be_blank
@@ -74,13 +74,13 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     let(:terms) { ["A Term", "Another Term", "a term"] }
 
     it "creates unique interests" do
-      request = AdvisableSchema.execute(query, context:)
       uids = request.dig("data", "createCaseStudyInterests", "interests").map { |i| i["id"] }
       expect(uids.size).to eq(2)
       interests = ::CaseStudy::Interest.with_log_data.where(uid: uids)
       expect(interests.map(&:term)).to match_array(["A Term", "Another Term"])
       expect(interests.map(&:account_id).uniq).to eq([user.account_id])
       expect(interests.map { |i| i.log_data.responsible_id }.uniq).to eq([user.account_id])
+      expect(PopulateInterestArticlesJob).to have_been_enqueued.with(match_array(interests.map(&:id)))
     end
   end
 
@@ -93,7 +93,6 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     end
 
     it "creates unique interests" do
-      request = AdvisableSchema.execute(query, context:)
       uids = request.dig("data", "createCaseStudyInterests", "interests").map { |i| i["id"] }
       expect(uids.size).to eq(1)
       interests = ::CaseStudy::Interest.with_log_data.where(account_id: user.account_id)
@@ -107,7 +106,6 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     let(:user) { create(:specialist) }
 
     it "returns an error" do
-      request = AdvisableSchema.execute(query, context:)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("MUST_BE_USER")
     end
@@ -117,7 +115,6 @@ RSpec.describe Mutations::CaseStudy::CreateInterests do
     let(:context) { {current_user: nil} }
 
     it "returns an error" do
-      request = AdvisableSchema.execute(query, context:)
       error = request["errors"][0]["extensions"]["code"]
       expect(error).to eq("NOT_AUTHENTICATED")
     end

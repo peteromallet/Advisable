@@ -5,5 +5,6 @@ module Types
     description "Subscription type"
 
     field :received_message, subscription: Subscriptions::ReceivedMessage
+    field :feed_updated, subscription: Subscriptions::FeedUpdated
   end
 end

@@ -2,8 +2,6 @@
 
 module Subscriptions
   class ReceivedMessage < Subscriptions::BaseSubscription
-    include CurrentUserUtilities
-
     description "A message was received on current_account's conversation"
 
     subscription_scope :current_account_id
