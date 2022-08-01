@@ -14,6 +14,7 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       action :login_as, label: "Log in as this User"
+      action :convert_to_specialist, label: "Convert to Specialist"
 
       def self.label(record, context)
         Lazy::Label.new(::Account, record.account_id, context, suffix: "user") do |account|
@@ -29,6 +30,24 @@ module Toby
         context[:session_manager].session[:impersonating] = object.to_global_id.to_param
 
         {url: Advisable::Application::ORIGIN_HOST}
+      end
+
+      def self.convert_to_specialist(user, _context)
+        # TODO: Handle this on frontend. Maybe we can return a hash like we do for url?
+        raise "Users account is already linked to a Specialist" if user.account.specialist
+
+        reflections = ::User.reflections.select { |_k, r| r.is_a?(ActiveRecord::Reflection::HasManyReflection) }.keys
+        reflections.each do |reflection|
+          # TODO: Handle this on frontend. Maybe we can return a hash like we do for url?
+          raise "User has #{reflection} records and can't be converted" if user.public_send(reflection).exists?
+        end
+
+        ActiveRecord::Base.transaction do
+          specialist = ::Specialist.create!(account: user.account)
+          user.destroy
+          # TODO: Handle this on frontend. We need to redirect without opening a new tab since the original record is now gone.
+          {url: "/toby/specialists/#{specialist.id}"}
+        end
       end
     end
   end
