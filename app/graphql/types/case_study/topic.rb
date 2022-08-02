@@ -15,10 +15,7 @@ module Types
         object.icon.url
       end
 
-      field :articles, Article.connection_type, null: true
-      def articles
-        ::CaseStudy::Article.where(id: object.results).for_feed
-      end
+      field :articles, Article.connection_type, null: true, method: :results
     end
   end
 end
