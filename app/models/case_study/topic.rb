@@ -13,15 +13,24 @@ module CaseStudy
 
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
+    def result_ids
+      super.presence || []
+    end
+
     def results
-      ids = result_ids.presence || []
-      Article.where(id: ids).in_order_of(:id, ids)
+      Article.where(id: result_ids).in_order_of(:id, result_ids)
     end
 
     def move_to!(position)
       ids_by_position = self.class.by_position.where.not(id:).pluck(:id)
-      ids_by_position.insert(position.to_i - 1, id)
+      ids_by_position.insert(position - 1, id)
       ActiveRecord::Base.connection.execute("UPDATE case_study_topics SET position = array_position(array[#{ids_by_position.join(',')}]::bigint[], id)")
+    end
+
+    def move_result_to!(result, position)
+      ids = result_ids.without(result)
+      ids.insert(position - 1, result)
+      update!(result_ids: ids.compact)
     end
   end
 end

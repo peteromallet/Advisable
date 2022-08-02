@@ -52,4 +52,15 @@ RSpec.describe CaseStudy::Topic, type: :model do
       end
     end
   end
+
+  describe "#move_result_to!" do
+    let!(:topic) { create(:case_study_topic, result_ids: [1, 2, 3]) }
+
+    it "moves the result to the given position" do
+      topic.move_result_to!(3, 1)
+      expect(topic.reload.result_ids).to eq([3, 1, 2])
+      topic.move_result_to!(1, 5)
+      expect(topic.reload.result_ids).to eq([3, 2, 1])
+    end
+  end
 end

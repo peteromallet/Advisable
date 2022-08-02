@@ -2,7 +2,7 @@
 
 module Admin
   class TopicsController < AdminController
-    before_action :set_topic, only: %i[edit update destroy move]
+    before_action :set_topic, only: %i[edit update destroy move move_result]
     before_action :fetch_icons, only: %i[new edit]
 
     def index
@@ -36,8 +36,12 @@ module Admin
     end
 
     def move
-      @topic.move_to!(params[:position])
+      @topic.move_to!(params[:position].to_i)
       head :ok
+    end
+
+    def move_result
+      @topic.move_result_to!(params[:result].to_i, params[:position].to_i)
     end
 
     def destroy
