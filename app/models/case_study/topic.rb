@@ -14,9 +14,8 @@ module CaseStudy
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
     def results
-      Rails.cache.fetch("topic_#{uid}_results", expires_in: 1.week) do
-        articles_for_interest.pluck(:article_id)
-      end
+      ids = result_ids.presence || []
+      Article.where(id: ids).in_order_of(:id, ids)
     end
 
     def move_to!(position)
@@ -35,6 +34,7 @@ end
 #  description :text
 #  name        :string
 #  position    :integer
+#  result_ids  :jsonb
 #  slug        :string           not null
 #  uid         :string           not null
 #  created_at  :datetime         not null

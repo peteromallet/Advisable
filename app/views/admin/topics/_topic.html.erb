@@ -4,14 +4,13 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </td>
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex">
-    <% if topic.icon.present? %>
-      <div style="background-image: url('<%= topic.icon.url %>')" class="h-5 w-5 mr-1"></div>
-    <% end %>
-    <%= topic.name %>
-  </td>
-  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-    <%= topic.term %>
+  <td class="whitespace-nowrap pl-4 pr-3 py-4 text-sm text-gray-500">
+    <div class="flex items-center gap-2">
+      <% if topic.icon.present? %>
+        <div style="background-image: url('<%= topic.icon.url %>')" class="h-5 w-5"></div>
+      <% end %>
+      <%= topic.name %>
+    </div>
   </td>
   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex">
     <div class="flex-grow"></div>
