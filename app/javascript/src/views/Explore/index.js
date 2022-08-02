@@ -2,15 +2,21 @@ import React from "react";
 import Footer from "src/components/Footer";
 import TopicsBar from "./TopicsBar";
 import "./explore.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Feed from "./Feed";
 import Trending from "./Trending";
 import Favorites from "./Favorites";
 import ScrollToTop from "./ScrollToTop";
 import Topic from "./Topic";
+import useTutorial from "src/hooks/useTutorial";
 
 export default function Explore() {
   const location = useLocation();
+  const onboarding = useTutorial("onboarding");
+
+  if (!onboarding.isComplete) {
+    return <Navigate replace to="/setup/company" />;
+  }
 
   return (
     <>
