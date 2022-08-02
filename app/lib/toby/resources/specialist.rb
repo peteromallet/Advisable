@@ -59,7 +59,7 @@ module Toby
         ActiveRecord::Base.transaction do
           user = ::User.create!(account: specialist.account, company: ::Company.new(name: "Converted from Specialist #{specialist.account.name}"))
           specialist.destroy
-          {replace: "/toby/users/#{user.id}"}
+          {replace: "/users/#{user.id}"}
         end
       rescue Toby::Action::Error => e
         {error: e.message}

@@ -43,7 +43,7 @@ module Toby
         ActiveRecord::Base.transaction do
           specialist = ::Specialist.create!(account: user.account)
           user.destroy
-          {replace: "/toby/specialists/#{specialist.id}"}
+          {replace: "/specialists/#{specialist.id}"}
         end
       rescue Toby::Action::Error => e
         {error: e.message}
