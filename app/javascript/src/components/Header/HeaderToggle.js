@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
@@ -24,14 +24,18 @@ function ToggleLink({ children, active, to }) {
   );
 }
 
-export default function HeaderToggle() {
+export function useIsCollaborationView() {
   const location = useLocation();
 
   const collaborationMatch = COLLABORATE_PATHS.some((path) => {
     return matchPath({ path }, location.pathname);
   });
 
-  const collaborationActive = Boolean(collaborationMatch);
+  return Boolean(collaborationMatch)
+}
+
+export default function HeaderToggle() {
+  const collaborationActive = useIsCollaborationView();
 
   const animation = {
     x: collaborationActive ? 84 : 0,
