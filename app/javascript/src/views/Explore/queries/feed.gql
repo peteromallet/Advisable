@@ -1,6 +1,10 @@
 #import "./articleFields.gql"
 
 query Feed($cursor: String) {
+  interests {
+    id
+    term
+  }
   feed(after: $cursor, first: 15) {
     pageInfo {
       endCursor

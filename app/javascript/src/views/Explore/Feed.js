@@ -4,12 +4,17 @@ import { useFeed } from "./queries";
 import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
 import ExploreViewHeading from "./ExploreViewHeading";
+import CustomizeInterests from "./CustomizeInterests";
+import useFeedUpdate from "./hooks/useFeedUpdate";
 
 export default function Explore() {
   const { loading, data, fetchMore } = useFeed();
+  const { pendingRefresh, awaitFeedUpate, refreshFeed } = useFeedUpdate();
+
   const pageInfo = data?.feed?.pageInfo;
   const edges = data?.feed?.edges || [];
-  const results = edges.map((n) => n.node.article);
+  const results = pendingRefresh ? [] : edges.map((n) => n.node.article);
+  const isLoading = loading || pendingRefresh;
 
   const handleLoadMore = useCallback(() => {
     if (!data) return;
@@ -19,8 +24,10 @@ export default function Explore() {
 
   return (
     <>
-        <ExploreViewHeading title="Your Feed" description="The best projects based on your interests." />
-      <CaseStudyGrid loading={loading} results={results} />
+      <ExploreViewHeading title="Your Feed" description="The best projects based on your interests.">
+        <CustomizeInterests awaitFeedUpdate={awaitFeedUpate} refreshFeed={refreshFeed} interests={data?.interests} />
+      </ExploreViewHeading>
+      <CaseStudyGrid loading={isLoading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </>
   );

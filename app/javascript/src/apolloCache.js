@@ -50,6 +50,9 @@ const createCache = () => {
           paymentRequests: relayStylePagination(),
           labelPosts: relayStylePagination(),
           savedArticles: relayStylePagination(),
+          interests: {
+            merge: replaceArrayMerge,
+          },
           followedLabels: {
             merge: replaceArrayMerge,
           },

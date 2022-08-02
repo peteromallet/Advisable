@@ -5,7 +5,7 @@ import composeStyles from "src/utilities/composeStyles";
 const styles = composeStyles({
   base: `
     rounded-full
-    py-1
+    py-1.5
     px-4
     border-solid
     inline-flex
@@ -35,9 +35,9 @@ const plusStyles = composeStyles({
   },
 });
 
-export default function SuggestedInterest({ children, isSelected, ...props }) {
+export default function SuggestedInterest({ children, isSelected, className, ...props }) {
   return (
-    <button className={styles({ isSelected })} {...props}>
+    <button className={styles({ isSelected, className })} {...props}>
       <div className="relative w-4 h-4">
         <Check className={checkStyles({ isSelected })} />
         <PlusSm className={plusStyles({ isSelected })} />

@@ -161,17 +161,17 @@ function InterestsCard({
   );
 }
 
-function YourInterests({ interests, onRemove }) {
+export function YourInterests({ interests, onRemove }) {
   if (interests.length === 0) return null;
 
   return (
     <div className="mb-10">
-      <h4 className="uppercase text-sm font-medium mb-1">Your Interests</h4>
+      <h4 className="uppercase text-sm font-medium mb-2">Your Interests</h4>
       <div className="flex flex-wrap gap-2">
         {interests.map((interest) => (
           <div
             key={interest}
-            className="pl-4 pr-3 py-2 rounded-full bg-neutral800 text-white inline-flex items-center gap-2"
+            className="pl-4 pr-1.5 py-1.5 text-sm rounded-full bg-neutral800 text-white inline-flex items-center gap-2"
           >
             {interest}
             <button className="inline-flex" onClick={() => onRemove(interest)}>

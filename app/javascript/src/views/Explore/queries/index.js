@@ -1,17 +1,21 @@
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import FEED from "./feed.gql";
 import TOPIC from "./topic.gql";
 import TOPICS from "./topics.gql";
 import TRENDING from "./trending.gql";
 import FAVORITES from "./favorites.gql";
+import CREATE_INTERESTS from "./createInterests.gql";
+import DELETE_INTEREST from "./deleteInterest.gql";
 import FAVORITE_ARTICLE from "./favoriteArticle.gql";
 import UNFAVORITE_ARTICLE from "./unfavoriteArticle.gql";
+import FEED_UPDATED from "./feedUpdated.gql";
 import { useLocation } from "react-router-dom";
 
 export function useFeed() {
   const location = useLocation();
   const fetchPolicy = location.state?.fetchPolicy;
   return useQuery(FEED, {
+    returnPartialData: true,
     fetchPolicy: fetchPolicy || "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
@@ -83,5 +87,21 @@ export function useTopic(slug) {
     variables: { slug },
     returnPartialData: true,
     notifyOnNetworkStatusChange: true,
+  });
+}
+
+export function useCreateInterests() {
+  return useMutation(CREATE_INTERESTS);
+}
+
+export const useDeleteInterest = () => {
+  return useMutation(DELETE_INTEREST);
+};
+
+export const useFeedUpdatedSubscription = (callback) => {
+  return useSubscription(FEED_UPDATED, {
+    onSubscriptionData() {
+      callback()
+    },
   });
 }

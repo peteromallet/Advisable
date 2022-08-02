@@ -9,7 +9,7 @@ const containerClasses = composeStyles({
   },
 });
 
-export default function InterestInput({ onAdd, className }) {
+export default function InterestInput({ onAdd, className, ...props }) {
   const inputRef = useRef();
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
@@ -38,6 +38,7 @@ export default function InterestInput({ onAdd, className }) {
         <PlusSm className="w-5 h-5" />
       </div>
       <input
+        {...props}
         ref={inputRef}
         value={value}
         onChange={handleChange}

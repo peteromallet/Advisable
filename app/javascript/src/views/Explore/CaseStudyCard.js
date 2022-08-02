@@ -35,7 +35,7 @@ function Result({ category, callout, context }) {
         })}
       </div>
       <div>
-        <h5 className="mb-1 font-semibold leading-none">{callout}</h5>
+        <h5 className="mb-1 font-semibold leading-snug">{callout}</h5>
         <p className="font-light text-neutral-600">{context}</p>
       </div>
     </li>
