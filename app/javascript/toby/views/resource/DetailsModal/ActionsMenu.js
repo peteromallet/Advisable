@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useMemo } from "react";
 import { Button, Card } from "@advisable/donut";
 import { DotsHorizontal } from "@styled-icons/heroicons-solid";
+import { useNavigate } from "react-router-dom";
 import { useMenuState, Menu, MenuItem, MenuButton } from "reakit/Menu";
 import Loader from "src/components/Loader";
 import { useNotifications } from "src/components/Notifications";
@@ -9,7 +10,8 @@ import { generateActionMutation } from "../../../utilities";
 import { useToby } from "../../../components/TobyProvider";
 
 function Action({ action, mutation, record, menu, ...props }) {
-  const { notify } = useNotifications();
+  const navigate = useNavigate();
+  const { notify, error: notifyError } = useNotifications();
   const [trigger, { loading }] = useMutation(mutation);
 
   const handle = async () => {
@@ -20,11 +22,22 @@ function Action({ action, mutation, record, menu, ...props }) {
       },
     });
 
+    const { url, replace, error } = response.data.action;
+
+    if (error) {
+      notifyError(error);
+      return;
+    }
+
     menu.hide();
     notify(`Action ran successfully`);
 
-    if (response?.data?.action?.url) {
-      window.open(response.data.action.url, "_blank").focus();
+    if (url) {
+      window.open(url, "_blank").focus();
+    }
+
+    if (replace) {
+      navigate(replace, { replace: true })
     }
   };
 

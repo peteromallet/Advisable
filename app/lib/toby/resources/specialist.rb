@@ -30,6 +30,7 @@ module Toby
       attribute :updated_at, Attributes::DateTime, readonly: true
 
       action :login_as, label: "Log in as this Specialist"
+      action :convert_to_user, label: "Convert to User"
 
       def self.label(record, context)
         Lazy::Label.new(::Account, record.account_id, context, suffix: "specialist") do |account|
@@ -45,6 +46,23 @@ module Toby
         context[:session_manager].session[:impersonating] = object.to_global_id.to_param
 
         {url: Advisable::Application::ORIGIN_HOST}
+      end
+
+      def self.convert_to_user(specialist, _context)
+        raise Toby::Action::Error, "Specialists account is already linked to a User" if specialist.account.user
+
+        reflections = ::Specialist.reflections.select { |_k, r| r.is_a?(ActiveRecord::Reflection::HasManyReflection) }.keys
+        reflections.each do |reflection|
+          raise Toby::Action::Error, "Specialist has #{reflection} records and can't be converted" if specialist.public_send(reflection).exists?
+        end
+
+        ActiveRecord::Base.transaction do
+          user = ::User.create!(account: specialist.account, company: ::Company.new(name: "Converted from Specialist #{specialist.account.name}"))
+          specialist.destroy
+          {replace: "/users/#{user.id}"}
+        end
+      rescue Toby::Action::Error => e
+        {error: e.message}
       end
     end
   end

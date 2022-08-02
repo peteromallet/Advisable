@@ -42,9 +42,8 @@ class Specialist < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :events, foreign_key: :host_id, inverse_of: :host, dependent: :nullify
   has_many :event_attendees, dependent: :destroy
-  has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
   has_many :referred, class_name: "Specialist", foreign_key: :referrer_id, inverse_of: :referrer, dependent: :nullify
-
+  has_many :articles, class_name: "CaseStudy::Article", dependent: :destroy
   has_many :article_skills, through: :articles, class_name: "CaseStudy::Skill", source: :skills
   has_many :case_study_skills, through: :article_skills, source: :skill
 

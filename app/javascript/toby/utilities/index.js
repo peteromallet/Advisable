@@ -204,6 +204,8 @@ export function generateActionMutation(schemaData, resourceData) {
         },
         __aliasFor: `action${resourceData.type}`,
         url: true,
+        replace: true,
+        error: true,
         resource: {
           ...node,
           ...versionHistoryFields,

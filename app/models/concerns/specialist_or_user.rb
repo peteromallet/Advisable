@@ -6,7 +6,7 @@ module SpecialistOrUser
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :account, dependent: :destroy
+    belongs_to :account
   end
 
   delegate :email, :first_name, :last_name, :name, to: :account

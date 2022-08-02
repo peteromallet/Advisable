@@ -164,6 +164,8 @@ module Toby
             argument :name, String, required: true
             field :resource, root.type, null: true
             field :url, String, null: true
+            field :replace, String, null: true
+            field :error, String, null: true
           end
         end
       end
