@@ -62,7 +62,7 @@ module Admin
     end
 
     def admin_topic_params
-      params.require(:case_study_topic).permit(:name, :term, :description, :icon)
+      params.require(:case_study_topic).permit(:name, :description, :icon)
     end
   end
 end

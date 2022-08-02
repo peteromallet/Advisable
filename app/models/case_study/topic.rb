@@ -2,7 +2,6 @@
 
 module CaseStudy
   class Topic < ApplicationRecord
-    include TermData
     include Sluggable
     slug_from :name
     include Uid
@@ -10,7 +9,7 @@ module CaseStudy
 
     has_one_attached :icon
 
-    validates :name, :term, presence: true
+    validates :name, presence: true
 
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
@@ -37,8 +36,6 @@ end
 #  name        :string
 #  position    :integer
 #  slug        :string           not null
-#  term        :citext
-#  term_data   :jsonb
 #  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

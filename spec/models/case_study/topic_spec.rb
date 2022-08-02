@@ -9,20 +9,6 @@ RSpec.describe CaseStudy::Topic, type: :model do
     expect(topic).to be_valid
   end
 
-  describe "#results" do
-    let(:embedding) { create(:case_study_embedding) }
-    let!(:article) { embedding.article }
-
-    before { allow_any_instance_of(OpenAiInteractor).to receive(:query_embedding_for).and_return([-0.024432803, 0.02814213, 0.02230821]) }
-
-    it "finds the articles for the term" do
-      expect(topic.term_data).to be_nil
-      expect(topic.results).to eq([article.id])
-      topic.reload
-      expect(topic.term_data).not_to be_nil
-    end
-  end
-
   describe "#move_to!" do
     context "when the positions are null" do
       let!(:topic1) { create(:case_study_topic, position: nil) }
