@@ -8,11 +8,9 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
-import Feed from "./views/Feed";
 import Article from "./views/CaseStudyArticle";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
-import { Versioned } from "./components/Versioned";
 import Explore from "./views/Explore";
 import Search from "./views/Search";
 
@@ -151,13 +149,7 @@ const ApplicationRoutes = () => {
               path="/explore/*"
               element={
                 <RequireAuthentication clientOnly>
-                  <Versioned
-                    name="explore"
-                    versions={{
-                      2: <Explore />,
-                    }}
-                    fallback={<Feed />}
-                  />
+                  <Explore />
                 </RequireAuthentication>
               }
             />
