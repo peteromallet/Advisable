@@ -18,4 +18,8 @@
     --stroke: theme("colors.red.700");
     --fill: theme("colors.red.200");
   }
+
+  .sentence-case:first-letter {
+    text-transform: uppercase;
+  }
 }

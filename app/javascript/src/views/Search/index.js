@@ -1,12 +1,18 @@
 import React, { useCallback } from "react";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import { useSearch } from "./queries";
 import CaseStudyGrid from "../Explore/CaseStudyGrid";
 import ScrollToTop from "../Explore/ScrollToTop";
 import Footer from "src/components/Footer";
 import EndlessScroll from "../Explore/EndlessScroll";
+import ExploreViewHeading from "../Explore/ExploreViewHeading";
 
 export default function Search() {
-  const { data, loading, fetchMore } = useSearch();
+  const location = useLocation();
+  const { search } = location?.state?.backgroundLocation || location;
+  const term = queryString.parse(search).q;
+  const { data, loading, fetchMore } = useSearch(term);
 
   const edges = data?.search?.articles?.edges || [];
   const pageInfo = data?.search?.articles?.pageInfo || {};
@@ -22,14 +28,14 @@ export default function Search() {
 
   return (
     <>
-      <div className="max-w-[1300px] mx-auto px-5 pb-10">
+      <div className="max-w-[1300px] mx-auto px-5 py-6 pb-10">
         <ScrollToTop />
-        <div className="py-8">
-          <CaseStudyGrid loading={loading} results={results} />
-          {pageInfo.hasNextPage && (
-            <EndlessScroll onLoadMore={handleLoadMore} />
-          )}
-        </div>
+        <ExploreViewHeading
+          back="/explore" title={term} description={`Discover the best "${term}" projects`} />
+        <CaseStudyGrid loading={loading} results={results} />
+        {pageInfo.hasNextPage && (
+          <EndlessScroll onLoadMore={handleLoadMore} />
+        )}
       </div>
       <Footer />
     </>

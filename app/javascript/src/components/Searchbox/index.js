@@ -119,7 +119,7 @@ export default function Searchbox({ className, ...props }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search projects..."
-        className="w-full bg-transparent outline-none placeholder:text-neutral-400"
+        className="w-full bg-transparent outline-none placeholder:text-neutral-400 text-lg"
         {...props}
       />
       <button className={buttonClasses({ focused })}>
