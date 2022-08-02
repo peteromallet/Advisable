@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :topics, except: [:show] do
       member do
         patch :move
+        patch :add_result
         patch :move_result
         delete :remove_result
       end

@@ -2,7 +2,7 @@
 
 module Admin
   class TopicsController < AdminController
-    before_action :set_topic, only: %i[edit update destroy move move_result remove_result]
+    before_action :set_topic, only: %i[edit update destroy move add_result move_result remove_result]
     before_action :fetch_icons, only: %i[new edit]
 
     def index
@@ -13,7 +13,9 @@ module Admin
       @topic = CaseStudy::Topic.new
     end
 
-    def edit; end
+    def edit
+      @articles = CaseStudy::Article.searchable.where.not(id: @topic.result_ids).reverse_chronological
+    end
 
     def create
       @topic = CaseStudy::Topic.new(admin_topic_params)
@@ -38,6 +40,11 @@ module Admin
     def move
       @topic.move_to!(params[:position].to_i)
       head :ok
+    end
+
+    def add_result
+      @topic.update!(result_ids: @topic.result_ids.push(params[:result].to_i))
+      redirect_to edit_admin_topic_path(@topic)
     end
 
     def move_result

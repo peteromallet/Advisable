@@ -8,8 +8,19 @@
   <div class="max-w-7xl mx-auto">
     <div class="py-8 px-4 sm:px-6 lg:px-8">
       <%= render "form", topic: @topic, url: admin_topic_path(@topic) %>
-      <h2 class="mt-8 ml-2 text-xl font-bold text-gray-900">Results</h2>
-      <div class="mt-8 flex flex-col">
+      <h2 class="mt-8 ml-2 text-2xl font-bold text-gray-900">Results</h2>
+      <%= form_with(model: @topic, url: add_result_admin_topic_path(@topic)) do |form| %>
+        <div class="mt-8 flex">
+          <select id="result" name="result" class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-sm">
+            <option value="">Select a new article to add to the list</option>
+            <% @articles.each do |article| %>
+              <option value="<%= article.id %>"><%= article.title %></option>
+            <% end %>
+          </select>
+          <button type="submit" class="whitespace-nowrap ml-2 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">Add Article</button>
+        </div>
+      <% end %>
+      <div class="mt-4 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-sm">
