@@ -2,7 +2,7 @@
 
 module Admin
   class TopicsController < AdminController
-    before_action :set_topic, only: %i[edit update destroy move move_result]
+    before_action :set_topic, only: %i[edit update destroy move move_result remove_result]
     before_action :fetch_icons, only: %i[new edit]
 
     def index
@@ -42,6 +42,14 @@ module Admin
 
     def move_result
       @topic.move_result_to!(params[:result].to_i, params[:position].to_i)
+    end
+
+    def remove_result
+      @topic.update!(result_ids: @topic.result_ids.without(params[:result].to_i))
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.remove("case_study_article_#{params[:result]}") }
+        format.html { redirect_to edit_admin_topic_path(@topic) }
+      end
     end
 
     def destroy

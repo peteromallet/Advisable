@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       member do
         patch :move
         patch :move_result
+        delete :remove_result
       end
     end
   end
