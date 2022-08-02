@@ -33,21 +33,20 @@ module Toby
       end
 
       def self.convert_to_specialist(user, _context)
-        # TODO: Handle this on frontend. Maybe we can return a hash like we do for url?
-        raise "Users account is already linked to a Specialist" if user.account.specialist
+        raise Toby::Action::Error, "Users account is already linked to a Specialist" if user.account.specialist
 
         reflections = ::User.reflections.select { |_k, r| r.is_a?(ActiveRecord::Reflection::HasManyReflection) }.keys
         reflections.each do |reflection|
-          # TODO: Handle this on frontend. Maybe we can return a hash like we do for url?
-          raise "User has #{reflection} records and can't be converted" if user.public_send(reflection).exists?
+          raise Toby::Action::Error, "User has #{reflection} records and can't be converted" if user.public_send(reflection).exists?
         end
 
         ActiveRecord::Base.transaction do
           specialist = ::Specialist.create!(account: user.account)
           user.destroy
-          # TODO: Handle this on frontend. We need to redirect without opening a new tab since the original record is now gone.
-          {url: "/toby/specialists/#{specialist.id}"}
+          {replace: "/toby/specialists/#{specialist.id}"}
         end
+      rescue Toby::Action::Error => e
+        {error: e.message}
       end
     end
   end

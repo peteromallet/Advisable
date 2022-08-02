@@ -2,6 +2,8 @@
 
 module Toby
   class Action
+    class Error < StandardError; end
+
     attr_reader :name, :resource, :label
 
     def initialize(name, resource, **args)
