@@ -12,8 +12,8 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white" data-controller="sortable" data-sortable-handle-value=".handle">
-            <% @topic.results.each do |result| %>
-              <%= render "result", topic: @topic, article: result %>
+            <% topic.results.each do |result| %>
+              <%= render "result", topic: topic, article: result %>
             <% end %>
           </tbody>
         </table>

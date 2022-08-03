@@ -58,7 +58,6 @@ module Admin
       @topic.result_ids.push(params[:result].to_i)
       @topic.result_ids = @topic.results.pluck(:id) # this filters out invalid ids
       @topic.save!
-      render turbo_stream: turbo_stream.replace("topic_results", partial: "admin/topics/results")
     end
 
     def move_result

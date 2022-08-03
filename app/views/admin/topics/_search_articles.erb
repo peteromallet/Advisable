@@ -12,7 +12,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white" data-controller="sortable" data-sortable-handle-value=".handle">
             <% @articles.each do |article| %>
-              <tr id="<%= dom_id article %>">
+              <tr id="<%= dom_id(article, :result) %>">
                 <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= article.title %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= article.specialist.account.name %></td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

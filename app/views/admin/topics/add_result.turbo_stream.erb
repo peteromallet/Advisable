@@ -1,0 +1,8 @@
+<turbo-stream action="replace" target="topic_results">
+  <template>
+    <%= render "results", topic: @topic %>
+  </template>
+</turbo-stream>
+<% @topic.results.each do |article| %>
+  <turbo-stream action="remove" target="<%= dom_id(article, :result) %>"></turbo-stream>
+<% end %>
