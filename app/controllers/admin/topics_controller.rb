@@ -2,7 +2,7 @@
 
 module Admin
   class TopicsController < AdminController
-    before_action :set_topic, only: %i[edit update destroy move add_result move_result remove_result]
+    before_action :set_topic, except: %i[index new create]
     before_action :fetch_icons, only: %i[new edit]
 
     def index
@@ -37,14 +37,28 @@ module Admin
       end
     end
 
+    def destroy
+      @topic.destroy
+      redirect_to admin_topics_path, notice: "Topic was successfully deleted."
+    end
+
     def move
       @topic.move_to!(params[:position].to_i)
       head :ok
     end
 
+    def search_articles
+      @articles = CaseStudy::Article.searchable.
+        where.not(id: @topic.result_ids).
+        where("title ILIKE ?", "%#{params[:query]}%")
+      render turbo_stream: turbo_stream.replace("search_results", partial: "admin/topics/search_articles")
+    end
+
     def add_result
-      @topic.update!(result_ids: @topic.result_ids.push(params[:result].to_i))
-      redirect_to edit_admin_topic_path(@topic)
+      @topic.result_ids.push(params[:result].to_i)
+      @topic.result_ids = @topic.results.pluck(:id) # this filters out invalid ids
+      @topic.save!
+      render turbo_stream: turbo_stream.replace("topic_results", partial: "admin/topics/results")
     end
 
     def move_result
@@ -57,11 +71,6 @@ module Admin
         format.turbo_stream { render turbo_stream: turbo_stream.remove("case_study_article_#{params[:result]}") }
         format.html { redirect_to edit_admin_topic_path(@topic) }
       end
-    end
-
-    def destroy
-      @topic.destroy
-      redirect_to admin_topics_path, notice: "Topic was successfully deleted."
     end
 
     private

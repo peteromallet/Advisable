@@ -1,0 +1,23 @@
+<div class="mt-4 flex flex-col" id="topic_results">
+  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-sm">
+        <table class="min-w-full divide-y divide-gray-300" id="topics">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6"></th>
+              <th scope="col" class="py-3 pl-4 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Title</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Author</th>
+              <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white" data-controller="sortable" data-sortable-handle-value=".handle">
+            <% @topic.results.each do |result| %>
+              <%= render "result", topic: @topic, article: result %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
