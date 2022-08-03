@@ -66,7 +66,10 @@ export default function CaseStudyCard({ article, delay }) {
   const results = (article.resultsContent?.results || []).slice(0, 2);
 
   return (
-    <motion.div whileHover="hover" whileTap="tap"
+    <motion.div
+      whileHover="hover"
+      whileTap="tap"
+      data-testid={`article-card-${article.id}`}
       variants={{ hover: { y: -4 } }}
       transition={{ duration: 0.2 }}
       className="w-full h-[500px] p-6 relative">

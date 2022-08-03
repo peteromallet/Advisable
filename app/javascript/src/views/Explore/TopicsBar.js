@@ -16,7 +16,7 @@ const topicClasses = composeStyles({
   },
 });
 
-function Topic({ to, name, icon, delay }) {
+function Topic({ to, name, icon, delay, ...props }) {
   const location = useLocation();
   const match = matchPath(
     {
@@ -29,7 +29,7 @@ function Topic({ to, name, icon, delay }) {
   const active = Boolean(match);
 
   return (
-    <Link to={to} className={topicClasses({ active })}>
+    <Link to={to} className={topicClasses({ active })} {...props}>
       <div className="topic-icon">
         <motion.div
           initial={{ opacity: 0 }}
@@ -181,7 +181,8 @@ export default function TopicsBar() {
                 delay={ANIMATION_DELAY}
               />
               <Topic
-                name={`Your\nFavourites`}
+                aria-label="Your Favorites"
+                name={`Your\nFavorites`}
                 icon={heart}
                 to="/explore/favorites"
                 delay={ANIMATION_DELAY * 2}

@@ -174,7 +174,7 @@ export function YourInterests({ interests, onRemove }) {
             className="pl-4 pr-1.5 py-1.5 text-sm rounded-full bg-neutral800 text-white inline-flex items-center gap-2"
           >
             {interest}
-            <button className="inline-flex" onClick={() => onRemove(interest)}>
+            <button aria-label={`Remove ${interest}`} className="inline-flex" onClick={() => onRemove(interest)}>
               <XCircle className="w-5 h-5" />
             </button>
           </div>

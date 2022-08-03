@@ -71,7 +71,7 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
             Customize your feed
           </h1>
           <p className="text-neutral-700 text-lg mb-8">We'll show you projects based on the topics you are interested in. You can add anything you like.</p>
-          <InterestInput onAdd={handleAdd} className="mb-8" />
+          <InterestInput name="interest" onAdd={handleAdd} className="mb-8" />
           <YourInterests interests={terms} onRemove={handleRemove} />
 
           <div>
@@ -85,6 +85,7 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
                     key={i}
                     className="text-sm"
                     isSelected={selected}
+                    aria-label={`${selected ? "Remove" : "Add"} ${topic}`} 
                     onClick={() => selected ? handleRemove(topic) : handleAdd(topic)}>
                     {topic}
                   </SuggestedInterest>

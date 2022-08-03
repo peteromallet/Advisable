@@ -12,7 +12,7 @@ function Pulse({ className }) {
 
 export default function CardSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-white rounded-xl shadow-md p-6 flex flex-col">
+    <div data-testid="casestudy-card-skeleton" className="w-full h-[500px] bg-white rounded-xl shadow-md p-6 flex flex-col">
       <Pulse className="w-[120px] h-3 mb-4" />
       <Pulse className="h-5 mb-3" />
       <Pulse className="h-5 mb-3" />

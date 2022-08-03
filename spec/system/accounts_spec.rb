@@ -11,7 +11,7 @@ RSpec.describe "Accounts", type: :system do
     fill_in("email", with: account.email)
     fill_in("password", with: "testing123")
     click_on("Login")
-    expect(page).to have_content("Your feed")
+    expect(page).to have_content("Your Feed")
     first("*[data-testid=account-dropdown]").click
     click_link("Logout")
     expect(page).to have_current_path("/login")
