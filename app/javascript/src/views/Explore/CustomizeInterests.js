@@ -12,36 +12,45 @@ import SuggestedInterest from "../UserOnboarding/SuggestedInterest";
 import { useBreakpoint } from "@advisable/donut";
 import CircularButton from "src/components/CircularButton";
 
-export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUpdate }) {
+export default function CustomizeInterests({
+  interests,
+  refreshFeed,
+  awaitFeedUpdate,
+}) {
   const modal = useModal();
   const apollo = useApolloClient();
   const isDesktop = useBreakpoint("mUp");
   const [deleteInterest] = useDeleteInterest();
   const [createInterests, { loading }] = useCreateInterests();
-  const [terms, setTerms] = useState([])
-  const hasAddedInterests = useMemo(() => terms.length !== interests?.length, [terms, interests])
+  const [terms, setTerms] = useState([]);
+  const hasAddedInterests = useMemo(
+    () => terms.length !== interests?.length,
+    [terms, interests],
+  );
 
   useEffect(() => {
-    setTerms((interests || []).map(i => i.term))
-  }, [interests])
+    setTerms((interests || []).map((i) => i.term));
+  }, [interests]);
 
-  const handleAdd = interest => {
+  const handleAdd = (interest) => {
     setTerms([...terms, interest]);
-  }
+  };
 
-  const handleRemove = interest => {
+  const handleRemove = (interest) => {
     setTerms(terms.filter((i) => i !== interest));
-    const savedInterest = interests.find(i => i.term === interest)
+    const savedInterest = interests.find((i) => i.term === interest);
 
     if (savedInterest) {
       apollo.cache.modify({
         id: "ROOT_QUERY",
         fields: {
           interests(existingRefs, { readField }) {
-            return existingRefs.filter(ref => savedInterest.id !== readField("id", ref))
-          }
-        }
-      })
+            return existingRefs.filter(
+              (ref) => savedInterest.id !== readField("id", ref),
+            );
+          },
+        },
+      });
 
       deleteInterest({
         variables: {
@@ -49,7 +58,7 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
         },
       });
     }
-  }
+  };
 
   const handleSave = async () => {
     if (hasAddedInterests) {
@@ -58,12 +67,12 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
           input: { terms },
         },
       });
-      awaitFeedUpdate()
+      awaitFeedUpdate();
     } else {
       refreshFeed();
     }
 
-    modal.hide()
+    modal.hide();
   };
 
   return (
@@ -75,12 +84,21 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
               <h1 className="text-3xl md:text-4xl font-bold tracking-tight leading-tighter mb-1">
                 Customize your feed
               </h1>
-              <p className="text-neutral-700 text-lg mb-8">We'll show you projects based on the topics you are interested in. You can add anything you like.</p>
-              <InterestInput name="interest" onAdd={handleAdd} className="mb-8" />
+              <p className="text-neutral-700 text-lg mb-8">
+                We'll show you projects based on the topics you are interested
+                in. You can add anything you like.
+              </p>
+              <InterestInput
+                name="interest"
+                onAdd={handleAdd}
+                className="mb-8"
+              />
               <YourInterests interests={terms} onRemove={handleRemove} />
 
               <div>
-                <h4 className="uppercase text-sm font-medium mb-2">More topics to follow</h4>
+                <h4 className="uppercase text-sm font-medium mb-2">
+                  More topics to follow
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   {SUGGESTED_TOPICS.map((topic, i) => {
                     const selected = terms.includes(topic);
@@ -91,22 +109,32 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
                         className="text-sm"
                         isSelected={selected}
                         aria-label={`${selected ? "Remove" : "Add"} ${topic}`}
-                        onClick={() => selected ? handleRemove(topic) : handleAdd(topic)}>
+                        onClick={() =>
+                          selected ? handleRemove(topic) : handleAdd(topic)
+                        }
+                      >
                         {topic}
                       </SuggestedInterest>
-                    )
+                    );
                   })}
                 </div>
               </div>
             </SimpleBar>
           </div>
 
-
           <div className="flex gap-2 justify-end border-t border-solid border-neutral-200 p-5">
-            <Button variant="outlined" onClick={modal.hide} className="w-full md:w-auto">
+            <Button
+              variant="outlined"
+              onClick={modal.hide}
+              className="w-full md:w-auto"
+            >
               Cancel
             </Button>
-            <Button loading={loading} onClick={handleSave} className="w-full md:w-auto">
+            <Button
+              loading={loading}
+              onClick={handleSave}
+              className="w-full md:w-auto"
+            >
               Save
             </Button>
           </div>
@@ -114,12 +142,17 @@ export default function CustomizeInterests({ interests, refreshFeed, awaitFeedUp
       </Modal>
 
       {isDesktop ? (
-        <Button prefix={<Adjustments />} size="sm" variant="outlined" onClick={modal.show}>
+        <Button
+          prefix={<Adjustments />}
+          size="sm"
+          variant="outlined"
+          onClick={modal.show}
+        >
           Customize
         </Button>
       ) : (
         <CircularButton onClick={modal.show} icon={Adjustments} />
       )}
     </>
-  )
+  );
 }
