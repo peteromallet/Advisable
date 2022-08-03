@@ -5,6 +5,7 @@ import CaseStudyGrid from "./CaseStudyGrid";
 import { useParams } from "react-router-dom";
 import EndlessScroll from "./EndlessScroll";
 import ExploreViewHeading from "./ExploreViewHeading";
+import FeedFooter from "./FeedFooter";
 
 export default function Topic() {
   const { slug } = useParams();
@@ -32,6 +33,11 @@ export default function Topic() {
       <ExploreViewHeading title={topic.name} description={topic.description} loading={!topic.name && loading} />
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+      {!loading && !pageInfo?.hasNextPage && (
+        <FeedFooter>
+          You've reached the end of the list.
+        </FeedFooter>
+      )}
     </>
   );
 }

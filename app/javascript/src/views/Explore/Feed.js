@@ -6,6 +6,7 @@ import CaseStudyGrid from "./CaseStudyGrid";
 import ExploreViewHeading from "./ExploreViewHeading";
 import CustomizeInterests from "./CustomizeInterests";
 import useFeedUpdate from "./hooks/useFeedUpdate";
+import FeedFooter from "./FeedFooter";
 
 export default function Explore() {
   const { loading, data, fetchMore } = useFeed();
@@ -28,6 +29,11 @@ export default function Explore() {
         <CustomizeInterests awaitFeedUpdate={awaitFeedUpate} refreshFeed={refreshFeed} interests={data?.interests} />
       </ExploreViewHeading>
       <CaseStudyGrid loading={isLoading} results={results} />
+      {!isLoading &&! pageInfo?.hasNextPage && (
+      <FeedFooter>
+          You've reached the end of the feed.
+        </FeedFooter>
+        )}
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </>
   );

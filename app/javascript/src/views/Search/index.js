@@ -7,6 +7,7 @@ import ScrollToTop from "../Explore/ScrollToTop";
 import Footer from "src/components/Footer";
 import EndlessScroll from "../Explore/EndlessScroll";
 import ExploreViewHeading from "../Explore/ExploreViewHeading";
+import FeedFooter from "../Explore/FeedFooter";
 
 export default function Search() {
   const location = useLocation();
@@ -35,6 +36,11 @@ export default function Search() {
         <CaseStudyGrid loading={loading} results={results} />
         {pageInfo.hasNextPage && (
           <EndlessScroll onLoadMore={handleLoadMore} />
+        )}
+        {!loading && !pageInfo.hasNextPage && (
+        <FeedFooter>
+          You've reached the end of the list.
+          </FeedFooter>
         )}
       </div>
       <Footer />
