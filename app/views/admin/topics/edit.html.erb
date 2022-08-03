@@ -9,8 +9,8 @@
     <div class="py-8 px-4 sm:px-6 lg:px-8">
       <%= render "form", topic: @topic, url: admin_topic_path(@topic) %>
       <h2 class="mt-8 ml-2 text-2xl font-bold text-gray-900">Results</h2>
-      <%= render "results", topic: @topic %>
-      <div id="topic_results"></div>
+      <%= render "results", topic: @topic, articles: @topic.results, mode: "list" %>
+      <div id="list_results"></div>
       <%= form_with(url: search_articles_admin_topic_path(@topic)) do |form| %>
         <div class="mt-4 flex">
           <%= form.search_field :query, placeholder: "Search for Articles to add", class: "block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm border-gray-300 rounded-sm" %>

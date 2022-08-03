@@ -51,7 +51,7 @@ module Admin
       @articles = CaseStudy::Article.searchable.
         where.not(id: @topic.result_ids).
         where("title ILIKE ?", "%#{params[:query]}%")
-      render turbo_stream: turbo_stream.replace("search_results", partial: "admin/topics/search_articles")
+      render turbo_stream: turbo_stream.replace("search_results", partial: "admin/topics/results", locals: {topic: @topic, articles: @articles, mode: "search"})
     end
 
     def add_result
@@ -67,7 +67,7 @@ module Admin
     def remove_result
       @topic.update!(result_ids: @topic.result_ids.without(params[:result].to_i))
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.remove("case_study_article_#{params[:result]}") }
+        format.turbo_stream { render turbo_stream: turbo_stream.remove("list_case_study_article_#{params[:result]}") }
         format.html { redirect_to edit_admin_topic_path(@topic) }
       end
     end
