@@ -20,7 +20,8 @@ class LocalData
   def populate_interests!
     puts "Populating interest data..."
     generate_and_find_interests
-    dump_data
+    populate_topics
+    TABLE_NAMES.each { |table| dump_table(table) }
   end
 
   def destroy_existing_data!
@@ -43,8 +44,16 @@ class LocalData
     CaseStudy::Interest.find_each(&:find_articles!)
   end
 
-  def dump_data
-    TABLE_NAMES.each { |table| `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"` }
+  def populate_topics
+    articles = CaseStudy::Article.searchable.pluck(:id)
+    CaseStudy::Topic.all.each do |topic|
+      topic.update_columns(result_ids: articles.sample(15))
+    end
+    dump_table("case_study_topics")
+  end
+
+  def dump_table(table)
+    `psql -d advisable_development -c "\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)"`
   end
 end
 # rubocop:enable Rails/SkipsModelValidations
