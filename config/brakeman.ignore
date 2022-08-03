@@ -82,26 +82,6 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "25ff15bd13bfc5128d8ab9fe7ee791fc66ee0275b296d767ed37546073433df5",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/lib/local_data.rb",
-      "line": 47,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "LocalData",
-        "method": "dump_data"
-      },
-      "user_input": "table",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
       "fingerprint": "482b5b663d88b9c4c918fa012a1b0bf1fe806bde0f6da53ec5ac632c90aa96ce",
       "check_name": "Execute",
       "message": "Possible command injection",
@@ -446,7 +426,7 @@
       "check_name": "Execute",
       "message": "Possible command injection",
       "file": "app/lib/fixtures_data.rb",
-      "line": 108,
+      "line": 107,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
       "render_path": null,
@@ -458,8 +438,28 @@
       "user_input": "table",
       "confidence": "Medium",
       "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "fc88fa5aa00e6169a5ffce3fadbe896ff64446225c5835122bb2bb048e8b3320",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/lib/local_data.rb",
+      "line": 56,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`psql -d advisable_development -c \"\\copy (SELECT * FROM #{table}) TO #{TestData::PRUNED_DIR}/#{table}.csv WITH (FORMAT CSV, HEADER TRUE, FORCE_QUOTE *)\"`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "LocalData",
+        "method": "dump_table"
+      },
+      "user_input": "table",
+      "confidence": "Medium",
+      "note": ""
     }
   ],
-  "updated": "2022-07-28 12:34:42 +0200",
+  "updated": "2022-08-03 17:12:49 +0200",
   "brakeman_version": "5.2.3"
 }
