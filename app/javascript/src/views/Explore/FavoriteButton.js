@@ -3,10 +3,10 @@ import { useApolloClient } from "@apollo/client";
 import { useFavoriteArticle, useUnfavoriteArticle } from "./queries";
 import HeartIcon from "src/icons/duo/heart";
 import composeStyles from "src/utilities/composeStyles";
+import { useNotifications } from "src/components/Notifications";
 
 const buttonClasses = composeStyles({
   base: `
-    icon-duo-neutral
     w-8
     h-8
     grid
@@ -15,12 +15,13 @@ const buttonClasses = composeStyles({
     border border-solid border-neutral-200
   `,
   variants: {
-    isFavorited: "!icon-solid-red",
+    isFavorited: "!bg-red-100 !border-red-100",
   },
 });
 
 export default function FavoriteButton({ article }) {
   const client = useApolloClient();
+  const { notify } = useNotifications();
   const [favorite] = useFavoriteArticle(article);
   const [unfavorite] = useUnfavoriteArticle(article);
   const { isFavorited } = article;
@@ -34,7 +35,13 @@ export default function FavoriteButton({ article }) {
     });
 
     const action = isFavorited ? unfavorite : favorite;
-    const res = await action();
+    await action();
+
+    if (isFavorited) {
+      notify("Removed from favorites")
+    } else {
+      notify("Added to favorites")
+    }
   };
 
   return (
@@ -44,8 +51,9 @@ export default function FavoriteButton({ article }) {
       title={isFavorited ? "Remove from favorites" : "Favorite this project"}
     >
       <HeartIcon
-        stroke={isFavorited ? "var(--color-red-700)" : "var(--color-neutral-700)"}
-        fill={isFavorited ? "var(--color-red-200)" : "var(--color-neutral-200)"}
+        className="mt-[2px]"
+        stroke={isFavorited ? "var(--color-red-900)" : "var(--color-neutral-700)"}
+        fill={isFavorited ? "var(--color-red-300)" : "var(--color-neutral-200)"}
         width="16" />
     </button>
   );

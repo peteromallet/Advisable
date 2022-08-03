@@ -8,7 +8,7 @@ const toggleClasses = composeStyles({
 });
 
 const toggleLinkClasses = composeStyles({
-  base: "px-4 flex items-center relative text-neutral-600 hover:text-neutral-900 text-[14px]",
+  base: "px-4 font-medium flex items-center relative text-neutral-600 hover:text-neutral-900 text-[14px]",
   variants: {
     active: "text-blue-800 hover:text-blue-800",
   },
@@ -39,7 +39,7 @@ export default function HeaderToggle() {
 
   const animation = {
     x: collaborationActive ? 84 : 0,
-    width: collaborationActive ? 106 : 88,
+    width: collaborationActive ? 110 : 88,
   }
 
   return (
