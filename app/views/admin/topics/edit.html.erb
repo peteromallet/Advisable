@@ -11,12 +11,14 @@
       <h2 class="mt-8 ml-2 text-2xl font-bold text-gray-900">Results</h2>
       <%= render "results", topic: @topic, articles: @topic.results, mode: "list" %>
       <div id="list_results"></div>
-      <%= form_with(url: search_articles_admin_topic_path(@topic)) do |form| %>
-        <div class="mt-4 flex">
-          <%= form.search_field :query, placeholder: "Search for Articles to add", class: "block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm border-gray-300 rounded-sm" %>
-          <%= form.submit "Search", class: "ml-2 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: { disable_with: false } %>
-        </div>
-      <% end %>
+      <div data-controller="search">
+        <%= form_with(url: search_articles_admin_topic_path(@topic), data: {search_target: "form"}) do |form| %>
+          <div class="mt-4 flex">
+            <%= form.search_field :query, placeholder: "Search for Articles to add", class: "block w-full shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm border-gray-300 rounded-sm", data: {action: "search#submit"} %>
+            <%= form.submit "Search", class: "ml-2 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+          </div>
+        <% end %>
+      </div>
       <div id="search_results"></div>
     </div>
   </div>
