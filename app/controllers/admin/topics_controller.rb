@@ -56,8 +56,8 @@ module Admin
     end
 
     def add_result
-      @topic.result_ids.push(params[:result].to_i)
-      @topic.result_ids = @topic.results.pluck(:id) # this filters out invalid ids
+      @topic.result_ids = @topic.result_ids + [params[:result].to_i]
+      @topic.result_ids = @topic.results.pluck(:id) # this filters out invalid, duplicated, and malformed ids
       @topic.save!
     end
 
