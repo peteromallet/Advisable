@@ -3,7 +3,6 @@
 module Types
   class SpecialistType < Types::BaseType
     include ActionView::Helpers::DateHelper
-    delegate :account, to: :object
 
     implements Types::ViewerInterface
 
@@ -143,14 +142,6 @@ module Types
     field :case_studies_count, Integer, null: false
     def case_studies_count
       object.articles.active.published.size
-    end
-
-    # TODO: AccountMigration - Rename for consistency
-    field :has_account, Boolean, null: false do
-      description "Whether or not the specialist has created their account yet"
-    end
-    def has_account
-      account.has_password?
     end
 
     field :completed_tutorials, [String], null: false do
