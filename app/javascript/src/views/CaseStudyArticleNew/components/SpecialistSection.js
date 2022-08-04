@@ -1,4 +1,4 @@
-import { Briefcase, Chat, Tag } from "@styled-icons/heroicons-outline";
+import { Chat, Tag } from "@styled-icons/heroicons-outline";
 import { Link, useModal, DialogDisclosure } from "@advisable/donut";
 import React from "react";
 import ConnectModal from "src/components/ConnectModal";
@@ -35,9 +35,16 @@ const StyledCategoryContent = ({ children }) => (
   <div className="font-medium text-base leading-5 text-blue900">{children}</div>
 );
 
+const PRICE_RANGES = {
+  low: "< $75",
+  medium: "$75 - $150",
+  high: "$150 - $300",
+  "very high": "> $300",
+}
+
 export default function SpecialistSection({ article }) {
   const { specialist } = article;
-  const { name, location, bio, hourlyRate } = specialist;
+  const { name, location, bio, priceRange } = specialist;
   const modal = useModal();
 
   return (
@@ -76,20 +83,20 @@ export default function SpecialistSection({ article }) {
 
       <div className="text-neutral900 mb-6">{bio}</div>
 
-      <div className="space-y-4">
-        {hourlyRate && (
-          <div className="flex gap-2">
+      <div className="space-y-5">
+        {priceRange && (
+          <div className="flex gap-3">
             <StyledIcon icon={Tag} color="red" />
             <div>
               <StyledCategoryName>Hourly Rate</StyledCategoryName>
               <StyledCategoryContent>
-                ${specialist.hourlyRate / 100}
+                {PRICE_RANGES[priceRange]}
               </StyledCategoryContent>
             </div>
           </div>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <StyledIcon icon={Chat} color="purple" />
           <div>
             <StyledCategoryName>Available For</StyledCategoryName>
