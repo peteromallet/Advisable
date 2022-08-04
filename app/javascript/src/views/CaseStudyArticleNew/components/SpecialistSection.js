@@ -65,12 +65,14 @@ export default function SpecialistSection({ article }) {
           <BadgeCheck size={24} className="fill-blue500" />
         </div>
       </div>
-
+      
+      <div>
       <Link to={specialist.profilePath} className="mb-2">
         <div className="text-2xl font-bold text-blue900 tracking-tight hover:underline decoration-blue200">
           {name}
         </div>
       </Link>
+      </div>
 
       <div className="flex gap-1 items-center mb-4">
         <div className="flex justify-center items-center">
