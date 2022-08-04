@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Versioned } from "src/components/Versioned";
-import CaseStudyArticle from "../CaseStudyArticle";
 import CaseStudyArticleNew from "../CaseStudyArticleNew";
 
 const backdropClassName = `
@@ -79,13 +77,7 @@ export default function ArticleModal() {
         data-testid="articleModal"
       >
         <div className="h-full overflow-y-scroll">
-          <Versioned
-            name="explore"
-            versions={{
-              2: <CaseStudyArticleNew />,
-            }}
-            fallback={<CaseStudyArticle topbarOffset={0} />}
-          />
+          <CaseStudyArticleNew />
         </div>
       </motion.div>
     </motion.div>
