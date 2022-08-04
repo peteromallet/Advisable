@@ -28,13 +28,19 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
           {title}
         </div>
       </div>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isActive && (
           <motion.div
+            key="content"
             className="overflow-hidden"
-            initial={{ height: isActive ? "auto" : 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            transition={{ duration: 0.2 }}
+            variants={{
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 }
+            }}
           >
             <p className="pb-4 text-neutral900">{children}</p>
           </motion.div>
@@ -44,7 +50,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
   );
 }
 
-export default function KeyTakeaways() {
+export default function KeyTakeaways({ insights }) {
   const [activeTab, setActiveTab] = React.useState(0);
   const closeTab = () => setActiveTab(null);
   const openTab = (index) => setActiveTab(index);
@@ -57,34 +63,16 @@ export default function KeyTakeaways() {
           Key Takeaways
         </div>
       </div>
-      <Section
-        index={0}
-        isActive={activeTab === 0}
-        closeTab={closeTab}
-        openTab={openTab}
-        title="Retargeting ads can be a quick win"
-      >
-        At first, the client wasn&apos;t doing anything with their
-        bottom-of-the-funnel customers. The first thing I did was set up
-        retargeting ads for them. With clients that haven&apos;t done any paid
-        before, this is the first obvious step. You can often capture these
-        customers for a reasonable price and build lookalike audiences from
-        them.
-      </Section>
-      <Section
-        index={1}
-        isActive={activeTab === 1}
-        closeTab={closeTab}
-        openTab={openTab}
-        title="Geo-targeting is a powerful tool"
-      >
-        At first, the client wasn&apos;t doing anything with their
-        bottom-of-the-funnel customers. The first thing I did was set up
-        retargeting ads for them. With clients that haven&apos;t done any paid
-        before, this is the first obvious step. You can often capture these
-        customers for a reasonable price and build lookalike audiences from
-        them.
-      </Section>
+      {insights.map((insight, index) => (
+        <Section
+          key={insight.id}
+          index={index}
+          isActive={activeTab === index}
+          closeTab={closeTab}
+          openTab={openTab}
+          title={insight.title}
+        >{insight.description}</Section>
+      ))}
     </div>
   );
 }

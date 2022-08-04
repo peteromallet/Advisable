@@ -70,7 +70,7 @@ export default function CaseStudyArticle() {
                 <p className="leading-7 text-neutral900 mb-10">
                   {data.caseStudy.subtitle}
                 </p>
-                <KeyTakeaways />
+                <KeyTakeaways insights={data.caseStudy.insights} />
               </div>
               <div className="pt-2">
                 <Results results={data.caseStudy.resultsContent?.results} />
