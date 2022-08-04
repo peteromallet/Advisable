@@ -16,7 +16,7 @@ module Types
 
       field :favicon, String, null: true
       def favicon
-        object.favicon.url || clearbit_logo
+        Rails.cache.fetch("company_favicon_#{object.id}", expires_in: 1.day) { object.favicon.url || clearbit_logo }
       end
 
       private
