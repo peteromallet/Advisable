@@ -84,10 +84,9 @@ class FixturesData
 
   def populate_topics
     topics_data = fixtures_yml[:topics].map do |topic|
-      {uid: CaseStudy::Topic.generate_uid, name: topic[:name], term: topic[:term], slug: topic[:name].parameterize, created_at: now, updated_at: now}
+      {uid: CaseStudy::Topic.generate_uid, name: topic[:name], slug: topic[:name].parameterize, created_at: now, updated_at: now}
     end
     CaseStudy::Topic.insert_all(topics_data).pluck("id")
-    CaseStudy::Topic.find_each(&:term_vector)
   end
 
   def populate_advisable

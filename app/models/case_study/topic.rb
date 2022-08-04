@@ -2,7 +2,6 @@
 
 module CaseStudy
   class Topic < ApplicationRecord
-    include TermData
     include Sluggable
     slug_from :name
     include Uid
@@ -10,20 +9,28 @@ module CaseStudy
 
     has_one_attached :icon
 
-    validates :name, :term, presence: true
+    validates :name, presence: true
 
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
+    def result_ids
+      super.presence || []
+    end
+
     def results
-      Rails.cache.fetch("topic_#{uid}_results", expires_in: 1.week) do
-        articles_for_interest.pluck(:article_id)
-      end
+      Article.where(id: result_ids).in_order_of(:id, result_ids)
     end
 
     def move_to!(position)
       ids_by_position = self.class.by_position.where.not(id:).pluck(:id)
-      ids_by_position.insert(position.to_i - 1, id)
+      ids_by_position.insert(position - 1, id)
       ActiveRecord::Base.connection.execute("UPDATE case_study_topics SET position = array_position(array[#{ids_by_position.join(',')}]::bigint[], id)")
+    end
+
+    def move_result_to!(result, position)
+      ids = result_ids.without(result)
+      ids.insert(position - 1, result)
+      update!(result_ids: ids.compact)
     end
   end
 end
@@ -36,9 +43,8 @@ end
 #  description :text
 #  name        :string
 #  position    :integer
+#  result_ids  :jsonb
 #  slug        :string           not null
-#  term        :citext
-#  term_data   :jsonb
 #  uid         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
