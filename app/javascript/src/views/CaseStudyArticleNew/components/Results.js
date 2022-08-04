@@ -51,24 +51,27 @@ const CATEGORY_ICONS = {
 
 export default function Results({ results }) {
   if (!results) return null;
+  const firstTwo = results.slice(0, 2);
 
-  const resultCards = results.map((result, index) => {
+  const resultCards = firstTwo.map((result, index) => {
     const Icon = CATEGORY_ICONS[result.category] || CATEGORY_ICONS["optimise"];
     if (!result.callout) return null;
 
     return (
       <div key={`result-${index}`}>
-        <div className="flex gap-2 mb-2 items-start">
+        <div className="flex gap-3 mb-2 items-start">
           {Icon && (
             <div className="min-w-[24px] w-[24px] h-[24px]">
               <Icon />
             </div>
           )}
-          <div className="text-white text-xl leading-6 font-semibold">
-            {result.callout}
+          <div>
+            <h5 className="text-white text-xl leading-6 font-semibold mb-1">
+              {result.callout}
+            </h5>
+            <p className="text-sm text-white leading-relaxed">{result.context}</p>
           </div>
         </div>
-        <div className="text-white">{result.context}</div>
       </div>
     );
   });
