@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import StickyBox from "react-sticky-box";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useBackground } from "@advisable/donut";
+import { useBackground, useModal } from "@advisable/donut";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -17,8 +17,11 @@ import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButt
 import ShareArticleButton from "./components/ShareArticleButton";
 import EditCaseStudyButton from "./components/EditCaseStudyButton";
 import CircularButton from "src/components/CircularButton";
+import ConnectModal from "src/components/ConnectModal";
 import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
+import Avatar from "src/components/Avatar";
+import { Chat } from "@styled-icons/heroicons-outline";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
@@ -26,9 +29,13 @@ export default function CaseStudyArticle() {
   const location = useLocation();
   const navigate = useNavigate();
   const { backgroundLocation } = location.state || {};
+  const contactModal = useModal();
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
+
+  const article = data?.caseStudy;
+  const { specialist } = article;
 
   return (
     <ErrorBoundary>
@@ -50,32 +57,52 @@ export default function CaseStudyArticle() {
           />
         )}
       </div>
-      <div className="pb-36 relative">
-        <div className="flex mx-auto w-full xl:w-[1320px]">
-          <div className="p-14 min-w-[348px] w-[348px]">
-            <StickyBox offsetTop={60} offsetBottom={60}>
-              <SpecialistSection article={data.caseStudy} />
-            </StickyBox>
-          </div>
-          <div className="pl-12 pr-14 py-11 relative w-full border-solid border-neutral100 border-l">
-            <h1 className="text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
-              {data.caseStudy.title}
-            </h1>
-            <div className="flex gap-14">
-              <div>
-                <p className="leading-7 text-neutral900 mb-10">
-                  {data.caseStudy.subtitle}
-                </p>
-                <KeyTakeaways insights={data.caseStudy.insights} />
-              </div>
-              <div className="pt-2">
-                <Results results={data.caseStudy.resultsContent?.results} />
-                <CompanyDetails caseStudy={data.caseStudy} />
-              </div>
+      <ConnectModal modal={contactModal} specialist={specialist} article={article} />
+      <div className="flex mx-auto w-full xl:w-[1320px] pb-36 px-6 lg:px-14">
+        <div className="hidden lg:block min-w-[348px] w-[348px] pt-12 pr-12">
+          <StickyBox offsetTop={60} offsetBottom={60}>
+            <SpecialistSection article={data.caseStudy} modal={contactModal} />
+          </StickyBox>
+        </div>
+        <div className="lg:pl-12 py-6 md:py-12 relative w-full border-solid border-neutral100 lg:border-l">
+          <div className="md:hidden flex items-center gap-3 border-b border-solid border-neutral-200 pb-4 mb-4">
+            <div className="shrink-0">
+              <Avatar
+                src={data.caseStudy.specialist.avatar}
+                name={data.caseStudy.specialist.name}
+              />
             </div>
-            <hr className="my-16" />
-            <ArticleContent caseStudy={data.caseStudy} />
+            <div className="w-full">
+              <h4 className="leading-none font-semibold mb-1 line-clamp-1">{data.caseStudy.specialist.name}</h4>
+              <p className="leading-none text-sm text-neutral-700 line-clamp-1 pb-0.5">{data.caseStudy.specialist.location}</p>
+            </div>
+            <div className="shrink-0">
+              <CircularButton
+                color="blue"
+                aria-label="Contact"
+                icon={Chat}
+                onClick={contactModal.show}
+              />
+            </div>
           </div>
+
+          <h1 className="text-3xl md:text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
+            {data.caseStudy.title}
+          </h1>
+          <div className="md:flex gap-14">
+            <div>
+              <p className="leading-7 text-neutral900 mb-10">
+                {data.caseStudy.subtitle}
+              </p>
+              <KeyTakeaways insights={data.caseStudy.insights} />
+            </div>
+            <div className="md:w-[280px] shrink-0 pt-2">
+              <Results results={data.caseStudy.resultsContent?.results} />
+              <CompanyDetails caseStudy={data.caseStudy} />
+            </div>
+          </div>
+          <hr className="my-16" />
+          <ArticleContent caseStudy={data.caseStudy} />
         </div>
       </div>
       <Footer />

@@ -77,7 +77,7 @@ export default function Results({ results }) {
   });
 
   return (
-    <div className="w-[280px] bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
+    <div className="w-full bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
       <div className="leading-none mb-4 uppercase text-xs font-semibold text-white">
         Results
       </div>

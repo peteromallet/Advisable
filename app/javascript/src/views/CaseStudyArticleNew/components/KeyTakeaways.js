@@ -5,6 +5,7 @@ import {
   MinusCircle,
   PlusCircle,
 } from "@styled-icons/heroicons-solid";
+import { useBreakpoint } from "@advisable/donut";
 
 function Section({ index, title, children, isActive, closeTab, openTab }) {
   return (
@@ -51,12 +52,13 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
 }
 
 export default function KeyTakeaways({ insights }) {
-  const [activeTab, setActiveTab] = React.useState(0);
+  const isDesktop = useBreakpoint("mUp");
+  const [activeTab, setActiveTab] = React.useState(isDesktop ? 0 : null);
   const closeTab = () => setActiveTab(null);
   const openTab = (index) => setActiveTab(index);
 
   return (
-    <div className="min-h-[320px]">
+    <div className="mb-8">
       <div className="flex gap-3 items-center border-b border-neutral100 border-solid pb-4">
         <LightBulb size="20px" className="fill-neutral900" />
         <div className="uppercase text-sm text-neutral900 font-semibold leading-none">

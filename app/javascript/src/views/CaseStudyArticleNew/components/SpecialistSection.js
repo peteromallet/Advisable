@@ -1,7 +1,6 @@
 import { Chat, Tag } from "@styled-icons/heroicons-outline";
-import { Link, useModal, DialogDisclosure } from "@advisable/donut";
+import { Link, DialogDisclosure } from "@advisable/donut";
 import React from "react";
-import ConnectModal from "src/components/ConnectModal";
 import Button from "src/components/Button";
 import { BadgeCheck, LocationMarker } from "@styled-icons/heroicons-solid";
 
@@ -42,10 +41,9 @@ const PRICE_RANGES = {
   "very high": "> $300",
 }
 
-export default function SpecialistSection({ article }) {
+export default function SpecialistSection({ article, modal }) {
   const { specialist } = article;
   const { name, location, bio, priceRange } = specialist;
-  const modal = useModal();
 
   return (
     <>
@@ -117,7 +115,6 @@ export default function SpecialistSection({ article }) {
         </div> */}
       </div>
 
-      <ConnectModal modal={modal} specialist={specialist} article={article} />
       {!specialist.unavailableUntil && (
         <div className="mt-8">
           <DialogDisclosure {...modal}>
