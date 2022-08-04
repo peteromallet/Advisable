@@ -2,7 +2,6 @@ import React from "react";
 import Images from "./Images";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
-import ArticleSidebar from "./ArticleSidebar";
 import SimilarArticles from "./SimilarArticles";
 
 const CONTENT_TYPES = {
@@ -28,8 +27,6 @@ export default function ArticleContent({ caseStudy }) {
 
   return (
     <>
-      <ArticleSidebar elements={elements} />
-      <div className="p-12 pr-14 w-full border-l border-solid border-neutral100">
         {elements.map((element, index) => (
           <CaseStudyContentBlock
             element={element}
@@ -41,7 +38,6 @@ export default function ArticleContent({ caseStudy }) {
           data-content-block={elements.length}
           articles={caseStudy.similar}
         />
-      </div>
     </>
   );
 }

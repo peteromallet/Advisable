@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import StickyBox from "react-sticky-box";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBackground } from "@advisable/donut";
 import Loading from "src/components/Loading";
@@ -16,7 +17,6 @@ import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButt
 import ShareArticleButton from "./components/ShareArticleButton";
 import EditCaseStudyButton from "./components/EditCaseStudyButton";
 import CircularButton from "src/components/CircularButton";
-import { ArrowSmLeft } from "@styled-icons/heroicons-outline";
 import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
 
@@ -25,7 +25,7 @@ export default function CaseStudyArticle() {
   const { data, loading, error } = useArticle();
   const location = useLocation();
   const navigate = useNavigate();
-  const { back, backgroundLocation } = location.state || {};
+  const { backgroundLocation } = location.state || {};
 
   if (loading) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
@@ -51,16 +51,12 @@ export default function CaseStudyArticle() {
         )}
       </div>
       <div className="pb-36 relative">
-        {back && (
-          <CircularButton
-            aria-label="Go back"
-            icon={ArrowSmLeft}
-            className="mr-4 hidden sm:block"
-            onClick={() => window.history.back()}
-          />
-        )}
         <div className="flex mx-auto w-full xl:w-[1320px]">
-          <SpecialistSection article={data.caseStudy} />
+          <div className="p-14 min-w-[348px] w-[348px]">
+            <StickyBox offsetTop={60} offsetBottom={60}>
+              <SpecialistSection article={data.caseStudy} />
+            </StickyBox>
+          </div>
           <div className="pl-12 pr-14 py-11 relative w-full border-solid border-neutral100 border-l">
             <h1 className="text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
               {data.caseStudy.title}
@@ -77,11 +73,9 @@ export default function CaseStudyArticle() {
                 <CompanyDetails caseStudy={data.caseStudy} />
               </div>
             </div>
-            <hr className="absolute bottom-0 left-0 w-[100vw] border-neutral100 " />
+            <hr className="my-16" />
+            <ArticleContent caseStudy={data.caseStudy} />
           </div>
-        </div>
-        <div className="flex mx-auto w-full xl:w-[1320px]">
-          <ArticleContent caseStudy={data.caseStudy} />
         </div>
       </div>
       <Footer />
