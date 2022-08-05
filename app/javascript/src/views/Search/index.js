@@ -8,6 +8,7 @@ import Footer from "src/components/Footer";
 import EndlessScroll from "../Explore/EndlessScroll";
 import ExploreViewHeading from "../Explore/ExploreViewHeading";
 import FeedFooter from "../Explore/FeedFooter";
+import SearchIllustration from "src/illustrations/zest/search";
 
 export default function Search() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export default function Search() {
   const edges = data?.search?.articles?.edges || [];
   const pageInfo = data?.search?.articles?.pageInfo || {};
   const results = edges.map((e) => e.node);
+  const hasResults = results.length > 0;
 
   const handleLoadMore = useCallback(() => {
     fetchMore({
@@ -37,10 +39,18 @@ export default function Search() {
         {pageInfo.hasNextPage && (
           <EndlessScroll onLoadMore={handleLoadMore} />
         )}
-        {!loading && !pageInfo.hasNextPage && (
-        <FeedFooter>
-          You've reached the end of the list.
+        {!loading && hasResults && !pageInfo.hasNextPage && (
+          <FeedFooter>
+            You've reached the end of the list.
           </FeedFooter>
+        )}
+
+        {!loading && !hasResults && (
+          <div className="w-[300px] py-12 mx-auto text-center">
+            <SearchIllustration width="200px" className="mx-auto mb-8" />
+            <h4 className="font-semibold">No results</h4>
+            <p>We couldnt find any results for '{term}'</p>
+          </div>
         )}
       </div>
       <Footer />
