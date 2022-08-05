@@ -6,10 +6,12 @@ import { useParams } from "react-router-dom";
 import EndlessScroll from "./EndlessScroll";
 import ExploreViewHeading from "./ExploreViewHeading";
 import FeedFooter from "./FeedFooter";
+import { isNotFound } from "../NotFound";
+import LostIllustration from "src/illustrations/zest/lost";
 
 export default function Topic() {
   const { slug } = useParams();
-  const { loading, data, fetchMore } = useTopic(slug);
+  const { loading, data, fetchMore, error } = useTopic(slug);
 
   const topic = data?.topic || {};
   const pageInfo = topic?.articles?.pageInfo;
@@ -27,6 +29,16 @@ export default function Topic() {
       },
     });
   }, [fetchMore, data]);
+
+  if (isNotFound(error)) {
+    return (
+      <div className="w-[300px] py-12 mx-auto text-center">
+        <LostIllustration width="200px" className="mx-auto mb-8" />
+        <h4 className="font-semibold">Oops</h4>
+        <p>We can't seem to find the page you're looking for.</p>
+      </div>
+    )
+  }
 
   return (
     <>
