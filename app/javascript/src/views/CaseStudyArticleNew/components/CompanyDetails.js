@@ -19,17 +19,17 @@ export default function CompanyDetails({ caseStudy }) {
 
   return (
     <div>
-      <div className="leading-none mb-1.5 uppercase text-xs font-semibold text-neutral500 tracking-wide">
+      <div className="mb-1.5 text-xs font-semibold tracking-wide leading-none uppercase text-neutral500">
         Company details
       </div>
-      <div className="flex gap-2 py-3 border-b border-b-neutral100 border-solid last:border-none">
+      <div className="flex gap-2 py-3 border-b border-solid last:border-none border-b-neutral100">
         {favicon && <Favicon src={favicon} size="xs" />}
         {website ? (
           <a
             href={website?.href}
             target="_blank"
             rel="noreferrer"
-            className="font-[450] text-blue500 flex gap-1 items-center leading-none"
+            className="flex gap-1 items-center leading-none font-[450] text-blue500"
           >
             {name}
             <div className="w-[18px] h-[18px]">
@@ -42,20 +42,20 @@ export default function CompanyDetails({ caseStudy }) {
       </div>
 
       {companyType && (
-        <div className="flex gap-2 py-3 border-b border-b-neutral100 border-solid last:border-none">
+        <div className="flex gap-2 py-3 border-b border-solid last:border-none border-b-neutral100">
           <div className="min-w-[24px] h-[24px]">
-            <Truck className="stroke-neutral700" />
+            <Truck size={24} className="stroke-neutral700" />
           </div>
-          <div className="text-neutral700 font-medium">{companyType}</div>
+          <div className="font-medium text-neutral700">{companyType}</div>
         </div>
       )}
 
       {businessType && (
         <div className="flex gap-2 py-3">
           <div className="min-w-[24px] h-[24px]">
-            <Briefcase className="stroke-neutral700" />
+            <Briefcase size={24} className="stroke-neutral700" />
           </div>
-          <div className="text-neutral700 font-medium">{businessType}</div>
+          <div className="font-medium text-neutral700">{businessType}</div>
         </div>
       )}
     </div>
