@@ -40,7 +40,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
             transition={{ duration: 0.2 }}
             variants={{
               open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 }
+              collapsed: { opacity: 0, height: 0 },
             }}
           >
             <p className="pb-4 text-neutral900">{children}</p>
@@ -56,6 +56,9 @@ export default function KeyTakeaways({ insights }) {
   const [activeTab, setActiveTab] = React.useState(isDesktop ? 0 : null);
   const closeTab = () => setActiveTab(null);
   const openTab = (index) => setActiveTab(index);
+
+  insights = insights.filter((insight) => insight.description && insight.title);
+  if (insights.length === 0) return null;
 
   return (
     <div className="mb-8">
@@ -73,7 +76,9 @@ export default function KeyTakeaways({ insights }) {
           closeTab={closeTab}
           openTab={openTab}
           title={insight.title}
-        >{insight.description}</Section>
+        >
+          {insight.description}
+        </Section>
       ))}
     </div>
   );
