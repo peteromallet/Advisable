@@ -78,7 +78,7 @@ module Types
 
       field :results_content, Types::CaseStudy::ResultsContent, null: true
       def results_content
-        object.contents.find_by(type: "CaseStudy::ResultsContent")
+        dataloader.with(ActiveRecordAssociationSource, :contents, ::CaseStudy::Content.where(type: "CaseStudy::ResultsContent")).load(object).first
       end
 
       field :insights, [Types::CaseStudy::Insight], null: true
