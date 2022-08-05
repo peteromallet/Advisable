@@ -5,7 +5,7 @@ import composeStyles from "src/utilities/composeStyles";
 const THRESHOLD = 200;
 
 const classes = composeStyles({
-  base: "fixed z-20 w-12 h-12 rounded-full shadow-xl bg-neutral-700 hover:bg-neutral-900 grid place-items-center bottom-4 left-4 opacity-0 invisible transition-opacity",
+  base: "fixed z-10 w-12 h-12 rounded-full shadow-xl bg-neutral-700 hover:bg-neutral-900 grid place-items-center bottom-4 left-4 opacity-0 invisible transition-opacity",
   variants: {
     enabled: "!visible !opacity-100",
   },

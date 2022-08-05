@@ -23,7 +23,7 @@ export default function Explore() {
       <div className="max-w-[1300px] mx-auto px-5 lg:px-10 pb-10 min-h-[80vh]">
         <ScrollToTop />
         <TopicsBar />
-        <div className="h-px mb-8 bg-neutral-200" />
+        <div className="h-px bg-neutral-200" />
         <Routes location={location.state?.backgroundLocation || location}>
           <Route index element={<Feed />} />
           <Route path="trending" element={<Trending />} />

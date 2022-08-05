@@ -11,21 +11,23 @@ export default function ClientHeader() {
   const isCollaborationView = useIsCollaborationView();
 
   return (
-    <HeaderBar>
-      <div className="flex items-center justify-start flex-1 gap-4">
+    <HeaderBar className="gap-4">
+      <div className="flex items-center justify-start md:flex-1 gap-4">
         <HeaderLogo />
-        <HeaderToggle />
+        <div className="hidden lg:block">
+          <HeaderToggle />
+        </div>
       </div>
 
-      <div className="flex items-center justify-center flex-1">
+      <div className="flex items-center  flex-1">
         {!isCollaborationView && (
-        <div className="w-[500px] flex justify-center">
-          <Searchbox name="headerSearch" />
-        </div>
+          <div className="w-full md:w-[500px] flex justify-center">
+            <Searchbox name="headerSearch" />
+          </div>
         )}
       </div>
 
-      <div className="flex items-center justify-end flex-1 ml-auto gap-3">
+      <div className="hidden md:flex items-center justify-end flex-1 ml-auto gap-3">
         <MessagesDropdown />
         <Notifications />
         <CurrentUser />

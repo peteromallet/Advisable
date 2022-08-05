@@ -4,6 +4,7 @@ import { ArrowSmRight, Search } from "@styled-icons/heroicons-solid";
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
+import { useBreakpoint } from "@advisable/donut";
 
 const iconClasses = composeStyles({
   base: `
@@ -72,6 +73,7 @@ export default function Searchbox({ className, ...props }) {
   const inputRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMedium = useBreakpoint("mUp");
   const [focused, setFocused] = useState(false);
 
   const query = useMemo(() => {
@@ -107,8 +109,8 @@ export default function Searchbox({ className, ...props }) {
       onClick={handleClick}
       onSubmit={handleSubmit}
       className={searchBoxClasses({ className, focused })}
-      initial={{ width: focused ? "100%" : "70%" }}
-      animate={{ width: focused ? "100%" : "70%" }}
+      initial={{ width: !isMedium || focused ? "100%" : "70%" }}
+      animate={{ width: !isMedium || focused ? "100%" : "70%" }}
     >
       <Search className={iconClasses({ focused })} />
       <input

@@ -30,18 +30,19 @@ function Topic({ to, name, icon, delay, ...props }) {
 
   return (
     <Link to={to} className={topicClasses({ active })} {...props}>
-      <div className="topic-icon">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay }}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay }}
+        className="topic-icon">
+        <div
           className="w-5 h-5"
           style={{
             backgroundImage: `url(${icon || home})`,
             backgroundPositionX: active ? -20 : 0,
           }}
         />
-      </div>
+      </motion.div>
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -168,7 +169,7 @@ export default function TopicsBar() {
             </motion.button>
           )}
         </AnimatePresence>
-        <div className="flex gap-12">
+        <div className="flex gap-8 sm:gap-10 lg:gap-12">
           {loading ? (
             [...Array(16)].map((_, i) => <TopicSkeleton key={i} />)
           ) : (

@@ -29,11 +29,11 @@ export default function Explore() {
         <CustomizeInterests awaitFeedUpdate={awaitFeedUpate} refreshFeed={refreshFeed} interests={data?.interests} />
       </ExploreViewHeading>
       <CaseStudyGrid loading={isLoading} results={results} />
-      {!isLoading &&! pageInfo?.hasNextPage && (
-      <FeedFooter>
+      {!isLoading && !pageInfo?.hasNextPage && (
+        <FeedFooter>
           You've reached the end of the feed.
         </FeedFooter>
-        )}
+      )}
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </>
   );
