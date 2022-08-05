@@ -61,9 +61,16 @@ const skillClasses = composeStyles({
   },
 });
 
+function primarySkillForArticle(article) {
+  const primarySkill = article.skills.find(skill => skill.primary);
+  if (!primarySkill) return article.skills[0]?.skill;
+  return primarySkill.skill;
+}
+
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
   const results = (article.resultsContent?.results || []).slice(0, 2);
+  const primarySkill = primarySkillForArticle(article);
 
   return (
     <motion.div
@@ -100,11 +107,11 @@ export default function CaseStudyCard({ article, delay }) {
           }}
           className="case-study-card-content"
         >
-          {article.primarySkill && (
+          {primarySkill && (
             <div
-              className={skillClasses({ color: article.primarySkill.color })}
+              className={skillClasses({ color: primarySkill.color })}
             >
-              {article.primarySkill.name}
+              {primarySkill.name}
             </div>
           )}
           <h4 className="font-serif text-[22px] font-semibold tracking-tight mb-8 leading-snug">
