@@ -1,10 +1,9 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
-import { Box, Card, Text, Checkbox } from "@advisable/donut";
+import { Box, Card, Text, Checkbox, Select } from "@advisable/donut";
 import Loading from "components/Loading";
 import FormField from "components/FormField";
-import CurrencyInput from "components/CurrencyInput";
 import { useNotifications } from "components/Notifications";
 import { GET_DATA, UPDATE_PROFILE } from "./queries";
 import SubmitButton from "components/SubmitButton";
@@ -16,17 +15,12 @@ const Profile = () => {
 
   const initialValues = {
     remote: data?.viewer?.remote || true,
-    hourlyRate: data?.viewer?.hourlyRate / 100.0,
+    priceRange: data?.viewer?.priceRange || "high",
     publicUse: data?.viewer?.publicUse || false,
   };
 
   const handleSubmit = async (values) => {
-    const input = {
-      hourlyRate: values.hourlyRate * 100,
-      remote: values.remote,
-      publicUse: values.publicUse,
-    };
-    const response = await updateProfile({ variables: { input } });
+    const response = await updateProfile({ variables: { input: values } });
     if (response.errors) {
       notifications.notify("Something went wrong, please try again", {
         variant: "error",
@@ -83,13 +77,18 @@ const Profile = () => {
             </Box>
             <Box height={1} bg="neutral100" my="l" />
             <FormField
-              as={CurrencyInput}
+              as={Select}
               prefix="$"
-              name="hourlyRate"
+              name="priceRange"
               placeholder="Hourly rate"
-              label="What is your typical hourly rate in USD?"
+              label="What is your typical price range?"
               description="This is just to get an idea of your rate. You will be able to set your rate on a per project basis when working with clients on Advisable."
-            />
+            >
+              <option value="low">{"< $75 per hour"}</option>
+              <option value="medium">{"$75 - $150 per hour"}</option>
+              <option value="high">{"$150 - $300 per hour"}</option>
+              <option value="very high">{"> $150 per hour"}</option>
+            </FormField>
             <Box height={1} bg="neutral100" my="l" />
             <Box mb="l">
               <Field as={Checkbox} type="checkbox" name="publicUse">
