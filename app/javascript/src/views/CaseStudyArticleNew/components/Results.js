@@ -69,7 +69,9 @@ export default function Results({ results }) {
             <h5 className="text-white text-xl leading-6 font-semibold mb-1">
               {result.callout}
             </h5>
-            <p className="text-sm text-white leading-relaxed">{result.context}</p>
+            <p className="text-sm text-white leading-relaxed">
+              {result.context}
+            </p>
           </div>
         </div>
       </div>

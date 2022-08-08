@@ -22,6 +22,7 @@ import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
 import Avatar from "src/components/Avatar";
 import { Chat } from "@styled-icons/heroicons-outline";
+import ScrollIndicator from "./components/ScrollIndicator";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
@@ -46,6 +47,7 @@ export default function CaseStudyArticle() {
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
       <div className="z-10 absolute right-0 top-0 inline-flex gap-2 p-5">
+        <ScrollIndicator />
         <EditCaseStudyButton article={data.caseStudy} />
         <ShareArticleButton slug={data.caseStudy.slug} />
         <FavoriteArticleButton article={data.caseStudy} />
@@ -57,7 +59,11 @@ export default function CaseStudyArticle() {
           />
         )}
       </div>
-      <ConnectModal modal={contactModal} specialist={specialist} article={article} />
+      <ConnectModal
+        modal={contactModal}
+        specialist={specialist}
+        article={article}
+      />
       <div className="flex mx-auto w-full xl:w-[1320px] pb-36 px-6 lg:px-14">
         <div className="hidden lg:block min-w-[348px] w-[348px] pt-12 pr-12">
           <StickyBox offsetTop={60} offsetBottom={60}>
@@ -73,8 +79,12 @@ export default function CaseStudyArticle() {
               />
             </div>
             <div className="w-full">
-              <h4 className="leading-none font-semibold mb-1 line-clamp-1">{data.caseStudy.specialist.name}</h4>
-              <p className="leading-none text-sm text-neutral-700 line-clamp-1 pb-0.5">{data.caseStudy.specialist.location}</p>
+              <h4 className="leading-none font-semibold mb-1 line-clamp-1">
+                {data.caseStudy.specialist.name}
+              </h4>
+              <p className="leading-none text-sm text-neutral-700 line-clamp-1 pb-0.5">
+                {data.caseStudy.specialist.location}
+              </p>
             </div>
             <div className="shrink-0">
               <CircularButton
@@ -101,7 +111,7 @@ export default function CaseStudyArticle() {
               <CompanyDetails caseStudy={data.caseStudy} />
             </div>
           </div>
-          <hr className="my-16" />
+          <hr className="my-16" id="article-content-start" />
           <ArticleContent caseStudy={data.caseStudy} />
         </div>
       </div>

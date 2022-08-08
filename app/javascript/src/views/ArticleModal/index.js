@@ -76,7 +76,7 @@ export default function ArticleModal() {
         transition={{ duration: 0.3 }}
         data-testid="articleModal"
       >
-        <div className="h-full overflow-y-scroll">
+        <div className="h-full overflow-y-scroll" id="article-scrollable-area">
           <CaseStudyArticleNew />
         </div>
       </motion.div>
