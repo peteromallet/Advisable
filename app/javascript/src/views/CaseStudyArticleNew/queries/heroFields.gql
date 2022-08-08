@@ -1,0 +1,34 @@
+fragment HeroFields on CaseStudyArticle {
+  slug
+  title
+  subtitle
+  companyType
+  resultsContent {
+    results
+  }
+  insights {
+    id
+    title
+    description
+  }
+  company {
+    id
+    name
+    logo
+    favicon
+    businessType
+    website
+  }
+  specialist {
+    id
+    bio
+    avatar
+    name
+    firstName
+    profilePath
+    priceRange
+    unavailableUntil
+    createdAt
+    location
+  }
+}

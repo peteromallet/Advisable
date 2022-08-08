@@ -32,7 +32,7 @@ export default function CaseStudyArticle() {
   const { backgroundLocation } = location.state || {};
   const contactModal = useModal();
 
-  if (loading) return <Loading />;
+  if (loading && !data) return <Loading />;
   if (isNotFound(error)) return <NotFound />;
 
   const article = data?.caseStudy;
@@ -112,7 +112,11 @@ export default function CaseStudyArticle() {
             </div>
           </div>
           <hr className="my-16" id="article-content-start" />
-          <ArticleContent caseStudy={data.caseStudy} />
+          {loading ? (
+            <Loading />
+          ) : (
+            <ArticleContent caseStudy={data.caseStudy} />
+          )}
         </div>
       </div>
       <Footer />

@@ -1,65 +1,12 @@
-#import "../../Feed/queries/articleFields.gql"
+#import "../../Explore/queries/articleFields.gql"
+#import "./heroFields.gql"
 
 query Article($slug: ID!) {
   caseStudy(id: $slug) {
     id
-    slug
-    title
-    subtitle
+    ...HeroFields
     editorUrl
-    companyType
-    resultsContent {
-      results
-    }
-    comment
     isFavorited
-    insights {
-      id
-      title
-      description
-    }
-    industries {
-      id
-      industry {
-        id
-        name
-      }
-    }
-    skills {
-      id
-      primary
-      skill {
-        id
-        name
-      }
-    }
-    company {
-      id
-      name
-      logo
-      favicon
-      businessType
-      website
-    }
-    specialist {
-      id
-      bio
-      avatar
-      name
-      firstName
-      profilePath
-      priceRange
-      unavailableUntil
-      createdAt
-      location
-      conversation {
-        id
-      }
-      account {
-        id
-        timezone
-      }
-    }
     sections {
       id
       type
@@ -85,6 +32,13 @@ query Article($slug: ID!) {
     }
     similar {
       ...ArticleFields
+      industries {
+        id
+        industry {
+          id
+          name
+        }
+      }
     }
     review {
       id
