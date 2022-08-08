@@ -1,26 +1,11 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
-import { resetAnalytics } from "src/utilities/segment";
 import { StyledDropdownLink } from "./styles";
-
-const LOGOUT = gql`
-  mutation Logout {
-    logout(input: {}) {
-      success
-    }
-  }
-`;
+import { useLogout } from "src/graphql/mutations";
 
 export default function Logout(props) {
-  const [logout] = useMutation(LOGOUT);
-
-  const handleLogout = async () => {
-    resetAnalytics();
-    await logout();
-    window.location = "/login";
-  };
+  const logout = useLogout();
 
   return (
-    <StyledDropdownLink as="a" href="#" {...props} onClick={handleLogout} />
+    <StyledDropdownLink as="a" href="#" {...props} onClick={logout} />
   );
 }

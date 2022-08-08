@@ -5,6 +5,7 @@ import CurrentUser from "./CurrentUser";
 import HeaderBar from "./HeaderBar";
 import HeaderToggle, { useIsCollaborationView } from "./HeaderToggle";
 import MessagesDropdown from "./MessagesDropdown";
+import MobileMenu from "./MobileMenu";
 import Notifications from "./Notifications";
 
 export default function ClientHeader() {
@@ -25,6 +26,10 @@ export default function ClientHeader() {
             <Searchbox name="headerSearch" />
           </div>
         )}
+      </div>
+
+      <div className="inline-flex lg:hidden">
+        <MobileMenu />
       </div>
 
       <div className="hidden md:flex items-center justify-end flex-1 ml-auto gap-3">
