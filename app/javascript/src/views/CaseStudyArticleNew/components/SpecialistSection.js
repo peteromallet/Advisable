@@ -1,8 +1,9 @@
 import { Chat, Tag } from "@styled-icons/heroicons-outline";
-import { Link, DialogDisclosure } from "@advisable/donut";
+import { Link, DialogDisclosure, Tooltip } from "@advisable/donut";
 import React from "react";
 import Button from "src/components/Button";
 import { BadgeCheck, LocationMarker } from "@styled-icons/heroicons-solid";
+import { DateTime } from "luxon";
 
 const StyledIcon = ({ icon: Icon, color }) => {
   const bgColors = {
@@ -39,11 +40,12 @@ const PRICE_RANGES = {
   medium: "$75 - $150",
   high: "$150 - $300",
   "very high": "> $300",
-}
+};
 
 export default function SpecialistSection({ article, modal }) {
   const { specialist } = article;
   const { name, location, bio, priceRange } = specialist;
+  const date = DateTime.fromISO(specialist.createdAt).toFormat("MMMM dd, yyyy");
 
   return (
     <>
@@ -59,9 +61,20 @@ export default function SpecialistSection({ article, modal }) {
             />
           )}
         </Link>
-        <div className="flex justify-center items-center absolute bottom-2 right-1 rounded-full p-0.5 bg-white">
-          <BadgeCheck size={24} className="fill-blue500" />
-        </div>
+        <Tooltip
+          placement="bottom"
+          content={`${specialist.firstName} has been a verified Advisable freelancer
+              since ${date}`}
+        >
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.advisable.com/vetting"
+            className="flex justify-center items-center absolute bottom-2 right-1 rounded-full p-0.5 bg-white"
+          >
+            <BadgeCheck size={24} className="fill-blue500" />
+          </a>
+        </Tooltip>
       </div>
 
       <div>

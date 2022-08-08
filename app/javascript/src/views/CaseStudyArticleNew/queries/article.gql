@@ -50,6 +50,7 @@ query Article($slug: ID!) {
       profilePath
       priceRange
       unavailableUntil
+      createdAt
       location
       conversation {
         id
