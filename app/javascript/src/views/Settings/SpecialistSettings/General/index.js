@@ -17,6 +17,7 @@ const Profile = () => {
     remote: data?.viewer?.remote || true,
     priceRange: data?.viewer?.priceRange || "high",
     publicUse: data?.viewer?.publicUse || false,
+    collaborationTypes: data?.viewer?.collaborationTypes || [],
   };
 
   const handleSubmit = async (values) => {
@@ -48,6 +49,33 @@ const Profile = () => {
             >
               General Settings
             </Text>
+            <div className="mb-8">
+              <h5 className="text-lg font-medium">What type of work are you available for?</h5>
+              <p className="mb-2">
+                This will be displayed on your profile
+              </p>
+              <Field
+                as={Checkbox}
+                type="checkbox"
+                name="collaborationTypes" value="hands_on"
+                checked={formik.values.collaborationTypes.includes("hands_on")}>
+                Hands on work
+              </Field>
+              <Field
+                as={Checkbox}
+                type="checkbox"
+                name="collaborationTypes" value="consultancy"
+                checked={formik.values.collaborationTypes.includes("consultancy")}>
+                Consultancy
+              </Field>
+              <Field
+                as={Checkbox}
+                type="checkbox"
+                name="collaborationTypes" value="mentorship"
+                checked={formik.values.collaborationTypes.includes("mentorship")}>
+                Mentoring
+              </Field>
+            </div>
             <Box paddingBottom="xs">
               <Text fontWeight="medium" color="neutral800">
                 Are you happy to work remotely?

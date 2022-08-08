@@ -63,6 +63,7 @@ class Specialist < ApplicationRecord
   scope :not_rejected, -> { where.not(application_stage: REJECTED_STAGES) }
   scope :accepted, -> { where(application_stage: "Accepted") }
 
+  before_validation :set_initial_values, on: :create
   before_save :update_timestamps, if: :will_save_change_to_application_stage?
 
   def accepted?
@@ -119,6 +120,12 @@ class Specialist < ApplicationRecord
     return unless respond_to?(column)
 
     public_send(column, Time.current)
+  end
+
+  def set_initial_values
+    self.hands_on = true
+    self.consultancy = true
+    self.mentorship = true
   end
 end
 
