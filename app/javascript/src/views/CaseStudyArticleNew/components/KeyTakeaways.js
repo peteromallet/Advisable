@@ -17,12 +17,12 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
         {isActive ? (
           <MinusCircle
             size="20px"
-            className="fill-neutral900 group-hover:fill-blue700"
+            className="fill-neutral900 group-hover:fill-blue700 min-w-[20px]"
           />
         ) : (
           <PlusCircle
             size="20px"
-            className="fill-neutral900 group-hover:fill-blue700"
+            className="fill-neutral900 group-hover:fill-blue700 min-w-[20px]"
           />
         )}
         <div className="text-neutral900 font-medium line-clamp-1 group-hover:text-blue700">
