@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { DateTime } from "luxon";
 import { useQuery, gql } from "@apollo/client";
-import { Toggle, Card, Button } from "@advisable/donut";
+import { Toggle, Card, Button, Checkbox } from "@advisable/donut";
 import { usePopoverState, Popover, PopoverDisclosure } from "reakit/Popover";
 import Loading from "src/components/Loading";
 import DatePicker from "src/components/DatePicker";
 import { useSetUnavailableUntil } from "src/shared/mutations/setUnavailableUntil";
+import { useUpdateProfile } from "./General/queries";
 
 const DISABLED_DATE = "2050-01-01";
 
@@ -14,6 +15,7 @@ const GET_UNAVAILABLE_DATE = gql`
     viewer {
       ... on Specialist {
         id
+        collaborationTypes
         unavailableUntil
       }
     }
@@ -158,6 +160,67 @@ function PauseAvailability({ unavailableUntil, isAvailableForWork }) {
   );
 }
 
+function CollaborationTypes({ disabled, collaborationTypes }) {
+  const [updateProfile, { loading }] = useUpdateProfile();
+  const [types, setTypes] = useState(collaborationTypes);
+
+  const handleClick = e => {
+    if (types.includes(e.target.value)) {
+      setTypes(types.filter((type) => type !== e.target.value));
+    } else {
+      setTypes([...types, e.target.value]);
+    }
+  }
+
+  const handleSubmit = async () => {
+    updateProfile({
+      variables: {
+        input: {
+          collaborationTypes: types,
+        }
+      }
+    })
+  }
+
+  return (
+    <div className="mb-8">
+      <h5 className="text-lg font-medium">What type of work are you available for?</h5>
+      <p className="mb-2">
+        This will be displayed on your profile
+      </p>
+      <Checkbox
+        type="checkbox"
+        onClick={handleClick}
+        disabled={disabled}
+        name="collaborationTypes" value="hands_on"
+        checked={types.includes("hands_on")}>
+        Hands on work
+      </Checkbox>
+      <Checkbox
+        type="checkbox"
+        onClick={handleClick}
+        disabled={disabled}
+        name="collaborationTypes" value="consultancy"
+        checked={types.includes("consultancy")}>
+        Consultancy
+      </Checkbox>
+      <Checkbox
+        type="checkbox"
+        onClick={handleClick}
+        disabled={disabled}
+        name="collaborationTypes" value="mentorship"
+        checked={types.includes("mentorship")}>
+        Mentoring
+      </Checkbox>
+      <Button
+        onClick={handleSubmit}
+        disabled={disabled}
+        loading={loading}
+        className="mt-6" variant="secondary">Save</Button>
+    </div>
+  )
+}
+
 export default function Availability() {
   const { data, loading, error } = useQuery(GET_UNAVAILABLE_DATE);
   const unavailableUntil = data?.viewer?.unavailableUntil;
@@ -189,6 +252,10 @@ export default function Availability() {
         </div>
         <AvailabilityToggle isAvailableForWork={isAvailableForWork} />
       </div>
+      <div className="h-px bg-neutral100 my-8" />
+      <CollaborationTypes
+        disabled={!isAvailableForWork}
+        collaborationTypes={data.viewer.collaborationTypes} />
       <div className="h-px bg-neutral100 my-8" />
       <PauseAvailability
         unavailableUntil={unavailableUntil}

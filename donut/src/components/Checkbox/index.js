@@ -11,7 +11,7 @@ import {
 } from "./styles";
 
 const Checkbox = React.forwardRef(function Checkbox(
-  { children, m, mx, my, mt, mr, mb, ml, size, ...props },
+  { children, m, mx, my, mt, mr, mb, ml, size, disabled, ...props },
   ref,
 ) {
   const checkVariants = {
@@ -20,13 +20,14 @@ const Checkbox = React.forwardRef(function Checkbox(
   };
 
   return (
-    <StyledCheckbox m={m} mx={mx} my={my} mt={mt} mr={mr} mb={mb} ml={ml}>
+    <StyledCheckbox data-disabled={disabled} m={m} mx={mx} my={my} mt={mt} mr={mr} mb={mb} ml={ml}>
       <StyledCheckboxInner>
         <StyledCheckboxInput
           {...props}
           ref={ref}
           role="checkbox"
           type="checkbox"
+          disabled={disabled}
           aria-checked={props.checked}
         />
         <StyledCheckboxToggle
