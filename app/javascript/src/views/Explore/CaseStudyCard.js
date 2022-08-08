@@ -69,7 +69,8 @@ function primarySkillForArticle(article) {
 
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
-  const results = (article.resultsContent?.results || []).slice(0, 2);
+  const resultsWithContent = (article.resultsContent?.results || []).filter(c => c.callout && c.context);
+  const results = resultsWithContent.slice(0, 2);
   const primarySkill = primarySkillForArticle(article);
 
   return (
