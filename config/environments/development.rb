@@ -35,7 +35,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  config.hosts += [/.+\.ngrok\.io/, "advisable.test"]
+  config.hosts += [/.+\.ngrok\.io/, "advisable.test", ENV.fetch("CUSTOM_DEV_HOST", nil)].compact
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   # config.active_storage.service = :amazon
