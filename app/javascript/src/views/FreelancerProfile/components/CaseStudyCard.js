@@ -1,12 +1,12 @@
-import * as Sentry from "@sentry/react";
 import React, { Suspense } from "react";
+import * as Sentry from "@sentry/react";
+import { Link, useLocation } from "react-router-dom";
 import { rgba } from "polished";
 import css from "@styled-system/css";
 import { useImage } from "react-image";
 import styled from "styled-components";
-import { variant } from "styled-system";
 import SuperEllipse from "react-superellipse";
-import { Box, Text, Link, Skeleton, useModal, theme } from "@advisable/donut";
+import { Box, Text, Skeleton, useModal, theme } from "@advisable/donut";
 import LogoMark from "src/components/LogoMark";
 import MeatballMenu, { StyledMeatballButton } from "./MeatballMenu";
 import EditCaseStudyDropdownLink from "./EditCaseStudyDropdownLink";
@@ -168,6 +168,7 @@ const CaseStudyBackgroundImage = React.memo(function CaseStudyBackgroundImage({
 
 export default function CaseStudyCard({ caseStudy, isOwner }) {
   const modal = useModal();
+  const location = useLocation();
 
   const skills = caseStudy.skills.map(({ skill }) => (
     <StyledSkillTag key={skill.id}>{skill.name}</StyledSkillTag>
@@ -178,7 +179,9 @@ export default function CaseStudyCard({ caseStudy, isOwner }) {
       <Box
         as={StyledLink}
         to={caseStudy.path}
-        state={{ back: true }}
+        state={{
+          backgroundLocation: location?.state?.backgroundLocation || location,
+        }}
         width="100%"
       >
         <StyledCaseStudyCard data-testid="caseStudyCard">
