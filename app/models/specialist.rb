@@ -123,9 +123,9 @@ class Specialist < ApplicationRecord
   end
 
   def set_initial_values
-    self.hands_on = true
-    self.consultancy = true
-    self.mentorship = true
+    self.hands_on = true if hands_on.nil?
+    self.consultancy = true if consultancy.nil?
+    self.mentorship = true if mentorship.nil?
   end
 end
 
