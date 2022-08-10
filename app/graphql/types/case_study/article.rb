@@ -32,7 +32,7 @@ module Types
         object.skills.order(created_at: :asc)
       end
 
-      field :primary_skill, Types::Skill, null: true
+      field :primary_skill, Types::Skill, null: true, deprecation_reason: "For performance reasons use `skills` instead and filter on the frontend"
       def primary_skill
         skills = object.skills
         skills.find(&:primary)&.skill || skills.first&.skill

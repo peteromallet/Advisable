@@ -202,7 +202,9 @@ module Types
     end
 
     def top_case_studies(limit:)
-      ::CaseStudy::Article.searchable.trending.first(limit)
+      Rails.cache.fetch("top_case_studies_#{limit}", expires_in: 1.day) do
+        ::CaseStudy::Article.searchable.trending.first(limit)
+      end
     end
 
     field :case_studies_by_categories, Types::CaseStudy::Article.connection_type do
@@ -317,7 +319,9 @@ module Types
     field :topics, [Types::CaseStudy::Topic], null: true
     def topics
       requires_client!
-      ::CaseStudy::Topic.by_position
+      Rails.cache.fetch("topics", expires_in: 1.day) do
+        ::CaseStudy::Topic.by_position
+      end
     end
 
     field :topic, Types::CaseStudy::Topic, null: true do
@@ -325,7 +329,9 @@ module Types
     end
     def topic(slug:)
       requires_client!
-      ::CaseStudy::Topic.find_by!(slug:)
+      Rails.cache.fetch("topic_#{slug}", expires_in: 1.day) do
+        ::CaseStudy::Topic.find_by!(slug:)
+      end
     end
 
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
