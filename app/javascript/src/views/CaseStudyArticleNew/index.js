@@ -46,7 +46,7 @@ export default function CaseStudyArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <div className="z-10 absolute right-0 top-0 inline-flex gap-2 p-5">
+      <div className="z-10 rounded-full bg-white absolute right-3 top-3 inline-flex gap-2 p-2">
         <ScrollIndicator />
         <EditCaseStudyButton article={data.caseStudy} />
         <ShareArticleButton slug={data.caseStudy.slug} />
@@ -64,14 +64,14 @@ export default function CaseStudyArticle() {
         specialist={specialist}
         article={article}
       />
-      <div className="flex mx-auto w-full xl:w-[1320px] pb-36 px-6 lg:px-14">
+      <div className="flex mx-auto w-full xl:max-w-[1320px] pb-36 px-6 lg:px-14">
         <div className="hidden lg:block min-w-[348px] w-[348px] pt-12 pr-12">
           <StickyBox offsetTop={60} offsetBottom={60}>
             <SpecialistSection article={data.caseStudy} modal={contactModal} />
           </StickyBox>
         </div>
-        <div className="lg:pl-12 py-6 md:py-12 relative w-full border-solid border-neutral100 lg:border-l">
-          <div className="md:hidden flex items-center gap-3 border-b border-solid border-neutral-200 pb-4 mb-4">
+        <div className="lg:pl-12 py-20 relative w-full border-solid border-neutral100 lg:border-l">
+          <div className="lg:hidden flex items-center gap-3 border-b border-t border-solid border-neutral-200 py-4 mb-4">
             <div className="shrink-0">
               <Avatar
                 src={data.caseStudy.specialist.avatar}
