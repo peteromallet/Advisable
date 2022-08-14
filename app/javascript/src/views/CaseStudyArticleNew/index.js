@@ -20,9 +20,8 @@ import CircularButton from "src/components/CircularButton";
 import ConnectModal from "src/components/ConnectModal";
 import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
-import Avatar from "src/components/Avatar";
-import { Chat } from "@styled-icons/heroicons-outline";
 import ScrollIndicator from "./components/ScrollIndicator";
+import SpecialistBar from "./components/SpecialistBar";
 
 export default function CaseStudyArticle() {
   useBackground("beige");
@@ -64,38 +63,17 @@ export default function CaseStudyArticle() {
         specialist={specialist}
         article={article}
       />
-      <div className="flex mx-auto w-full xl:max-w-[1320px] pb-36 px-6 lg:px-14">
-        <div className="hidden lg:block min-w-[348px] w-[348px] pt-12 pr-12">
+      <div className="flex mx-auto w-full xl:max-w-[1320px] pb-36 px-6 lg:px-10 xl:px-14">
+        <div className="hidden lg:block min-w-[272px] w-[272px] xl:min-w-[348px] xl:w-[348px] pt-12 pr-6 xl:pr-12">
           <StickyBox offsetTop={60} offsetBottom={60}>
             <SpecialistSection article={data.caseStudy} modal={contactModal} />
           </StickyBox>
         </div>
-        <div className="lg:pl-12 py-20 relative w-full border-solid border-neutral100 lg:border-l">
-          <div className="lg:hidden flex items-center gap-3 border-b border-t border-solid border-neutral-200 py-4 mb-4">
-            <div className="shrink-0">
-              <Avatar
-                src={data.caseStudy.specialist.avatar}
-                name={data.caseStudy.specialist.name}
-              />
-            </div>
-            <div className="w-full">
-              <h4 className="leading-none font-semibold mb-1 line-clamp-1">
-                {data.caseStudy.specialist.name}
-              </h4>
-              <p className="leading-none text-sm text-neutral-700 line-clamp-1 pb-0.5">
-                {data.caseStudy.specialist.location}
-              </p>
-            </div>
-            <div className="shrink-0">
-              <CircularButton
-                color="blue"
-                aria-label="Contact"
-                icon={Chat}
-                onClick={contactModal.show}
-              />
-            </div>
-          </div>
-
+        <div className="lg:pl-6 xl:pl-12 py-20 relative w-full border-solid border-neutral100 lg:border-l">
+          <SpecialistBar
+            modal={contactModal}
+            specialist={data.caseStudy.specialist}
+          />
           <h1 className="text-3xl md:text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
             {data.caseStudy.title}
           </h1>
