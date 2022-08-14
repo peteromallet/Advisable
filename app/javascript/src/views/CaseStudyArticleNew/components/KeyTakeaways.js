@@ -57,8 +57,8 @@ export default function KeyTakeaways({ insights }) {
   const closeTab = () => setActiveTab(null);
   const openTab = (index) => setActiveTab(index);
 
-  insights = insights.filter((insight) => insight.description && insight.title);
-  if (insights.length === 0) return null;
+  insights = insights?.filter((i) => i.description && i.title);
+  if (!insights?.length) return null;
 
   return (
     <div className="mb-8">
