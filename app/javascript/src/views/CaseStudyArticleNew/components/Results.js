@@ -50,7 +50,7 @@ const CATEGORY_ICONS = {
 };
 
 export default function Results({ results }) {
-  if (!results) return null;
+  if (!results?.length) return null;
   const firstTwo = results.slice(0, 2);
 
   const resultCards = firstTwo.map((result, index) => {
