@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useTopic } from "./queries";
-import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
 import { useParams } from "react-router-dom";
 import EndlessScroll from "./EndlessScroll";
@@ -37,18 +36,20 @@ export default function Topic() {
         <h4 className="font-semibold">Oops</h4>
         <p>We can't seem to find the page you're looking for.</p>
       </div>
-    )
+    );
   }
 
   return (
     <>
-      <ExploreViewHeading title={topic.name} description={topic.description} loading={!topic.name && loading} />
+      <ExploreViewHeading
+        title={topic.name}
+        description={topic.description}
+        loading={!topic.name && loading}
+      />
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
       {!loading && !pageInfo?.hasNextPage && (
-        <FeedFooter>
-          You've reached the end of the list.
-        </FeedFooter>
+        <FeedFooter>You've reached the end of the list.</FeedFooter>
       )}
     </>
   );

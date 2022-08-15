@@ -51,7 +51,7 @@ RSpec.describe "Client signup", type: :system do
       end
       # We have an intentional 5 second delay on the 'setting up your feed' step.
       sleep(6)
-      expect(page).to have_current_path("/explore")
+      expect(page).to have_current_path("/")
     end
   end
 end

@@ -22,15 +22,15 @@ RSpec.describe "Discover", type: :system do
 
   context "when not authenticated" do
     it "/explore redirects to the login page" do
-      visit "/explore"
+      visit "/"
       expect(page).to have_content("Please sign in to your account")
     end
   end
 
   context "when logged in as specialist" do
-    it "/explore redirects to dashboard on / path" do
+    it "/ redirects to dashboard on / path" do
       authenticate_as(create(:specialist, application_stage: "Accepted"))
-      visit "/explore"
+      visit "/"
       expect(page).to have_content("Collaboration requests")
     end
   end
@@ -39,10 +39,10 @@ RSpec.describe "Discover", type: :system do
     it "Lists topics and they can click into one" do
       create(:case_study_topic, name: "SEO", slug: "seo")
       authenticate_as(user)
-      visit("/explore")
+      visit("/")
       expect(page).to have_content("SEO")
       click_link("SEO", match: :first)
-      expect(page).to have_current_path("/explore/seo")
+      expect(page).to have_current_path("/topics/seo")
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "Discover", type: :system do
     it "redirects to onboarding" do
       user.account.update(completed_tutorials: [])
       authenticate_as(user)
-      visit("/explore")
+      visit("/")
       expect(page).to have_content("Tell us about your company")
       expect(page).to have_current_path("/setup/company")
     end
@@ -63,7 +63,7 @@ RSpec.describe "Discover", type: :system do
       create(:case_study_interest_article, interest:, article:)
     end
     authenticate_as(user)
-    visit("/explore")
+    visit("/")
     trending = CaseStudy::Article.published.trending
     expect(page).to have_content(trending.first.title)
     expect(page).not_to have_content(trending.last.title)
@@ -78,7 +78,7 @@ RSpec.describe "Discover", type: :system do
     allow(topic).to receive(:results).and_return(articles)
     allow(CaseStudy::Topic).to receive(:find_by).with(slug: "seo").and_return(topic)
     authenticate_as(user)
-    visit("/explore/seo")
+    visit("/topics/seo")
     expect(page).to have_content(articles.first.title)
     expect(page).not_to have_content(articles.last.title)
     scroll_to(:bottom)
@@ -90,7 +90,7 @@ RSpec.describe "Discover", type: :system do
     article = create(:case_study_article, title: "How to sell paper")
     allow_any_instance_of(CaseStudy::InterestPreview).to receive(:results).and_return([article])
     authenticate_as(user)
-    visit("/explore")
+    visit("/")
     input = find_field("headerSearch")
     input.send_keys("headerSearch", :enter)
     expect(page).to have_content(article.title)
@@ -100,7 +100,7 @@ RSpec.describe "Discover", type: :system do
     design = create(:case_study_interest, term: "Design", account:)
     expect(account.reload.interests).to include(design)
     authenticate_as(user)
-    visit("/explore")
+    visit("/")
     click_on("Customize")
     click_on("Remove Design", match: :first)
     click_on("Save")
@@ -112,7 +112,7 @@ RSpec.describe "Discover", type: :system do
     expect(account.reload.interests.map(&:term)).not_to include("Design")
     expect(account.reload.interests.map(&:term)).not_to include("Creative PR Strategy")
     authenticate_as(user)
-    visit("/explore")
+    visit("/")
     click_on("Customize")
     find_field("interest").send_keys("Design", :enter)
     click_on("Add Creative PR Strategy") # test adding from list of suggestions

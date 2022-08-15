@@ -8,11 +8,11 @@ RSpec.describe "Setting a password", type: :system do
 
   it "asks authenticated users to set a password when they havent yet set one" do
     authenticate_as(user)
-    visit "/explore"
+    visit "/messages"
     expect(page).to have_content("Please set a password")
     fill_in "password", with: "testing123"
     fill_in "passwordConfirmation", with: "testing123"
     click_on "Set Password"
-    expect(page).to have_current_path("/explore")
+    expect(page).to have_current_path("/messages")
   end
 end

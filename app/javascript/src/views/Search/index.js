@@ -34,7 +34,7 @@ export default function Search() {
       <div className="max-w-[1300px] mx-auto px-5 py-6 pb-10">
         <ScrollToTop />
         <ExploreViewHeading
-          back="/explore" title={term} description={`Discover the best "${term}" projects`} />
+          back="/" title={term} description={`Discover the best "${term}" projects`} />
         <CaseStudyGrid loading={loading} results={results} />
         {pageInfo.hasNextPage && (
           <EndlessScroll onLoadMore={handleLoadMore} />

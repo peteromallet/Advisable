@@ -20,13 +20,13 @@ RSpec.describe "Favorites", type: :system do
 
   it "bookmarks empty state" do
     authenticate_as(user)
-    visit "/explore/favorites"
+    visit "/favorites"
     expect(page).to have_content("You haven't favorited any projecs yet.")
   end
 
   it "add article to favorites via article page" do
     authenticate_as(user)
-    visit "/explore"
+    visit "/"
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
@@ -37,14 +37,14 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content("Added to bookmarks")
     click_button("Close modal")
     click_link("Your Favorites")
-    expect(page).to have_current_path("/explore/favorites")
+    expect(page).to have_current_path("/favorites")
     expect(page).to have_content(article1.title)
   end
 
   it "remove article from favorites via article page" do
     create(:case_study_favorited_article, article: article1, account: user.account)
     authenticate_as(user)
-    visit "/explore/favorites"
+    visit "/favorites"
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
@@ -59,11 +59,11 @@ RSpec.describe "Favorites", type: :system do
 
   it "add article to favorites via feed list" do
     authenticate_as(user)
-    visit "/explore"
+    visit "/"
     expect(page).to have_content(article1.title)
     page.find_button("Favorite this project", match: :first).click
     click_on("Your Favorites")
-    expect(page).to have_current_path("/explore/favorites")
+    expect(page).to have_current_path("/favorites")
     expect(page).to have_content(article1.title)
   end
 
@@ -72,14 +72,14 @@ RSpec.describe "Favorites", type: :system do
     favorited = user.reload.account.favorited_articles.map(&:article)
     expect(favorited).to include(article1)
     authenticate_as(user)
-    visit "/explore"
+    visit "/"
     expect(page).to have_content(article1.title)
     card = find_by_test_id("article-card-#{article1.uid}")
     within(card) do
       click_button("Remove from favorites")
     end
     click_on("Your Favorites")
-    expect(page).to have_current_path("/explore/favorites")
+    expect(page).to have_current_path("/favorites")
     expect(page).not_to have_content(article1.title)
     favorited = user.reload.account.favorited_articles.map(&:article)
     expect(favorited).not_to include(article1)
@@ -88,7 +88,7 @@ RSpec.describe "Favorites", type: :system do
   it "remove article from favorites via favorites list" do
     create(:case_study_favorited_article, article: article1, account: user.account)
     authenticate_as(user)
-    visit "/explore/favorites"
+    visit "/favorites"
     expect(page).to have_content(article1.title)
     click_button("Remove from favorites")
     expect(page).not_to have_content(article1.title)

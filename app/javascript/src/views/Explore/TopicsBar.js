@@ -34,7 +34,8 @@ function Topic({ to, name, icon, delay, ...props }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay }}
-        className="topic-icon">
+        className="topic-icon"
+      >
         <div
           className="w-5 h-5"
           style={{
@@ -174,10 +175,10 @@ export default function TopicsBar() {
             [...Array(16)].map((_, i) => <TopicSkeleton key={i} />)
           ) : (
             <>
-              <Topic name={`Your\nFeed`} to="/explore" />
+              <Topic name={`Your\nFeed`} to="/" />
               <Topic
                 name={`Trending\nProjects`}
-                to="/explore/trending"
+                to="/trending"
                 icon={lightbulb}
                 delay={ANIMATION_DELAY}
               />
@@ -185,7 +186,7 @@ export default function TopicsBar() {
                 aria-label="Your Favorites"
                 name={`Your\nFavorites`}
                 icon={heart}
-                to="/explore/favorites"
+                to="/favorites"
                 delay={ANIMATION_DELAY * 2}
               />
               {topics.map((topic, i) => (
@@ -193,7 +194,7 @@ export default function TopicsBar() {
                   key={topic.id}
                   icon={topic.icon}
                   name={topic.name}
-                  to={`/explore/${topic.slug}`}
+                  to={`/topics/${topic.slug}`}
                   delay={ANIMATION_DELAY * 2 + ANIMATION_DELAY * i}
                 />
               ))}

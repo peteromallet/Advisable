@@ -13,6 +13,10 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
 import Explore from "./views/Explore";
 import Search from "./views/Search";
+import Feed from "./views/Explore/Feed";
+import Trending from "./views/Explore/Trending";
+import Favorites from "./views/Explore/Favorites";
+import Topic from "./views/Explore/Topic";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -40,6 +44,8 @@ const ApplicationRoutes = () => {
   const viewer = useViewer();
   const location = useLocation();
   const isClient = viewer && viewer.__typename === "User";
+  const isFreelancer = viewer && viewer.__typename === "Specialist";
+  const isNotAuthenticated = viewer === null;
 
   return (
     <>
@@ -53,25 +59,32 @@ const ApplicationRoutes = () => {
           )}
 
           <Routes location={location.state?.backgroundLocation || location}>
-            {isClient && (
+            <Route path="/set_password" element={<Navigate replace to="/" />} />
+
+            {isNotAuthenticated && (
+              <Route path="/" element={<Navigate replace to="/login" />} />
+            )}
+
+            {isFreelancer && (
               <Route
                 path="/"
                 exact
-                element={<Navigate replace exact to="/explore" />}
+                element={
+                  <RequireAuthentication>
+                    <FreelancerDashboard />
+                  </RequireAuthentication>
+                }
               />
             )}
 
-            <Route path="/set_password" element={<Navigate replace to="/" />} />
-
-            <Route
-              path="/"
-              exact
-              element={
-                <RequireAuthentication>
-                  <FreelancerDashboard />
-                </RequireAuthentication>
-              }
-            />
+            {isClient && (
+              <Route path="/" element={<Explore />}>
+                <Route index element={<Feed />} />
+                <Route path="trending" element={<Trending />} />
+                <Route path="favorites" element={<Favorites />} />
+                <Route path="topics/:slug" element={<Topic />} />
+              </Route>
+            )}
 
             <Route path="/articles/:slug" element={<Article />} />
 
@@ -144,15 +157,6 @@ const ApplicationRoutes = () => {
             />
 
             <Route path="/search" element={<Search />} />
-
-            <Route
-              path="/explore/*"
-              element={
-                <RequireAuthentication clientOnly>
-                  <Explore />
-                </RequireAuthentication>
-              }
-            />
 
             <Route
               path="/payments/:id"

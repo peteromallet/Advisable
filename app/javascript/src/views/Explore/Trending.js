@@ -1,11 +1,10 @@
 import React from "react";
 import { useTrending } from "./queries";
-import "./explore.css";
 import CaseStudyGrid from "./CaseStudyGrid";
 import ExploreViewHeading from "./ExploreViewHeading";
 import FeedFooter from "./FeedFooter";
 
-export default function Explore() {
+export default function Trending() {
   const { loading, data } = useTrending();
   const results = data?.topCaseStudies || [];
 
