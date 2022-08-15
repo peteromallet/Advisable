@@ -58,7 +58,7 @@ export default function SpecialistSection({ article, modal }) {
           <Avatar src={specialist.avatar} name={specialist.name} size="3xl" />
         </Link>
         <Tooltip
-          placement="bottom"
+          placement="bottom-end"
           content={`${specialist.firstName} has been a verified Advisable freelancer
               since ${date}`}
         >
