@@ -65,7 +65,7 @@ const createCache = () => {
             });
           },
           topic: {
-            read(_, { args, toReference, cache }) {
+            read(existing, { args, toReference, readField, cache }) {
               const topic = Object.values(cache.data.data).find((record) => {
                 return (
                   record.__typename === "CaseStudyTopic" &&
@@ -73,12 +73,14 @@ const createCache = () => {
                 );
               });
 
-              if (topic) {
-                return toReference({
-                  id: topic.id,
-                  __typename: "CaseStudyTopic",
-                });
-              }
+              const reference = toReference({
+                id: topic?.id,
+                __typename: "CaseStudyTopic",
+              });
+
+              const referenceData =
+                reference && readField("id", reference) ? reference : undefined;
+              return existing || referenceData;
             },
           },
         },

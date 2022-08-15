@@ -27,7 +27,7 @@ export default function Topic() {
         cursor: data.topic.articles.pageInfo.endCursor,
       },
     });
-  }, [fetchMore, data]);
+  }, [slug, fetchMore, data]);
 
   if (isNotFound(error)) {
     return (
