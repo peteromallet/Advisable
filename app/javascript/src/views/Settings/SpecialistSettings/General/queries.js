@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 const fields = gql`
   fragment SpecialistFields on Specialist {
@@ -10,6 +10,7 @@ const fields = gql`
     lastName
     priceRange
     publicUse
+    collaborationTypes
   }
 `;
 
@@ -35,3 +36,7 @@ export const UPDATE_PROFILE = gql`
     }
   }
 `;
+
+export function useUpdateProfile() {
+  return useMutation(UPDATE_PROFILE);
+}

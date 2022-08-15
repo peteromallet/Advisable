@@ -31,20 +31,20 @@ export const StyledCheckboxToggle = styled.div`
   transition: background 200ms;
 
   ${variant({
-    prop: "size",
-    variants: {
-      s: {
-        width: 16,
-        height: 16,
-        marginRight: "xs",
-      },
-      m: {
-        width: 18,
-        height: 18,
-        marginRight: "xs",
-      },
+  prop: "size",
+  variants: {
+    s: {
+      width: 16,
+      height: 16,
+      marginRight: "xs",
     },
-  })}
+    m: {
+      width: 18,
+      height: 18,
+      marginRight: "xs",
+    },
+  },
+})}
 
   svg {
     top: 50%;
@@ -81,11 +81,16 @@ export const StyledCheckbox = styled.label`
   cursor: pointer;
   user-select: none;
 
-  &:hover ${StyledCheckboxInner} {
+  &[data-disabled="true"] {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &:hover:not(data-disabled="true") ${StyledCheckboxInner} {
     background: ${theme.colors.neutral100};
   }
 
-  &:hover ${StyledCheckboxInput}:not(:checked) + ${StyledCheckboxToggle} {
+  &:hover:not(data-disabled="true") ${StyledCheckboxInput}:not(:checked) + ${StyledCheckboxToggle} {
     background: ${darken(0.015, theme.colors.neutral100)};
     border: 2px solid ${darken(0.025, theme.colors.neutral300)};
   }
@@ -95,7 +100,7 @@ export const StyledCheckbox = styled.label`
     border-color: ${theme.colors.blue500};
   }
 
-  &:hover ${StyledCheckboxInput}:checked + ${StyledCheckboxToggle} {
+  &:hover:not(data-disabled="true") ${StyledCheckboxInput}:checked + ${StyledCheckboxToggle} {
     background: ${theme.colors.blue400};
     border-color: ${theme.colors.blue800};
   }

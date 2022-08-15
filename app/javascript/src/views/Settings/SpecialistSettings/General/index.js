@@ -1,16 +1,16 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Box, Card, Text, Checkbox, Select } from "@advisable/donut";
 import Loading from "components/Loading";
 import FormField from "components/FormField";
 import { useNotifications } from "components/Notifications";
-import { GET_DATA, UPDATE_PROFILE } from "./queries";
+import { GET_DATA, useUpdateProfile } from "./queries";
 import SubmitButton from "components/SubmitButton";
 
 const Profile = () => {
   const { loading, data } = useQuery(GET_DATA);
-  const [updateProfile] = useMutation(UPDATE_PROFILE);
+  const [updateProfile] = useUpdateProfile();
   const notifications = useNotifications();
 
   const initialValues = {
@@ -48,6 +48,7 @@ const Profile = () => {
             >
               General Settings
             </Text>
+
             <Box paddingBottom="xs">
               <Text fontWeight="medium" color="neutral800">
                 Are you happy to work remotely?

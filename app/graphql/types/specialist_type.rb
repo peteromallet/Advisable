@@ -255,7 +255,7 @@ module Types
 
     field :collaboration_types, [String], null: true
     def collaboration_types
-      ::Specialist::COLLABORATION_TYPES.filter_map { |type| object.public_send(type) }
+      ::Specialist::COLLABORATION_TYPES.filter { |type| object.public_send(type) }
     end
 
     field :unavailable_until, GraphQL::Types::ISO8601DateTime, null: true
