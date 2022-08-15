@@ -43,6 +43,7 @@ function RedirectToFreelancerProfile() {
 const ApplicationRoutes = () => {
   const viewer = useViewer();
   const location = useLocation();
+  const isClient = viewer && viewer.__typename === "User";
   const isFreelancer = viewer && viewer.__typename === "Specialist";
 
   return (
@@ -71,6 +72,7 @@ const ApplicationRoutes = () => {
               />
             )}
 
+            {(isClient || !viewer) && (
             <Route path="/" element={<Explore />}>
               {viewer ? (
                 <Route index element={<Feed />} />
@@ -78,11 +80,10 @@ const ApplicationRoutes = () => {
                 <Route index element={<Trending />} />
               )}
               <Route path="trending" element={<Trending />} />
-              {viewer && (
-              <Route path="favorites" element={<Favorites />} />
-              )}
+              {viewer && <Route path="favorites" element={<Favorites />} />}
               <Route path="topics/:slug" element={<Topic />} />
             </Route>
+            )}
 
             <Route path="/articles/:slug" element={<ArticleNew />} />
 

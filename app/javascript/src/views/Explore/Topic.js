@@ -7,8 +7,10 @@ import ExploreViewHeading from "./ExploreViewHeading";
 import FeedFooter from "./FeedFooter";
 import { isNotFound } from "../NotFound";
 import LostIllustration from "src/illustrations/zest/lost";
+import useViewer from "src/hooks/useViewer";
 
 export default function Topic() {
+  const viewer = useViewer();
   const { slug } = useParams();
   const { loading, data, fetchMore, error } = useTopic(slug);
 
@@ -47,8 +49,8 @@ export default function Topic() {
         loading={!topic.name && loading}
       />
       <CaseStudyGrid loading={loading} results={results} />
-      {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
-      {!loading && !pageInfo?.hasNextPage && (
+      {viewer && pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+      {viewer && !loading && !pageInfo?.hasNextPage && (
         <FeedFooter>You've reached the end of the list.</FeedFooter>
       )}
     </>

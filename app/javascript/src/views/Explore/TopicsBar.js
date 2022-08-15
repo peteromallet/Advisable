@@ -184,16 +184,15 @@ export default function TopicsBar() {
                 icon={lightbulb}
                 delay={ANIMATION_DELAY}
               />
-                {viewer && (
-              <Topic
-                aria-label="Your Favorites"
-                name={`Your\nFavorites`}
-                icon={heart}
-                to="/favorites"
-                delay={ANIMATION_DELAY * 2}
-              />
-
-                )}
+              {viewer && (
+                <Topic
+                  aria-label="Your Favorites"
+                  name={`Your\nFavorites`}
+                  icon={heart}
+                  to="/favorites"
+                  delay={ANIMATION_DELAY * 2}
+                />
+              )}
               {topics.map((topic, i) => (
                 <Topic
                   key={topic.id}
