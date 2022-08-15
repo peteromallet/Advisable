@@ -5,10 +5,10 @@ import { Box, Text, Button } from "@advisable/donut";
 import { useClientPaymentRequests } from "./queries";
 import currency from "src/utilities/currency";
 import PaymentRequestStatus from "./PaymentRequestStatus";
-import NoPaymentRequests from "./NoPaymentRequests";
 import { Loading } from "src/components";
 import { ExclamationCircle } from "@styled-icons/heroicons-solid";
 import { shouldShowPastDue } from "./utilities";
+import ClientEmptyState from "./ClientsEmptyState";
 
 export default function ClientPaymentRequests() {
   const { data, loading, error, fetchMore } = useClientPaymentRequests();
@@ -26,6 +26,10 @@ export default function ClientPaymentRequests() {
     });
   };
 
+  if (!loading && data && paymentRequests.length === 0) {
+    return <ClientEmptyState />
+  }
+
   return (
     <Box>
       <h2 className="text-3xl font-semibold tracking-tight mb-6">Payments</h2>
@@ -42,11 +46,6 @@ export default function ClientPaymentRequests() {
             Amount
           </Table.HeaderCell>
         </Table.Header>
-        {paymentRequests.length === 0 && (
-          <NoPaymentRequests>
-            You have not received any payment requests yet
-          </NoPaymentRequests>
-        )}
         {paymentRequests.map((pr) => (
           <Table.Row key={pr.id} to={`/payment_requests/${pr.id}`}>
             <Table.Cell className="flex items-center flex-1">
