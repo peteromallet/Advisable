@@ -8,7 +8,7 @@ const fields = gql`
     email
     firstName
     lastName
-    hourlyRate
+    priceRange
     publicUse
     collaborationTypes
   }
