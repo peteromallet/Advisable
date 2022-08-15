@@ -45,7 +45,7 @@ export default function CaseStudyArticle() {
         </Helmet>
       )}
       {data?.caseStudy && <ArticleEvents article={data?.caseStudy} />}
-      <div className="z-10 rounded-full bg-white absolute right-3 top-3 inline-flex gap-2 p-2">
+      <div className="inline-flex absolute top-3 right-3 z-10 gap-2 p-2 bg-white rounded-full">
         <ScrollIndicator />
         <EditCaseStudyButton article={data.caseStudy} />
         <ShareArticleButton slug={data.caseStudy.slug} />
@@ -63,28 +63,28 @@ export default function CaseStudyArticle() {
         specialist={specialist}
         article={article}
       />
-      <div className="flex mx-auto w-full xl:max-w-[1320px] pb-36 px-6 lg:px-10 xl:px-14">
-        <div className="hidden lg:block min-w-[272px] w-[272px] xl:min-w-[348px] xl:w-[348px] pt-12 pr-6 xl:pr-12">
+      <div className="flex px-6 pb-36 mx-auto w-full lg:px-10 xl:px-14 xl:max-w-[1320px]">
+        <div className="hidden pt-12 pr-6 lg:block xl:pr-12 min-w-[272px] w-[272px] xl:min-w-[348px] xl:w-[348px]">
           <StickyBox offsetTop={60} offsetBottom={60}>
             <SpecialistSection article={data.caseStudy} modal={contactModal} />
           </StickyBox>
         </div>
-        <div className="lg:pl-6 xl:pl-12 py-20 relative w-full border-solid border-neutral100 lg:border-l">
+        <div className="relative py-20 w-full border-solid lg:pl-6 lg:border-l xl:pl-12 border-neutral100">
           <SpecialistBar
             modal={contactModal}
             specialist={data.caseStudy.specialist}
           />
-          <h1 className="text-3xl md:text-4xl font-serif font-[800] tracking-tight text-blue900 mb-4 max-w-[720px]">
+          <h1 className="mb-4 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[720px]">
             {data.caseStudy.title}
           </h1>
-          <div className="md:flex gap-14">
+          <div className="gap-14 md:flex">
             <div>
-              <p className="leading-7 text-neutral900 mb-10">
+              <p className="mb-10 leading-7 text-neutral900">
                 {data.caseStudy.subtitle}
               </p>
               <KeyTakeaways insights={data.caseStudy.insights} />
             </div>
-            <div className="md:w-[280px] shrink-0 pt-2">
+            <div className="pt-2 shrink-0 md:w-[280px]">
               <Results results={data.caseStudy.resultsContent?.results} />
               <CompanyDetails caseStudy={data.caseStudy} />
             </div>

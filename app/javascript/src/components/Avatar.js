@@ -45,6 +45,11 @@ const avatarStyles = composeStyles({
         h-[80px]
         text-xl
       `,
+      "3xl": `
+        w-[96px]
+        h-[96px]
+        text-xl
+      `,
     },
   },
 });
