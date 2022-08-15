@@ -78,7 +78,9 @@ const ApplicationRoutes = () => {
                 <Route index element={<Trending />} />
               )}
               <Route path="trending" element={<Trending />} />
+              {viewer && (
               <Route path="favorites" element={<Favorites />} />
+              )}
               <Route path="topics/:slug" element={<Topic />} />
             </Route>
 

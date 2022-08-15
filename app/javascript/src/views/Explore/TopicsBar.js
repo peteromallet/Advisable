@@ -8,6 +8,7 @@ import heart from "./svg/heart.svg";
 import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
 import { ArrowSmLeft, ArrowSmRight } from "@styled-icons/heroicons-solid";
+import useViewer from "src/hooks/useViewer";
 
 const topicClasses = composeStyles({
   base: "topic",
@@ -100,6 +101,7 @@ const ANIMATION_DELAY = 0.025;
 
 export default function TopicsBar() {
   const scrollRef = useRef();
+  const viewer = useViewer();
   const { data, loading } = useTopics();
   const [scrollLeft, setScrollLeft] = useState(false);
   const [scrollRight, setScrollRight] = useState(false);
@@ -182,6 +184,7 @@ export default function TopicsBar() {
                 icon={lightbulb}
                 delay={ANIMATION_DELAY}
               />
+                {viewer && (
               <Topic
                 aria-label="Your Favorites"
                 name={`Your\nFavorites`}
@@ -189,6 +192,8 @@ export default function TopicsBar() {
                 to="/favorites"
                 delay={ANIMATION_DELAY * 2}
               />
+
+                )}
               {topics.map((topic, i) => (
                 <Topic
                   key={topic.id}
