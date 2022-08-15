@@ -7,6 +7,7 @@ import Loading from "src/components/Loading";
 import DatePicker from "src/components/DatePicker";
 import { useSetUnavailableUntil } from "src/shared/mutations/setUnavailableUntil";
 import { useUpdateProfile } from "./General/queries";
+import { useNotifications } from "src/components/Notifications";
 
 const DISABLED_DATE = "2050-01-01";
 
@@ -161,64 +162,81 @@ function PauseAvailability({ unavailableUntil, isAvailableForWork }) {
 }
 
 function CollaborationTypes({ disabled, collaborationTypes }) {
+  const notifications = useNotifications();
   const [updateProfile, { loading }] = useUpdateProfile();
   const [types, setTypes] = useState(collaborationTypes);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (types.includes(e.target.value)) {
       setTypes(types.filter((type) => type !== e.target.value));
     } else {
       setTypes([...types, e.target.value]);
     }
-  }
+  };
 
   const handleSubmit = async () => {
-    updateProfile({
+    const response = await updateProfile({
       variables: {
         input: {
           collaborationTypes: types,
-        }
-      }
-    })
-  }
+        },
+      },
+    });
+
+    if (response.errors) {
+      notifications.error("Something went wrong, please try again.");
+    } else {
+      notifications.notify("Your settings have been updated.");
+    }
+  };
 
   return (
     <div className="mb-8">
-      <h5 className="text-lg font-medium">What type of work are you available for?</h5>
-      <p className="mb-2">
-        This will be displayed on your profile
-      </p>
+      <h5 className="text-lg font-medium">
+        What type of work are you available for?
+      </h5>
+      <p className="mb-2">This will be displayed on your profile</p>
       <Checkbox
         type="checkbox"
         onClick={handleClick}
         disabled={disabled}
-        name="collaborationTypes" value="hands_on"
-        checked={types.includes("hands_on")}>
+        name="collaborationTypes"
+        value="hands_on"
+        checked={types.includes("hands_on")}
+      >
         Hands on work
       </Checkbox>
       <Checkbox
         type="checkbox"
         onClick={handleClick}
         disabled={disabled}
-        name="collaborationTypes" value="consultancy"
-        checked={types.includes("consultancy")}>
+        name="collaborationTypes"
+        value="consultancy"
+        checked={types.includes("consultancy")}
+      >
         Consultancy
       </Checkbox>
       <Checkbox
         type="checkbox"
         onClick={handleClick}
         disabled={disabled}
-        name="collaborationTypes" value="mentorship"
-        checked={types.includes("mentorship")}>
+        name="collaborationTypes"
+        value="mentorship"
+        checked={types.includes("mentorship")}
+      >
         Mentoring
       </Checkbox>
       <Button
         onClick={handleSubmit}
         disabled={disabled}
         loading={loading}
-        className="mt-6" variant="secondary">Save</Button>
+        className="mt-6"
+        variant="secondary"
+      >
+        Save
+      </Button>
     </div>
-  )
+  );
 }
 
 export default function Availability() {
@@ -255,7 +273,8 @@ export default function Availability() {
       <div className="h-px bg-neutral100 my-8" />
       <CollaborationTypes
         disabled={!isAvailableForWork}
-        collaborationTypes={data.viewer.collaborationTypes} />
+        collaborationTypes={data.viewer.collaborationTypes}
+      />
       <div className="h-px bg-neutral100 my-8" />
       <PauseAvailability
         unavailableUntil={unavailableUntil}
