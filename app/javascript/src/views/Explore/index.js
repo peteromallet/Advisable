@@ -7,6 +7,7 @@ import ScrollToTop from "./ScrollToTop";
 import useTutorial from "src/hooks/useTutorial";
 import useViewer from "src/hooks/useViewer";
 import Hero from "./Hero";
+import SignupCTA from "src/components/SignupCTA";
 
 export default function Explore() {
   const viewer = useViewer();
@@ -24,6 +25,7 @@ export default function Explore() {
         <TopicsBar />
         <div className="h-px bg-neutral-200" />
         <Outlet />
+        {!viewer &&<SignupCTA />}
       </div>
       <Footer />
     </>
