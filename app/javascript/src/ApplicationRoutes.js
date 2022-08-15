@@ -43,9 +43,7 @@ function RedirectToFreelancerProfile() {
 const ApplicationRoutes = () => {
   const viewer = useViewer();
   const location = useLocation();
-  const isClient = viewer && viewer.__typename === "User";
   const isFreelancer = viewer && viewer.__typename === "Specialist";
-  const isNotAuthenticated = viewer === null;
 
   return (
     <>
@@ -61,10 +59,6 @@ const ApplicationRoutes = () => {
           <Routes location={location.state?.backgroundLocation || location}>
             <Route path="/set_password" element={<Navigate replace to="/" />} />
 
-            {isNotAuthenticated && (
-              <Route path="/" element={<Navigate replace to="/login" />} />
-            )}
-
             {isFreelancer && (
               <Route
                 path="/"
@@ -77,14 +71,16 @@ const ApplicationRoutes = () => {
               />
             )}
 
-            {isClient && (
-              <Route path="/" element={<Explore />}>
+            <Route path="/" element={<Explore />}>
+              {viewer ? (
                 <Route index element={<Feed />} />
-                <Route path="trending" element={<Trending />} />
-                <Route path="favorites" element={<Favorites />} />
-                <Route path="topics/:slug" element={<Topic />} />
-              </Route>
-            )}
+              ) : (
+                <Route index element={<Trending />} />
+              )}
+              <Route path="trending" element={<Trending />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="topics/:slug" element={<Topic />} />
+            </Route>
 
             <Route path="/articles/:slug" element={<ArticleNew />} />
 
