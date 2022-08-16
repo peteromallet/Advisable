@@ -11,7 +11,7 @@ module CaseStudy
 
     validates :name, presence: true
 
-    scope :internal, -> { where(hidden: [false, nil]) }
+    scope :visible, -> { where(hidden: [false, nil]) }
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
     def result_ids
