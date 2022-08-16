@@ -86,7 +86,7 @@ Rails.application.routes.draw do
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
   # match every other route to the frontend codebase
-  root "application#frontend"
+  root "application#home"
   get "/case_studies/:id", to: "application#case_study"
   get "/articles/:slug", to: "specialists#case_study", as: :specialist_case_study
   get "/profile/:username", to: "specialists#profile", as: :freelancer_profile, constraints: UsernameConstraint.new

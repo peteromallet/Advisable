@@ -5,8 +5,13 @@ class ApplicationController < ActionController::Base
   include CurrentUser
 
   before_action :set_sentry_context
-  before_action :prefetch_viewer, only: %i[frontend guild_post]
+  before_action :prefetch_viewer, only: %i[home frontend guild_post]
   before_action :authenticate_with_magic_link, only: %i[frontend guild_post]
+
+  def home
+    prefetch_query("app/javascript/src/views/Explore/queries/home.gql") unless logged_in?
+    prefetch_query("app/javascript/src/views/Explore/queries/topics.gql")
+  end
 
   def frontend
     respond_to(&:html)
