@@ -1,41 +1,24 @@
-import React, { createElement } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Avatar from "src/components/Avatar";
 import FavoriteButton from "./FavoriteButton";
 import composeStyles from "src/utilities/composeStyles";
-import Chess from "src/icons/duo/chess";
-import Coins from "src/icons/duo/coins";
-import rocket from "src/icons/duo/rocket";
-import target from "src/icons/duo/target";
-import sliders from "src/icons/duo/sliders";
-import multiply from "src/icons/duo/multiply";
-import paintbrush from "src/icons/duo/paintbrush";
-
-const CATEGORY_ICONS = {
-  "Strategy Development": Chess,
-  "More Revenue": Coins,
-  "Big Impact": target,
-  "Big Win": target,
-  "Number Multiplying": multiply,
-  "Increasing Number": multiply,
-  "Create Something": paintbrush,
-  "New Launch": rocket,
-  "Optimising Something": sliders,
-};
+import ResultIcon from "src/components/ResultIcon";
 
 function Result({ category, callout, context }) {
   return (
     <li className="flex gap-4">
       <div className="icon-duo-neutral">
-        {createElement(CATEGORY_ICONS[category] || CATEGORY_ICONS["Big Win"], {
-          width: 24,
-          stroke: "var(--color-neutral-700)",
-          fill: "var(--color-neutral-200)"
-        })}
+        <ResultIcon
+          category={category}
+          width={24}
+          stroke="var(--color-blue900)"
+          fill="var(--color-slate-200)"
+        />
       </div>
       <div>
-        <h5 className="mb-1 font-semibold leading-snug">{callout}</h5>
+        <h5 className="font-semibold leading-snug">{callout}</h5>
         <p className="font-light text-neutral-600">{context}</p>
       </div>
     </li>
@@ -62,14 +45,16 @@ const skillClasses = composeStyles({
 });
 
 function primarySkillForArticle(article) {
-  const primarySkill = article.skills.find(skill => skill.primary);
+  const primarySkill = article.skills.find((skill) => skill.primary);
   if (!primarySkill) return article.skills[0]?.skill;
   return primarySkill.skill;
 }
 
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
-  const resultsWithContent = (article.resultsContent?.results || []).filter(c => c.callout && c.context);
+  const resultsWithContent = (article.resultsContent?.results || []).filter(
+    (c) => c.callout && c.context,
+  );
   const results = resultsWithContent.slice(0, 2);
   const primarySkill = primarySkillForArticle(article);
 
@@ -80,7 +65,8 @@ export default function CaseStudyCard({ article, delay }) {
       data-testid={`article-card-${article.id}`}
       variants={{ hover: { y: -4 } }}
       transition={{ duration: 0.2 }}
-      className="w-full h-[500px] p-6 relative">
+      className="w-full h-[500px] p-6 relative"
+    >
       <motion.div
         initial={{
           boxShadow: "0 4px 8px -2px rgba(0, 0, 0, 0.12)",
@@ -92,9 +78,10 @@ export default function CaseStudyCard({ article, delay }) {
           },
           tap: {
             scale: 1,
-          }
+          },
         }}
-        className="absolute inset-0 bg-white rounded-xl" />
+        className="absolute inset-0 bg-white rounded-xl"
+      />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -109,9 +96,7 @@ export default function CaseStudyCard({ article, delay }) {
           className="case-study-card-content"
         >
           {primarySkill && (
-            <div
-              className={skillClasses({ color: primarySkill.color })}
-            >
+            <div className={skillClasses({ color: primarySkill.color })}>
               {primarySkill.name}
             </div>
           )}
