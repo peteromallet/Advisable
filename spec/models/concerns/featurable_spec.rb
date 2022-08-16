@@ -24,9 +24,9 @@ RSpec.describe Featurable do
     let(:dummy) { DummyFeaturable.new }
 
     it "toggles admin enabled" do
-      expect(dummy.admin?).to eq(false)
+      expect(dummy.admin?).to be(false)
       dummy.toggle_admin
-      expect(dummy.admin?).to eq(true)
+      expect(dummy.admin?).to be(true)
     end
 
     it "filters by with_feature" do
@@ -52,9 +52,9 @@ RSpec.describe Featurable do
       let(:dummy) { DummyFeaturable.new }
 
       it "toggles team_manager enabled" do
-        expect(dummy.team_manager?).to eq(false)
+        expect(dummy.team_manager?).to be(false)
         dummy.toggle_team_manager
-        expect(dummy.team_manager?).to eq(true)
+        expect(dummy.team_manager?).to be(true)
       end
 
       it "filters by with_permission" do

@@ -5,6 +5,5 @@ module Types
     implements Types::ReviewInterface
 
     description "A type for a basic Review"
-
   end
 end

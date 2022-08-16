@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe MessagesRepliesMailbox do
   let(:conversation) { create(:conversation) }
-  let(:destination) { "#{conversation.uid}@#{ENV["MESSAGE_REPLIES_DOMAIN"]}" }
+  let(:destination) { "#{conversation.uid}@#{ENV.fetch("MESSAGE_REPLIES_DOMAIN", nil)}" }
   let(:account) { create(:account) }
 
   it "parses emails sent to correct destionation" do

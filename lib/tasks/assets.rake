@@ -7,7 +7,7 @@
 namespace :assets do
   desc "Remove 'node_modules' folder"
   task rm_node_modules: :environment do
-    Rails.logger.info "Removing node_modules folder"
+    Rails.logger.info("Removing node_modules folder")
     FileUtils.remove_dir("node_modules", true)
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe MagicLink, type: :model do
@@ -34,13 +35,13 @@ RSpec.describe MagicLink, type: :model do
   describe "self.for_path" do
     it "returns a magic_link matching the given path and token" do
       magic_link = create(:magic_link)
-      link = MagicLink.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
+      link = described_class.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
       expect(link).to eq(magic_link)
     end
 
     it "excludes expired magic links" do
       magic_link = create(:magic_link, expires_at: 1.hour.ago)
-      link = MagicLink.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
+      link = described_class.for_path(account: magic_link.account, token: magic_link.token, path: magic_link.path)
       expect(link).to be_nil
     end
   end

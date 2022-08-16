@@ -14,7 +14,7 @@ RSpec.describe GoogleCalendarEventsController do
       request.headers["X-Goog-Channel-Id"] = "gcal-1"
       post :create
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 

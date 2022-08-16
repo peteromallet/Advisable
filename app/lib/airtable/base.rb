@@ -13,7 +13,7 @@ module Airtable
       attr_accessor :sync_model, :sync_block, :push_block, :after_sync_block
 
       def base_key
-        ENV["AIRTABLE_DATABASE_KEY"]
+        ENV.fetch("AIRTABLE_DATABASE_KEY", nil)
       end
 
       def columns_hash

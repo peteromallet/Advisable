@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Address
   attr_accessor :line1, :line2, :city, :state, :country, :postcode
 
@@ -13,7 +14,7 @@ class Address
 
   def to_s
     output = "#{line1},"
-    output += "\n#{line2}," unless line2.blank?
+    output += "\n#{line2}," if line2.present?
     output += "\n#{city},"
     output += "\n#{state},"
     output += "\n#{country},"
@@ -34,16 +35,16 @@ class Address
 
   def self.parse(address)
     parts = address.split(",").map(&:squish)
-    has_line_2 = parts.length == 6
+    has_line2 = parts.length == 6
 
     new(
       {
         "line1" => parts[0],
-        "line2" => has_line_2 ? parts[1] : nil,
-        "city" => parts[has_line_2 ? 2 : 1],
-        "state" => parts[has_line_2 ? 3 : 2],
-        "country" => parts[has_line_2 ? 4 : 3],
-        "postcode" => parts[has_line_2 ? 5 : 4]
+        "line2" => has_line2 ? parts[1] : nil,
+        "city" => parts[has_line2 ? 2 : 1],
+        "state" => parts[has_line2 ? 3 : 2],
+        "country" => parts[has_line2 ? 4 : 3],
+        "postcode" => parts[has_line2 ? 5 : 4]
       }
     )
   end

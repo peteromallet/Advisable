@@ -89,11 +89,11 @@ group :test do
   gem "rspec_junit_formatter"
   gem "rspec-rails"
   gem "rspec-retry"
-  gem "super_diff"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "stripe-ruby-mock", require: "stripe_mock"
+  gem "super_diff"
   gem "timecop"
   gem "webdrivers"
   gem "webmock"

@@ -8,20 +8,20 @@ RSpec.describe StripeEventsController do
     allow(Stripe::Webhook).to receive(:construct_event).and_return(event)
     expect(StripeEvents).to receive(:process).with(event)
     post :create, params: PAYMENT_INTENT_EVENT, format: :json
-    expect(response.status).to eq(204)
+    expect(response).to have_http_status(:no_content)
   end
 
   it "returns 400 if invalid JSON is passed" do
     allow(Stripe::Webhook).to receive(:construct_event).and_raise(JSON::ParserError)
     post :create, params: PAYMENT_INTENT_EVENT, format: :json
-    expect(response.status).to eq(400)
+    expect(response).to have_http_status(:bad_request)
   end
 
   it "returns 400 if invalid signature" do
     error = Stripe::SignatureVerificationError.new("invalid", "signature_header")
     allow(Stripe::Webhook).to receive(:construct_event).and_raise(error)
     post :create, params: PAYMENT_INTENT_EVENT, format: :json
-    expect(response.status).to eq(400)
+    expect(response).to have_http_status(:bad_request)
   end
 end
 

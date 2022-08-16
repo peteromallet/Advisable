@@ -19,7 +19,7 @@ class StripeEventsController < ApplicationController
     Stripe::Webhook.construct_event(
       request.body.read,
       request.env["HTTP_STRIPE_SIGNATURE"],
-      ENV["STRIPE_WEBHOOK_SECRET"]
+      ENV.fetch("STRIPE_WEBHOOK_SECRET", nil)
     )
   end
 end

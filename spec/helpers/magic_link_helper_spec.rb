@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe MagicLinkHelper do
@@ -18,14 +19,14 @@ RSpec.describe MagicLinkHelper do
       url = helper.magic_link(account, "/testing?existing=param")
       uri = URI.parse(url)
       query_params = CGI.parse(uri.query)
-      expect(query_params["existing"][0]).to_not be_nil
+      expect(query_params["existing"][0]).not_to be_nil
     end
 
     it "creates a new magic link" do
       account = create(:account)
-      expect {
+      expect do
         helper.magic_link(account, "/testing")
-      }.to change { 
+      end.to change {
         account.magic_links.count
       }.by(1)
     end
