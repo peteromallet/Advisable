@@ -17,6 +17,7 @@ import Feed from "./views/Explore/Feed";
 import Trending from "./views/Explore/Trending";
 import Favorites from "./views/Explore/Favorites";
 import Topic from "./views/Explore/Topic";
+import Home from "./views/Explore/Home";
 
 const FreelancerDashboard = lazy(() => import("./views/FreelancerDashboard"));
 const FreelancerApplication = lazy(() =>
@@ -77,7 +78,7 @@ const ApplicationRoutes = () => {
               {viewer ? (
                 <Route index element={<Feed />} />
               ) : (
-                <Route index element={<Trending />} />
+                <Route index element={<Home />} />
               )}
               <Route path="trending" element={<Trending />} />
               {viewer && <Route path="favorites" element={<Favorites />} />}

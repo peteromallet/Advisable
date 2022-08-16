@@ -172,12 +172,13 @@ export default function TopicsBar() {
             </motion.button>
           )}
         </AnimatePresence>
-        <div className="flex gap-8 sm:gap-10 lg:gap-12">
+        <div className="flex gap-8 sm:gap-10">
           {loading ? (
             [...Array(16)].map((_, i) => <TopicSkeleton key={i} />)
           ) : (
             <>
-              <Topic name={`Your\nFeed`} to="/" />
+              {!viewer && <Topic name={`Featured\nProjects`} to="/" />}
+              {viewer && <Topic name={`Your\nFeed`} to="/" />}
               <Topic
                 name={`Trending\nProjects`}
                 to="/trending"
