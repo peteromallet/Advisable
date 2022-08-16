@@ -74,9 +74,8 @@ RSpec.describe "Discover", type: :system do
 
   it "shows the results for a topic and loads more on scroll" do
     articles = create_list(:case_study_article, 20)
-    topic = create(:case_study_topic, slug: "seo")
-    allow(topic).to receive(:results).and_return(articles)
-    allow(CaseStudy::Topic).to receive(:find_by).with(slug: "seo").and_return(topic)
+    create(:case_study_topic, slug: "seo")
+    allow_any_instance_of(CaseStudy::Topic).to receive(:results).and_return(articles)
     authenticate_as(user)
     visit("/topics/seo")
     expect(page).to have_content(articles.first.title)
