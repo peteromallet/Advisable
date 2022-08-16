@@ -4,8 +4,7 @@ require "matrix"
 
 module Admin
   class ArticlesController < AdminController
-    before_action :set_article, only: %i[show edit update destroy]
-    before_action :form_vars, only: %i[new edit]
+    before_action :set_article, only: %i[show edit add_insight remove_insight update destroy]
 
     include Pagy::Backend
 
@@ -47,6 +46,16 @@ module Admin
 
     def edit; end
 
+    def add_insight
+      @article.insights.create!(insight_params)
+      render partial: "insights", locals: {article: @article}
+    end
+
+    def remove_insight
+      @article.insights.find(params[:insight_id]).destroy
+      render partial: "insights", locals: {article: @article}
+    end
+
     def create
       @article = CaseStudy::Article.new(article_params)
 
@@ -76,13 +85,12 @@ module Admin
       @article = CaseStudy::Article.find(params[:id])
     end
 
-    def form_vars
-      @specialists = Specialist.includes(:account).map { |s| [s.account.name, s.id] }
-      @interviewers = Account.where(email: SalesPerson.select(:email)).map { |a| [a.name, a.id] }
+    def article_params
+      params.require(:case_study_article).permit(:title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [])
     end
 
-    def article_params
-      params.require(:case_study_article).permit(:specialist_id, :interviewer_id, :title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [])
+    def insight_params
+      params.require(:case_study_insight).permit(:title, :description)
     end
   end
 end

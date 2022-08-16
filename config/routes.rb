@@ -43,7 +43,13 @@ Rails.application.routes.draw do
       get :finance, on: :collection
     end
     resources :articles do
-      get :search, on: :collection
+      collection do
+        get :search
+      end
+      member do
+        post :add_insight
+        delete :remove_insight
+      end
     end
     resources :topics, except: [:show] do
       member do

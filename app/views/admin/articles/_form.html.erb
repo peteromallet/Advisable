@@ -1,11 +1,242 @@
-<%= form_with(model: article, url: url) do |form| %>
-  <div class="shadow overflow-hidden sm:rounded-md">
+<%= form_with(model: article, url: url, class: "space-y-6") do |form| %>
+  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <% if article.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+          <ul>
+            <% article.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Basic</h3>
+      </div>
+      <div class="mt-5 space-y-6 md:mt-0 md:col-span-2">
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-6">
+            <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.text_field :title, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
+          </div>
+          <div class="col-span-6">
+            <%= form.label :subtitle, class: "block text-sm font-medium text-gray-700" %>
+            <div class="mt-1">
+              <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
+            </div>
+          </div>
+          <div class="col-span-6 sm:col-span-4">
+            <fieldset>
+              <legend class="text-base font-medium text-gray-900">Company Type</legend>
+              <div class="mt-4 space-y-4">
+                <% CaseStudy::Article::COMPANY_TYPES.each do |type| %>
+                  <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                      <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
+                    </div>
+                    <div class="ml-3 text-sm">
+                      <label for="company_type_<%= type.parameterize %>" class="font-medium text-gray-700"><%= type %></label>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Insights</h3>
+        <p class="mt-1 text-sm text-gray-500">Explain what Insights are here.</p>
+      </div>
+      <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-6">
+            <%= render "insights", article: article %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Examples:
+  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Basic</h3>
+      </div>
+      <div class="mt-5 space-y-6 md:mt-0 md:col-span-2">
+        <div class="grid grid-cols-3 gap-6">
+          <div class="col-span-3 sm:col-span-2">
+            <label for="company-website" class="block text-sm font-medium text-gray-700"> Website </label>
+            <div class="mt-1 flex rounded-sm shadow-sm">
+              <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"> http:// </span>
+              <input type="text" name="company-website" id="company-website" class="focus:ring-emerald-500 focus:border-emerald-500 flex-1 block w-full rounded-none rounded-r-sm sm:text-sm border-gray-300" placeholder="www.example.com">
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="about" class="block text-sm font-medium text-gray-700"> About </label>
+          <div class="mt-1">
+            <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm" placeholder="you@example.com"></textarea>
+          </div>
+          <p class="mt-2 text-sm text-gray-500">Brief description for your profile. URLs are hyperlinked.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700"> Photo </label>
+          <div class="mt-1 flex items-center space-x-5">
+            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </span>
+            <button type="button" class="bg-white py-2 px-3 border border-gray-300 rounded-sm shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">Change</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700"> Cover photo </label>
+          <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-sm">
+            <div class="space-y-1 text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <div class="flex text-sm text-gray-600">
+                <label for="file-upload" class="relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500">
+                  <span>Upload a file</span>
+                  <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                </label>
+                <p class="pl-1">or drag and drop</p>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
+        <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can receive mail.</p>
+      </div>
+      <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="grid grid-cols-6 gap-6">
+          <div class="col-span-6 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+            <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+            <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-4">
+            <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+            <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-3">
+            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+            <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
+            </select>
+          </div>
+          <div class="col-span-6">
+            <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
+            <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+            <input type="text" name="city" id="city" autocomplete="address-level2" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
+            <input type="text" name="region" id="region" autocomplete="address-level1" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+            <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+        <p class="mt-1 text-sm text-gray-500">Decide which communications you'd like to receive and how.</p>
+      </div>
+      <div class="mt-5 space-y-6 md:mt-0 md:col-span-2">
+        <fieldset>
+          <legend class="sr-only">By Email</legend>
+          <div class="text-base font-medium text-gray-900">By Email</div>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-start">
+              <div class="h-5 flex items-center">
+                <input id="comments" name="comments" type="checkbox" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="comments" class="font-medium text-gray-700">Comments</label>
+                <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="candidates" name="candidates" type="checkbox" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="candidates" class="font-medium text-gray-700">Candidates</label>
+                <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="offers" name="offers" type="checkbox" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="offers" class="font-medium text-gray-700">Offers</label>
+                <p class="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="contents text-base font-medium text-gray-900">Push Notifications</legend>
+          <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-center">
+              <input id="push-everything" name="push-notifications" type="radio" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300">
+              <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
+            </div>
+            <div class="flex items-center">
+              <input id="push-email" name="push-notifications" type="radio" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300">
+              <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
+            </div>
+            <div class="flex items-center">
+              <input id="push-nothing" name="push-notifications" type="radio" class="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300">
+              <label for="push-nothing" class="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  -->
+  <div class="flex justify-end">
+    <%= form.submit class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+  </div>
+  <!-- OLD STUFF:
+  <div class="shadow overflow-hidden sm:rounded-sm">
     <div class="px-4 py-5 bg-white sm:p-6">
       <div class="grid grid-cols-6 gap-6">
         <% if article.errors.any? %>
           <div style="color: red">
             <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
-
             <ul>
               <% article.errors.each do |error| %>
                 <li><%= error.full_message %></li>
@@ -13,85 +244,39 @@
             </ul>
           </div>
         <% end %>
-
-        <div class="col-span-6 sm:col-span-4">
-          <%= form.label :interviewer, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :interviewer_id, options_for_select(@interviewers, article.interviewer_id), {include_blank: true}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"} %>
-        </div>
-
-        <div class="col-span-6 sm:col-span-4">
-          <%= form.label :specialist, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :specialist_id, options_for_select(@specialists, article.specialist_id), {}, class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
-        </div>
-
-        <div class="col-span-6">
-          <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.text_field :title, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-        </div>
-
-        <div class="col-span-6">
-          <%= form.label :subtitle, class: "block text-sm font-medium text-gray-700" %>
-          <div class="mt-1">
-            <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" %>
-          </div>
-        </div>
-
-        <div class="col-span-6 sm:col-span-4">
-          <fieldset>
-            <legend class="text-base font-medium text-gray-900">Company Type</legend>
-            <div class="mt-4 space-y-4">
-              <% CaseStudy::Article::COMPANY_TYPES.each do |type| %>
-                <div class="flex items-start">
-                  <div class="flex items-center h-5">
-                    <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), class: "focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
-                  </div>
-                  <div class="ml-3 text-sm">
-                    <label for="company_type_<%= type.parameterize %>" class="font-medium text-gray-700"><%= type %></label>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </fieldset>
-        </div>
-
         <div class="col-span-6">
           <%= form.label :comment, class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
-            <%= form.text_area :comment, rows: 5, class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" %>
+            <%= form.text_area :comment, rows: 5, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
           </div>
         </div>
-
         <div class="col-span-6">
           <%= form.label :editor_note, class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
-            <%= form.text_area :editor_note, rows: 5, class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" %>
+            <%= form.text_area :editor_note, rows: 5, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
           </div>
         </div>
-
         <div class="col-span-6">
           <%= form.label :goals, class: "block text-sm font-medium text-gray-700" %>
           <div class="mt-1">
-            <%= form.text_area :goals, rows: 5, class: "shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" %>
+            <%= form.text_area :goals, rows: 5, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
           </div>
         </div>
-
         <div class="col-span-3">
           <%= form.label :score, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.number_field :score, class: "mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+          <%= form.number_field :score, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
         </div>
-
         <div class="col-span-3">
           <%= form.label :published_at, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.datetime_select :published_at, {}, class: "mt-1 py-2 pl-3 pr-7 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+          <%= form.datetime_select :published_at, {}, class: "mt-1 py-2 pl-3 pr-7 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm" %>
         </div>
-
         <div class="col-span-6 sm:col-span-4">
           <fieldset>
             <legend class="text-base font-medium text-gray-900">Configuration</legend>
             <div class="mt-4 space-y-4">
               <div class="flex items-start">
                 <div class="flex items-center h-5">
-                  <%= form.check_box :confidential, class: "focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" %>
+                  <%= form.check_box :confidential, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
                 </div>
                 <div class="ml-3 text-sm">
                   <%= form.label :confidential %>
@@ -100,7 +285,7 @@
               </div>
               <div class="flex items-start">
                 <div class="flex items-center h-5">
-                  <%= form.check_box :targeting, class: "focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" %>
+                  <%= form.check_box :targeting, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
                 </div>
                 <div class="ml-3 text-sm">
                   <%= form.label :targeting %>
@@ -108,7 +293,7 @@
               </div>
               <div class="flex items-start">
                 <div class="flex items-center h-5">
-                  <%= form.check_box :hide_from_search, class: "focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded" %>
+                  <%= form.check_box :hide_from_search, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
                 </div>
                 <div class="ml-3 text-sm">
                   <%= form.label :hide_from_search %>
@@ -121,7 +306,8 @@
       </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-      <%= form.submit class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <%= form.submit class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
     </div>
   </div>
+  -->
 <% end %>
