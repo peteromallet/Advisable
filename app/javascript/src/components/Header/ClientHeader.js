@@ -28,7 +28,7 @@ export default function ClientHeader() {
         )}
       </div>
 
-      <div className="inline-flex lg:hidden">
+      <div className="inline-flex md:hidden">
         <MobileMenu />
       </div>
 

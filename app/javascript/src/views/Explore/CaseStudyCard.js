@@ -65,7 +65,7 @@ export default function CaseStudyCard({ article, delay }) {
       data-testid={`article-card-${article.id}`}
       variants={{ hover: { y: -4 } }}
       transition={{ duration: 0.2 }}
-      className="w-full h-[500px] p-6 relative"
+      className="w-full h-[500px] relative"
     >
       <motion.div
         initial={{
@@ -93,7 +93,7 @@ export default function CaseStudyCard({ article, delay }) {
           state={{
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
-          className="case-study-card-content"
+          className="p-6 case-study-card-content"
         >
           {primarySkill && (
             <div className={skillClasses({ color: primarySkill.color })}>
@@ -116,7 +116,7 @@ export default function CaseStudyCard({ article, delay }) {
           </ul>
         </Link>
 
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex p-5 items-center justify-between pt-2">
           <div className="flex items-center gap-3">
             <Avatar
               size="xs"
