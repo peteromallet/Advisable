@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryBot.define do
   factory :video_call do
     sequence(:uid) { "vid_#{SecureRandom.hex[0..14]}" }

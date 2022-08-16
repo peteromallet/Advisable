@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Sentry.init do |config|
-  config.dsn = ENV["SENTRY_API_DSN"]
+  config.dsn = ENV.fetch("SENTRY_API_DSN", nil)
   config.send_default_pii = true
   config.breadcrumbs_logger = %i[sentry_logger active_support_logger]
 

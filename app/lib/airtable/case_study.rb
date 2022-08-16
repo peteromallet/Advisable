@@ -29,9 +29,7 @@ module Airtable
           airspecialist.sync
         end
 
-        if fields["Interviewer"].present? && ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
-          Airtable::SalesPerson.find(fields["Interviewer"].first).sync
-        end
+        Airtable::SalesPerson.find(fields["Interviewer"].first).sync if fields["Interviewer"].present? && ::SalesPerson.find_by(airtable_id: fields["Interviewer"].first).nil?
 
         Array(fields["Industry"]).each do |airtable_id|
           Airtable::Industry.find(airtable_id).sync if ::Industry.find_by(airtable_id:).nil?

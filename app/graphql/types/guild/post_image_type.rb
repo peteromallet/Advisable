@@ -5,21 +5,13 @@ module Types
     class PostImageType < Types::BaseType
       graphql_name "GuildPostImage"
 
-      field :id, ID, null: false
-      field :url, String, null: false
-      field :cover, Boolean, null: false
+      field :id, ID, null: false, method: :uid
+      field :url, String, null: false, method: :resized_image_url
       field :position, Integer, null: false
 
-      def id
-        object.uid
-      end
-
+      field :cover, Boolean, null: false
       def cover
         object.cover || false
-      end
-
-      def url
-        object.resized_image_url
       end
     end
   end

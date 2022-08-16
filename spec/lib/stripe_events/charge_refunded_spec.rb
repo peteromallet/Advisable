@@ -29,7 +29,7 @@ RSpec.describe StripeEvents::ChargeRefunded do
     let(:metadata) { OpenStruct.new }
 
     it "does nothing" do
-      expect(StripeEvents.process(event)).to eq(nil)
+      expect(StripeEvents.process(event)).to be_nil
     end
   end
 end

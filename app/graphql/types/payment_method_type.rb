@@ -1,29 +1,36 @@
 # frozen_string_literal: true
-class Types::PaymentMethodType < Types::BaseType
-  field :id, String, null: false
-  field :name, String, null: false
-  field :last4, String, null: false
-  field :brand, String, null: false
-  field :exp_month, String, null: false
-  field :exp_year, String, null: false
 
-  def name
-    object.billing_details.name
-  end
+module Types
+  class PaymentMethodType < Types::BaseType
+    field :id, String, null: false
+    field :name, String, null: false
 
-  def last4
-    object.card.last4
-  end
+    def name
+      object.billing_details.name
+    end
 
-  def exp_month
-    object.card.exp_month
-  end
+    field :last4, String, null: false
 
-  def exp_year
-    object.card.exp_year
-  end
+    def last4
+      object.card.last4
+    end
 
-  def brand
-    object.card.brand
+    field :brand, String, null: false
+
+    def brand
+      object.card.brand
+    end
+
+    field :exp_month, String, null: false
+
+    def exp_month
+      object.card.exp_month
+    end
+
+    field :exp_year, String, null: false
+
+    def exp_year
+      object.card.exp_year
+    end
   end
 end

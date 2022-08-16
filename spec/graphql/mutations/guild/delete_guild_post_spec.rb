@@ -23,7 +23,7 @@ RSpec.describe Mutations::Guild::DeleteGuildPost do
   it "deletes a guild post" do
     expect do
       AdvisableSchema.execute(query, context: {current_user: specialist})
-    end.to change { Guild::Post.count }.from(1).to(0)
+    end.to change(Guild::Post, :count).from(1).to(0)
   end
 
   it "does not delete a post that doesn't belong to current_user" do

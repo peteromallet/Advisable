@@ -19,7 +19,7 @@ RSpec.describe Guild::PostBoostMailer do
     it "does not send the email when unsubscribed" do
       account = create(:account, unsubscribed_from: ["Advisable Guild"])
       specialist.update!(account:)
-      expect(mail.to).to eq(nil)
+      expect(mail.to).to be_nil
     end
   end
 end

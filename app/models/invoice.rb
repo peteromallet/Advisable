@@ -26,7 +26,7 @@ class Invoice < ApplicationRecord
     self.key = nil if regenerate
     raise "No pdf" if key.blank?
 
-    obj = Aws::S3::Object.new(bucket_name: ENV["AWS_S3_BUCKET"], key:)
+    obj = Aws::S3::Object.new(bucket_name: ENV.fetch("AWS_S3_BUCKET", nil), key:)
     obj.presigned_url(:get, expires_in: URL_EXPIRES_AT)
   end
 end

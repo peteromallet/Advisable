@@ -25,7 +25,7 @@ class SluggableDummy
     @options = options
   end
 
-  def method_missing(method, *_args, **_options, &_block)
+  def method_missing(method, *_args, **_options, &)
     return options[method] if respond_to_missing?(method)
 
     super

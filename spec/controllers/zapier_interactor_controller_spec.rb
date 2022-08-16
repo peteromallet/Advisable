@@ -21,7 +21,7 @@ RSpec.describe ZapierInteractorController, type: :request do
 
       it "ignores the param" do
         post("/zapier_interactor/update_interview", params:)
-        expect(response.status).to eq(422)
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON[response.body]["message"]).to eq("Validation failed: Status is not included in the list")
       end
     end

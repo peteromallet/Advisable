@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-class Types::QuestionType < Types::BaseType
-  field :id, ID, null: false
-  field :content, String, null: false
 
-  def id
-    object.uid
+module Types
+  class QuestionType < Types::BaseType
+    field :id, ID, null: false, method: :uid
+    field :content, String, null: false
   end
 end

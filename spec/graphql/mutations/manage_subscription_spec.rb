@@ -42,7 +42,7 @@ RSpec.describe Mutations::ManageSubscription do
         response = AdvisableSchema.execute(query, context:)
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Mutations::ManageSubscription do
         response = AdvisableSchema.execute(query, context:)
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end
@@ -93,7 +93,7 @@ RSpec.describe Mutations::ManageSubscription do
         response = AdvisableSchema.execute(query, context:)
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe Mutations::ManageSubscription do
         response = AdvisableSchema.execute(query, context:)
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe Mutations::ManageSubscription do
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
         expect(account).to eq(current_user.account)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end
@@ -175,7 +175,7 @@ RSpec.describe Mutations::ManageSubscription do
         id = response.dig("data", "manageSubscription", "account", "id")
         account = Account.with_log_data.find_by!(uid: id)
         expect(account).to eq(current_user.account)
-        expect(account.log_data.responsible_id).to eq(nil)
+        expect(account.log_data.responsible_id).to be_nil
         expect(account.unsubscribed_from).to match_array(["SMS Alerts", "Onboarding Emails"])
       end
     end

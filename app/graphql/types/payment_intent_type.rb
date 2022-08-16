@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-class Types::PaymentIntentType < Types::BaseType
-  field :secret, String, null: false
-  field :last_payment_error, Types::LastPaymentErrorType, null: true
 
-  def secret
-    object.client_secret
+module Types
+  class PaymentIntentType < Types::BaseType
+    field :secret, String, null: false, method: :client_secret
+    field :last_payment_error, Types::LastPaymentErrorType, null: true
   end
 end

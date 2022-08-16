@@ -41,7 +41,7 @@ RSpec.describe Types::EventType do
     it "includes whether the viewer is attending" do
       event.event_attendees.create!(attendee: current_user)
       event.reload
-      expect(event_query["attending"]).to eq(true)
+      expect(event_query["attending"]).to be(true)
     end
   end
 

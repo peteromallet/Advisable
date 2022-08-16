@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationMailbox < ActionMailbox::Base
-  routing /@#{ENV["GUILD_REPLIES_DOMAIN"]}/ => :guild_chat_replies
-  routing /@#{ENV["MESSAGE_REPLIES_DOMAIN"]}/ => :messages_replies
+  routing(/@#{ENV.fetch("GUILD_REPLIES_DOMAIN", nil)}/ => :guild_chat_replies)
+  routing(/@#{ENV.fetch("MESSAGE_REPLIES_DOMAIN", nil)}/ => :messages_replies)
 
   private
 

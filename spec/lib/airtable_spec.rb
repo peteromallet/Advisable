@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe Airtable do
@@ -9,7 +10,7 @@ RSpec.describe Airtable do
         expect(table).to receive(:sync)
       end
 
-      Airtable.sync
+      described_class.sync
     end
   end
 end
