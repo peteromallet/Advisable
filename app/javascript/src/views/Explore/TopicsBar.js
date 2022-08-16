@@ -58,7 +58,7 @@ function Topic({ to, name, icon, delay, ...props }) {
 }
 
 const topicsBarClasses = composeStyles({
-  base: "w-full py-6 topics-bar",
+  base: "w-full py-8 topics-bar",
   variants: {
     scrollLeft: "topics-bar--scroll-left",
     scrollRight: "topics-bar--scroll-right",

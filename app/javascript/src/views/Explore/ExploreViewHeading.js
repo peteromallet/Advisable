@@ -17,9 +17,9 @@ export default function ExploreViewHeading({
       )}
       <div className="flex-1">
         {loading ? (
-          <div className="max-w-[250px] h-[24px] bg-neutral-200 animate-pulse rounded-md mt-2 mb-4" />
+          <div className="max-w-[250px] h-[24px] bg-neutral-200 animate-pulse rounded-md mt-2 mb-3" />
         ) : (
-          <h1 className="text-2xl md:text-3xl leading-none  font-bold tracking-tight text-neutral900 sentence-case">
+          <h1 className="text-2xl md:text-3xl leading-none font-bold tracking-tight text-neutral900 sentence-case">
             {title}
           </h1>
         )}
