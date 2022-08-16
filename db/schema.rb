@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_110803) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_16_091439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -331,6 +331,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_110803) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "result_ids"
+    t.boolean "hidden"
     t.index ["slug"], name: "index_case_study_topics_on_slug", unique: true
     t.index ["uid"], name: "index_case_study_topics_on_uid", unique: true
   end
