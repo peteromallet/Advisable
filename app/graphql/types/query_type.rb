@@ -320,7 +320,7 @@ module Types
     def topics
       requires_client!
       Rails.cache.fetch("topics", expires_in: 1.day) do
-        ::CaseStudy::Topic.by_position
+        ::CaseStudy::Topic.visible.by_position
       end
     end
 

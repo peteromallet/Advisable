@@ -11,6 +11,7 @@ module CaseStudy
 
     validates :name, presence: true
 
+    scope :visible, -> { where(hidden: [false, nil]) }
     scope :by_position, -> { order("position ASC NULLS LAST") }
 
     def result_ids
@@ -41,6 +42,7 @@ end
 #
 #  id          :bigint           not null, primary key
 #  description :text
+#  hidden      :boolean
 #  name        :string
 #  position    :integer
 #  result_ids  :jsonb
