@@ -28,6 +28,7 @@ fragment HeroFields on CaseStudyArticle {
     firstName
     profilePath
     priceRange
+    collaborationTypes
     unavailableUntil
     location
     createdAt

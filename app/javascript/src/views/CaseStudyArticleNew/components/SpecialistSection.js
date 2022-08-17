@@ -1,10 +1,11 @@
 import React from "react";
+import { DateTime } from "luxon";
 import { Chat, Tag } from "@styled-icons/heroicons-outline";
 import { Link, DialogDisclosure, Tooltip } from "@advisable/donut";
 import Avatar from "src/components/Avatar";
 import Button from "src/components/Button";
+import commaSeparated from "src/utilities/commaSeparated";
 import { BadgeCheck, LocationMarker } from "@styled-icons/heroicons-solid";
-import { DateTime } from "luxon";
 
 const StyledIcon = ({ icon: Icon, color }) => {
   const bgColors = {
@@ -43,10 +44,17 @@ const PRICE_RANGES = {
   "very high": "> $300",
 };
 
+const COLLABORATION_TYPES = {
+  hands_on: "Hands-On Work",
+  consultancy: "Consultations",
+  mentorship: "Mentoring",
+};
+
 export default function SpecialistSection({ article, modal }) {
   const { specialist } = article;
-  const { name, location, bio, priceRange } = specialist;
+  const { name, location, bio, priceRange, collaborationTypes } = specialist;
   const date = DateTime.fromISO(specialist.createdAt).toFormat("MMMM dd, yyyy");
+  const availableFor = collaborationTypes.map((t) => COLLABORATION_TYPES[t]);
 
   return (
     <>
@@ -105,15 +113,17 @@ export default function SpecialistSection({ article, modal }) {
           </div>
         )}
 
-        <div className="flex gap-3">
-          <StyledIcon icon={Chat} color="purple" />
-          <div>
-            <StyledCategoryName>Available For</StyledCategoryName>
-            <StyledCategoryContent>
-              Consultations, Mentoring and Hands-On Work
-            </StyledCategoryContent>
+        {collaborationTypes?.length > 0 && (
+          <div className="flex gap-3">
+            <StyledIcon icon={Chat} color="purple" />
+            <div>
+              <StyledCategoryName>Available For</StyledCategoryName>
+              <StyledCategoryContent>
+                {commaSeparated(availableFor)}
+              </StyledCategoryContent>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* <div className="flex gap-2">
           <StyledIcon icon={Briefcase} color="cyan" />
