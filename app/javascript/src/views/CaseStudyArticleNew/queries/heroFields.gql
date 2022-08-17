@@ -30,6 +30,7 @@ fragment HeroFields on CaseStudyArticle {
     priceRange
     unavailableUntil
     location
+    createdAt
     account {
       id
     }
