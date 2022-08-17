@@ -1,0 +1,74 @@
+.signupCTA {
+  background: linear-gradient(115.88deg, #20193c 8.93%, #17042d 91.83%);
+
+  .freelancer {
+    --image: 0;
+    width: 48px;
+    height: 48px;
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+    background: url("./freelancers.jpg");
+    background-position: calc(-48px * var(--image)) 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .freelancer:nth-child(1) {
+    top: 65px;
+    left: 240px;
+  }
+
+  .freelancer:nth-child(2) {
+    --image: 1;
+    top: 120px;
+    left: 120px;
+  }
+
+  .freelancer:nth-child(3) {
+    --image: 2;
+    top: 320px;
+    left: 160px;
+  }
+
+  .freelancer:nth-child(4) {
+    --image: 3;
+    top: 190px;
+    left: 280px;
+  }
+
+  .freelancer:nth-child(5) {
+    --image: 4;
+    top: 130px;
+    left: 380px;
+  }
+
+  .freelancer:nth-child(6) {
+    --image: 5;
+    top: 170px;
+    left: 540px;
+  }
+
+  .freelancer:nth-child(7) {
+    --image: 6;
+    top: 290px;
+    left: 620px;
+  }
+
+  .freelancer:nth-child(8) {
+    --image: 7;
+    top: 170px;
+    left: 50px;
+  }
+
+  .freelancer:nth-child(9) {
+    --image: 8;
+    top: 250px;
+    left: 380px;
+  }
+
+  .freelancer:nth-child(10) {
+    --image: 9;
+    top: 80px;
+    left: 480px;
+  }
+}
