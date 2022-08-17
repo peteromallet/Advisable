@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:uid) { "csm_#{SecureRandom.hex[0..14]}" }
     name { "MyString" }
     description { "MyText" }
-    website { "MyString" }
-    business_type { "MyString" }
+    website { "https://mystring.com/" }
+    business_type { "B2B" }
   end
 end

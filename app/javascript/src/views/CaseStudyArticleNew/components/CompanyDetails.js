@@ -29,6 +29,7 @@ export default function CompanyDetails({ caseStudy }) {
             href={website?.href}
             target="_blank"
             rel="noreferrer"
+            aria-label="Company website"
             className="flex gap-1 items-center leading-none font-[450] text-blue500"
           >
             {name}
