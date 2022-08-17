@@ -63,7 +63,7 @@ export default function CaseStudyCard({ article, delay }) {
       whileHover="hover"
       whileTap="tap"
       data-testid={`article-card-${article.id}`}
-      variants={{ hover: { y: -4 } }}
+      variants={{ hover: { y: -4 }, tap: { scale: 0.95 } }}
       transition={{ duration: 0.2 }}
       className="w-full h-[500px] relative"
     >
@@ -86,14 +86,14 @@ export default function CaseStudyCard({ article, delay }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay }}
-        className="flex flex-col h-full relative"
+        className="rounded-xl overflow-hidden flex flex-col h-full relative"
       >
         <Link
           to={article.path}
           state={{
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
-          className="p-6 case-study-card-content"
+          className="no-tap-highlight rounded-xl p-6 case-study-card-content"
         >
           {primarySkill && (
             <div className={skillClasses({ color: primarySkill.color })}>

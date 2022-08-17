@@ -9,6 +9,10 @@
     height: calc(100vh - var(--header-height));
   }
 
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .icon-duo-neutral {
     --stroke: theme("colors.neutral.800");
     --fill: theme("colors.neutral.100");
