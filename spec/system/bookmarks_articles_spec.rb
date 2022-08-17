@@ -30,8 +30,8 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
-    specialist_bar = find_by_test_id("specialistBar")
-    within(specialist_bar) do
+    action_buttons_bar = find_by_test_id("action-buttons-bar")
+    within(action_buttons_bar) do
       find_by_label("Add to Bookmarks").click
     end
     expect(page).to have_content("Added to bookmarks")
@@ -48,8 +48,8 @@ RSpec.describe "Favorites", type: :system do
     expect(page).to have_content(article1.title)
     click_on(article1.title)
     expect(page).to have_current_path("/articles/#{article1.slug}")
-    specialist_bar = find_by_test_id("specialistBar")
-    within(specialist_bar) do
+    action_buttons_bar = find_by_test_id("action-buttons-bar")
+    within(action_buttons_bar) do
       click_button("Remove from Bookmarks")
     end
     expect(page).to have_content("Removed from bookmarks")
