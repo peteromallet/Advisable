@@ -21,21 +21,4 @@ fragment ArticleFields on CaseStudyArticle {
       name
     }
   }
-  specialist {
-    id
-    name
-    avatar
-    unavailableUntil
-  }
-  company {
-    id
-    name
-    website
-    favicon
-    businessType
-  }
-  resultsContent {
-    id
-    results
-  }
 }

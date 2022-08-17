@@ -4,6 +4,7 @@ fragment HeroFields on CaseStudyArticle {
   subtitle
   companyType
   resultsContent {
+    id
     results
   }
   insights {
@@ -28,7 +29,6 @@ fragment HeroFields on CaseStudyArticle {
     profilePath
     priceRange
     unavailableUntil
-    createdAt
     location
   }
 }
