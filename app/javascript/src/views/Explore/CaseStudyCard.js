@@ -139,7 +139,7 @@ export default function CaseStudyCard({ article, delay }) {
             <span className="font-medium">{article.specialist.name}</span>
           </div>
           <div>
-            <FavoriteButton article={article} />
+            <FavoriteButton article={article} size="sm" />
           </div>
         </div>
       </motion.div>

@@ -1,11 +1,10 @@
+#import 'src/views/CaseStudyArticleNew/queries/heroFields.gql'
+
 fragment ArticleFields on CaseStudyArticle {
   id
-  slug
-  title
+  ...HeroFields
   path
-  subtitle
   isFavorited
-  companyType
   skills {
     id
     primary
@@ -21,22 +20,5 @@ fragment ArticleFields on CaseStudyArticle {
       id
       name
     }
-  }
-  specialist {
-    id
-    name
-    avatar
-    unavailableUntil
-  }
-  company {
-    id
-    name
-    website
-    favicon
-    businessType
-  }
-  resultsContent {
-    id
-    results
   }
 }

@@ -1,3 +1,5 @@
+#import 'src/views/CaseStudyArticleNew/queries/heroFields.gql'
+
 query DashboardData {
   viewer {
     ... on Specialist {
@@ -9,14 +11,9 @@ query DashboardData {
     }
   }
   topCaseStudies {
+    ...HeroFields
     id
     path
-    title
-    specialist {
-      id
-      name
-      avatar
-    }
     coverPhoto
   }
   upcomingEvents {

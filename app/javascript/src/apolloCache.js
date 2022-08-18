@@ -83,6 +83,23 @@ const createCache = () => {
               return existing || referenceData;
             },
           },
+          caseStudy: {
+            read(_, { args, toReference, cache }) {
+              const article = Object.values(cache.data.data).find((record) => {
+                return (
+                  record.__typename === "CaseStudyArticle" &&
+                  (record.slug === args.id || record.id === args.id)
+                );
+              });
+
+              if (article) {
+                return toReference({
+                  id: article.id,
+                  __typename: "CaseStudyArticle",
+                });
+              }
+            },
+          },
         },
       },
       CaseStudyTopic: {

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import CaseStudyArticle from "../CaseStudyArticle";
+import CaseStudyArticleNew from "../CaseStudyArticleNew";
 
 const backdropClassName = `
   fixed
@@ -19,7 +19,6 @@ const modalClassName = `
   bg-white
   relative
   shadow-2xl
-  overflow-y-scroll
   rounded-t-[32px]
 `;
 
@@ -77,7 +76,9 @@ export default function ArticleModal() {
         transition={{ duration: 0.3 }}
         data-testid="articleModal"
       >
-        <CaseStudyArticle topbarOffset={0} />
+        <div className="h-full overflow-y-scroll" id="article-scrollable-area">
+          <CaseStudyArticleNew />
+        </div>
       </motion.div>
     </motion.div>
   );

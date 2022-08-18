@@ -3,6 +3,7 @@ import React from "react";
 function TargetIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "#fff",
   ...props
 }) {
   return (
@@ -13,7 +14,7 @@ function TargetIcon({
       {...props}
     >
       <path
-        fill="#fff"
+        fill={bg}
         d="M11.987 22.285c6.577 0 10.277-3.7 10.277-10.276 0-6.577-3.7-10.277-10.277-10.277-6.577 0-10.276 3.7-10.276 10.277 0 6.577 3.7 10.276 10.276 10.276z"
       ></path>
       <path
@@ -43,4 +44,3 @@ function TargetIcon({
 }
 
 export default TargetIcon;
-

@@ -150,7 +150,6 @@ module Types
     delegate :completed_tutorials, to: :account
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-      authorize :specialist?, :admin?
       description "The timestamp for when the specialist record was created"
     end
 

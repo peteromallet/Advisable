@@ -1,3 +1,5 @@
+#import 'src/views/CaseStudyArticleNew/queries/heroFields.gql'
+
 fragment SpecialistFields on Specialist {
   id
   name
@@ -25,16 +27,11 @@ fragment SpecialistFields on Specialist {
   }
 
   caseStudies {
+    ...HeroFields
     id
-    slug
     path
-    companyType
-    title
     coverPhoto
     editorUrl
-    company {
-      favicon
-    }
     skills {
       skill {
         id

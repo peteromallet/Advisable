@@ -8,7 +8,7 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
-import Article from "./views/CaseStudyArticle";
+import ArticleNew from "./views/CaseStudyArticleNew";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
 import Explore from "./views/Explore";
@@ -86,7 +86,7 @@ const ApplicationRoutes = () => {
               </Route>
             )}
 
-            <Route path="/articles/:slug" element={<Article />} />
+            <Route path="/articles/:slug" element={<ArticleNew />} />
 
             <Route
               path="/post"

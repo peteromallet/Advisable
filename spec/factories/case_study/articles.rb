@@ -14,6 +14,7 @@ FactoryBot.define do
     specialist
     interviewer { association :account }
     editor { association :account }
+    company_type { ["Growth-Stage Startup"] }
 
     trait :with_skills do
       skills { [association(:case_study_skill, primary: true), association(:case_study_skill)] }

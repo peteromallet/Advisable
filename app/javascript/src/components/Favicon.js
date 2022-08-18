@@ -13,6 +13,11 @@ const faviconStyles = composeStyles({
   `,
   variants: {
     size: {
+      xs: `
+        w-[24px]
+        h-[24px]
+        rounded-[4px]
+      `,
       sm: `
         w-[28px]
         h-[28px]

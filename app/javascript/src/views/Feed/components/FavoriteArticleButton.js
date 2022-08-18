@@ -23,6 +23,7 @@ const buttonClasses = composeStyles({
     flex
     justify-center
     items-center
+    bg-white
     ring-1
     ring-inset
     ring-neutral200
