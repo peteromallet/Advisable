@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Avatar from "src/components/Avatar";
@@ -52,6 +52,7 @@ function primarySkillForArticle(article) {
 
 export default function CaseStudyCard({ article, delay }) {
   const location = useLocation();
+  const [tapping, setTapping] = useState(false);
   const resultsWithContent = (article.resultsContent?.results || []).filter(
     (c) => c.callout && c.context,
   );
@@ -61,17 +62,27 @@ export default function CaseStudyCard({ article, delay }) {
   return (
     <motion.div
       whileHover="hover"
-      whileTap="tap"
+      animate={tapping ? "tap" : "initial"}
       data-testid={`article-card-${article.id}`}
-      variants={{ hover: { y: -4 }, tap: { scale: 0.95 } }}
+      variants={{
+        initial: { scale: 1, y: 0 },
+        hover: { y: -4 },
+        tap: { scale: 0.95 },
+      }}
       transition={{ duration: 0.2 }}
-      className="w-full h-[500px] relative"
+      className="relative w-full h-[500px]"
+      onTap={(e) => {
+        e.preventDefault();
+      }}
     >
       <motion.div
         initial={{
           boxShadow: "0 4px 8px -2px rgba(0, 0, 0, 0.12)",
         }}
         variants={{
+          initial: {
+            scale: 1,
+          },
           hover: {
             scale: 1.01,
             boxShadow: "0 8px 60px -12px rgba(0, 0, 0, 0.16)",
@@ -86,21 +97,23 @@ export default function CaseStudyCard({ article, delay }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay }}
-        className="rounded-xl overflow-hidden flex flex-col h-full relative"
+        className="flex overflow-hidden relative flex-col h-full rounded-xl"
       >
         <Link
           to={article.path}
           state={{
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
-          className="no-tap-highlight rounded-xl p-6 case-study-card-content"
+          onMouseDown={() => setTapping(true)}
+          onMouseUp={() => setTapping(false)}
+          className="p-6 rounded-xl no-tap-highlight case-study-card-content"
         >
           {primarySkill && (
             <div className={skillClasses({ color: primarySkill.color })}>
               {primarySkill.name}
             </div>
           )}
-          <h4 className="font-serif text-[22px] font-semibold tracking-tight mb-8 leading-snug">
+          <h4 className="mb-8 font-serif font-semibold tracking-tight leading-snug text-[22px]">
             {article.title}
           </h4>
 
@@ -116,8 +129,8 @@ export default function CaseStudyCard({ article, delay }) {
           </ul>
         </Link>
 
-        <div className="flex p-5 items-center justify-between pt-2">
-          <div className="flex items-center gap-3">
+        <div className="flex justify-between items-center p-5 pt-2">
+          <div className="flex gap-3 items-center">
             <Avatar
               size="xs"
               src={article.specialist.avatar}
