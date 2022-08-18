@@ -51,8 +51,8 @@ function HeroSquare({ delay, src, ...props }) {
       animate={{
         opacity: 1,
         scale: 1,
-        rotateX: 0,
         rotateY: 0,
+        rotateX: 0,
         transformPerspective: 500,
       }}
       transition={{
@@ -74,7 +74,7 @@ function HeroSquare({ delay, src, ...props }) {
 export default function Hero() {
   return (
     <div className="mb-4 hero">
-      <div className="relative z-20 py-44 px-5 mx-auto lg:px-10 max-w-[1300px]">
+      <div className="relative z-10 py-44 px-5 mx-auto lg:px-10 max-w-[1300px]">
         <div className="hero-grid">
           <div>
             <AnimatedLine offset={20} />
@@ -92,7 +92,7 @@ export default function Hero() {
             <AnimatedLine direction="up" offset={-12} />
             <AnimatedLine direction="up" offset={-20} />
           </div>
-          <div className="relative z-20">
+          <div className="relative z-40 hero-squares">
             <HeroSquare src={one} />
             <HeroSquare src={two} delay={0.2} />
             <HeroSquare src={three} delay={0.4} />

@@ -49,6 +49,10 @@
   background: linear-gradient(90deg, #bea1fb00 0%, #bea1fb 100%);
 }
 
+.hero-squares {
+  transform: translate3d(0px, 0px, 0px); /* translate3d is for Safari */
+}
+
 .hero-square {
   --size: 4;
   --block-size: calc(var(--grid-size) * var(--size) - 1px);
@@ -59,7 +63,7 @@
   height: var(--block-size);
   position: absolute;
   overflow: hidden;
-  perspective: 200px;
+  transform-style: preserve-3d;
   box-shadow: 0 0 30px rgb(0 0 0 / 0.1), 2px 2px 8px rgb(0 0 0 / 0.08);
   border-radius: calc(5px * var(--size));
   top: calc((var(--grid-area) / 2) + var(--offset-top) - 1px);

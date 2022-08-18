@@ -139,7 +139,7 @@ const BaseStyles = createGlobalStyle`
 
   /* Styling for nested modals */
   ${StyledDialogBackdrop} {
-    z-index: 20;
+    z-index: 50;
   }
 
   ${StyledDialog} {
