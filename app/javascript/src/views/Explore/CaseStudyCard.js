@@ -71,9 +71,6 @@ export default function CaseStudyCard({ article, delay }) {
       }}
       transition={{ duration: 0.2 }}
       className="relative w-full h-[500px]"
-      onTap={(e) => {
-        e.preventDefault();
-      }}
     >
       <motion.div
         initial={{
