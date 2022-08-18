@@ -24,7 +24,7 @@ import ScrollIndicator from "./components/ScrollIndicator";
 import SpecialistBar from "./components/SpecialistBar";
 
 export default function CaseStudyArticle() {
-  useBackground("beige");
+  useBackground("white");
   const { data, loading, error } = useArticle();
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,17 +50,17 @@ export default function CaseStudyArticle() {
         specialist={specialist}
         article={article}
       />
-      <div className="relative flex px-6 pb-0 mx-auto w-full lg:px-10 xl:px-14 xl:max-w-[1320px]">
-        <div className="hidden pt-12 pr-6 lg:block xl:pr-12 min-w-[272px] w-[272px] xl:min-w-[348px] xl:w-[348px]">
+      <div className="flex relative px-6 pb-0 mx-auto w-full lg:px-10 xl:px-14 xl:max-w-[1320px]">
+        <div className="hidden pt-12 pr-6 lg:block xl:pr-12 shrink-0 w-[280px] xl:w-[320px]">
           <StickyBox offsetTop={60} offsetBottom={60}>
             <SpecialistSection article={data.caseStudy} modal={contactModal} />
           </StickyBox>
         </div>
-        <div className="relative flex flex-col py-3 w-full border-solid lg:pl-6 lg:border-l xl:pl-12 border-neutral100">
+        <div className="flex relative flex-col py-3 w-full border-solid lg:pl-6 lg:border-l xl:pl-12 border-neutral100">
           <ScrollIndicator />
           <div
             data-testid="action-buttons-bar"
-            className="sticky top-3 right-3 ml-auto z-10 inline-flex gap-2 p-2 bg-white rounded-full"
+            className="inline-flex sticky top-3 right-3 z-10 gap-2 p-2 ml-auto bg-white rounded-full"
           >
             <EditCaseStudyButton article={data.caseStudy} />
             <ShareArticleButton slug={data.caseStudy.slug} />
@@ -78,7 +78,7 @@ export default function CaseStudyArticle() {
               modal={contactModal}
               specialist={data.caseStudy.specialist}
             />
-            <h1 className="mb-4 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[720px]">
+            <h1 className="mb-4 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[680px]">
               {data.caseStudy.title}
             </h1>
             <div className="gap-14 md:flex">

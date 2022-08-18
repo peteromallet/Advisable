@@ -56,25 +56,25 @@ const CATEGORY_ICONS = {
 
 export default function Results({ results }) {
   if (!results?.length) return null;
-  const firstTwo = results.slice(0, 2);
+  const filtered = results.filter((result) => result.callout);
+  const firstTwo = filtered.slice(0, 2);
 
   const resultCards = firstTwo.map((result, index) => {
     const Icon = CATEGORY_ICONS[result.category] || CATEGORY_ICONS["impact-1"];
-    if (!result.callout) return null;
 
     return (
       <div key={`result-${index}`}>
-        <div className="flex gap-3 mb-2 items-start">
+        <div className="flex gap-3 items-start mb-2">
           {Icon && (
             <div className="min-w-[24px] w-[24px] h-[24px]">
               <Icon />
             </div>
           )}
           <div>
-            <h5 className="text-white text-xl leading-6 font-semibold mb-1">
+            <h5 className="mb-1 text-xl font-semibold leading-6 text-white">
               {result.callout}
             </h5>
-            <p className="text-sm text-white leading-relaxed">
+            <p className="text-sm leading-relaxed text-white">
               {result.context}
             </p>
           </div>
@@ -84,8 +84,8 @@ export default function Results({ results }) {
   });
 
   return (
-    <div className="w-full bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
-      <div className="leading-none mb-4 uppercase text-xs font-semibold text-white">
+    <div className="w-full shadow-xl bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
+      <div className="mb-4 text-xs font-semibold leading-none text-white uppercase">
         Results
       </div>
       <div className="space-y-7">{resultCards}</div>
