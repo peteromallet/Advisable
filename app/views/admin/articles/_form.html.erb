@@ -1,67 +1,6 @@
 <%= form_with(model: article, url: url, class: "space-y-6") do |form| %>
-  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
-    <div class="md:grid md:grid-cols-3 md:gap-6">
-      <% if article.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
-          <ul>
-            <% article.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div class="md:col-span-1">
-        <h3 class="text-lg font-medium leading-6 text-gray-900">Basic</h3>
-      </div>
-      <div class="mt-5 space-y-6 md:mt-0 md:col-span-2">
-        <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-6">
-            <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
-            <%= form.text_field :title, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
-          </div>
-          <div class="col-span-6">
-            <%= form.label :subtitle, class: "block text-sm font-medium text-gray-700" %>
-            <div class="mt-1">
-              <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
-            </div>
-          </div>
-          <div class="col-span-6 sm:col-span-4">
-            <fieldset>
-              <legend class="text-base font-medium text-gray-900">Company Type</legend>
-              <div class="mt-4 space-y-4">
-                <% CaseStudy::Article::COMPANY_TYPES.each do |type| %>
-                  <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                      <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label for="company_type_<%= type.parameterize %>" class="font-medium text-gray-700"><%= type %></label>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            </fieldset>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
-    <div class="md:grid md:grid-cols-3 md:gap-6">
-      <div class="md:col-span-1">
-        <h3 class="text-lg font-medium leading-6 text-gray-900">Insights</h3>
-        <p class="mt-1 text-sm text-gray-500">Explain what Insights are here.</p>
-      </div>
-      <div class="mt-5 md:mt-0 md:col-span-2">
-        <div class="grid grid-cols-6 gap-6">
-          <div class="col-span-6">
-            <%= render "insights", article: article %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render "basic", article: article, form: form %>
+  <%= render "insights", article: article %>
   <!-- Examples:
   <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
     <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -270,39 +209,7 @@
           <%= form.label :published_at, class: "block text-sm font-medium text-gray-700" %>
           <%= form.datetime_select :published_at, {}, class: "mt-1 py-2 pl-3 pr-7 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm" %>
         </div>
-        <div class="col-span-6 sm:col-span-4">
-          <fieldset>
-            <legend class="text-base font-medium text-gray-900">Configuration</legend>
-            <div class="mt-4 space-y-4">
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <%= form.check_box :confidential, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :confidential %>
-                  <p class="text-gray-500">Should the company be hidden?</p>
-                </div>
-              </div>
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <%= form.check_box :targeting, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :targeting %>
-                </div>
-              </div>
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <%= form.check_box :hide_from_search, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :hide_from_search %>
-                  <p class="text-gray-500">Hide from search. Will then only visible by direct link.</p>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
+
       </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
