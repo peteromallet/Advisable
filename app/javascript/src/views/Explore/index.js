@@ -25,7 +25,7 @@ export default function Explore() {
         <TopicsBar />
         <div className="h-px bg-neutral-200" />
         <Outlet />
-        {!viewer &&<SignupCTA />}
+        {!viewer && <SignupCTA />}
       </div>
       <Footer />
     </>
