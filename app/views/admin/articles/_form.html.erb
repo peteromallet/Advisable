@@ -1,5 +1,6 @@
 <%= form_with(model: article, url: url, class: "space-y-6") do |form| %>
   <%= render "basic", article: article, form: form %>
+  <%= render "company", article: article, form: form %>
   <%= render "insights", article: article %>
   <!-- Examples:
   <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">

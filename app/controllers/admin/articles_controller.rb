@@ -68,7 +68,7 @@ module Admin
 
     def update
       if @article.update(article_params)
-        redirect_to admin_article_path(@article), notice: "Article was successfully updated."
+        redirect_to edit_admin_article_path(@article), notice: "Article was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -86,7 +86,7 @@ module Admin
     end
 
     def article_params
-      params.require(:case_study_article).permit(:title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [])
+      params.require(:case_study_article).permit(:title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
     end
 
     def insight_params

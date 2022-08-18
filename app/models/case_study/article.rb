@@ -29,6 +29,8 @@ module CaseStudy
     has_one :guild_post, class_name: "::Guild::Post", dependent: :nullify
     has_one_attached :cover_photo
 
+    accepts_nested_attributes_for :company
+
     scope :published, -> { where.not(published_at: nil) }
     scope :searchable, -> { active.published.where(hide_from_search: false) }
     scope :by_score, -> { order("score DESC NULLS LAST").order(id: :desc) }
