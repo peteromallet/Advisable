@@ -6,6 +6,9 @@ import Paintbrush from "src/icons/duo/paintbrush";
 import Rocket from "src/icons/duo/rocket";
 import Sliders from "src/icons/duo/sliders";
 import Target from "src/icons/duo/target";
+import Gauge from "src/icons/duo/gauge";
+import Lightbulb from "src/icons/duo/lightbulb";
+import Barchart from "src/icons/duo/barchart";
 
 const ChessIcon = (props) => (
   <Chess fill="white" stroke="white" bg="transparent" {...props} />
@@ -28,23 +31,25 @@ const RocketIcon = (props) => (
 const SlidersIcon = (props) => (
   <Sliders fill="transparent" stroke="white" bg="transparent" {...props} />
 );
+const GaugeIcon = (props) => (
+  <Gauge fill="white" stroke="white" bg="transparent" {...props} />
+);
+const LightbulbIcon = (props) => (
+  <Lightbulb fill="transparent" stroke="white" {...props} />
+);
+const BarchartIcon = (props) => (
+  <Barchart fill="transparent" stroke="white" bg="transparent" {...props} />
+);
 
 const CATEGORY_ICONS = {
-  "Strategy Development": ChessIcon,
-  "More Revenue": CoinsIcon,
-  "Big Impact": TargetIcon,
-  "Big Win": TargetIcon,
-  "Number Multiplying": MultiplyIcon,
-  "Increasing Number": MultiplyIcon,
-  "Create Something": PaintbrushIcon,
-  "New Launch": RocketIcon,
-  "Optimising Something": SlidersIcon,
-
-  strategy: ChessIcon,
   revenue: CoinsIcon,
-  impact: TargetIcon,
-  multiply: MultiplyIcon,
+  "impact-1": TargetIcon,
+  "impact-2": GaugeIcon,
+  "impact-3": LightbulbIcon,
+  "multiply-1": MultiplyIcon,
+  "multiply-2": BarchartIcon,
   creative: PaintbrushIcon,
+  strategy: ChessIcon,
   launch: RocketIcon,
   optimise: SlidersIcon,
 };
@@ -54,7 +59,7 @@ export default function Results({ results }) {
   const firstTwo = results.slice(0, 2);
 
   const resultCards = firstTwo.map((result, index) => {
-    const Icon = CATEGORY_ICONS[result.category] || CATEGORY_ICONS["optimise"];
+    const Icon = CATEGORY_ICONS[result.category] || CATEGORY_ICONS["impact-1"];
     if (!result.callout) return null;
 
     return (

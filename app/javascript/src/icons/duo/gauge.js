@@ -3,6 +3,7 @@ import React from "react";
 function GaugeIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "white",
   ...props
 }) {
   return (
@@ -12,7 +13,7 @@ function GaugeIcon({
       viewBox="0 0 14 14"
       {...props}
     >
-      <circle cx="7" cy="7" r="6.25" fill="#fff" stroke={stroke}></circle>
+      <circle cx="7" cy="7" r="6.25" fill={bg} stroke={stroke}></circle>
       <path
         stroke={stroke}
         strokeLinecap="round"
