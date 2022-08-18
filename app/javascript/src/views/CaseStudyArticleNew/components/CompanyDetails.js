@@ -23,7 +23,7 @@ export default function CompanyDetails({ caseStudy }) {
         Company details
       </div>
       <div className="flex gap-2 py-3 border-b border-solid last:border-none border-b-neutral100">
-        {favicon && <Favicon src={favicon} size="xs" />}
+        <Favicon src={favicon} size="xs" />
         {website ? (
           <a
             href={website?.href}
@@ -38,7 +38,7 @@ export default function CompanyDetails({ caseStudy }) {
             </div>
           </a>
         ) : (
-          <div>{name}</div>
+          <div className="font-medium text-neutral700">{name}</div>
         )}
       </div>
 
