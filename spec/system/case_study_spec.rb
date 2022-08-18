@@ -4,7 +4,6 @@ require "rails_helper"
 
 RSpec.describe "Case study view", type: :system do
   let(:specialist) { create(:specialist, price_range: "medium") }
-  let(:similar) { create(:case_study_article) }
   let(:article) { create(:case_study_article, comment: "Comment string", specialist:) }
   let!(:background) { create(:case_study_section, type: "background", article:) }
   let!(:h1) { create(:case_study_heading_content, section: background) }

@@ -13,7 +13,7 @@ import CompanyDetails from "./components/CompanyDetails";
 import Results from "./components/Results";
 import SpecialistSection from "./components/SpecialistSection";
 import KeyTakeaways from "./components/KeyTakeaways";
-import FavoriteArticleButton from "src/views/Feed/components/FavoriteArticleButton";
+import FavoriteButton from "src/views/Explore/FavoriteButton";
 import ShareArticleButton from "./components/ShareArticleButton";
 import EditCaseStudyButton from "./components/EditCaseStudyButton";
 import CircularButton from "src/components/CircularButton";
@@ -64,7 +64,7 @@ export default function CaseStudyArticle() {
           >
             <EditCaseStudyButton article={data.caseStudy} />
             <ShareArticleButton slug={data.caseStudy.slug} />
-            <FavoriteArticleButton article={data.caseStudy} />
+            <FavoriteButton article={data.caseStudy} />
             {backgroundLocation && (
               <CircularButton
                 aria-label="Close modal"
