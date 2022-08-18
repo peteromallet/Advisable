@@ -4,7 +4,7 @@ require "matrix"
 
 module Admin
   class ArticlesController < AdminController
-    before_action :set_article, only: %i[show edit add_insight remove_insight update destroy]
+    before_action :set_article, except: %i[index search new create]
 
     include Pagy::Backend
 
@@ -47,13 +47,24 @@ module Admin
     def edit; end
 
     def add_insight
-      @article.insights.create!(insight_params)
+      @article.insights.create!(params.require(:case_study_insight).permit(:title, :description))
       render partial: "insights", locals: {article: @article}
     end
 
     def remove_insight
       @article.insights.find(params[:insight_id]).destroy
       render partial: "insights", locals: {article: @article}
+    end
+
+    def add_industry
+      industry_id = params.require(:case_study_industry).permit(:industry)[:industry]
+      @article.industries.create!(industry_id:) if industry_id.present? && !@article.industries.exists?(industry_id:)
+      render partial: "industries", locals: {article: @article}
+    end
+
+    def remove_industry
+      @article.industries.find(params[:industry_id]).destroy
+      render partial: "industries", locals: {article: @article}
     end
 
     def create
@@ -87,10 +98,6 @@ module Admin
 
     def article_params
       params.require(:case_study_article).permit(:title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
-    end
-
-    def insight_params
-      params.require(:case_study_insight).permit(:title, :description)
     end
   end
 end

@@ -3,8 +3,8 @@
     <h1 class="text-3xl font-bold text-gray-900">Editing article</h1>
   </div>
 </header>
-<main>
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-gray-100">
+<main class="bg-gray-100">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <%= render "form", article: @article, url: admin_article_path(@article) %>
   </div>
 </main>
