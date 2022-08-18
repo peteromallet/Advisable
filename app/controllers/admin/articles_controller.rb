@@ -78,6 +78,12 @@ module Admin
       render partial: "skills", locals: {article: @article}
     end
 
+    def make_skill_primary
+      @article.skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+      @article.skills.find(params[:skill_id]).update(primary: true)
+      render partial: "skills", locals: {article: @article}
+    end
+
     def create
       @article = CaseStudy::Article.new(article_params)
 

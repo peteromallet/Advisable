@@ -9,7 +9,7 @@
         <div class="col-span-6">
           <turbo-frame id="<%= dom_id(article, "industries") %>">
             <div class="space-y-3">
-              <% article.industries.each do |industry| %>
+              <% article.industries.order(:id).each do |industry| %>
                 <%= render "admin/articles/industry", industry: industry %>
               <% end %>
             </div>

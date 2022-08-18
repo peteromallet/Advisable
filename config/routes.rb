@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         delete :remove_industry
         post :add_skill
         delete :remove_skill
+        get :make_skill_primary
       end
     end
     resources :topics, except: [:show] do
