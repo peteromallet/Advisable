@@ -51,6 +51,8 @@ Rails.application.routes.draw do
         delete :remove_insight
         post :add_industry
         delete :remove_industry
+        post :add_skill
+        delete :remove_skill
       end
     end
     resources :topics, except: [:show] do

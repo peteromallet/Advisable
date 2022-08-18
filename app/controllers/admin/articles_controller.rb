@@ -67,6 +67,17 @@ module Admin
       render partial: "industries", locals: {article: @article}
     end
 
+    def add_skill
+      skill_id = params.require(:case_study_skill).permit(:skill)[:skill]
+      @article.skills.create!(skill_id:) if skill_id.present? && !@article.skills.exists?(skill_id:)
+      render partial: "skills", locals: {article: @article}
+    end
+
+    def remove_skill
+      @article.skills.find(params[:skill_id]).destroy
+      render partial: "skills", locals: {article: @article}
+    end
+
     def create
       @article = CaseStudy::Article.new(article_params)
 

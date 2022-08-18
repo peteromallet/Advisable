@@ -1,0 +1,8 @@
+<div class="flex">
+  <div class="flex-grow">
+    <p class="text-gray-800"><%= skill.skill.name %></p>
+  </div>
+  <div>
+    <%= link_to "Delete", remove_skill_admin_article_path(skill.article, skill_id: skill.id), class: "inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+  </div>
+</div>
