@@ -53,8 +53,8 @@ function HeroSquare({ delay, src, ...props }) {
 
 export default function Hero() {
   return (
-    <div className="hero mb-4">
-      <div className="relative py-40 max-w-[1300px] mx-auto px-5 lg:px-10">
+    <div className="mb-4 hero">
+      <div className="relative py-40 px-5 mx-auto lg:px-10 max-w-[1300px]">
         <div className="hero-mask">
           <div className="hero-grid">
             <div>
@@ -93,23 +93,26 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <div className="z-10 relative max-w-[720px]">
+        <div className="relative z-10 max-w-[700px]">
           <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0, duration: 0.8 }}
-            className="font-serif text-6xl text-white font-bold tracking-[-0.02em] mb-6"
+            className="mb-6 font-serif text-6xl font-bold text-white tracking-[-0.02em]"
           >
-            Explore the world's best marketing projects
+            Discover the best of{" "}
+            <span className="font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+              SaaS Marketing
+            </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.05, duration: 1 }}
-            className="max-w-[600px] text-white text-xl leading-relaxed"
+            className="text-xl leading-relaxed text-white max-w-[600px]"
           >
-            Marketers showcase their best projects on Advisable - the home to
-            the world's best marketing and growth professionals.
+            Find out what's working for leading marketers and connect with them
+            for mentorship & fractional support
           </motion.p>
         </div>
       </div>

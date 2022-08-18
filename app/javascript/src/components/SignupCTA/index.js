@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Button from "../Button";
 import map from "./map.svg";
 import useInterval from "src/hooks/useInterval";
+import { Link } from "react-router-dom";
 
 function random(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -26,10 +27,10 @@ function Freelancer({ visible = false }) {
       initial={initial}
       animate={visible ? animate : initial}
       transition={{ type: "spring", stiffness: 120, damping: 20, mass: 0.5 }}
-      className="freelancer relative"
+      className="relative freelancer"
     >
       <motion.div
-        className="absolute inset-0 rounded-full border border-solid border-white"
+        className="absolute inset-0 rounded-full border border-white border-solid"
         initial="initial"
         animate={visible ? "animate" : "initial"}
         variants={{
@@ -75,32 +76,35 @@ function Map() {
   useInterval(updateFreelancers, 2000);
 
   return (
-    <div className="w-[720px] z-0 h-full absolute bottom-0 right-5 select-none">
+    <div className="absolute bottom-0 right-5 z-0 h-full select-none w-[720px]">
       {FREELANCER_MAP.map((index) => (
         <Freelancer key={index} visible={visibleFreelancers.includes(index)} />
       ))}
-      <img src={map} className="w-full h-full object-contain" />
+      <img src={map} className="object-contain w-full h-full" />
     </div>
   );
 }
 
 export default function SignupCTA() {
   return (
-    <div className="signupCTA relative mt-12 shadow-xl bg-blue900 px-16 py-20 rounded-xl">
-      <div className="z-10 relative">
-        <h1 className="font-serif text-white text-4xl font-semibold tracking-tight leading-tight max-w-[520px] mb-5">
-          Get full access to our network of marketing specialists
+    <div className="relative py-20 px-16 mt-12 rounded-xl shadow-xl signupCTA bg-blue900">
+      <div className="relative z-10">
+        <h1 className="mb-5 font-serif text-5xl font-semibold tracking-tight leading-tight text-white max-w-[520px]">
+          Explore 100s of case studies for free
         </h1>
-        <p className="text-white text-lg w-[460px] leading-relaxed mb-12 opacity-80">
-          Advisable is home to the world's best marketing and growth projects -
-          sign up to gain full access to all projects on Advisable and
-          collaborate with the experts behind them.
+        <p className="mb-12 text-lg leading-relaxed text-white opacity-80 w-[460px]">
+          Get free access to our full library of SaaS marketing case studies.
+          You only pay when you hire someone you discover through us!
         </p>
         <div className="flex gap-4">
-          <Button size="lg">Get full access now</Button>
-          <Button variant="whiteOutlined" size="lg">
-            Share your project
-          </Button>
+          <Link to="/clients/join">
+            <Button size="lg">Get full access</Button>
+          </Link>
+          <Link to="/freelancers/join">
+            <Button variant="whiteOutlined" size="lg">
+              Share your project
+            </Button>
+          </Link>
         </div>
       </div>
       <Map />
