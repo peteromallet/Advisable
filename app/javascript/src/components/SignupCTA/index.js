@@ -87,7 +87,7 @@ function Map() {
 
 export default function SignupCTA() {
   return (
-    <div className="relative py-20 px-16 mt-12 rounded-xl shadow-xl signupCTA bg-blue900">
+    <div className="relative py-20 px-16 mt-8 rounded-xl shadow-xl signupCTA bg-blue900">
       <div className="relative z-10">
         <h1 className="mb-5 font-serif text-5xl font-semibold tracking-tight leading-tight text-white max-w-[520px]">
           Explore 100s of case studies for free

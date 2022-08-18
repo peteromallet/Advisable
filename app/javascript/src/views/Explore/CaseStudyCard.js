@@ -5,6 +5,7 @@ import Avatar from "src/components/Avatar";
 import FavoriteButton from "./FavoriteButton";
 import composeStyles from "src/utilities/composeStyles";
 import ResultIcon from "src/components/ResultIcon";
+import useViewer from "src/hooks/useViewer";
 
 function Result({ category, callout, context }) {
   return (
@@ -51,6 +52,7 @@ function primarySkillForArticle(article) {
 }
 
 export default function CaseStudyCard({ article, delay }) {
+  const viewer = useViewer();
   const location = useLocation();
   const [tapping, setTapping] = useState(false);
   const resultsWithContent = (article.resultsContent?.results || []).filter(
@@ -135,9 +137,7 @@ export default function CaseStudyCard({ article, delay }) {
             />
             <span className="font-medium">{article.specialist.name}</span>
           </div>
-          <div>
-            <FavoriteButton article={article} size="sm" />
-          </div>
+          <div>{viewer && <FavoriteButton article={article} />}</div>
         </div>
       </motion.div>
     </motion.div>
