@@ -18,7 +18,7 @@ export default function Home() {
   }, [fetchMore, data]);
 
   return (
-    <div className="py-12">
+    <div className="pt-12">
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </div>
