@@ -23,7 +23,7 @@ class Message < ApplicationRecord
 
   before_validation :strip_content
 
-  validates :kind, inclusion: {in: KINDS}, allow_nil: true
+  validates :kind, inclusion: {in: KINDS}, allow_blank: true
 
   scope :with_content, -> { where.not(content: nil) }
   scope :interview_requests, -> { where(kind: "InterviewRequest") }

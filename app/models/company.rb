@@ -18,8 +18,8 @@ class Company < ApplicationRecord
   has_many :accounts, through: :users
   has_many :invoices, dependent: :destroy
 
-  validates :business_type, inclusion: {in: VALID_BUSINESS_TYPES}, allow_nil: true
-  validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
+  validates :business_type, inclusion: {in: VALID_BUSINESS_TYPES}, allow_blank: true
+  validates :kind, inclusion: {in: VALID_KINDS}, allow_blank: true
 
   attribute :address, AddressAttribute::Type.new
 

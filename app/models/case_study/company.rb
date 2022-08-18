@@ -13,6 +13,8 @@ module CaseStudy
     has_one_attached :favicon
     has_one_attached :logo
     resize logo: {resize_to_limit: [400, 400]}
+
+    validates :business_type, inclusion: {in: ::Company::VALID_BUSINESS_TYPES}, allow_blank: true
   end
 end
 

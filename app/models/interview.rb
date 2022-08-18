@@ -36,7 +36,7 @@ class Interview < ApplicationRecord
   before_save :set_kind, if: -> { kind.blank? }
 
   validates :status, inclusion: {in: VALID_STATUSES}
-  validates :kind, inclusion: {in: VALID_KINDS}, allow_nil: true
+  validates :kind, inclusion: {in: VALID_KINDS}, allow_blank: true
 
   def conversation
     Conversation.by_accounts(accounts)

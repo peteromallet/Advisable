@@ -28,9 +28,9 @@ class User < ApplicationRecord
   scope :accepted, -> { where(application_status: "Application Accepted") }
 
   validates :company, presence: {unless: :disabled?}
-  validates :rejection_reason, inclusion: {in: %w[cheap_talent not_hiring]}, allow_nil: true
-  validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_nil: true
-  validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_nil: true
+  validates :rejection_reason, inclusion: {in: %w[cheap_talent not_hiring]}, allow_blank: true
+  validates :talent_quality, inclusion: {in: TALENT_QUALITY_OPTIONS}, allow_blank: true
+  validates :number_of_freelancers, inclusion: {in: NUMBER_OF_FREELANCERS_OPTIONS}, allow_blank: true
 
   alias_attribute :application_status, :contact_status
 

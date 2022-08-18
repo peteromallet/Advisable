@@ -16,8 +16,8 @@ class Payment < ApplicationRecord
   before_create :set_admin_fee
 
   validates :amount, presence: true
-  validates :status, inclusion: {in: VALID_STATUSES}, allow_nil: true
-  validates :payment_method, inclusion: {in: VALID_PAYMENT_METHODS}, allow_nil: true
+  validates :status, inclusion: {in: VALID_STATUSES}, allow_blank: true
+  validates :payment_method, inclusion: {in: VALID_PAYMENT_METHODS}, allow_blank: true
 
   scope :with_status, ->(status) { where(status:) }
 
