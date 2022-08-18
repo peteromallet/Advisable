@@ -3,7 +3,6 @@ import React, { useCallback } from "react";
 import EndlessScroll from "./EndlessScroll";
 import { useHome } from "./queries";
 import CaseStudyGrid from "./CaseStudyGrid";
-import ExploreViewHeading from "./ExploreViewHeading";
 
 export default function Home() {
   const { loading, data, fetchMore } = useHome();
@@ -19,13 +18,9 @@ export default function Home() {
   }, [fetchMore, data]);
 
   return (
-    <>
-      <ExploreViewHeading
-        title="Featured projects"
-        description="The best of Advisable"
-      />
+    <div className="py-12">
       <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
-    </>
+    </div>
   );
 }
