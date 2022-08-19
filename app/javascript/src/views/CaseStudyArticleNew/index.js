@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import StickyBox from "react-sticky-box";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBackground, useModal } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
 import Loading from "src/components/Loading";
 import ErrorBoundary from "src/components/ErrorBoundary";
 import NotFound, { isNotFound } from "src/views/NotFound";
@@ -25,6 +26,7 @@ import SpecialistBar from "./components/SpecialistBar";
 
 export default function CaseStudyArticle() {
   useBackground("white");
+  const viewer = useViewer();
   const { data, loading, error } = useArticle();
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ export default function CaseStudyArticle() {
 
   const article = data?.caseStudy;
   const { specialist } = article;
+  const isOwner = viewer?.id === specialist.id;
 
   return (
     <ErrorBoundary>
@@ -61,8 +64,8 @@ export default function CaseStudyArticle() {
             data-testid="action-buttons-bar"
             className="inline-flex absolute top-3 right-3 z-10 gap-2 p-2 ml-auto bg-white rounded-full lg:flex-col-reverse"
           >
-            <EditCaseStudyButton article={data.caseStudy} />
             <ShareArticleButton slug={data.caseStudy.slug} />
+            <EditCaseStudyButton article={data.caseStudy} />
             <FavoriteButton article={data.caseStudy} />
             {backgroundLocation && (
               <CircularButton
@@ -80,6 +83,7 @@ export default function CaseStudyArticle() {
               <SpecialistSection
                 article={data.caseStudy}
                 modal={contactModal}
+                isOwner={isOwner}
               />
             </StickyBox>
           </div>
@@ -90,6 +94,7 @@ export default function CaseStudyArticle() {
               <SpecialistBar
                 modal={contactModal}
                 specialist={data.caseStudy.specialist}
+                isOwner={isOwner}
               />
               <h1 className="mb-4 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[680px]">
                 {data.caseStudy.title}

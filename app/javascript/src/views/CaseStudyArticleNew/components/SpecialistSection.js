@@ -50,7 +50,7 @@ const COLLABORATION_TYPES = {
   mentorship: "Mentoring",
 };
 
-export default function SpecialistSection({ article, modal }) {
+export default function SpecialistSection({ article, modal, isOwner }) {
   const { specialist } = article;
   const { name, location, bio, priceRange, collaborationTypes } = specialist;
   const date = DateTime.fromISO(specialist.createdAt).toFormat("MMMM dd, yyyy");
@@ -134,7 +134,7 @@ export default function SpecialistSection({ article, modal }) {
         </div> */}
       </div>
 
-      {!specialist.unavailableUntil && (
+      {!specialist.unavailableUntil && !isOwner && (
         <div className="mt-8">
           <DialogDisclosure {...modal}>
             {(disclosure) => (
