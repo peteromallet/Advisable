@@ -1,6 +1,7 @@
 import React from "react";
 import { useApolloClient } from "@apollo/client";
 import { useFavoriteArticle, useUnfavoriteArticle } from "./queries";
+import useViewer from "src/hooks/useViewer";
 import HeartIcon from "src/icons/duo/heart";
 import composeStyles from "src/utilities/composeStyles";
 import { useNotifications } from "src/components/Notifications";
@@ -25,11 +26,14 @@ const buttonClasses = composeStyles({
 });
 
 function FavoriteButton({ article, size }) {
+  const viewer = useViewer();
   const client = useApolloClient();
   const { notify } = useNotifications();
   const [favorite] = useFavoriteArticle(article);
   const [unfavorite] = useUnfavoriteArticle(article);
   const { isFavorited } = article;
+
+  if (viewer.__typename === "Specialist") return null;
 
   const handleClick = async () => {
     client.cache.modify({
