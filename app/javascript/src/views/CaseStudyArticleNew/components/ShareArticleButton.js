@@ -68,7 +68,7 @@ function ShareArticleButton({ slug, className, size }) {
             initial={{ y: -10 }}
             animate={{ y: 0 }}
             exit={{ y: 20, opacity: 0 }}
-            className="absolute -bottom-8 bg-blue100 rounded-xs shadow px-2 py-2"
+            className="absolute z-10 -bottom-8 bg-blue100 rounded-xs shadow px-2 py-2"
           >
             <div className="text-blue900 text-xs leading-none whitespace-nowrap opacity-80">
               Link copied!
