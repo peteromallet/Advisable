@@ -1,0 +1,52 @@
+.grid-lines {
+  --grid-size: 24px;
+  --grid-area: 200%;
+  --grid-color: white;
+  --grid-area: calc(var(--grid-size) * 100);
+
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  position: absolute;
+
+  width: var(--grid-area);
+  height: var(--grid-area);
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  background-position: -2px -2px, -2px -2px;
+}
+
+.grid-lines-content {
+  transform: translate3d(0px, 0px, 0px); /* translate3d is for Safari */
+}
+
+.grid-line-highlight[data-direction="up"] {
+  --left: calc(var(--grid-size) * var(--offset));
+  left: calc((var(--grid-area) / 2) + var(--left) - 2px);
+  top: 0;
+  position: absolute;
+  width: 1px;
+  height: 100px;
+  background: linear-gradient(
+    var(--grid-highlight-start) 0%,
+    var(--grid-highlight-end) 100%
+  );
+}
+
+.grid-line-highlight[data-direction="down"] {
+  --top: calc(var(--grid-size) * var(--offset));
+  top: calc((var(--grid-area) / 2) + var(--top) - 2px);
+  left: 0;
+  position: absolute;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--grid-highlight-end) 0%,
+    var(--grid-highlight-start) 100%
+  );
+}

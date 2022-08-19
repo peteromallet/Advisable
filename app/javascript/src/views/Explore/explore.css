@@ -1,56 +1,7 @@
 .hero {
   overflow: hidden;
   position: relative;
-  background: linear-gradient(100deg, #010033 13.67%, #1a003c 80.63%);
-  background: linear-gradient(97.81deg, #deddff 13.67%, #e0ccf9 80.63%);
-  background: linear-gradient(97.81deg, #cbcbed 13.67%, #d4c1ec 80.63%);
   background: linear-gradient(97.81deg, #e5e5f5 13.67%, #e8dff5 80.63%);
-}
-
-.hero-grid {
-  --grid-size: 24px;
-  --grid-area: 200%;
-  --grid-color: #e4cfff;
-  --grid-area: calc(var(--grid-size) * 100);
-
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  position: absolute;
-
-  width: var(--grid-area);
-  height: var(--grid-area);
-  position: absolute;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size),
-    var(--grid-size) var(--grid-size);
-  background-position: -2px -2px, -2px -2px;
-}
-
-.grid-line-highlight[data-direction="up"] {
-  --left: calc(var(--grid-size) * var(--offset));
-  left: calc((var(--grid-area) / 2) + var(--left) - 2px);
-  top: 0;
-  position: absolute;
-  width: 1px;
-  height: 100px;
-  background: linear-gradient(#bea1fb 0%, #bea1fb00 100%);
-}
-
-.grid-line-highlight[data-direction="down"] {
-  --top: calc(var(--grid-size) * var(--offset));
-  top: calc((var(--grid-area) / 2) + var(--top) - 2px);
-  left: 0;
-  position: absolute;
-  width: 100px;
-  height: 1px;
-  background: linear-gradient(90deg, #bea1fb00 0%, #bea1fb 100%);
-}
-
-.hero-squares {
-  transform: translate3d(0px, 0px, 0px); /* translate3d is for Safari */
 }
 
 .hero-square {

@@ -51,7 +51,7 @@ function primarySkillForArticle(article) {
   return primarySkill.skill;
 }
 
-export default function CaseStudyCard({ article, delay }) {
+export default function CaseStudyCard({ article, delay, allowPublicAccess }) {
   const viewer = useViewer();
   const location = useLocation();
   const [tapping, setTapping] = useState(false);
@@ -101,6 +101,7 @@ export default function CaseStudyCard({ article, delay }) {
         <Link
           to={article.path}
           state={{
+            limitedView: !viewer && !allowPublicAccess,
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
           onMouseDown={() => setTapping(true)}
