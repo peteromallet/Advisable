@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index] do
       get :finance, on: :collection
     end
-    resources :articles do
+    resources :articles, except: [:show] do
       collection do
         get :search
       end

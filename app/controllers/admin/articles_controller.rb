@@ -38,8 +38,6 @@ module Admin
       @results = @results.sort_by { |r| r[:similarity] }.reverse
     end
 
-    def show; end
-
     def new
       @article = CaseStudy::Article.new
     end
@@ -86,9 +84,10 @@ module Admin
 
     def create
       @article = CaseStudy::Article.new(article_params)
+      @article.build_company
 
       if @article.save
-        redirect_to admin_article_path(@article), notice: "Article was successfully created."
+        redirect_to edit_admin_article_path(@article), notice: "Article was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -114,7 +113,7 @@ module Admin
     end
 
     def article_params
-      params.require(:case_study_article).permit(:title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
+      params.require(:case_study_article).permit(:title, :subtitle, :score, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
     end
   end
 end

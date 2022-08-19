@@ -1,20 +1,28 @@
 <div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
   <div class="md:grid md:grid-cols-3 md:gap-6">
-    <% if article.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
-        <ul>
-          <% article.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
     <div class="md:col-span-1">
       <h3 class="text-lg font-medium leading-6 text-gray-900">Basic</h3>
     </div>
     <div class="mt-5 md:mt-0 md:col-span-2">
       <div class="grid grid-cols-6 gap-6">
+        <% if article.errors.any? %>
+          <div class="col-span-6">
+            <div class="text-red-600">
+              <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
+              <ul>
+                <% article.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-span-6">
+        </div>
+        <div class="col-span-6">
+          <%= form.label :specialist_id, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.select :specialist_id, options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+        </div>
         <div class="col-span-6">
           <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
           <%= form.text_field :title, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
@@ -25,7 +33,7 @@
             <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
           </div>
         </div>
-        <div class="col-span-6 sm:col-span-4">
+        <div class="col-span-6">
           <fieldset>
             <legend class="text-base font-medium text-gray-900">Configuration</legend>
             <div class="mt-4 space-y-4">
@@ -49,6 +57,10 @@
               </div>
             </div>
           </fieldset>
+        </div>
+        <div class="col-span-2">
+          <%= form.label :score, class: "block text-sm font-medium text-gray-700" %>
+          <%= form.number_field :score, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
         </div>
       </div>
     </div>
