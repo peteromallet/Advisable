@@ -1,0 +1,18 @@
+<span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800">Results</span>
+<% content.content["results"].each do |result| %>
+  <% if result.is_a?(Hash) %>
+    <div class="block mt-2">
+      <p class="text-l font-semibold text-gray-900">
+        <%= result["callout"] %>
+        <% if result["category"].present? %>
+          <span class="text-gray-500 px-2 py-0.5 rounded-full text-sm font-medium bg-gray-100"><%= result["category"] %></span>
+        <% end%>
+      </p>
+      <p class="mt-1 text-base text-gray-500"><%= result["context"] %></p>
+    </div>
+  <% else %>
+    <p class="mt-2 text-base text-gray-500">
+      <%= result %>
+    </p>
+  <% end %>
+<% end %>
