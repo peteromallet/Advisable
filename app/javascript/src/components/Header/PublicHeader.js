@@ -9,18 +9,18 @@ export default function PublicHeader() {
   return (
     <>
       <StyledHeader>
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center px-5 mx-auto w-full lg:px-10 max-w-[1300px]">
           <div className="flex items-center">
             <a href="/">
               <Logo height={20} />
             </a>
-            <NavigationLink to="https://more.advisable.com/freelancers">
-              Hiring
+            <NavigationLink to="https://advisable.com/testing/freelancers">
+              Get Featured
             </NavigationLink>
-            <NavigationLink to="https://more.advisable.com/freelancers">
-              For freelancers
+            <NavigationLink to="https://advisable.com/testing/clients">
+              Recruit Talent
             </NavigationLink>
-            <NavigationLink to="https://more.advisable.com/pricing">
+            <NavigationLink to="https://advisable.com/testing/pricing">
               Pricing
             </NavigationLink>
           </div>
