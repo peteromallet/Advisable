@@ -5,14 +5,17 @@ function randomBetween(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
 
-export default function GridHighlight({ offset, direction = "down" }) {
+export default function GridHighlight({
+  id,
+  offset,
+  onComplete,
+  direction = "down",
+}) {
   const transition = useMemo(() => {
     return {
-      delay: randomBetween(0, 8),
+      delay: randomBetween(0, 3),
       duration: randomBetween(4, 8),
       ease: "linear",
-      repeat: Infinity,
-      repeatDelay: randomBetween(4, 10),
     };
   }, []);
 
@@ -29,6 +32,7 @@ export default function GridHighlight({ offset, direction = "down" }) {
       }}
       transition={transition}
       style={{ "--offset": offset }}
+      onAnimationComplete={() => onComplete(id)}
     />
   );
 }

@@ -1,5 +1,6 @@
 .grid-lines {
-  --grid-size: 24px;
+  --size: 24;
+  --grid-size: calc(var(--size) * 1px);
   --grid-area: 200%;
   --grid-color: white;
   --grid-area: calc(var(--grid-size) * 100);
