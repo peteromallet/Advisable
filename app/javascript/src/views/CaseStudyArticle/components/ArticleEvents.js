@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useEffect, useLayoutEffect } from "react";
 import { trackEvent } from "src/utilities/segment";
 
@@ -42,11 +42,11 @@ export default function ArticleEvents({ article }) {
 
   // Track window focus so that we pause the timer when the user switches tabs.
   useEffect(() => {
-    const handleFocus = (e) => {
+    const handleFocus = () => {
       setFocused(true);
     };
 
-    const handleBlur = (e) => {
+    const handleBlur = () => {
       clearInterval(timer.current);
       setFocused(false);
     };
@@ -69,7 +69,7 @@ export default function ArticleEvents({ article }) {
       });
     }
 
-    function handleUnload(e) {
+    function handleUnload() {
       trackLeftEvent();
     }
 

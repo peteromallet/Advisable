@@ -1,4 +1,4 @@
-#import 'src/views/CaseStudyArticleNew/queries/heroFields.gql'
+#import 'src/views/CaseStudyArticle/queries/heroFields.gql'
 
 fragment ArticleFields on CaseStudyArticle {
   id
