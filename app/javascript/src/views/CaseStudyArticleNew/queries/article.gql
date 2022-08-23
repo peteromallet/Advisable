@@ -32,13 +32,6 @@ query Article($slug: ID!) {
     }
     similar {
       ...ArticleFields
-      industries {
-        id
-        industry {
-          id
-          name
-        }
-      }
     }
     review {
       id
