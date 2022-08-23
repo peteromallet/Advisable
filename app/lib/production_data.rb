@@ -12,8 +12,6 @@ class ProductionData
   TABLE_NAMES = CLASSES.map(&:table_name).freeze
 
   def create_file!
-    raise "Ensure insights and new results data is in production before removing"
-
     destroy_local_data
     FixturesData.new.seed!
     download_data_from_production
