@@ -24,6 +24,7 @@ module Toby
       attribute :mentorship, Attributes::Boolean
       attribute :sourcing_fee, Attributes::Integer
       attribute :country, Attributes::BelongsTo
+      attribute :vat_number, Attributes::String
       attribute :iban, Attributes::String
       attribute :bank_currency, Attributes::String
       attribute :created_at, Attributes::DateTime, readonly: true
