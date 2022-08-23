@@ -7,8 +7,16 @@ module Types
       description "Type definition for CaseStudy::Industry"
 
       field :id, ID, null: false, method: :uid
+
       field :article, Article, null: false
+      def article
+        dataloader.with(::ActiveRecordSource, ::CaseStudy::Article).load(object.article_id)
+      end
+
       field :industry, Types::IndustryType, null: false
+      def industry
+        dataloader.with(::ActiveRecordSource, ::Industry).load(object.industry_id)
+      end
     end
   end
 end

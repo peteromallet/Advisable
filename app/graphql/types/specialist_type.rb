@@ -3,7 +3,6 @@
 module Types
   class SpecialistType < Types::BaseType
     include ActionView::Helpers::DateHelper
-    delegate :account, to: :object
 
     implements Types::ViewerInterface
 
@@ -145,21 +144,12 @@ module Types
       object.articles.active.published.size
     end
 
-    # TODO: AccountMigration - Rename for consistency
-    field :has_account, Boolean, null: false do
-      description "Whether or not the specialist has created their account yet"
-    end
-    def has_account
-      account.has_password?
-    end
-
     field :completed_tutorials, [String], null: false do
       authorize :specialist?, :admin?
     end
     delegate :completed_tutorials, to: :account
 
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true do
-      authorize :specialist?, :admin?
       description "The timestamp for when the specialist record was created"
     end
 

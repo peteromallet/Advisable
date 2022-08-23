@@ -17,7 +17,7 @@ RSpec.describe "Talk with specialist button", type: :system do
   it "allows client to request a call" do
     authenticate_as(user)
     visit("/articles/#{article.slug}")
-    click_button("Talk with specialist")
+    click_button("Contact")
     expect(page).to have_content("Connect with #{article.specialist.first_name} to discuss your project and collaborate together.")
     find("*[aria-label=\"Request call\"]").click
     expect(page).to have_content("Request a call with #{article.specialist.first_name}")
@@ -39,7 +39,7 @@ RSpec.describe "Talk with specialist button", type: :system do
   it "allows client to send a message" do
     authenticate_as(user)
     visit("/articles/#{article.slug}")
-    click_button("Talk with specialist")
+    click_button("Contact")
     expect(page).to have_content("Connect with #{article.specialist.first_name} to discuss your project and collaborate together.")
     find("*[aria-label=\"Message\"]").click
     expect(page).to have_content("Connect with #{article.specialist.first_name} by sending them a message.")
@@ -52,7 +52,7 @@ RSpec.describe "Talk with specialist button", type: :system do
   it "allows specialist to send a message" do
     authenticate_as(specialist)
     visit("/articles/#{article.slug}")
-    click_button("Talk with specialist")
+    click_button("Contact")
     expect(page).to have_content("Message #{article.specialist.first_name}")
     fill_in("message", with: "I wanna hire you")
     click_button("Send message")
@@ -62,7 +62,7 @@ RSpec.describe "Talk with specialist button", type: :system do
 
   it "allows non authenticated user to sign up as a client and request a call" do
     visit("/articles/#{article.slug}")
-    click_button("Talk with specialist")
+    click_button("Contact")
     expect(page).to have_content("Connect with #{article.specialist.first_name} and thousands of other specialists")
     find("*[aria-label=\"Signup as a company\"]").click
     fill_in("firstName", with: "John")
@@ -90,7 +90,7 @@ RSpec.describe "Talk with specialist button", type: :system do
 
   it "allows non authenticated user to sign up as a specialist and send a message" do
     visit("/articles/#{article.slug}")
-    click_button("Talk with specialist")
+    click_button("Contact")
     expect(page).to have_content("Connect with #{article.specialist.first_name} and thousands of other specialists")
     find("*[aria-label=\"Signup as a freelancer\"]").click
     fill_in("firstName", with: "John")

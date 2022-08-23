@@ -7,7 +7,7 @@ import { StyledNav, NavItem } from "./styles";
 const ClientNavigation = ({ closeNav, isMobile }) => {
   return (
     <StyledNav>
-      <NavigationLink onClick={closeNav} to="/explore">
+      <NavigationLink onClick={closeNav} to="/">
         Discover
       </NavigationLink>
       <NavigationLink onClick={closeNav} to="/payment_requests">

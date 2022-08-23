@@ -1,7 +1,8 @@
 import React from "react";
-import * as Sentry from "@sentry/react";
 import { useImage } from "react-image";
-import { Link, Box, Text } from "@advisable/donut";
+import * as Sentry from "@sentry/react";
+import { Link, useLocation } from "react-router-dom";
+import { Box, Text } from "@advisable/donut";
 import { StyledLineClamp } from "@guild/views/Events/styles";
 import styled from "styled-components";
 import css from "@styled-system/css";
@@ -39,9 +40,17 @@ function Avatar({ avatar }) {
 }
 
 export default function Project({ caseStudy }) {
+  const location = useLocation();
+
   return (
     <Sentry.ErrorBoundary>
-      <Card as={Link} to={caseStudy.path}>
+      <Card
+        as={Link}
+        to={caseStudy.path}
+        state={{
+          backgroundLocation: location?.state?.backgroundLocation || location,
+        }}
+      >
         <Box display="flex" css={css({ columnGap: 4 })}>
           <Box
             position="relative"

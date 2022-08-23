@@ -3,6 +3,7 @@ import React from "react";
 function SliderIcon({
   stroke = "rgb(0 0 0)",
   fill = "rgb(0 0 0 / 24)",
+  bg = "#fff",
   ...props
 }) {
   return (
@@ -26,7 +27,7 @@ function SliderIcon({
         d="M6.857 7.714H12M17.143 16.286H12"
       ></path>
       <path
-        fill="#fff"
+        fill={bg}
         stroke={stroke}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -38,4 +39,3 @@ function SliderIcon({
 }
 
 export default SliderIcon;
-

@@ -9,14 +9,18 @@ module Types
       field :id, ID, null: false, method: :uid
       field :name, String, null: false
       field :website, String, null: true
-      field :logo, String, null: true, method: :resized_logo_url
       field :business_type, String, null: true
       field :description, String, null: true
       field :articles, [Article], null: false
 
+      field :logo, String, null: true
+      def logo
+        Rails.cache.fetch("cs_company_logo_#{object.id}", expires_in: 1.day) { object.resized_logo_url }
+      end
+
       field :favicon, String, null: true
       def favicon
-        object.favicon.url || clearbit_logo
+        Rails.cache.fetch("cs_company_favicon_#{object.id}", expires_in: 1.day) { object.favicon.url || clearbit_logo }
       end
 
       private

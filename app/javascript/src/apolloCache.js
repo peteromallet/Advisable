@@ -50,6 +50,9 @@ const createCache = () => {
           paymentRequests: relayStylePagination(),
           labelPosts: relayStylePagination(),
           savedArticles: relayStylePagination(),
+          interests: {
+            merge: replaceArrayMerge,
+          },
           followedLabels: {
             merge: replaceArrayMerge,
           },
@@ -61,9 +64,55 @@ const createCache = () => {
               id: args.id,
             });
           },
+          topic: {
+            read(existing, { args, toReference, readField, cache }) {
+              const topic = Object.values(cache.data.data).find((record) => {
+                return (
+                  record.__typename === "CaseStudyTopic" &&
+                  record.slug === args.slug
+                );
+              });
+
+              const reference = toReference({
+                id: topic?.id,
+                __typename: "CaseStudyTopic",
+              });
+
+              const referenceData =
+                reference && readField("id", reference) ? reference : undefined;
+              return existing || referenceData;
+            },
+          },
+          caseStudy: {
+            read(_, { args, toReference, cache }) {
+              const article = Object.values(cache.data.data).find((record) => {
+                return (
+                  record.__typename === "CaseStudyArticle" &&
+                  (record.slug === args.id || record.id === args.id)
+                );
+              });
+
+              if (article) {
+                return toReference({
+                  id: article.id,
+                  __typename: "CaseStudyArticle",
+                });
+              }
+            },
+          },
+        },
+      },
+      CaseStudyTopic: {
+        fields: {
+          articles: relayStylePagination(),
         },
       },
       CaseStudyInterest: {
+        fields: {
+          articles: relayStylePagination(),
+        },
+      },
+      CaseStudyInterestPreview: {
         fields: {
           articles: relayStylePagination(),
         },
@@ -98,11 +147,6 @@ const createCache = () => {
           },
         },
       },
-      // CaseStudySearch: {
-      //   fields: {
-
-      //   }
-      // },
       Project: {
         fields: {
           deposit: {

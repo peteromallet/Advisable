@@ -8,4 +8,30 @@
   .h-viewport {
     height: calc(100vh - var(--header-height));
   }
+
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .icon-duo-neutral {
+    --stroke: theme("colors.neutral.800");
+    --fill: theme("colors.neutral.100");
+  }
+
+  .icon-solid-red {
+    --stroke: theme("colors.red.700");
+    --fill: theme("colors.red.200");
+  }
+
+  .sentence-case:first-letter {
+    text-transform: uppercase;
+  }
+
+  .fade-to-white {
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0) 0%,
+      rgb(255 255 255) 100%
+    );
+  }
 }

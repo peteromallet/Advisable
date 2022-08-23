@@ -29,7 +29,7 @@ module Types
 
       field :skills, [Skill], null: true
       def skills
-        object.skills.order(created_at: :asc)
+        dataloader.with(::ActiveRecordAssociationSource, :skills).load(object)
       end
 
       field :primary_skill, Types::Skill, null: true, deprecation_reason: "For performance reasons use `skills` instead and filter on the frontend"
@@ -45,6 +45,9 @@ module Types
 
       field :slug, String, null: true
       field :industries, [Industry], null: true
+      def industries
+        dataloader.with(::ActiveRecordAssociationSource, :industries).load(object)
+      end
       field :title, String, null: true
       field :subtitle, String, null: true
       field :excerpt, String, null: true
@@ -75,10 +78,13 @@ module Types
 
       field :results_content, Types::CaseStudy::ResultsContent, null: true
       def results_content
-        object.contents.find_by(type: "CaseStudy::ResultsContent")
+        dataloader.with(::ActiveRecordAssociationSource, :contents, ::CaseStudy::Content.where(type: "CaseStudy::ResultsContent")).load(object).first
       end
 
       field :insights, [Types::CaseStudy::Insight], null: true
+      def insights
+        dataloader.with(::ActiveRecordAssociationSource, :insights).load(object)
+      end
     end
   end
 end

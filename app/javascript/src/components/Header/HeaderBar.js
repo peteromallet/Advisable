@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import composeStyles from "src/utilities/composeStyles";
 
 const headerClasses = composeStyles({
@@ -20,7 +21,9 @@ const headerClasses = composeStyles({
 export default function HeaderBar({ children, className }) {
   return (
     <>
-      <header className={headerClasses({ className })}>{children}</header>
+      <motion.header layoutScroll className={headerClasses({ className })}>
+        {children}
+      </motion.header>
       <div className="h-[var(--header-height)]" />
     </>
   );

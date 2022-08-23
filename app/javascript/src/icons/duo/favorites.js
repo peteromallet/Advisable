@@ -25,4 +25,3 @@ function HeartIcon({
 }
 
 export default HeartIcon;
-

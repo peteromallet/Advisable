@@ -1,0 +1,9 @@
+query Topics {
+  topics {
+    id
+    slug
+    icon
+    name
+    description
+  }
+}

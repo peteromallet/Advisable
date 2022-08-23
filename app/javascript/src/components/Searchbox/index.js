@@ -4,18 +4,16 @@ import { ArrowSmRight, Search } from "@styled-icons/heroicons-solid";
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
+import { useBreakpoint } from "@advisable/donut";
 
 const iconClasses = composeStyles({
   base: `
-    w-5
-    h-5
+    w-4
+    h-4
     ml-3 
     shrink-0
-    text-neutral-400
+    text-neutral-700
   `,
-  variants: {
-    focused: `!text-blue900`,
-  },
 });
 
 const searchBoxClasses = composeStyles({
@@ -75,6 +73,7 @@ export default function Searchbox({ className, ...props }) {
   const inputRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
+  const isMedium = useBreakpoint("mUp");
   const [focused, setFocused] = useState(false);
 
   const query = useMemo(() => {
@@ -101,7 +100,7 @@ export default function Searchbox({ className, ...props }) {
     if (value) {
       inputRef.current.blur();
       window.scrollTo(0, 0);
-      navigate(`/explore/search?q=${value}`);
+      navigate(`/search?q=${value}`);
     }
   };
 
@@ -110,9 +109,8 @@ export default function Searchbox({ className, ...props }) {
       onClick={handleClick}
       onSubmit={handleSubmit}
       className={searchBoxClasses({ className, focused })}
-      initial={{ width: focused ? "100%" : "70%" }}
-      animate={{ width: focused ? "100%" : "70%" }}
-      // transition={{ duration: 0.3 }}
+      initial={{ width: !isMedium || focused ? "100%" : "70%" }}
+      animate={{ width: !isMedium || focused ? "100%" : "70%" }}
     >
       <Search className={iconClasses({ focused })} />
       <input
@@ -123,7 +121,7 @@ export default function Searchbox({ className, ...props }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder="Search projects..."
-        className="outline-none w-full bg-transparent placeholder:text-neutral-400"
+        className="w-full bg-transparent outline-none placeholder:text-neutral-400 text-lg"
         {...props}
       />
       <button className={buttonClasses({ focused })}>

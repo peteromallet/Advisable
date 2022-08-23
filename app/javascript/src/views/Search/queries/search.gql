@@ -1,0 +1,19 @@
+#import "../../Explore/queries/articleFields.gql"
+
+query InterestPreview($term: String!, $cursor: String) {
+  search(term: $term) {
+    id
+    term
+    articles(first: 15, after: $cursor) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

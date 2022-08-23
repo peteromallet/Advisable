@@ -318,7 +318,6 @@ module Types
 
     field :topics, [Types::CaseStudy::Topic], null: true
     def topics
-      requires_client!
       Rails.cache.fetch("topics", expires_in: 1.day) do
         ::CaseStudy::Topic.visible.by_position
       end
@@ -328,7 +327,6 @@ module Types
       argument :slug, String, required: true
     end
     def topic(slug:)
-      requires_client!
       Rails.cache.fetch("topic_#{slug}", expires_in: 1.day) do
         ::CaseStudy::Topic.find_by!(slug:)
       end

@@ -1,0 +1,24 @@
+#import 'src/views/CaseStudyArticleNew/queries/heroFields.gql'
+
+fragment ArticleFields on CaseStudyArticle {
+  id
+  ...HeroFields
+  path
+  isFavorited
+  skills {
+    id
+    primary
+    skill {
+      id
+      name
+      color
+    }
+  }
+  industries {
+    id
+    industry {
+      id
+      name
+    }
+  }
+}
