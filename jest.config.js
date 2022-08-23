@@ -11,7 +11,7 @@ module.exports = {
     "app/javascript/src/testHelpers",
   ],
   transformIgnorePatterns: [
-    "<rootDir>/node_modules/(?!lodash-es|react-sticky-box)",
+    "<rootDir>/node_modules/(?!lodash-es|react-sticky-box|nanoid)",
   ],
   moduleNameMapper: {
     "@advisable/donut": "<rootDir>/donut/src",
