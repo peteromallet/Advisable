@@ -1,4 +1,5 @@
 #import "../../Explore/queries/articleFields.gql"
+#import "../../CaseStudyArticleNew/queries/heroFields.gql"
 
 query InterestPreview($term: String!, $cursor: String) {
   search(term: $term) {
@@ -11,6 +12,7 @@ query InterestPreview($term: String!, $cursor: String) {
       }
       edges {
         node {
+          ...HeroFields
           ...ArticleFields
         }
       }

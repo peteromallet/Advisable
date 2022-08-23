@@ -1,4 +1,5 @@
 #import "./articleFields.gql"
+#import "../../CaseStudyArticleNew/queries/heroFields.gql"
 
 query Feed($cursor: String) {
   interests {
@@ -18,6 +19,7 @@ query Feed($cursor: String) {
           term
         }
         article {
+          ...HeroFields
           ...ArticleFields
         }
       }

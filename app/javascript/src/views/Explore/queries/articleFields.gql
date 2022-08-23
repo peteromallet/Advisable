@@ -1,5 +1,3 @@
-#import "../../CaseStudyArticleNew/queries/heroFields.gql"
-
 fragment ArticleFields on CaseStudyArticle {
   id
   ...HeroFields
