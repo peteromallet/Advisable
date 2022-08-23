@@ -1,6 +1,0 @@
-query Interests {
-  interests {
-    id
-    term
-  }
-}
