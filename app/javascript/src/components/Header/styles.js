@@ -6,7 +6,7 @@ export const StyledHeader = styled.header`
   ${flexbox};
   top: 0;
   left: 0;
-  z-index: 20;
+  z-index: 30;
   width: 100%;
   height: var(--header-height);
   display: flex;

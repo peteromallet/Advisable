@@ -8,6 +8,7 @@ import heart from "./svg/heart.svg";
 import lightbulb from "./svg/lightbulb.svg";
 import { useTopics } from "./queries";
 import { ArrowSmLeft, ArrowSmRight } from "@styled-icons/heroicons-solid";
+import useViewer from "src/hooks/useViewer";
 
 const topicClasses = composeStyles({
   base: "topic",
@@ -57,7 +58,7 @@ function Topic({ to, name, icon, delay, ...props }) {
 }
 
 const topicsBarClasses = composeStyles({
-  base: "w-full py-6 topics-bar",
+  base: "w-full py-8 topics-bar",
   variants: {
     scrollLeft: "topics-bar--scroll-left",
     scrollRight: "topics-bar--scroll-right",
@@ -100,6 +101,7 @@ const ANIMATION_DELAY = 0.025;
 
 export default function TopicsBar() {
   const scrollRef = useRef();
+  const viewer = useViewer();
   const { data, loading } = useTopics();
   const [scrollLeft, setScrollLeft] = useState(false);
   const [scrollRight, setScrollRight] = useState(false);
@@ -170,25 +172,28 @@ export default function TopicsBar() {
             </motion.button>
           )}
         </AnimatePresence>
-        <div className="flex gap-8 sm:gap-10 lg:gap-12">
+        <div className="flex gap-8 sm:gap-10">
           {loading ? (
             [...Array(16)].map((_, i) => <TopicSkeleton key={i} />)
           ) : (
             <>
-              <Topic name={`Your\nFeed`} to="/" />
+              {!viewer && <Topic name={`Featured\nProjects`} to="/" />}
+              {viewer && <Topic name={`Your\nFeed`} to="/" />}
               <Topic
                 name={`Trending\nProjects`}
                 to="/trending"
                 icon={lightbulb}
                 delay={ANIMATION_DELAY}
               />
-              <Topic
-                aria-label="Your Favorites"
-                name={`Your\nFavorites`}
-                icon={heart}
-                to="/favorites"
-                delay={ANIMATION_DELAY * 2}
-              />
+              {viewer && (
+                <Topic
+                  aria-label="Your Favorites"
+                  name={`Your\nFavorites`}
+                  icon={heart}
+                  to="/favorites"
+                  delay={ANIMATION_DELAY * 2}
+                />
+              )}
               {topics.map((topic, i) => (
                 <Topic
                   key={topic.id}

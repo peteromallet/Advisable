@@ -23,6 +23,7 @@ const COMPLETE_TUTORIAL = gql`
 const useTutorial = (name, opts = {}) => {
   const viewer = useViewer();
   const [completeTutorial] = useMutation(COMPLETE_TUTORIAL);
+  if (!viewer) return { isComplete: true };
 
   const isComplete = viewer.completedTutorials.indexOf(name) > -1;
   const autoStart = opts.autoStart || false;

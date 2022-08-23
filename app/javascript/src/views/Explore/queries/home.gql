@@ -1,0 +1,20 @@
+#import "./articleFields.gql"
+
+query Home($cursor: String) {
+  topic(slug: "home") {
+    id
+    name
+    description
+    articles(after: $cursor, first: 15) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      edges {
+        node {
+          ...ArticleFields
+        }
+      }
+    }
+  }
+}

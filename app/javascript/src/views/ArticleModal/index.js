@@ -5,7 +5,7 @@ import CaseStudyArticleNew from "../CaseStudyArticleNew";
 
 const backdropClassName = `
   fixed
-  z-20
+  z-50
   inset-0
   pt-12
   bg-[rgba(0,0,0,.4)]
@@ -76,7 +76,7 @@ export default function ArticleModal() {
         transition={{ duration: 0.3 }}
         data-testid="articleModal"
       >
-        <div className="h-full overflow-y-scroll" id="article-scrollable-area">
+        <div className="overflow-y-scroll h-full" id="article-scrollable-area">
           <CaseStudyArticleNew />
         </div>
       </motion.div>

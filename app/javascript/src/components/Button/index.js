@@ -37,6 +37,13 @@ export const buttonStyles = composeStyles({
         hover:!border-blue600
         active:!border-blue800
       `,
+      whiteOutlined: `
+        border-2
+        text-white
+        border-[rgba(255,255,255,0.2)]
+        hover:!border-[rgba(255,255,255,0.3)]
+        active:!border-[rgba(255,255,255,0.4)]
+      `,
       subtle: `
         text-blue700
         bg-blue50

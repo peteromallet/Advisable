@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useSubscription } from "@apollo/client";
 import FEED from "./feed.gql";
+import HOME from "./home.gql";
 import TOPIC from "./topic.gql";
 import TOPICS from "./topics.gql";
 import TRENDING from "./trending.gql";
@@ -19,6 +20,10 @@ export function useFeed() {
     fetchPolicy: fetchPolicy || "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
+}
+
+export function useHome() {
+  return useQuery(HOME);
 }
 
 export function useTrending() {

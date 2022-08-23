@@ -1,0 +1,16 @@
+<% title = "Explore the worlds best marketing projects" %>
+<% description = "Marketers showcase their best projects on Advisable - the home to the world's best marketing and growth professionals." %>
+
+<% content_for :title, "Advisable" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="<%= title %>">
+
+  <meta property="og:site_name" content="Advisable" />
+  <meta property="og:title" content="<%= title %>" />
+  <meta property="og:description" content="<%= description %>" />
+
+  <meta name="twitter:site" content="AdvisableHQ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= title %>" />
+  <meta name="twitter:description" content="<%= description %>" />
+<% end %>

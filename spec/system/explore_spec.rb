@@ -20,13 +20,6 @@ RSpec.describe "Discover", type: :system do
     allow_any_instance_of(CaseStudy::TermData).to receive(:articles_for_interest).and_return([])
   end
 
-  context "when not authenticated" do
-    it "/explore redirects to the login page" do
-      visit "/"
-      expect(page).to have_content("Please sign in to your account")
-    end
-  end
-
   context "when logged in as specialist" do
     it "/ redirects to dashboard on / path" do
       authenticate_as(create(:specialist, application_stage: "Accepted"))
