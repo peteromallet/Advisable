@@ -13,19 +13,19 @@ const FreelancerNavigation = ({ closeNav, isMobile }) => {
       <NavigationLink onClick={closeNav} to="/payment_requests">
         Payments
       </NavigationLink>
-      <NavigationLink
-        prefix={<MessageCount />}
-        onClick={closeNav}
-        to="/messages"
-      >
-        Messages
-      </NavigationLink>
       <NavigationLink onClick={closeNav} to="/profile">
         Profile
       </NavigationLink>
 
       {isMobile && (
         <>
+          <NavigationLink
+            prefix={<MessageCount />}
+            onClick={closeNav}
+            to="/messages"
+          >
+            Messages
+          </NavigationLink>
           <NavItem as="a" href="/settings">
             Settings
           </NavItem>
