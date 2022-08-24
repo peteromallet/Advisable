@@ -4,7 +4,7 @@ require "matrix"
 
 module Admin
   class ArticlesController < AdminController
-    before_action :set_article, except: %i[index search new create]
+    before_action :set_article, except: %i[index search new create move_content]
 
     include Pagy::Backend
 
@@ -104,6 +104,11 @@ module Admin
     def destroy
       @article.destroy
       redirect_to admin_articles_path, notice: "Article was successfully destroyed.", status: :see_other
+    end
+
+    def move_content
+      CaseStudy::Content.find(params[:id]).move_to!(params[:position].to_i)
+      head :ok
     end
 
     private
