@@ -5,7 +5,7 @@ import renderLineBreaks from "src/utilities/renderLineBreaks";
 export default function CaseStudyParagraph({ text, ...props }) {
   return (
     <p
-      className="font-[350] text-xl text-neutral900 leading-8 pt-px pb-[3px] mb-9"
+      className="pt-px mb-9 text-lg leading-8 font-[350] text-neutral900 pb-[3px]"
       {...props}
     >
       <Linkify
