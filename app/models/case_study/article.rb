@@ -64,7 +64,7 @@ module CaseStudy
       "/articles/#{slug_or_uid}"
     end
 
-    def similar(limit: 3, exclude_specialist: nil)
+    def similar(limit: 4, exclude_specialist: nil)
       similar_ids = Rails.cache.fetch("case_study_article_similar_#{id}", expires_in: 1.day) do
         Embedding.ordered_articles_for(embedding.vector).pluck(:article_id).reject { |article_id| id == article_id }
       end
