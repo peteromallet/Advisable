@@ -54,7 +54,11 @@ Rails.application.routes.draw do
         post :add_skill
         delete :remove_skill
         get :make_skill_primary
-        patch :move_content
+      end
+    end
+    resources :contents, only: %i[edit update] do
+      member do
+        patch :move
       end
     end
     resources :topics, except: [:show] do
