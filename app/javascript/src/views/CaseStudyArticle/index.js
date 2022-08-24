@@ -79,7 +79,10 @@ export default function CaseStudyArticle() {
 
         <div className="flex relative px-6 pb-0 mx-auto w-full lg:px-10 xl:px-14 xl:max-w-[1320px]">
           <div className="hidden pt-12 pr-12 lg:block xl:pr-16 shrink-0 w-[280px] xl:w-[320px]">
-            <StickyBox offsetTop={60} offsetBottom={60}>
+            <StickyBox
+              offsetTop={backgroundLocation ? 60 : 116}
+              offsetBottom={60}
+            >
               <SpecialistSection
                 article={data.caseStudy}
                 modal={contactModal}
