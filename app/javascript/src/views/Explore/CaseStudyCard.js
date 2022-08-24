@@ -56,6 +56,7 @@ export default function CaseStudyCard({
   delay,
   allowPublicAccess,
   showSkill = true,
+  ...props
 }) {
   const viewer = useViewer();
   const location = useLocation();
@@ -78,6 +79,7 @@ export default function CaseStudyCard({
       }}
       transition={{ duration: 0.2 }}
       className="relative w-full h-[500px]"
+      {...props}
     >
       <motion.div
         initial={{

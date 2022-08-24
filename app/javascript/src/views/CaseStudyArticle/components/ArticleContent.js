@@ -2,7 +2,6 @@ import React from "react";
 import Images from "./Images";
 import Heading from "./Heading";
 import Paragraph from "./Paragraph";
-import SimilarArticles from "./SimilarArticles";
 import { useLocation } from "react-router-dom";
 import LimitedContentSignup from "./LimitedContentSignup";
 
@@ -54,20 +53,14 @@ export default function ArticleContent({ caseStudy }) {
   }
 
   return (
-    <>
-      <div className="max-w-[680px]">
-        {elements.map((element, index) => (
-          <CaseStudyContentBlock
-            element={element}
-            key={element.id}
-            data-content-block={index}
-          />
-        ))}
-      </div>
-      <SimilarArticles
-        data-content-block={elements.length}
-        articles={caseStudy.similar}
-      />
-    </>
+    <div className="max-w-[680px]">
+      {elements.map((element, index) => (
+        <CaseStudyContentBlock
+          element={element}
+          key={element.id}
+          data-content-block={index}
+        />
+      ))}
+    </div>
   );
 }

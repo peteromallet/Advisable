@@ -23,6 +23,7 @@ import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SpecialistBar from "./components/SpecialistBar";
+import SimilarArticles from "./components/SimilarArticles";
 
 export default function CaseStudyArticle() {
   useBackground("white");
@@ -39,6 +40,11 @@ export default function CaseStudyArticle() {
   const article = data?.caseStudy;
   const { specialist } = article;
   const isOwner = viewer?.id === specialist.id;
+
+  const scrollToTop = () => {
+    let el = document.getElementById("article-scrollable-area");
+    el.scrollTo(0, 0);
+  };
 
   return (
     <ErrorBoundary>
@@ -118,7 +124,13 @@ export default function CaseStudyArticle() {
               {loading ? (
                 <Loading />
               ) : (
-                <ArticleContent caseStudy={data.caseStudy} />
+                <>
+                  <ArticleContent caseStudy={data.caseStudy} />
+                  <SimilarArticles
+                    articles={data.caseStudy.similar}
+                    onClick={scrollToTop}
+                  />
+                </>
               )}
             </div>
           </div>
