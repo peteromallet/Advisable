@@ -12,20 +12,20 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
     <div className="border-b border-solid border-neutral100">
       <div
         onClick={() => (isActive ? closeTab() : openTab(index))}
-        className="flex gap-3 cursor-pointer py-4 items-center group"
+        className="flex gap-2 items-center py-4 cursor-pointer group"
       >
         {isActive ? (
           <MinusCircle
             size="20px"
-            className="fill-neutral900 group-hover:fill-blue700 min-w-[20px]"
+            className="fill-neutral900 min-w-[20px] group-hover:fill-blue700"
           />
         ) : (
           <PlusCircle
             size="20px"
-            className="fill-neutral900 group-hover:fill-blue700 min-w-[20px]"
+            className="fill-neutral900 min-w-[20px] group-hover:fill-blue700"
           />
         )}
-        <div className="text-neutral900 font-medium line-clamp-1 group-hover:text-blue700">
+        <div className="font-semibold text-neutral900 line-clamp-1 group-hover:text-blue700">
           {title}
         </div>
       </div>
@@ -33,7 +33,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
         {isActive && (
           <motion.div
             key="content"
-            className="overflow-hidden"
+            className="overflow-hidden pb-4 -my-2"
             initial="collapsed"
             animate="open"
             exit="collapsed"
@@ -43,7 +43,7 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
               collapsed: { opacity: 0, height: 0 },
             }}
           >
-            <p className="pb-4 text-neutral900">{children}</p>
+            <p className="pb-4 text-neutral-600">{children}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -62,9 +62,9 @@ export default function KeyTakeaways({ insights }) {
 
   return (
     <div className="mb-8">
-      <div className="flex gap-3 items-center border-b border-neutral100 border-solid pb-4">
-        <LightBulb size="20px" className="fill-neutral900" />
-        <div className="uppercase text-sm text-neutral900 font-semibold leading-none">
+      <div className="flex gap-2 items-center pb-4 border-b border-solid border-neutral100">
+        <LightBulb size="20px" className="fill-neutral-600" />
+        <div className="text-sm font-semibold leading-none uppercase text-neutral-600">
           Key Takeaways
         </div>
       </div>

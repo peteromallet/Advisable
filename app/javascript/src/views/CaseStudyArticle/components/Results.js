@@ -84,7 +84,7 @@ export default function Results({ results }) {
   });
 
   return (
-    <div className="w-full shadow-xl bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
+    <div className="w-full shadow-2xl bg-gradient-to-b from-[#0082FD] to-[#692FFF] rounded-lg p-5 pb-8 mb-8">
       <div className="mb-4 text-xs font-semibold leading-none text-white uppercase">
         Results
       </div>
