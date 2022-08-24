@@ -4,13 +4,15 @@ module Admin
   class ContentsController < AdminController
     before_action :set_content
 
+    RESULT_CATEGORIES = %w[revenue impact-1 impact-2 impact-3 multiply-1 multiply-2 creative strategy launch optimise].freeze
+
     def edit
-      render partial: "admin/contents/base_form", locals: {content: @content}
+      render partial: "admin/contents/edit", locals: {content: @content}
     end
 
     def update
-      if @case_study_content.update(case_study_content_params)
-        redirect_to @case_study_content, notice: "Content was successfully updated."
+      if @content.update(content_params)
+        render partial: "admin/contents/base", locals: {content: @content}
       else
         render :edit, status: :unprocessable_entity
       end
@@ -21,14 +23,29 @@ module Admin
       head :ok
     end
 
+    def remove_image
+      image = @content.images.find(params[:image_id])
+      image.purge
+      render turbo_stream: turbo_stream.remove(image)
+    end
+
     private
 
     def set_content
       @content = CaseStudy::Content.find(params[:id])
     end
 
-    def case_study_content_params
-      params.fetch(:case_study_content, {})
+    def content_params
+      case @content
+      when CaseStudy::ParagraphContent
+        {content: {text: params[:text]}}
+      when CaseStudy::HeadingContent
+        {content: {text: params[:text], size: params[:size]}}
+      when CaseStudy::ResultsContent
+        {content: {results: params[:results].reject { |r| r.values.all?(&:blank?) }}}
+      when CaseStudy::ImagesContent
+        {}
+      end
     end
   end
 end

@@ -1,12 +1,12 @@
 <div class="flex justify-between">
-  <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-100 text-fuchsia-800">
-    Images
+  <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+    Editing Images
   </span>
-  <%= link_to "Edit", edit_admin_content_path(content), class: "px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400" %>
+  <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
 </div>
 <ul role="list" class="mt-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6">
   <% content.images.each do |image| %>
-    <li class="relative">
+    <li class="relative" id="<%= dom_id(image) %>">
       <div class="group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
         <%= image_tag image, class: "object-cover pointer-events-none group-hover:opacity-75" %>
       </div>
@@ -16,6 +16,9 @@
       <p class="block text-sm font-medium text-gray-500 pointer-events-none">
         <%= image.blob.metadata["width"] %> x <%= image.blob.metadata["height"] %> px
         (<%= number_to_human_size(image.blob.byte_size) %>)
+      </p>
+      <p class="mt-2 block text-sm font-medium text-red-500">
+        <%= link_to "Remove", remove_image_admin_content_path(content, image_id: image.id), class: "px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
       </p>
     </li>
   <% end %>

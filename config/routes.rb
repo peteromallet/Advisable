@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :contents, only: %i[edit update] do
       member do
         patch :move
+        delete :remove_image
       end
     end
     resources :topics, except: [:show] do
