@@ -81,7 +81,8 @@ export default function CaseStudyCard({
     >
       <motion.div
         initial={{
-          boxShadow: "0 4px 8px -2px rgba(0, 0, 0, 0.12)",
+          boxShadow:
+            "0 4px 12px -2px rgba(0, 0, 0, 0.12), 0 1px 4px -1px rgba(0, 0, 0, 0.08)",
         }}
         variants={{
           initial: {
@@ -89,7 +90,8 @@ export default function CaseStudyCard({
           },
           hover: {
             scale: 1.01,
-            boxShadow: "0 8px 60px -12px rgba(0, 0, 0, 0.16)",
+            boxShadow:
+              "0 8px 40px -12px rgba(0, 0, 0, 0.24), 0 2px 8px -2px rgba(0, 0, 0, 0.12)",
           },
           tap: {
             scale: 1,
