@@ -3,14 +3,11 @@ import { StyledHeader, StyledHeaderSpacer } from "./styles";
 import CurrentUser from "./CurrentUser";
 import { Box } from "@advisable/donut";
 import HeaderLogo from "src/components/HeaderLogo";
-import useViewer from "src/hooks/useViewer";
+import MessagesDropdown from "./MessagesDropdown";
 import Notifications from "./Notifications";
 import Navigation from "./Navigation";
-import NavigationLink from "./NavigationLink";
 
 export default function DesktopHeader() {
-  const viewer = useViewer();
-
   return (
     <>
       <StyledHeader>
@@ -18,14 +15,11 @@ export default function DesktopHeader() {
         <Box flexGrow={1}>
           <Navigation />
         </Box>
-        <Box display="flex" alignItems="center" css="gap: 12px;">
-          {viewer?.isSpecialist && <Notifications />}
-          {viewer ? (
-            <CurrentUser />
-          ) : (
-            <NavigationLink to="/login">Login</NavigationLink>
-          )}
-        </Box>
+        <div className="hidden flex-1 gap-3 justify-end items-center ml-auto md:flex">
+          <MessagesDropdown />
+          <Notifications />
+          <CurrentUser />
+        </div>
       </StyledHeader>
       <StyledHeaderSpacer />
     </>
