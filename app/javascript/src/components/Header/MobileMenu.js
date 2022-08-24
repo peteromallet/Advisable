@@ -1,50 +1,39 @@
-import { Menu, X } from '@styled-icons/heroicons-outline';
-import React, { useState } from 'react';
-import { useLogout } from 'src/graphql/mutations';
+import { Menu, X } from "@styled-icons/heroicons-outline";
+import React, { useState } from "react";
+import { forwardClassName } from "src/utilities/forwardClassName";
 
-function MobileMenuLink({ children, ...props }) {
+export function MobileMenuLink({ children, ...props }) {
   return (
-    <a className="text-lg py-3 block" {...props}>
+    <a className="block py-3 text-lg" {...props}>
       {children}
     </a>
-  )
+  );
 }
 
-export default function MobileMenu() {
-  const logout = useLogout();
+export default function MobileMenu({ children, className }) {
   const [open, setOpen] = useState(false);
 
-  const toggleMenu = e => {
+  const toggleMenu = (e) => {
     e.preventDefault();
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <Menu className="w-6 h-6" />
+      <button
+        onClick={toggleMenu}
+        className={forwardClassName("lg:hidden", className)}
+      >
+        {open ? (
+          <X className="right-5 w-6 h-6" />
+        ) : (
+          <Menu className="w-6 h-6" />
+        )}
       </button>
       {open && (
-        <div className="fixed inset-0 bg-white p-5 pt-10">
-          <button onClick={toggleMenu}>
-            <X className="w-6 h-6 absolute top-5 right-5" />
-          </button>
+        <div className="fixed inset-0 top-[var(--header-height)] p-5 z-10 bg-white border-t border-solid border-neutral-200">
           <div className="divide-y divide-solid divide-neutral-200">
-            <MobileMenuLink href="/">
-              Discover
-            </MobileMenuLink>
-            <MobileMenuLink href="/messages">
-              Messages
-            </MobileMenuLink>
-            <MobileMenuLink href="/payment_requests">
-              Payments
-            </MobileMenuLink>
-            <MobileMenuLink href="/settings">
-              Settings
-            </MobileMenuLink>
-            <MobileMenuLink href="#" onClick={logout}>
-              Logout
-            </MobileMenuLink>
+            {children}
           </div>
         </div>
       )}

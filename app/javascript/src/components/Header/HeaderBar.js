@@ -5,7 +5,6 @@ import composeStyles from "src/utilities/composeStyles";
 const headerClasses = composeStyles({
   base: `
     z-20
-    px-5
     flex
     fixed
     top-0
@@ -14,6 +13,7 @@ const headerClasses = composeStyles({
     bg-white
     shadow
     align-items
+    items-center
     h-[var(--header-height)]
   `,
 });
