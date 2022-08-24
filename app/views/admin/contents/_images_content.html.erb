@@ -8,7 +8,7 @@
   <% content.images.each do |image| %>
     <li class="relative">
       <div class="group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
-        <%= image_tag image, class: "object-cover pointer-events-none group-hover:opacity-75" %>
+        <%= image_tag image, class: "object-cover pointer-events-none" %>
       </div>
       <p class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">
         <%= image.blob.filename %>

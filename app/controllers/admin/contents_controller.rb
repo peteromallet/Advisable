@@ -44,6 +44,11 @@ module Admin
       when CaseStudy::ResultsContent
         {content: {results: params[:results].reject { |r| r.values.all?(&:blank?) }}}
       when CaseStudy::ImagesContent
+        if params[:images].present?
+          params[:images].each do |image|
+            @content.images.attach(image)
+          end
+        end
         {}
       end
     end
