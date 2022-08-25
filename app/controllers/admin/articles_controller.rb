@@ -40,6 +40,20 @@ module Admin
       @article = CaseStudy::Article.new
     end
 
+    def create
+      @article = CaseStudy::Article.new(article_params)
+      @article.build_company
+      CaseStudy::Section::VALID_TYPES.each.with_index do |type, index|
+        @article.sections.build(type:, position: index)
+      end
+
+      if @article.save
+        redirect_to edit_admin_article_path(@article), notice: "Article was successfully created."
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
+
     def edit; end
 
     def add_insight
@@ -78,17 +92,6 @@ module Admin
       @article.skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
       @article.skills.find(params[:skill_id]).update(primary: true)
       render partial: "skills", locals: {article: @article}
-    end
-
-    def create
-      @article = CaseStudy::Article.new(article_params)
-      @article.build_company
-
-      if @article.save
-        redirect_to edit_admin_article_path(@article), notice: "Article was successfully created."
-      else
-        render :new, status: :unprocessable_entity
-      end
     end
 
     def update
