@@ -240,7 +240,7 @@ module Types
 
     field :price_range, String, null: true
     def price_range
-      object.price_range.presence || ::Specialist::VALID_PRICE_RANGES[2]
+      object.price_range.presence || ::Specialist::VALID_PRICE_RANGES[1]
     end
 
     field :collaboration_types, [String], null: true
