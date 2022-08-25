@@ -30,7 +30,12 @@ function Topic({ to, name, icon, delay, ...props }) {
   const active = Boolean(match);
 
   return (
-    <Link to={to} className={topicClasses({ active })} {...props}>
+    <Link
+      to={to}
+      data-active={active}
+      className={topicClasses({ active })}
+      {...props}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -89,10 +94,10 @@ function TopicSkeleton() {
       animate={{ opacity: 1 }}
     >
       <div className="topic-icon">
-        <div className="w-5 h-5 rounded-md bg-neutral-200 animate-pulse" />
+        <div className="w-5 h-5 rounded-md animate-pulse bg-neutral-200" />
       </div>
-      <div className="w-[32px] h-[8px] bg-neutral-200 rounded animate-pulse my-1 mb-1.5" />
-      <div className="w-[24px] h-[8px] bg-neutral-200 rounded animate-pulse" />
+      <div className="my-1 mb-1.5 rounded animate-pulse w-[32px] h-[8px] bg-neutral-200" />
+      <div className="rounded animate-pulse w-[24px] h-[8px] bg-neutral-200" />
     </motion.div>
   );
 }
@@ -114,6 +119,12 @@ export default function TopicsBar() {
   };
 
   useLayoutEffect(calculateScrolls, [loading]);
+
+  useLayoutEffect(() => {
+    const active = document.querySelector(".topic[data-active=true]");
+    if (!active) return;
+    active.scrollIntoView({ block: "nearest", inline: "start" });
+  }, [loading]);
 
   const topics = data?.topics || [];
 
