@@ -1,6 +1,5 @@
 fragment ArticleFields on CaseStudyArticle {
   id
-  ...HeroFields
   path
   isFavorited
   skills {
