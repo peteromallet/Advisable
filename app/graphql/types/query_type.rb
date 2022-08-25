@@ -318,18 +318,14 @@ module Types
 
     field :topics, [Types::CaseStudy::Topic], null: true
     def topics
-      Rails.cache.fetch("topics", expires_in: 1.day) do
-        ::CaseStudy::Topic.visible.by_position
-      end
+      ::CaseStudy::Topic.visible.by_position
     end
 
     field :topic, Types::CaseStudy::Topic, null: true do
       argument :slug, String, required: true
     end
     def topic(slug:)
-      Rails.cache.fetch("topic_#{slug}", expires_in: 1.day) do
-        ::CaseStudy::Topic.find_by!(slug:)
-      end
+      ::CaseStudy::Topic.find_by!(slug:)
     end
 
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
