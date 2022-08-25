@@ -33,14 +33,14 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
         {isActive && (
           <motion.div
             key="content"
-            className="overflow-hidden pb-4 -my-2"
+            className="overflow-hidden"
             initial="collapsed"
             animate="open"
             exit="collapsed"
             transition={{ duration: 0.2 }}
             variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
+              open: { opacity: 1, height: "auto", y: -8 },
+              collapsed: { opacity: 0, height: 0, y: -8 },
             }}
           >
             <p className="pb-4 text-neutral-600">{children}</p>
