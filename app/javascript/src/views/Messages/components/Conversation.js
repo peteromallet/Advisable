@@ -15,7 +15,7 @@ export default function Conversation({ conversations, currentAccount }) {
 
   return (
     <div className="h-full flex flex-col lg:flex-row">
-      <Sentry.ErrorBoundary fallback={ConversationError}>
+      <Sentry.ErrorBoundary key={id} fallback={ConversationError}>
         {conversation ? (
           <div className="block lg:hidden">
             <ConversationHeader conversation={conversation} />
