@@ -1,9 +1,15 @@
-<div class="flex justify-between">
+<% if content.persisted? %>
+  <div class="flex justify-between">
+    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+      Editing Images
+    </span>
+    <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
+  </div>
+<% else %>
   <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
-    Editing Images
+    New Images
   </span>
-  <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
-</div>
+<% end %>
 <ul role="list" class="mt-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6">
   <% content.images.each do |image| %>
     <li class="relative" id="<%= dom_id(image) %>">
@@ -21,7 +27,7 @@
     </li>
   <% end %>
   <li class="relative">
-    <%= form_with(url: admin_content_path(content), method: :patch) do |form| %>
+    <%= form_with(**content_form_params(content)) do |form| %>
       <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
         <div class="space-y-1 text-center">
           <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -30,11 +36,13 @@
           <div class="flex text-sm text-gray-600">
             <%= form.label :images, class: "mt-3 relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
               <span>Select images</span>
-              <%= form.file_field :images, multiple: true, class: "sr-only" %>
+              <%= form.file_field :images, multiple: true, class: "sr-only", onchange: "form.requestSubmit()" %>
             <% end %>
           </div>
         </div>
       </div>
+      <%= form.hidden_field :section_id, value: content.section.id %>
+      <%= form.hidden_field :type, value: content.type %>
       <%= form.submit "Upload", class: "w-full mt-2 px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
     <% end %>
   </li>

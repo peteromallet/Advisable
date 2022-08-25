@@ -1,0 +1,15 @@
+<turbo-frame id="<%= dom_id(section, "new_content") %>">
+  <div class="flex">
+    <div class="w-full">
+      <%= form_with(url: new_admin_content_path, method: :get, class: "mb-6") do |form| %>
+        <div class="mt-1">
+          <%= form.select :type, options_for_select(CaseStudy::Content.descendants.map{|t| [t.name.demodulize.sub(/Content$/, ""), t.name]}, (params[:action] == "new" && params["type"])), {prompt: "Add new content"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500", onchange: "form.requestSubmit()"} %>
+        </div>
+        <%= form.hidden_field :section_id, value: section.id %>
+      <% end %>
+      <% if defined?(content) %>
+        <%= render "admin/contents/#{content.class.name.demodulize.underscore}_form", content: content %>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>

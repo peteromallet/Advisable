@@ -2,12 +2,29 @@
 
 module Admin
   class ContentsController < AdminController
-    before_action :set_content
+    before_action :set_content, except: %i[new create]
 
     RESULT_CATEGORIES = %w[revenue impact-1 impact-2 impact-3 multiply-1 multiply-2 creative strategy launch optimise].freeze
 
     def edit
       render partial: "admin/contents/edit", locals: {content: @content}
+    end
+
+    def new
+      section = CaseStudy::Section.find(params[:section_id])
+      content = CaseStudy::Content.new(section:, type: params[:type])
+      render partial: "admin/contents/new", locals: {section:, content:}
+    end
+
+    def create
+      @content = CaseStudy::Content.new(section_id: params[:section_id], type: params[:type])
+      @content.assign_attributes(**content_params, position: @content.section.contents.count + 1)
+
+      if @content.save
+        render turbo_stream: turbo_stream.replace(@content.section, partial: "admin/articles/section", locals: {section: @content.section})
+      else
+        render partial: "admin/contents/new", locals: {section: @content.section, content: @content}, status: :unprocessable_entity
+      end
     end
 
     def update

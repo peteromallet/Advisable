@@ -9,13 +9,7 @@
         <div class="mt-5 md:mt-0 md:col-span-2">
           <div class="grid grid-cols-6 gap-6">
             <div class="col-span-6">
-              <turbo-frame id="<%= dom_id(section) %>">
-                <div class="grid gap-6" data-controller="sortable" data-sortable-handle-value=".handle">
-                  <% section.contents.by_position.each do |content| %>
-                    <%= render "admin/contents/base", content: content %>
-                  <% end %>
-                </div>
-              </turbo-frame>
+              <%= render "section", section: section %>
             </div>
           </div>
         </div>

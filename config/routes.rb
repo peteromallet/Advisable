@@ -56,7 +56,7 @@ Rails.application.routes.draw do
         get :make_skill_primary
       end
     end
-    resources :contents, only: %i[edit update] do
+    resources :contents, except: %i[show destroy index] do
       member do
         patch :move
         delete :remove_image
