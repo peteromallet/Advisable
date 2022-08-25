@@ -51,7 +51,12 @@ function primarySkillForArticle(article) {
   return primarySkill.skill;
 }
 
-export default function CaseStudyCard({ article, delay, allowPublicAccess }) {
+export default function CaseStudyCard({
+  article,
+  delay,
+  allowPublicAccess,
+  showSkill = true,
+}) {
   const viewer = useViewer();
   const location = useLocation();
   const [tapping, setTapping] = useState(false);
@@ -108,7 +113,7 @@ export default function CaseStudyCard({ article, delay, allowPublicAccess }) {
           onMouseUp={() => setTapping(false)}
           className="p-6 rounded-xl no-tap-highlight case-study-card-content"
         >
-          {primarySkill && (
+          {showSkill && primarySkill && (
             <div className={skillClasses({ color: primarySkill.color })}>
               {primarySkill.name}
             </div>

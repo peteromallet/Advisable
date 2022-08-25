@@ -33,7 +33,7 @@ export default function Topic() {
 
   if (isNotFound(error)) {
     return (
-      <div className="w-[300px] py-12 mx-auto text-center">
+      <div className="py-12 mx-auto text-center w-[300px]">
         <LostIllustration width="200px" className="mx-auto mb-8" />
         <h4 className="font-semibold">Oops</h4>
         <p>We can't seem to find the page you're looking for.</p>
@@ -48,8 +48,10 @@ export default function Topic() {
         description={topic.description}
         loading={!topic.name && loading}
       />
-      <CaseStudyGrid loading={loading} results={results} />
-      {viewer && pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
+      <CaseStudyGrid loading={loading} results={results} showSkill={false} />
+      {viewer && pageInfo?.hasNextPage && (
+        <EndlessScroll onLoadMore={handleLoadMore} />
+      )}
       {viewer && !loading && !pageInfo?.hasNextPage && (
         <FeedFooter>You've reached the end of the list.</FeedFooter>
       )}
