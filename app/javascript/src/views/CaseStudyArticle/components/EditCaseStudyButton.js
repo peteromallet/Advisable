@@ -30,7 +30,7 @@ export default function EditCaseStudyButton({ article }) {
           <p className="mb-8 max-w-[320px] mx-auto">
             Any edits you make will take up to 10 minutes to be reflected live.
           </p>
-          <a href={article.editorUrl} target="_blank">
+          <a href={article.editorUrl} target="_blank" rel="noreferrer">
             <Button size="lg" prefix={<ExternalLink />} className="inline-flex">
               Open Editor
             </Button>

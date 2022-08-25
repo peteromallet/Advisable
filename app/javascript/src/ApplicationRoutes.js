@@ -8,7 +8,7 @@ import RequireAuthentication from "./components/RequireAuthentication";
 import Settings from "./views/Settings";
 import useViewer from "./hooks/useViewer";
 import EditPost from "./views/EditPost";
-import ArticleNew from "./views/CaseStudyArticleNew";
+import Article from "./views/CaseStudyArticle";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ArticleModal from "./views/ArticleModal";
 import Explore from "./views/Explore";
@@ -74,19 +74,19 @@ const ApplicationRoutes = () => {
             )}
 
             {(isClient || !viewer) && (
-            <Route path="/" element={<Explore />}>
-              {viewer ? (
-                <Route index element={<Feed />} />
-              ) : (
-                <Route index element={<Home />} />
-              )}
-              <Route path="trending" element={<Trending />} />
-              {viewer && <Route path="favorites" element={<Favorites />} />}
-              <Route path="topics/:slug" element={<Topic />} />
-            </Route>
+              <Route path="/" element={<Explore />}>
+                {viewer ? (
+                  <Route index element={<Feed />} />
+                ) : (
+                  <Route index element={<Home />} />
+                )}
+                <Route path="trending" element={<Trending />} />
+                {viewer && <Route path="favorites" element={<Favorites />} />}
+                <Route path="topics/:slug" element={<Topic />} />
+              </Route>
             )}
 
-            <Route path="/articles/:slug" element={<ArticleNew />} />
+            <Route path="/articles/:slug" element={<Article />} />
 
             <Route
               path="/post"

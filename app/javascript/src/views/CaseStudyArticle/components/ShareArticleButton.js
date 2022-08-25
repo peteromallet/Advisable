@@ -10,6 +10,7 @@ const buttonClasses = composeStyles({
     flex
     justify-center
     items-center
+    bg-white
     ring-1
     ring-inset
     ring-neutral200
@@ -51,7 +52,7 @@ function ShareArticleButton({ slug, className, size }) {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="relative flex justify-center">
       <Tooltip placement="bottom" content={copied ? null : "Copy Link"}>
         <button
           className={buttonClasses({ className, size })}
@@ -67,9 +68,9 @@ function ShareArticleButton({ slug, className, size }) {
             initial={{ y: -10 }}
             animate={{ y: 0 }}
             exit={{ y: 20, opacity: 0 }}
-            className="absolute -bottom-4 bg-blue100 rounded-xs shadow px-2 py-2"
+            className="absolute z-10 -bottom-8 bg-blue100 rounded-xs shadow px-2 py-2"
           >
-            <div className="text-blue900 text-xs leading-none opacity-80">
+            <div className="text-blue900 text-xs leading-none whitespace-nowrap opacity-80">
               Link copied!
             </div>
           </motion.div>

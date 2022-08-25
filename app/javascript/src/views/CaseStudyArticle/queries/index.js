@@ -6,5 +6,7 @@ export function useArticle() {
   const { slug } = useParams();
   return useQuery(ARTICLE, {
     variables: { slug },
+    returnPartialData: true,
+    notifyOnNetworkStatusChange: true,
   });
 }
