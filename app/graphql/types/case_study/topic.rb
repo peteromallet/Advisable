@@ -15,12 +15,7 @@ module Types
         object.icon.url
       end
 
-      field :articles, Article.connection_type, null: true
-      def articles
-        Rails.cache.fetch("case_study_topic_#{object.id}_articles", expires_in: 1.day) do
-          object.results
-        end
-      end
+      field :articles, Article.connection_type, null: true, method: :results
     end
   end
 end
