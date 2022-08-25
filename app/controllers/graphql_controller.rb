@@ -49,6 +49,7 @@ class GraphqlController < ApplicationController
   end
 
   def verify_authenticity_token
+    return if Rails.env.development?
     return if ENV["GRAPHQL_PLAYGROUND"].present?
     return if ENV["API_ACCESS_KEY"].present? && request.headers["Api-Key"] == ENV["API_ACCESS_KEY"]
 
