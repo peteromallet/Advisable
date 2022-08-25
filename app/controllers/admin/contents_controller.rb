@@ -35,6 +35,11 @@ module Admin
       end
     end
 
+    def destroy
+      @content.destroy
+      render turbo_stream: turbo_stream.replace(@content.section, partial: "admin/articles/section", locals: {section: @content.section})
+    end
+
     def move
       @content.move_to!(params[:position].to_i)
       head :ok

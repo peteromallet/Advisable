@@ -2,7 +2,10 @@
   <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800">
     Results
   </span>
-  <%= link_to "Edit", edit_admin_content_path(content), class: "px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400" %>
+  <div>
+    <%= link_to "Edit", edit_admin_content_path(content), class: "px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400" %>
+    <%= link_to "Remove", admin_content_path(content), class: "px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400", data: {turbo_method: "delete", turbo_confirm: "Are you sure?"} %>
+  </div>
 </div>
 <% content.content["results"].each do |result| %>
   <div class="block mt-2">
