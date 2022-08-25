@@ -1,0 +1,49 @@
+<% if content.persisted? %>
+  <div class="flex justify-between">
+    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+      Editing Images
+    </span>
+    <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
+  </div>
+<% else %>
+  <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+    New Images
+  </span>
+<% end %>
+<ul role="list" class="mt-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6">
+  <% content.images.each do |image| %>
+    <li class="relative" id="<%= dom_id(image) %>">
+      <div class="group block w-full aspect-w-10 aspect-h-7 rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+        <%= image_tag image, class: "object-cover pointer-events-none" %>
+      </div>
+      <p class="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">
+        <%= image.blob.filename %>
+      </p>
+      <p class="block text-sm font-medium text-gray-500 pointer-events-none">
+        <%= image.blob.metadata["width"] %> x <%= image.blob.metadata["height"] %> px
+        (<%= number_to_human_size(image.blob.byte_size) %>)
+      </p>
+      <%= link_to "Remove", remove_image_admin_content_path(content, image_id: image.id), class: "mt-2 px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+    </li>
+  <% end %>
+  <li class="relative">
+    <%= form_with(**content_form_params(content)) do |form| %>
+      <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+        <div class="space-y-1 text-center">
+          <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <div class="flex text-sm text-gray-600">
+            <%= form.label :images, class: "mt-3 relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
+              <span>Select images</span>
+              <%= form.file_field :images, multiple: true, class: "sr-only", onchange: "form.requestSubmit()" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <%= form.hidden_field :section_id, value: content.section.id %>
+      <%= form.hidden_field :type, value: content.type %>
+      <%= form.submit "Upload", class: "w-full mt-2 px-2 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+    <% end %>
+  </li>
+</ul>

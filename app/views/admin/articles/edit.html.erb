@@ -3,8 +3,18 @@
     <h1 class="text-3xl font-bold text-gray-900">Editing article</h1>
   </div>
 </header>
-<main>
+<main class="bg-gray-100">
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <%= render "form", article: @article, url: admin_article_path(@article) %>
+    <%= form_with(model: @article, url: admin_article_path(@article), class: "space-y-6") do |form| %>
+      <%= render "basic", article: @article, form: form %>
+      <div class="flex justify-end">
+        <%= form.submit "Save Above Changes", class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+      </div>
+      <div>&nbsp;</div>
+      <%= render "insights", article: @article %>
+      <%= render "skills", article: @article %>
+      <%= render "industries", article: @article %>
+    <% end %>
+    <%= render "sections", article: @article %>
   </div>
 </main>

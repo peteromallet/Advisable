@@ -42,8 +42,25 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index] do
       get :finance, on: :collection
     end
-    resources :articles do
-      get :search, on: :collection
+    resources :articles, except: [:show] do
+      collection do
+        get :search
+      end
+      member do
+        post :add_insight
+        delete :remove_insight
+        post :add_industry
+        delete :remove_industry
+        post :add_skill
+        delete :remove_skill
+        get :make_skill_primary
+      end
+    end
+    resources :contents, except: %i[show index] do
+      member do
+        patch :move
+        delete :remove_image
+      end
     end
     resources :topics, except: [:show] do
       member do

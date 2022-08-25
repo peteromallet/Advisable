@@ -53,7 +53,7 @@ class Specialist < ApplicationRecord
   has_one_attached :cover_photo
   resize cover_photo: {resize_to_limit: [2000, 2000]}
 
-  validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_nil: true
+  validates :number_of_projects, inclusion: {in: %w[1-5 5-20 20+ None], message: "is invalid"}, allow_blank: true
   validates :application_stage, inclusion: {in: VALID_APPLICATION_STAGES}, allow_blank: true
   validates :price_range, inclusion: {in: VALID_PRICE_RANGES}, allow_blank: true
   validates :username, uniqueness: true, allow_blank: true

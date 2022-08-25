@@ -26,6 +26,17 @@ module CaseStudy
       super.presence || {}
     end
 
+    def move_to!(position)
+      ids_by_position = CaseStudy::Content.where(section:).by_position.where.not(id:).pluck(:id)
+      ids_by_position.insert(position - 1, id)
+      sql = <<-SQL
+        UPDATE case_study_contents
+        SET position = array_position(array[#{ids_by_position.join(',')}]::bigint[], id)
+        WHERE section_id = #{section.id}
+      SQL
+      ActiveRecord::Base.connection.execute(sql)
+    end
+
     private
 
     def valid_content; end

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require "matrix"
-
 module Admin
   class ArticlesController < AdminController
-    before_action :set_article, only: %i[show edit update destroy]
-    before_action :form_vars, only: %i[new edit]
+    before_action :set_article, except: %i[index search new create]
 
     include Pagy::Backend
 
@@ -39,27 +36,67 @@ module Admin
       @results = @results.sort_by { |r| r[:similarity] }.reverse
     end
 
-    def show; end
-
     def new
       @article = CaseStudy::Article.new
     end
 
-    def edit; end
-
     def create
       @article = CaseStudy::Article.new(article_params)
+      @article.build_company
+      CaseStudy::Section::VALID_TYPES.each.with_index do |type, index|
+        @article.sections.build(type:, position: index)
+      end
 
       if @article.save
-        redirect_to admin_article_path(@article), notice: "Article was successfully created."
+        redirect_to edit_admin_article_path(@article), notice: "Article was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
     end
 
+    def edit; end
+
+    def add_insight
+      @article.insights.create!(params.require(:case_study_insight).permit(:title, :description))
+      render partial: "insights", locals: {article: @article}
+    end
+
+    def remove_insight
+      @article.insights.find(params[:insight_id]).destroy
+      render partial: "insights", locals: {article: @article}
+    end
+
+    def add_industry
+      industry_id = params.require(:case_study_industry).permit(:industry)[:industry]
+      @article.industries.create!(industry_id:) if industry_id.present? && !@article.industries.exists?(industry_id:)
+      render partial: "industries", locals: {article: @article}
+    end
+
+    def remove_industry
+      @article.industries.find(params[:industry_id]).destroy
+      render partial: "industries", locals: {article: @article}
+    end
+
+    def add_skill
+      skill_id = params.require(:case_study_skill).permit(:skill)[:skill]
+      @article.skills.create!(skill_id:) if skill_id.present? && !@article.skills.exists?(skill_id:)
+      render partial: "skills", locals: {article: @article}
+    end
+
+    def remove_skill
+      @article.skills.find(params[:skill_id]).destroy
+      render partial: "skills", locals: {article: @article}
+    end
+
+    def make_skill_primary
+      @article.skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+      @article.skills.find(params[:skill_id]).update(primary: true)
+      render partial: "skills", locals: {article: @article}
+    end
+
     def update
       if @article.update(article_params)
-        redirect_to admin_article_path(@article), notice: "Article was successfully updated."
+        redirect_to edit_admin_article_path(@article), notice: "Article was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -76,13 +113,8 @@ module Admin
       @article = CaseStudy::Article.find(params[:id])
     end
 
-    def form_vars
-      @specialists = Specialist.includes(:account).map { |s| [s.account.name, s.id] }
-      @interviewers = Account.where(email: SalesPerson.select(:email)).map { |a| [a.name, a.id] }
-    end
-
     def article_params
-      params.require(:case_study_article).permit(:specialist_id, :interviewer_id, :title, :subtitle, :comment, :editor_note, :goals, :score, :confidential, :targeting, :published_at, :hide_from_search, company_type: [])
+      params.require(:case_study_article).permit(:title, :subtitle, :score, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
     end
   end
 end
