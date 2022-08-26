@@ -44,6 +44,17 @@ module.exports = {
         purple700: "#3B159F",
         purple800: "#2B0F76",
         purple900: "#1B0751",
+        "transparent-white": {
+          10: "rgb(255 255 255 / .1)",
+          20: "rgb(255 255 255 / .2)",
+          30: "rgb(255 255 255 / .3)",
+          40: "rgb(255 255 255 / .4)",
+          50: "rgb(255 255 255 / .5)",
+          60: "rgb(255 255 255 / .6)",
+          70: "rgb(255 255 255 / .7)",
+          80: "rgb(255 255 255 / .8)",
+          90: "rgb(255 255 255 / .9)",
+        },
       },
       borderRadius: {
         xs: "0.5rem",
@@ -56,6 +67,7 @@ module.exports = {
         height: "height",
       },
       boxShadow: {
+        pop: "0px 4px 20px -2px rgb(0 0 0 / .16), 0px 1px 4px -2px rgb(0 0 0 / .32)",
         feed: "0 2px 4px rgba(0, 0, 0, 0.08), 0px 4px 16px 0px rgba(0, 0, 0, 0.04)",
         articleCard:
           "0px 12px 40px -12px rgba(0, 0, 0, 0.12), 0px 2px 8px rgba(0, 0, 0, 0.04)",
@@ -76,7 +88,7 @@ module.exports = {
     // This snippet defines each color in the tailwind config as a CSS variable
     // on :root. This can be useful when you want to use a color outside of what
     // tailwind provides. e.g working with SVG's.
-    function ({ addBase, theme }) {
+    function({ addBase, theme }) {
       function extractColorVars(colorObj, colorGroup = "") {
         return Object.keys(colorObj).reduce((vars, colorKey) => {
           const value = colorObj[colorKey];

@@ -23,6 +23,7 @@ import { X } from "@styled-icons/heroicons-solid";
 import { useArticle } from "./queries";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SpecialistBar from "./components/SpecialistBar";
+import SimilarArticles from "./components/SimilarArticles";
 
 export default function CaseStudyArticle() {
   useBackground("white");
@@ -39,6 +40,11 @@ export default function CaseStudyArticle() {
   const article = data?.caseStudy;
   const { specialist } = article;
   const isOwner = viewer?.id === specialist.id;
+
+  const scrollToTop = () => {
+    let el = document.getElementById("article-scrollable-area");
+    el.scrollTo(0, 0);
+  };
 
   return (
     <ErrorBoundary>
@@ -78,8 +84,11 @@ export default function CaseStudyArticle() {
         </div>
 
         <div className="flex relative px-6 pb-0 mx-auto w-full lg:px-10 xl:px-14 xl:max-w-[1320px]">
-          <div className="hidden pt-12 pr-6 lg:block xl:pr-12 shrink-0 w-[280px] xl:w-[320px]">
-            <StickyBox offsetTop={60} offsetBottom={60}>
+          <div className="hidden pt-12 pr-12 lg:block xl:pr-16 shrink-0 w-[280px] xl:w-[320px]">
+            <StickyBox
+              offsetTop={backgroundLocation ? 60 : 116}
+              offsetBottom={60}
+            >
               <SpecialistSection
                 article={data.caseStudy}
                 modal={contactModal}
@@ -87,16 +96,16 @@ export default function CaseStudyArticle() {
               />
             </StickyBox>
           </div>
-          <div className="flex relative flex-col py-3 w-full border-solid lg:pl-6 lg:border-l xl:pl-12 border-neutral100">
+          <div className="flex relative flex-col py-3 w-full border-solid lg:pl-12 lg:border-l xl:pl-16 border-neutral100">
             <ScrollIndicator />
 
-            <div className="pt-16 pb-20">
+            <div className="pt-10 pb-20">
               <SpecialistBar
                 modal={contactModal}
                 specialist={data.caseStudy.specialist}
                 isOwner={isOwner}
               />
-              <h1 className="mb-4 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[680px]">
+              <h1 className="mb-5 font-serif text-3xl tracking-tight md:text-4xl font-[800] text-blue900 max-w-[680px]">
                 {data.caseStudy.title}
               </h1>
               <div className="gap-14 md:flex">
@@ -115,7 +124,13 @@ export default function CaseStudyArticle() {
               {loading ? (
                 <Loading />
               ) : (
-                <ArticleContent caseStudy={data.caseStudy} />
+                <>
+                  <ArticleContent caseStudy={data.caseStudy} />
+                  <SimilarArticles
+                    articles={data.caseStudy.similar}
+                    onClick={scrollToTop}
+                  />
+                </>
               )}
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDoubleDown } from "@styled-icons/heroicons-outline";
 import React, { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowDown } from "@styled-icons/heroicons-solid";
 
 export default function ScrollIndicator() {
   const [isVisible, setVisibility] = React.useState(true);
@@ -9,13 +9,14 @@ export default function ScrollIndicator() {
     let el = document.getElementById("article-scrollable-area");
 
     const handleScroll = () => {
-      if (!isVisible) return;
-
       let distance = !el ? window.scrollY : el.scrollTop;
-      if (distance <= 10) return;
+      if (distance <= 10 && !isVisible) {
+        setVisibility(true);
+      }
 
-      setVisibility(false);
-      (el || window).removeEventListener("scroll", handleScroll);
+      if (distance >= 10 && isVisible) {
+        setVisibility(false);
+      }
     };
 
     (el || window).addEventListener("scroll", handleScroll);
@@ -28,24 +29,29 @@ export default function ScrollIndicator() {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isVisible && (
         <div
           onClick={handleClick}
-          className="fixed bottom-[5%] left-[50%] -translate-x-1/2 "
+          className="fixed bottom-5 left-[50%] -translate-x-1/2 "
         >
           <motion.div
-            className="flex gap-3 items-center bg-white hover:-translate-y-1 transition-transform rounded-full p-3 pr-11 drop-shadow-2xl cursor-pointer"
-            exit={{ opacity: 0, scale: 0.9, y: -20 }}>
-            <div className="rounded-full bg-neutral50 w-[40px] h-[40px] flex items-center justify-center">
-              <ChevronDoubleDown size={20} className="stroke-blue500" />
+            className="flex gap-2 items-center p-2 pr-6 rounded-full cursor-pointer bg-blue900 shadow-pop"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ y: -2 }}
+          >
+            <div className="flex justify-center items-center rounded-full bg-transparent-white-20 w-[32px] h-[32px]">
+              <ArrowDown className="w-4 h-4 text-white" />
             </div>
             <div>
-              <div className="uppercase text-xs text-neutral400 font-medium leading-none">
+              <div className="mb-0.5 text-sm font-medium leading-none text-transparent-white-60">
                 Scroll to
               </div>
-              <div className="text-neutral700 leading-5 font-medium">
-                Read full case study
+              <div className="font-medium leading-none text-transparent-white-90">
+                Read more
               </div>
             </div>
           </motion.div>

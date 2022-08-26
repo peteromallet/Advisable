@@ -82,7 +82,7 @@ export default function SpecialistSection({ article, modal, isOwner }) {
       </div>
 
       <div>
-        <Link to={specialist.profilePath} className="mb-2">
+        <Link to={specialist.profilePath} className="mb-0.5">
           <div className="text-2xl font-bold tracking-tight hover:underline text-blue900 decoration-blue200">
             {name}
           </div>
