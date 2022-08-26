@@ -24,10 +24,7 @@ end
 Rails.application.routes.draw do
   match "(*any)", to: redirect { |_, req| "https://app.advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
 
-  if Rails.env.development? || ENV.fetch("STAGING", nil)
-    mount GraphqlPlayground::Rails::Engine, as: "graphql_playground", at: "/playground", graphql_path: "/graphql"
-    mount GraphqlPlayground::Rails::Engine, as: "toby_playground", at: "/toby_playground", graphql_path: "/toby_graphql"
-  end
+  get "/graphiql", to: "application#graphiql" if Rails.env.development? || ENV.fetch("STAGING", nil)
 
   mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
   mount PgHero::Engine, at: "/pghero", constraints: AdminConstraint.new

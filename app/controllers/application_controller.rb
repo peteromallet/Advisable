@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     prefetch_query("app/javascript/src/views/Explore/queries/topics.gql")
   end
 
+  def graphiql
+    render layout: false
+  end
+
   def frontend
     respond_to(&:html)
   rescue ActionController::UnknownFormat
