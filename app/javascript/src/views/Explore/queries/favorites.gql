@@ -1,4 +1,5 @@
 #import "./articleFields.gql"
+#import "../../CaseStudyArticle/queries/heroFields.gql"
 
 query FavoritedArticles($cursor: String) {
   favoritedArticles(after: $cursor, first: 15) {
@@ -9,6 +10,7 @@ query FavoritedArticles($cursor: String) {
     edges {
       node {
         ...ArticleFields
+        ...HeroFields
       }
     }
   }

@@ -1,4 +1,5 @@
 #import "./articleFields.gql"
+#import "../../CaseStudyArticle/queries/heroFields.gql"
 
 query Topic($slug: String!, $cursor: String) {
   topic(slug: $slug) {
@@ -13,6 +14,7 @@ query Topic($slug: String!, $cursor: String) {
       edges {
         node {
           ...ArticleFields
+          ...HeroFields
         }
       }
     }

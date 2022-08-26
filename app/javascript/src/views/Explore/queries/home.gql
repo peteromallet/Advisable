@@ -1,4 +1,5 @@
 #import "./articleFields.gql"
+#import "../../CaseStudyArticle/queries/heroFields.gql"
 
 query Home($cursor: String) {
   topic(slug: "home") {
@@ -13,6 +14,7 @@ query Home($cursor: String) {
       edges {
         node {
           ...ArticleFields
+          ...HeroFields
         }
       }
     }

@@ -1,8 +1,5 @@
-#import 'src/views/CaseStudyArticle/queries/heroFields.gql'
-
 fragment ArticleFields on CaseStudyArticle {
   id
-  ...HeroFields
   path
   isFavorited
   skills {
