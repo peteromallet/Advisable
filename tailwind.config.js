@@ -51,6 +51,7 @@ module.exports = {
         md: "1rem",
         lg: "1.5rem",
         xl: "2rem",
+        "2xl": "2.5rem",
       },
       transitionProperty: {
         height: "height",
@@ -76,7 +77,7 @@ module.exports = {
     // This snippet defines each color in the tailwind config as a CSS variable
     // on :root. This can be useful when you want to use a color outside of what
     // tailwind provides. e.g working with SVG's.
-    function ({ addBase, theme }) {
+    function({ addBase, theme }) {
       function extractColorVars(colorObj, colorGroup = "") {
         return Object.keys(colorObj).reduce((vars, colorKey) => {
           const value = colorObj[colorKey];
