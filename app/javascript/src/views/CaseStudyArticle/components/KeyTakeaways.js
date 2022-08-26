@@ -39,8 +39,8 @@ function Section({ index, title, children, isActive, closeTab, openTab }) {
             exit="collapsed"
             transition={{ duration: 0.2 }}
             variants={{
-              open: { opacity: 1, height: "auto", y: -8 },
-              collapsed: { opacity: 0, height: 0, y: -8 },
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 },
             }}
           >
             <p className="pb-4 text-neutral-600">{children}</p>
