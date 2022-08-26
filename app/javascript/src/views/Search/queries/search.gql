@@ -1,5 +1,5 @@
 #import "../../Explore/queries/articleFields.gql"
-#import "../../CaseStudyArticleNew/queries/heroFields.gql"
+#import "../../CaseStudyArticle/queries/heroFields.gql"
 
 query InterestPreview($term: String!, $cursor: String) {
   search(term: $term) {

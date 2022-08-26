@@ -1,5 +1,5 @@
 #import "./articleFields.gql"
-#import "../../CaseStudyArticleNew/queries/heroFields.gql"
+#import "../../CaseStudyArticle/queries/heroFields.gql"
 
 query Topic($slug: String!, $cursor: String) {
   topic(slug: $slug) {
