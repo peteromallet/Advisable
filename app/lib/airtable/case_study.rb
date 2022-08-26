@@ -182,13 +182,18 @@ module Airtable
     end
 
     def attach_insights!(article)
-      insights.each do |air_insight|
-        next if air_insight.fields["Insight Available"]&.strip != "Yes"
-
-        insight = article.insights.find_or_initialize_by(airtable_id: air_insight.id)
-        insight.title = air_insight.fields["Insight Title"]
-        insight.description = air_insight.fields["Insight Body"]
-        insight.save!
+      article.insights = []
+      relevant = insights.
+        select { |i| i["Insight Available"]&.strip == "Yes" && i["Shown"]&.strip == "Yes" }.
+        sort_by { |i| i["Insight Score"] }.
+        reverse.
+        take(3)
+      relevant.each do |air_insight|
+        article.insights.create!(
+          airtable_id: air_insight.id,
+          title: air_insight.fields["Insight Title"],
+          description: air_insight.fields["Insight Body"]
+        )
       end
     end
   end
