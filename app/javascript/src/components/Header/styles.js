@@ -1,25 +1,5 @@
 import styled from "styled-components";
-import { flexbox } from "styled-system";
 import { theme, Box, Link } from "@advisable/donut";
-
-export const StyledHeader = styled.header`
-  ${flexbox};
-  top: 0;
-  left: 0;
-  z-index: 30;
-  width: 100%;
-  height: var(--header-height);
-  display: flex;
-  position: fixed;
-  background: white;
-  align-items: center;
-  padding: 0 24px 0 24px;
-  box-shadow: 0px 1px 4px ${theme.colors.blue800}20;
-`;
-
-export const StyledHeaderSpacer = styled.div`
-  height: var(--header-height);
-`;
 
 export const Hamburger = styled.button`
   padding: 0;
