@@ -33,7 +33,7 @@ module Mutations
 
         if user.save
           login_as(account)
-          user.sync_to_airtable
+          user.bg_sync_to_airtable
           user.send_confirmation_email
           track_event("Client Signed Up")
           GeocodeAccountJob.perform_later(account, context[:client_ip])

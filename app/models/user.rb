@@ -70,7 +70,7 @@ class User < ApplicationRecord
     Logidze.with_responsible(responsible) do
       user.save!
     end
-    user.sync_to_airtable
+    user.bg_sync_to_airtable
     user
   end
 

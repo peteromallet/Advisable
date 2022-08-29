@@ -109,7 +109,7 @@ class ZapierInteractorController < ApplicationController
       yield(record)
     end
 
-    record.sync_to_airtable if record.respond_to?(:sync_to_airtable) && record.airtable_id.present?
+    record.bg_sync_to_airtable if record.respond_to?(:bg_sync_to_airtable) && record.airtable_id.present?
 
     render json: {status: "OK.", uid: record.uid}
   rescue ActiveRecord::RecordNotFound
