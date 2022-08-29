@@ -3,24 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Airtable::Skill do
-  # We can declare a fields let variable which the shared examples below will
-  # use as the airtable fields.
-  let(:fields) do
-    {
-      "Name" => "Testing",
-      "Category" => ["Testing"]
-    }
-  end
-
   include_examples "airtable syncing"
-  include_examples "sync airtable column", "Name", to: :name
-
-  it "syncs the category" do
-    record = create(:skill, category: nil)
-    airtable = described_class.new(fields, id: record.airtable_id)
-    expect { airtable.sync }.to change { record.reload.category }.
-      from(nil).to("Testing")
-  end
 
   describe "self.active" do
     it "fetches all of the skills from the 'Skelectable Skills' view" do

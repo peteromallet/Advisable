@@ -5,140 +5,7 @@ require "rails_helper"
 RSpec.describe Airtable::Specialist do
   let(:specialist) { create(:specialist) }
 
-  include_examples "airtable syncing", fields: {"Email Address" => Faker::Internet.email}
-  include_examples "sync airtable association", "Country", to: :country, fields: {"Email Address" => Faker::Internet.email}
-
-  include_examples("sync airtable columns to association", {
-    association: :account,
-    columns: [
-      {from: "Email Address", to: :email, with: "test@test.com"},
-      {from: "First Name", to: :first_name, with: "John"},
-      {from: "Last Name", to: :last_name, with: "Snow"}
-    ]
-  })
-
-  describe "syncing the application stage" do
-    let(:specialist) { create(:specialist, application_stage: nil) }
-    let(:airtable) do
-      described_class.new({
-        "Email Address" => "test@airtable.com",
-        "Application Stage" => "Started",
-        "Bank Holder Address" => "123 Bacon Street, Egg City, IE, 12345"
-      }, id: specialist.airtable_id)
-    end
-
-    context "when updated_at is fresher than sync_started_at" do
-      it "does not change data" do
-        old_email = specialist.account.email
-
-        airtable.sync(started_at: 5.minutes.ago)
-        expect(specialist.account.reload.email).to eq(old_email)
-      end
-    end
-  end
-
-  context "when 'Okay To Use Publicly' is Yes" do
-    let(:specialist) { create(:specialist, public_use: nil) }
-    let(:airtable) do
-      described_class.new({
-        "Email Address" => "test@airtable.com",
-        "Okay To Use Publicly" => "Yes"
-      }, id: specialist.airtable_id)
-    end
-
-    it "sets the public_use column to true" do
-      expect { airtable.sync }.to change {
-        specialist.reload.public_use
-      }.from(nil).to(true)
-    end
-  end
-
-  context "when 'Okay To Use Publicly' is No" do
-    let(:specialist) { create(:specialist, public_use: nil) }
-    let(:airtable) do
-      described_class.new({
-        "Okay To Use Publicly" => "No",
-        "Email Address" => "test@airtable.com"
-      }, id: specialist.airtable_id)
-    end
-
-    it "sets the public_use column to false" do
-      expect { airtable.sync }.to change {
-        specialist.reload.public_use
-      }.from(nil).to(false)
-    end
-  end
-
-  context "when there is a 'Typical Hourly Rate'" do
-    let(:specialist) { create(:specialist, hourly_rate: nil) }
-    let(:airtable) do
-      described_class.new({
-        "Email Address" => "test@airtable.com",
-        "Typical Hourly Rate" => 87
-      }, id: specialist.airtable_id)
-    end
-
-    it "translates it to price_range" do
-      expect { airtable.sync }.to change {
-        specialist.reload.price_range
-      }.from(nil).to("medium")
-    end
-  end
-
-  describe "when there are 'Specialist Skills'" do
-    let(:skill_a) { create(:skill) }
-    let(:skill_b) { create(:skill) }
-    let(:airtable) do
-      described_class.new({
-        "Email Address" => "test@airtable.com",
-        "Specialist Skills" => [skill_a.airtable_id, skill_b.airtable_id]
-      }, id: specialist.airtable_id)
-    end
-
-    it "associates each skill to the specialist" do
-      expect(specialist.reload.skills).not_to include(skill_a)
-      expect(specialist.reload.skills).not_to include(skill_b)
-      airtable.sync
-      expect(specialist.reload.skills).to include(skill_a)
-      expect(specialist.reload.skills).to include(skill_b)
-    end
-
-    context "when the skill has not already been synced" do
-      let(:airtable) do
-        described_class.new({
-          "Email Address" => "test@airtable.com",
-          "Specialist Skills" => ["recNewSkill"]
-        }, id: specialist.airtable_id)
-      end
-
-      it "syncs it first" do
-        airtable_skill = instance_double(Airtable::Skill)
-        allow(Airtable::Skill).to receive(:find).with("recNewSkill").and_return(airtable_skill)
-        expect(airtable_skill).to receive(:sync)
-        airtable.sync
-      end
-    end
-  end
-
-  describe "value stripping" do
-    let(:specialist) { create(:specialist) }
-    let(:airtable) do
-      described_class.new({
-        "Email Address" => " test@airtable.com ",
-        "First Name" => " Dwight ",
-        "Last Name" => " Schrute ",
-        "VAT Number" => " 1234 "
-      }, id: specialist.airtable_id)
-    end
-
-    it "strips association attributes" do
-      airtable.sync
-      specialist.reload
-      expect(specialist.vat_number).to eq(" 1234 ")
-      attributes = specialist.account.attributes.slice("email", "first_name", "last_name").map(&:second)
-      expect(attributes).to match_array(["Dwight", "Schrute", "test@airtable.com"])
-    end
-  end
+  include_examples "airtable syncing"
 
   describe "unsubscriptions" do
     let(:account) { create(:account) }
@@ -147,14 +14,6 @@ RSpec.describe Airtable::Specialist do
     let(:airtable) { described_class.new(fields, id: specialist.airtable_id) }
 
     context "when syncing to airtable" do
-      it "syncs over unsubscriptions to account" do
-        expect(account.reload.unsubscribed_from).to eq([])
-        airtable.sync
-        expect(account.reload.unsubscribed_from).to match_array(["Marketing Emails", "Onboarding Emails"])
-      end
-    end
-
-    context "when syncing from airtable" do
       let(:account) { create(:account, unsubscribed_from: ["SMS Alerts"]) }
 
       before { allow(airtable).to receive(:save) }
@@ -353,29 +212,6 @@ RSpec.describe Airtable::Specialist do
         }.from(skill.id).to(original.id)
 
         expect(Skill.where(id: skill.id)).to eq([])
-      end
-    end
-  end
-
-  describe "account handling" do
-    let(:specialist) { create(:specialist) }
-    let(:airtable) { described_class.new({"Email Address" => email}, id: specialist.airtable_id) }
-
-    context "when email is present" do
-      let(:email) { "test@airtable.com" }
-
-      it "creates the specialist" do
-        specialist = airtable.sync
-        expect(specialist.account).not_to be_nil
-      end
-    end
-
-    context "when email is blank" do
-      let(:email) { "" }
-
-      it "does not create a specialist" do
-        specialist = airtable.sync
-        expect(specialist).to be_nil
       end
     end
   end

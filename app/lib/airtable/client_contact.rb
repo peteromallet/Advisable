@@ -4,68 +4,8 @@
 module Airtable
   class ClientContact < Airtable::Base
     include Airtable::UnsubscribedFrom
-
     self.table_name = "Client Contacts"
-
     sync_with ::User
-
-    sync_column_to_association "Email Address", association: :account, to: :email
-    sync_column_to_association "First Name", association: :account, to: :first_name
-    sync_column_to_association "Last Name", association: :account, to: :last_name
-    sync_column_to_association "Type of Company", association: :company, to: :kind
-    sync_column_to_association "Project Payment Method", association: :company, to: :project_payment_method
-
-    sync_column "Title", to: :title
-    sync_column "Exceptional Project Payment Terms", to: :exceptional_project_payment_terms
-    sync_column "Campaign Name", to: :campaign_name
-    sync_column "Campaign Source", to: :campaign_source
-    sync_column "Contact Status", to: :contact_status
-    sync_column "Campaign Medium", to: :campaign_medium
-    sync_column "PID", to: :pid
-    sync_column "RID", to: :rid
-    sync_column "fid", to: :fid
-    sync_column "gclid", to: :gclid
-    sync_column "Same City Importance", to: :locality_importance
-    sync_column "Trustpilot Review Status", to: :trustpilot_review_status
-
-    sync_data do |user|
-      sales_person_airtable_id = fields["Owner"].try(:first)
-      if sales_person_airtable_id
-        sales_person = ::SalesPerson.find_by(airtable_id: sales_person_airtable_id)
-        if sales_person.nil?
-          airtable_sp = Airtable::SalesPerson.find(sales_person_airtable_id)
-          sales_person = airtable_sp.sync
-        end
-        user.company.update(sales_person:)
-      end
-
-      industry_id = self["Industry"].try(:first)
-      if industry_id
-        industry = ::Industry.find_by_airtable_id(industry_id)
-        industry = Airtable::Industry.find(industry_id).sync if industry.nil?
-        user.company.industry = industry
-      end
-
-      user.account.test_account = true if fields["Test Account"].try(:include?, "Yes")
-
-      sync_budget(user)
-      sync_unsubscribed_from(user)
-    end
-
-    def sync_budget(user)
-      amount = self["Estimated Annual Freelancer Spend (USD)"]
-      return if amount.nil?
-
-      user.company.budget = amount * 100
-    end
-
-    # After the syncing process has been complete
-    after_sync do |user|
-      if user.account.blank?
-        user.destroy
-        break
-      end
-    end
 
     push_data do |user|
       self["UID"] = user.uid
