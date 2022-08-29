@@ -49,25 +49,28 @@ class GoogleCalendar
     raise GoogleCalendarError, "No provider for Google Calendar" unless provider
   end
 
-  # TODO: Need to update this to work with interviews that are other combos besides user and specialist
   def create_event(interview)
+    reschedule_email = if interview.specialist_and_user?
+                         "#{interview.user.company.sales_person.name} at #{interview.user.company.sales_person.email}"
+                       else
+                         "us at hello@advisable.com"
+                       end
+
     description = <<~DESCRIPTION.strip
       You can use the following link for you call: #{app_host}/calls/#{interview.video_call.uid}.\n
       Please sign in to your Advisable account to join this call.\n
-      If you'd like to reschedule, please email #{interview.user.company.sales_person.name} at #{interview.user.company.sales_person.email}.
+      If you'd like to reschedule, please email #{reschedule_email}.
     DESCRIPTION
     ends_at = interview.starts_at + 30.minutes
+    attendees = interview.account_records.map { |acc| Google::Apis::CalendarV3::EventAttendee.new(email: acc.email) }
     event = Google::Apis::CalendarV3::Event.new(
       start: Google::Apis::CalendarV3::EventDateTime.new(date_time: interview.starts_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name),
       end: Google::Apis::CalendarV3::EventDateTime.new(date_time: ends_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name),
       location: "#{app_host}/calls/#{interview.video_call.uid}",
       reminders: Google::Apis::CalendarV3::Event::Reminders.new(use_default: true),
-      summary: "Call with #{interview.user.name_with_company} and #{interview.specialist.account.name}",
+      summary: "Call with #{interview.account_records.map(&:name_with_company).to_sentence}",
       description:,
-      attendees: [
-        Google::Apis::CalendarV3::EventAttendee.new(email: interview.user.account.email),
-        Google::Apis::CalendarV3::EventAttendee.new(email: interview.specialist.account.email)
-      ]
+      attendees:
     )
     ser_event = service.insert_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), event, send_updates: "all")
 
@@ -79,10 +82,7 @@ class GoogleCalendar
     event = service.get_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), interview.google_calendar_id)
     event.start = Google::Apis::CalendarV3::EventDateTime.new(date_time: interview.starts_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name)
     event.end = Google::Apis::CalendarV3::EventDateTime.new(date_time: ends_at.rfc3339, time_zone: interview.starts_at.time_zone.tzinfo.name)
-    event.attendees = [
-      Google::Apis::CalendarV3::EventAttendee.new(email: interview.user.account.email, response_status: "needsAction"),
-      Google::Apis::CalendarV3::EventAttendee.new(email: interview.specialist.account.email, response_status: "needsAction")
-    ]
+    event.attendees = interview.account_records.map { |acc| Google::Apis::CalendarV3::EventAttendee.new(email: acc.email, response_status: "needsAction") }
     service.update_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), event.id, event, send_updates: "all")
   end
 
