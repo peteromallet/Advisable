@@ -1,4 +1,4 @@
-import { throttle } from "lodash-es";
+import { throttle } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 function getStoredSizes(resource) {

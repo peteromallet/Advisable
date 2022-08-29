@@ -1,6 +1,6 @@
 import React from "react";
 import * as Sentry from "@sentry/react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Exclamation } from "@styled-icons/heroicons-solid/Exclamation";
 import { Attribute } from "../../attributes";
 import { recordPath } from "../../utilities";
@@ -27,7 +27,7 @@ export default function Rows({ edges, resource, sizeForColumn, attributes }) {
             fallback={
               <div className="inline-flex items-center">
                 <Exclamation size={16} />
-                <span className="-mt-px ml-1">Error</span>
+                <span className="ml-1 -mt-px">Error</span>
               </div>
             }
           >
