@@ -18,7 +18,7 @@
                 <div class="flex">
                   <div class="flex-grow">
                     <%= f.label :skill, class: "block text-sm font-medium text-gray-700" %>
-                    <%= f.select :skill, ::Skill.where.not(id: article.skills.pluck(:skill_id)).map { |skill| [skill.name, skill.id] }, {prompt: "Select Skill"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+                    <%= f.select :skill, ::Skill.active.order(:name).where.not(id: article.skills.pluck(:skill_id)).map { |skill| [skill.name, skill.id] }, {prompt: "Select Skill"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
                   </div>
                   <div class="ml-2">
                     <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
