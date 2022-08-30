@@ -36,6 +36,11 @@ FactoryBot.define do
     content { {links: [Faker::TvShows::SiliconValley.url, Faker::TvShows::SiliconValley.url]} }
   end
 
+  factory :case_study_podcast_content, parent: :case_study_content, class: "CaseStudy::PodcastContent" do
+    type { "CaseStudy::PodcastContent" }
+    content { {url: Faker::TvShows::SiliconValley.url} }
+  end
+
   factory :case_study_images_content, parent: :case_study_content, class: "CaseStudy::ImagesContent" do
     type { "CaseStudy::ImagesContent" }
     content { {} }
