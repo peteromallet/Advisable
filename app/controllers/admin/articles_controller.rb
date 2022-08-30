@@ -2,7 +2,15 @@
 
 module Admin
   class ArticlesController < AdminController
+    SPECIALIST_ACTIONS = %i[add_industry add_insight add_skill edit make_skill_primary remove_industry remove_insight remove_skill update].freeze
+
+    include AsSpecialist
+
+    attr_reader :article
+
     before_action :set_article, except: %i[index search new create]
+    skip_before_action :admin?, only: SPECIALIST_ACTIONS
+    before_action :admin_or_as_specialist?, only: SPECIALIST_ACTIONS
 
     include Pagy::Backend
 
@@ -42,13 +50,13 @@ module Admin
 
     def create
       @article = CaseStudy::Article.new(article_params)
-      @article.build_company
+      article.build_company
       CaseStudy::Section::VALID_TYPES.each.with_index do |type, index|
-        @article.sections.build(type:, position: index)
+        article.sections.build(type:, position: index)
       end
 
-      if @article.save
-        redirect_to edit_admin_article_path(@article), notice: "Article was successfully created."
+      if article.save
+        redirect_to edit_admin_article_path(article), notice: "Article was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -57,53 +65,53 @@ module Admin
     def edit; end
 
     def add_insight
-      @article.insights.create!(params.require(:case_study_insight).permit(:title, :description))
-      render partial: "insights", locals: {article: @article}
+      article.insights.create!(params.require(:case_study_insight).permit(:title, :description))
+      render partial: "insights", locals: {article:}
     end
 
     def remove_insight
-      @article.insights.find(params[:insight_id]).destroy
-      render partial: "insights", locals: {article: @article}
+      article.insights.find(params[:insight_id]).destroy
+      render partial: "insights", locals: {article:}
     end
 
     def add_industry
       industry_id = params.require(:case_study_industry).permit(:industry)[:industry]
-      @article.industries.create!(industry_id:) if industry_id.present? && !@article.industries.exists?(industry_id:)
-      render partial: "industries", locals: {article: @article}
+      article.industries.create!(industry_id:) if industry_id.present? && !article.industries.exists?(industry_id:)
+      render partial: "industries", locals: {article:}
     end
 
     def remove_industry
-      @article.industries.find(params[:industry_id]).destroy
-      render partial: "industries", locals: {article: @article}
+      article.industries.find(params[:industry_id]).destroy
+      render partial: "industries", locals: {article:}
     end
 
     def add_skill
       skill_id = params.require(:case_study_skill).permit(:skill)[:skill]
-      @article.skills.create!(skill_id:) if skill_id.present? && !@article.skills.exists?(skill_id:)
-      render partial: "skills", locals: {article: @article}
+      article.skills.create!(skill_id:) if skill_id.present? && !article.skills.exists?(skill_id:)
+      render partial: "skills", locals: {article:}
     end
 
     def remove_skill
-      @article.skills.find(params[:skill_id]).destroy
-      render partial: "skills", locals: {article: @article}
+      article.skills.find(params[:skill_id]).destroy
+      render partial: "skills", locals: {article:}
     end
 
     def make_skill_primary
-      @article.skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
-      @article.skills.find(params[:skill_id]).update(primary: true)
-      render partial: "skills", locals: {article: @article}
+      article.skills.update_all(primary: false) # rubocop:disable Rails/SkipsModelValidations
+      article.skills.find(params[:skill_id]).update(primary: true)
+      render partial: "skills", locals: {article:}
     end
 
     def update
-      if @article.update(article_params)
-        redirect_to edit_admin_article_path(@article), notice: "Article was successfully updated."
+      if article.update(article_params)
+        redirect_to edit_admin_article_path(article), notice: "Article was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
-      @article.destroy
+      article.destroy
       redirect_to admin_articles_path, notice: "Article was successfully destroyed.", status: :see_other
     end
 
@@ -114,7 +122,7 @@ module Admin
     end
 
     def article_params
-      params.require(:case_study_article).permit(:title, :subtitle, :score, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
+      params.require(:case_study_article).permit(:title, :subtitle, :score, :published_at, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
     end
   end
 end

@@ -39,6 +39,18 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index] do
       get :finance, on: :collection
     end
+    resources :topics, except: [:show] do
+      member do
+        patch :move
+        post :search_articles
+        post :add_result
+        patch :move_result
+        delete :remove_result
+      end
+    end
+  end
+
+  namespace :admin do
     resources :articles, except: [:show] do
       collection do
         get :search
@@ -57,15 +69,6 @@ Rails.application.routes.draw do
       member do
         patch :move
         delete :remove_image
-      end
-    end
-    resources :topics, except: [:show] do
-      member do
-        patch :move
-        post :search_articles
-        post :add_result
-        patch :move_result
-        delete :remove_result
       end
     end
   end
