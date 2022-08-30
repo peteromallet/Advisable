@@ -27,7 +27,7 @@ module Mutations
 
       if success
         specialist_or_user.send_confirmation_email
-        specialist_or_user.sync_to_airtable
+        specialist_or_user.bg_sync_to_airtable
       else
         signup_failed(account)
       end

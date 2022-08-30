@@ -23,14 +23,14 @@ class GeocodeAccountJob < ApplicationJob
     user = account.user
     user.country = country
     user.company.address = {city: geocoded_ip.city, country: geocoded_ip.country}
-    user.sync_to_airtable
+    user.bg_sync_to_airtable
   end
 
   def geocode_specialist
     specialist = account.specialist
     specialist.country = country
     specialist.city = geocoded_ip.city
-    specialist.sync_to_airtable
+    specialist.bg_sync_to_airtable
   end
 
   def geocode(ip)

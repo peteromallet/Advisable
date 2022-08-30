@@ -2,10 +2,6 @@
 
 # Rake task to set up all the daily and hourly tasks
 
-def airtable_sync
-  Airtable.sync
-end
-
 def clear_magic_links
   MagicLink.expired.delete_all
 end
@@ -15,10 +11,6 @@ def clear_unavailable_until_today
 end
 
 namespace :cron do
-  task hourly: :environment do
-    airtable_sync
-  end
-
   task daily: :environment do
     clear_magic_links
     clear_unavailable_until_today

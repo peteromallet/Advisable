@@ -38,7 +38,7 @@ module Toby
             attribute.write(record, value) unless attribute.readonly
           end
           record.save!
-          record.sync_to_airtable if record.respond_to?(:sync_to_airtable) && record.airtable_id.present?
+          record.bg_sync_to_airtable if record.respond_to?(:sync_to_airtable) && record.airtable_id.present?
         end
 
         def attribute(name, type, **args)

@@ -36,7 +36,7 @@ module Mutations
         bank_currency: args[:bank_currency],
         vat_number: args[:vat_number]
       )
-      specialist.sync_to_airtable
+      specialist.bg_sync_to_airtable
       {specialist:}
     end
   end

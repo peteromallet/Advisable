@@ -3,118 +3,10 @@
 module Airtable
   class Specialist < Airtable::Base
     include Airtable::UnsubscribedFrom
-
     self.table_name = "Specialists"
-
     belongs_to :country, class: "Airtable::Country", column: "Country"
-
-    # Tells which active record model to sync data with.
     sync_with ::Specialist
 
-    sync_column_to_association "Email Address", association: :account, to: :email
-    sync_column_to_association "First Name", association: :account, to: :first_name
-    sync_column_to_association "Last Name", association: :account, to: :last_name
-
-    sync_column "VAT Number", to: :vat_number
-    sync_column "Can Travel", to: :travel_availability
-    sync_column "City", to: :city
-    sync_column "LinkedIn URL", to: :linkedin
-    sync_column "Biography", to: :bio
-    sync_column "Application Stage", to: :application_stage
-    sync_column "Bank Holder Name", to: :bank_holder_name
-    sync_column "Bank Currency", to: :bank_currency
-    sync_column "Estimated Number of Freelance Projects", to: :number_of_projects
-    sync_column "PID", to: :pid
-    sync_column "Campaign Name", to: :campaign_name
-    sync_column "Campaign Source", to: :campaign_source
-    sync_column "Community Status", to: :community_status
-    sync_column "Community Status - Applied To Join - Timestamp", to: :community_applied_at
-    sync_column "Community Status - Accepted - Timestamp", to: :community_accepted_at
-    sync_column "Community Status - Invited To Call - Timestamp", to: :community_invited_to_call_at
-    sync_column "Community Score", to: :community_score
-    sync_column "Application Status", to: :application_status
-    sync_column "Campaign Medium", to: :campaign_medium
-    sync_column "Case Study Status", to: :case_study_status
-    sync_column "Trustpilot Review Status", to: :trustpilot_review_status
-
-    sync_data do |specialist|
-      if self["Bank Holder Address"]
-        # sync the bank holder address
-        specialist.bank_holder_address =
-          Address.parse(self["Bank Holder Address"]).to_h
-      end
-
-      interviewer_id = fields["Interviewer"].try(:first)
-      if interviewer_id
-        sales_person = ::SalesPerson.find_by(airtable_id: interviewer_id)
-        if sales_person.nil?
-          airtable_sp = Airtable::SalesPerson.find(interviewer_id)
-          sales_person = airtable_sp.sync
-        end
-        specialist.update(interviewer: sales_person)
-      end
-
-      # Sync 'Okay To Use Publicly'
-      specialist.public_use = self["Okay To Use Publicly"].include?("Yes") if self["Okay To Use Publicly"]
-
-      # sync the Freelancing Status column
-      freelancing_status = fields["Freelancing Status"]
-      specialist.primarily_freelance = freelancing_status.try(:include?, "Yes")
-
-      price_range_index = case fields["Typical Hourly Rate"].to_i
-                          when (..75)
-                            0
-                          when 75..150
-                            1
-                          when 150..300
-                            2
-                          when (300..)
-                            3
-                          end
-      specialist.price_range = ::Specialist::VALID_PRICE_RANGES[price_range_index]
-
-      # to prevent making more requests than we need, first check if there is
-      # an existing country record
-      country_airtable_id = fields["Country"].try(:first)
-
-      if country_airtable_id
-        country = ::Country.find_by_airtable_id(country_airtable_id)
-        country = Airtable::Country.find(country_airtable_id).sync if country.nil?
-        specialist.country = country
-      end
-
-      specialist.image = self["Image"].try(:first)
-
-      # iterate through each associated specialist id from airtable
-      specialist_skills.each do |skill_id|
-        # check if we already have a synced record of that skill.
-        skill =
-          ::Skill.find_by_airtable_id(skill_id)
-        # if not then sync it
-        skill = Airtable::Skill.find(skill_id).sync if skill.nil?
-        # find or initialize an association.
-        specialist.specialist_skills.find_or_initialize_by(skill:)
-      end
-
-      specialist.remote = true if fields["Remote OK"].try(:include?, "Yes")
-      specialist.remote = false if fields["Remote OK"].try(:include?, "No")
-      specialist.account.test_account = true if fields["Test Account"].try(:include?, "Yes")
-      specialist.referrer_id = ::Specialist.find_by(airtable_id: self["Referrer"].first)&.id if self["Referrer"].try(:first).present?
-
-      sync_unsubscribed_from(specialist)
-    end
-
-    # After the syncing process has been complete
-    after_sync do |specialist|
-      if specialist.account.blank?
-        specialist.destroy
-        break
-      end
-
-      specialist.saved_change_to_application_stage
-    end
-
-    # Describes how data should be synced to airtable.
     push_data do |specialist|
       self["Biography"] = specialist.bio
       self["LinkedIn URL"] = specialist.linkedin
@@ -211,22 +103,10 @@ module Airtable
     # this could be due to a duplicate skill record so we pass on to the
     # handle_duplicate_skill method.
     def handle_airtable_error(err, record)
-      # extract the id of the record that could not be found from the error
-
-      # get the postgres skill that represents this skill
-
-      # pass on to the handle_duplicate_skill method if the skill exists
-
       if err.message.include?("ROW_DOES_NOT_EXIST")
         id = err.message[/(rec\w*)/, 1]
-
         skill = ::Skill.find_by_airtable_id(id)
-
         return handle_duplicate_skill(skill, record) if skill.present?
-
-        # otherwise reraise the error, its a different kind of missing record.
-        # possibly a country association or something..
-        return false
       end
 
       false
@@ -242,8 +122,7 @@ module Airtable
         record.specialist_skills.find_by(skill:).update(skill: original)
         original.merge_with!(duplicate: skill)
       else
-        # The skill may have existed in airtable before so we need to clear
-        # out any existing airtable_id.
+        # The skill may have existed in airtable before so we need to clear out any existing airtable_id.
         skill.airtable_id = nil
         skill.sync_to_airtable # add the skill to airtable
       end

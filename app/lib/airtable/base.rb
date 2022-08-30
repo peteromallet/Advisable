@@ -16,149 +16,19 @@ module Airtable
         ENV.fetch("AIRTABLE_DATABASE_KEY", nil)
       end
 
-      def columns_hash
-        @columns_hash || {}
-      end
-
-      def associations
-        @associations ||= {}
-      end
-
-      def column_associations
-        @column_associations ||= {}
-      end
-
-      # Sync can be called on any class that inherits from Airtable::Base
-      # to sync all records from airtable.
-      # We filter the query to only fetch records that have been modified within
-      # the last day.
-      def sync(
-        report = nil,
-        filter: "DATETIME_DIFF(TODAY(), LAST_MODIFIED_TIME(), 'days') < 1",
-        view: nil,
-        started_at: nil
-      )
-        records = all(filter:, view:)
-        records.each do |r|
-          r.sync(report, started_at:)
-        rescue StandardError => e
-          raise $ERROR_INFO, "#{e.message} (#{r.class} with id #{r.id})", $ERROR_INFO.backtrace
-        end
-      end
-
-      # The sync_with method tells the class which ActiveRecord model to sync
-      # the data to.
       def sync_with(model)
         @sync_model = model
-      end
-
-      # sync_column allows us to define a mapping from the airtable record to
-      # the ActiveRecord model. e.g if the airtable record has an application_status
-      # which we want to sync with the ActiveRecord model's 'status' attribute, we
-      # can use.
-      # => sync_column 'Application Status', to: :status
-      def sync_column(column, options = {})
-        @columns_hash ||= {}
-        @columns_hash[column] = options[:to]
-      end
-
-      # sync_association allows us to define a mapping from an airtable column to
-      # an associated ActiveRecord model. This should be used when airtable
-      # columns are setup to 'Link to another record'.
-      # Note: Currently only supports belongs_to relationships
-      def sync_association(column, options = {})
-        @associations ||= {}
-        @associations[column] = options
-      end
-
-      # sync_column_to_association allows us to define a mapping from an airtable column
-      # to a column on an associated ActiveRecord model.
-      # e.g. first_name from Specialist to Account
-      def sync_column_to_association(column, association:, **options)
-        @column_associations ||= {}
-        @column_associations[association] ||= {}
-        @column_associations[association][column] = {strip: true}.merge(options)
-      end
-
-      # sync_data allows us to sync data which might not fit into a direct mapping
-      # with the airtable record. This can also be useful for setting relationships.
-      def sync_data(&block)
-        @sync_block = block
       end
 
       def push_data(&block)
         @push_block = block
       end
-
-      def after_sync(&block)
-        @after_sync_block = block
-      end
     end
 
-    # returns the active record model to sync data to
     def model
       @model ||= self.class.sync_model.find_or_initialize_by(airtable_id: id)
     end
 
-    # You can call sync on an instance of any class that inherits from
-    # Airtable::Base to sync that individual record.
-    # You can pass an instance of Airtable::SyncReport to capture any
-    # errors that prevented the record from being synced
-    # => Airtable::Project.find("rec_123").sync
-    def sync(report = nil, started_at: nil)
-      return if started_at && model.updated_at && model.updated_at > started_at
-
-      ActiveRecord::Base.transaction do
-        error = false
-        record_type = self.class.sync_model.to_s.underscore
-
-        self.class.columns_hash.each do |column, attr|
-          model.public_send("#{attr}=", self[column])
-        end
-
-        self.class.column_associations.each do |association, columns_hash|
-          model.public_send("build_#{association}") if model.public_send(association).blank?
-          association = model.public_send(association)
-
-          columns_hash.each do |column, options|
-            value = self[column]
-            value = value.strip if options[:strip] && value.present?
-            association.public_send("#{options[:to]}=", value)
-          end
-
-          next if association.save
-
-          message = "Failed to sync association columns of #{association} on #{record_type} #{id} \n#{association.errors.full_messages}"
-          Rails.logger.warn(message)
-          report&.failed(id, record_type, association.errors.full_messages)
-          error = true
-        end
-
-        unless error
-          self.class.associations.each do |column, options|
-            sync_association(column:, record: model, attribute: options[:to])
-          end
-
-          instance_exec(model, &self.class.sync_block) if self.class.sync_block
-
-          if model.save
-            instance_exec(model, &self.class.after_sync_block) if self.class.after_sync_block
-
-            model
-          else
-            message = "Failed to sync #{record_type} #{id} \n#{model.errors.full_messages}"
-            Rails.logger.warn(message)
-            report&.failed(id, record_type, model.errors.full_messages)
-          end
-        end
-      end
-    end
-
-    # The push method describes how data should be pushed to airtable. This is
-    # not the only place where data is pushed to airtable, we also push data
-    # in graphql mutations and service classes, however, most of these are being
-    # converted to use the sync_to_airtable method from the Syncable module which
-    # uses push
     def push(record, additional_fields = {})
       raise "Airtable ID does not match" if id && id != record.try(:airtable_id)
 
@@ -192,27 +62,6 @@ module Airtable
     # retry to sync the record.
     def handle_airtable_error(_err, _record)
       false
-    end
-
-    private
-
-    def sync_association(column:, record:, attribute:)
-      # read the id from the column data.
-      id = self[column].try(:first)
-      # if there is no ID then we are done.
-      return unless id
-
-      # use rails reflect_on_association metod to find the association class.
-      reflection = record.class.reflect_on_association(attribute)
-      association_class = reflection.class_name.constantize
-      # use the class name to find the association airtable class
-      airtable_class = "Airtable::#{reflection.class_name}".constantize
-      # see if we have a synced copy of the association first
-      associate = association_class.find_by_airtable_id(id)
-      # if there isn't a synced version of the association then sync it
-      associate = airtable_class.find(id).sync if associate.nil?
-      # assign the association
-      record.public_send("#{attribute}=", associate)
     end
   end
 end

@@ -69,7 +69,7 @@ RSpec.describe(User, type: :model) do
     end
 
     it "sync with airtable" do
-      expect_any_instance_of(described_class).to receive(:sync_to_airtable)
+      expect_any_instance_of(described_class).to receive(:bg_sync_to_airtable)
       user.invite_comember!(new_account)
     end
   end
