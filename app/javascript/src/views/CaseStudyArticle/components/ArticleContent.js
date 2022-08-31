@@ -4,12 +4,14 @@ import Heading from "./Heading";
 import Paragraph from "./Paragraph";
 import { useLocation } from "react-router-dom";
 import LimitedContentSignup from "./LimitedContentSignup";
+import Podcast from "./PodcastContent";
 
 const CONTENT_TYPES = {
   Images,
   Heading,
   Results: null,
   Paragraph,
+  Podcast,
 };
 
 function CaseStudyContentBlock({ element, ...props }) {
