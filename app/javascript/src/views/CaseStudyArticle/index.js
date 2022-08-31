@@ -97,7 +97,7 @@ export default function CaseStudyArticle() {
             </StickyBox>
           </div>
           <div className="flex relative flex-col py-3 w-full border-solid lg:pl-12 lg:border-l xl:pl-16 border-neutral100">
-            <ScrollIndicator />
+            {!location.state?.signupPrompt && <ScrollIndicator />}
 
             <div className="pt-10 pb-20">
               <SpecialistBar
@@ -124,13 +124,15 @@ export default function CaseStudyArticle() {
               {loading ? (
                 <Loading />
               ) : (
-                <>
-                  <ArticleContent caseStudy={data.caseStudy} />
-                  <SimilarArticles
-                    articles={data.caseStudy.similar}
-                    onClick={scrollToTop}
-                  />
-                </>
+                !location.state?.signupPrompt && (
+                  <>
+                    <ArticleContent caseStudy={data.caseStudy} />
+                    <SimilarArticles
+                      articles={data.caseStudy.similar}
+                      onClick={scrollToTop}
+                    />
+                  </>
+                )
               )}
             </div>
           </div>
