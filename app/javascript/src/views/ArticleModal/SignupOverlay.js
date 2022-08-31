@@ -12,18 +12,17 @@ export default function SignupOverlay() {
           <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
           <div className="relative z-10">
             <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-white">
-              Sign up to access 100s of full case studies
+              Explore 100s of full case studies for free
             </h1>
             <p className="text-lg text-indigo-50 max-w-[400px]">
-              It’s free forever to access to our library of SaaS marketing
-              projects.
+              Access our library of SaaS growth projects from leading marketers.
             </p>
           </div>
         </div>
         <div className="p-10">
           <Link to="/clients/join" className="block mb-4">
             <Button size="lg" className="w-full">
-              Get Started
+              Get full access
             </Button>
           </Link>
           <Link
