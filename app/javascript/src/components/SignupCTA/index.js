@@ -94,13 +94,13 @@ export default function SignupCTA() {
           boxShadow:
             "0 12px 40px -8px rgb(0 0 0 / .6), 0 -40px 40px -24px rgb( 0 0 0 / .28)",
         }}
-        className="relative py-20 px-16 -mx-8 rounded-2xl signupCTA bg-blue900"
+        className="relative py-20 px-16 rounded-2xl lg:-mx-8 signupCTA bg-blue900"
       >
         <div className="relative z-10">
           <h1 className="mb-5 font-serif text-5xl font-semibold tracking-tight leading-tight text-white max-w-[520px]">
             Explore 100s of case studies for free
           </h1>
-          <p className="mb-12 text-lg leading-relaxed text-white opacity-80 w-[460px]">
+          <p className="mb-12 text-lg leading-relaxed text-white opacity-80 max-w-[460px]">
             Get free access to our full library of SaaS marketing case studies.
             You only pay when you hire someone you discover through us!
           </p>
