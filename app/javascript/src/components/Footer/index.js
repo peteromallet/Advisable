@@ -18,7 +18,7 @@ function FooterLink(props) {
 
 function FooterMenu({ title, links }) {
   return (
-    <div className="w-[120px]">
+    <div className="w-[200px] lg:w-[150px]">
       <h5 className="mb-2 text-lg font-medium">{title}</h5>
       <ul className="space-y-3">
         {links.map((link) => (
@@ -36,8 +36,8 @@ export default function Footer() {
 
   return (
     <div className="pt-12 pb-20 border-t border-solid border-neutral100">
-      <div className="flex justify-between px-10 mx-auto w-full max-w-[1300px]">
-        <div>
+      <div className="justify-between px-10 mx-auto w-full md:flex max-w-[1300px]">
+        <div className="mb-8">
           <div className="mb-1">
             <Logo />
           </div>
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex gap-24">
+        <div className="grid grid-cols-2 gap-16 lg:grid-cols-4">
           <FooterMenu
             title="Overview"
             links={[
