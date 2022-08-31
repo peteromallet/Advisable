@@ -14,7 +14,14 @@ const toggleLinkClasses = composeStyles({
   },
 });
 
-const COLLABORATE_PATHS = ["/payment_requests", "/messages"];
+const COLLABORATE_PATHS = [
+  "/collaborate",
+  "/payment_requests",
+  "/messages",
+  "/guild/*",
+  "/posts/*",
+  "/events/*",
+];
 
 function ToggleLink({ children, active, to }) {
   return (
@@ -31,7 +38,7 @@ export function useIsCollaborationView() {
     return matchPath({ path }, location.pathname);
   });
 
-  return Boolean(collaborationMatch)
+  return Boolean(collaborationMatch);
 }
 
 export default function HeaderToggle() {
@@ -40,21 +47,21 @@ export default function HeaderToggle() {
   const animation = {
     x: collaborationActive ? 84 : 0,
     width: collaborationActive ? 110 : 88,
-  }
+  };
 
   return (
     <div className={toggleClasses()}>
       <ToggleLink active={!collaborationActive} to="/">
         Discover
       </ToggleLink>
-      <ToggleLink active={collaborationActive} to="/payment_requests">
+      <ToggleLink active={collaborationActive} to="/collaborate">
         Collaborate
       </ToggleLink>
       <motion.div
         animate={animation}
         initial={animation}
         transition={{ type: "spring", stiffness: 100, damping: 10, mass: 0.3 }}
-        className="inset-1 absolute shadow z-0 rounded-full bg-white"
+        className="absolute inset-1 z-0 bg-white rounded-full shadow"
       />
     </div>
   );

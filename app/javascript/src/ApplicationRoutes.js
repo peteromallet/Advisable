@@ -44,6 +44,7 @@ const ApplicationRoutes = () => {
   const viewer = useViewer();
   const location = useLocation();
   const isFreelancer = viewer && viewer.__typename === "Specialist";
+  const isClient = viewer && viewer.__typename === "User";
 
   return (
     <>
@@ -61,13 +62,20 @@ const ApplicationRoutes = () => {
 
             {isFreelancer && (
               <Route
-                path="/dashboard"
+                path="/collaborate"
                 exact
                 element={
                   <RequireAuthentication>
                     <FreelancerDashboard />
                   </RequireAuthentication>
                 }
+              />
+            )}
+
+            {isClient && (
+              <Route
+                path="/collaborate"
+                element={<Navigate to="/payment_requests" />}
               />
             )}
 
