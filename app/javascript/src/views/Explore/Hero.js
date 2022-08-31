@@ -1,12 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 import GridLines from "src/components/GridLines";
+import HeroLogos from "./HeroLogos";
 
 export default function Hero() {
   return (
     <div className="mb-4 hero">
       <div className="relative z-10 py-24 px-5 mx-auto lg:px-10 max-w-[1300px]">
-        <GridLines color="#e4cfff" highlight="#B98CDD" />
+        <GridLines size={20} color="#e4cfff" highlight="#B98CDD">
+          <HeroLogos />
+        </GridLines>
         <div className="relative z-10 max-w-[560px]">
           <motion.h1
             initial={{ opacity: 0 }}
