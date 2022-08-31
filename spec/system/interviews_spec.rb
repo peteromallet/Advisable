@@ -106,7 +106,8 @@ RSpec.describe "Interviews", type: :system do
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    click_on("Next Month")
+    first(".DayPicker-Day[aria-disabled=false]").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
@@ -125,7 +126,8 @@ RSpec.describe "Interviews", type: :system do
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    click_on("Next Month")
+    first(".DayPicker-Day[aria-disabled=false]").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
