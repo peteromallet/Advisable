@@ -13,7 +13,7 @@ export default function Explore() {
   const viewer = useViewer();
   const onboarding = useTutorial("onboarding");
 
-  if (!onboarding.isComplete) {
+  if (viewer?.isClient && !onboarding.isComplete) {
     return <Navigate replace to="/setup/company" />;
   }
 
@@ -21,7 +21,7 @@ export default function Explore() {
     <>
       {!viewer && <Hero />}
       <ScrollToTop />
-      <div className="max-w-[1300px] mx-auto px-5 lg:px-10 pb-10 min-h-[80vh]">
+      <div className="px-5 pb-10 mx-auto lg:px-10 max-w-[1300px] min-h-[80vh]">
         <TopicsBar />
         <div className="h-px bg-neutral-200" />
         <Outlet />

@@ -10,7 +10,7 @@ module Mutations
       field :article, Types::CaseStudy::Article, null: false
 
       def authorized?(**_args)
-        requires_client!
+        requires_current_user!
       end
 
       def resolve(article:)

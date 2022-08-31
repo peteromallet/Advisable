@@ -8,7 +8,7 @@ module CaseStudy
     alias delete? read?
 
     def user_owner?
-      record.account&.user == current_user
+      record.account == current_user&.account
     end
   end
 end

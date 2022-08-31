@@ -304,7 +304,7 @@ module Types
 
     field :interests, [Types::CaseStudy::Interest], null: true
     def interests
-      requires_client!
+      requires_current_user!
       current_user.account.interests
     end
 
@@ -312,7 +312,7 @@ module Types
       argument :id, ID, required: true
     end
     def interest(id:)
-      requires_client!
+      requires_current_user!
       current_user.account.interests.find_by!(uid: id)
     end
 
@@ -330,7 +330,7 @@ module Types
 
     field :feed, Types::CaseStudy::InterestArticle.connection_type, null: true
     def feed
-      requires_client!
+      requires_current_user!
       interests = current_user.account.interests
 
       interest_article_ids = ::CaseStudy::InterestArticle.
@@ -344,7 +344,7 @@ module Types
 
     field :favorited_articles, Types::CaseStudy::Article.connection_type, null: true
     def favorited_articles
-      requires_client!
+      requires_current_user!
       favorited = ::CaseStudy::FavoritedArticle.where(account: current_user.account).order(created_at: :desc).pluck(:article_id)
       ::CaseStudy::Article.searchable.where(id: favorited).in_order_of(:id, favorited)
     end
@@ -353,7 +353,7 @@ module Types
       argument :term, String, required: true
     end
     def search(term:)
-      requires_client!
+      requires_current_user!
       interest_preview = ::CaseStudy::InterestPreview.find_or_create_by!(term:, account: current_user.account)
       interest_preview.find_results!
       track_event("Search", {term:})
