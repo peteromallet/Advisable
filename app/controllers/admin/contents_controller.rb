@@ -65,6 +65,8 @@ module Admin
         {content: {text: params[:text], size: params[:size]}}
       when CaseStudy::ResultsContent
         {content: {results: params[:results].reject { |r| r.values.all?(&:blank?) }}}
+      when CaseStudy::PodcastContent
+        {content: {url: params[:url]}}
       when CaseStudy::ImagesContent
         if params[:images].present?
           params[:images].each do |image|
