@@ -19,19 +19,19 @@ export default function Hero() {
             transition={{ delay: 0, duration: 0.8 }}
             className="mb-4 font-serif text-4xl font-bold md:text-5xl text-blue900 tracking-[-0.02em]"
           >
-            Discover the best of{" "}
+            Discover the growth secrets of{" "}
             <span className="font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-              SaaS Marketing
+              SaaS Startups
             </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.05, duration: 1 }}
-            className="text-lg leading-relaxed md:text-xl text-blue900 max-w-[600px]"
+            className="text-lg md:text-xl md:leading-relaxed text-blue900 max-w-[600px]"
           >
-            Find out what's working for leading marketers and connect with them
-            for mentorship & fractional support
+            Find out what’s working for leading marketers and connect with them
+            for mentorship & fractional support.
           </motion.p>
         </div>
       </div>
