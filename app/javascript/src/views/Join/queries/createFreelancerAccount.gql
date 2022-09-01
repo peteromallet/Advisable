@@ -1,0 +1,9 @@
+# import "../../graphql/queries/getViewer.graphql
+
+mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
+  createFreelancerAccount(input: $input) {
+    viewer {
+      ...ViewerFields
+    }
+  }
+}
