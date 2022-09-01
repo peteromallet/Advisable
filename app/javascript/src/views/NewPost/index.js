@@ -23,13 +23,13 @@ export default function CollaborationRequest() {
       },
     });
 
-    navigate("/");
+    navigate("/collaborate");
   };
 
   return (
     <View>
       <Box position="absolute" right="20px" top="20px">
-        <Link to="/">
+        <Link to="/collaborate">
           <CircularButton icon={X} />
         </Link>
       </Box>

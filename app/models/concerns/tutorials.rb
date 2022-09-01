@@ -7,7 +7,7 @@ module Tutorials
 
   TUTORIALS = {
     "User" => %w[onboarding feed],
-    "Specialist" => %w[introductory_call]
+    "Specialist" => %w[onboarding introductory_call]
   }.freeze
 
   included do

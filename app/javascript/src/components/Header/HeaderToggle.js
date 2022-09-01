@@ -19,7 +19,7 @@ const COLLABORATE_PATHS = [
   "/payment_requests",
   "/messages",
   "/guild/*",
-  "/posts/*",
+  "/post*",
   "/events/*",
 ];
 

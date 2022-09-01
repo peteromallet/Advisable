@@ -13,8 +13,8 @@ export default function Explore() {
   const viewer = useViewer();
   const onboarding = useTutorial("onboarding");
 
-  if (viewer?.isClient && !onboarding.isComplete) {
-    return <Navigate replace to="/setup/company" />;
+  if (!onboarding.isComplete) {
+    return <Navigate replace to="/setup/interests" />;
   }
 
   return (
