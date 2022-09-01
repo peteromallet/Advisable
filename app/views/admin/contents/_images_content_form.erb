@@ -1,15 +1,10 @@
-<% if content.persisted? %>
-  <div class="flex justify-between">
-    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
-      Editing Images
-    </span>
-    <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
-  </div>
-<% else %>
-  <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+<span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-100 text-fuchsia-800">
+  <% if content.persisted? %>
+    Images
+  <% else %>
     New Images
-  </span>
-<% end %>
+  <% end %>
+</span>
 <ul role="list" class="mt-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6">
   <% content.images.each do |image| %>
     <li class="relative" id="<%= dom_id(image) %>">
