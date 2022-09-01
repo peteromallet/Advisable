@@ -1,0 +1,69 @@
+<% if current_account.admin? %>
+  <nav class="bg-gray-800" data-controller="menu">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none"  width="24" height="24" viewBox="0 0 40 40">
+              <path fill="#FFF" d="M17.727 21.794a12.045 12.045 0 015.853-4.954c1.368-.542 2.859-.84 4.42-.84 6.627 0 12 5.373 12 12s-5.373 12-12 12a11.986 11.986 0 01-9.834-5.122c-.662-.943-.145-2.183.852-2.761a14.062 14.062 0 003.192-2.538A6 6 0 1028 22c-2 0-3.625.733-5.727 4.206A11.993 11.993 0 0112 32C5.373 32 0 26.627 0 20S5.373 8 12 8c4.069 0 7.664 2.025 9.834 5.122.661.943.144 2.183-.852 2.761a14.061 14.061 0 00-3.192 2.538A6 6 0 1012 26c3.314-.001 4.378-1.978 5.727-4.207zM33.2 14.997a6 6 0 10-10.989-4.576 14.061 14.061 0 00-3.193-2.538c-.996-.578-1.513-1.818-.852-2.761A11.986 11.986 0 0128 0c6.627 0 12 5.373 12 12 0 1.426-.248 2.793-.705 4.062-.442 1.23-2.005 1.383-3.062.614a13.97 13.97 0 00-3.034-1.679z"></path>
+            </svg>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <%= active_link_to "Dashboard", admin_dashboard_index_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+              <%= active_link_to "Topics", admin_topics_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+              <%= active_link_to "Articles", admin_articles_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+              <%= active_link_to "Article Search", search_admin_articles_path, class: "px-3 py-2 rounded-md text-sm font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-4 flex items-center md:ml-6">
+            <div class="ml-3 relative">
+              <img class="h-8 w-8 rounded-full" src="<%= current_user.account.cached_avatar_url %>">
+            </div>
+          </div>
+        </div>
+        <div class="-mr-2 flex md:hidden">
+          <!-- Mobile menu button -->
+          <button type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" data-action="click->menu#toggle">
+            <span class="sr-only">Open main menu</span>
+            <!-- Heroicon name: outline/menu Menu open: "hidden", Menu closed: "block" -->
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-menu-target="toggleable">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Heroicon name: outline/x Menu open: "block", Menu closed: "hidden" -->
+            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" data-menu-target="toggleable">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="hidden md:hidden" id="mobile-menu" data-menu-target="toggleable">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <%= active_link_to "Dashboard", admin_dashboard_index_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+        <%= active_link_to "Topics", admin_topics_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+        <%= active_link_to "Articles", admin_articles_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+        <%= active_link_to "Article Search", search_admin_articles_path, class: "block px-3 py-2 rounded-md text-base font-medium", active: :exclusive, class_active: "bg-gray-900 text-white", class_inactive: "text-gray-300 hover:bg-gray-700 hover:text-white" %>
+      </div>
+      <div class="pt-4 pb-3 border-t border-gray-700">
+        <div class="flex items-center px-5">
+          <div class="flex-shrink-0">
+            <img class="h-10 w-10 rounded-full" src="<%= current_user.account.cached_avatar_url %>">
+          </div>
+          <div class="ml-3">
+            <div class="text-base font-medium leading-none text-white">
+              <%= current_account.name %>
+            </div>
+            <div class="text-sm font-medium leading-none text-gray-400">
+              <%= current_account.email %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+<% end %>

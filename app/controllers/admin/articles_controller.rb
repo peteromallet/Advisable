@@ -104,7 +104,8 @@ module Admin
 
     def update
       if article.update(article_params)
-        redirect_to edit_admin_article_path(article), notice: "Article was successfully updated."
+        path = current_account.admin? ? edit_admin_article_path(article) : specialist_editor_path(article)
+        redirect_to path, notice: "Article was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end

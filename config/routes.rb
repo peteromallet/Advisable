@@ -73,6 +73,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "editor/:id", to: "admin/articles#edit", as: :specialist_editor
+
   post "/graphql", to: "graphql#execute"
 
   post "/stripe_events", to: "stripe_events#create"
