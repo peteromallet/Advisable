@@ -10,7 +10,7 @@ module HostHelper
     if heroku_name.present? && heroku_name != "advisable"
       "https://#{heroku_name}.herokuapp.com"
     elsif Rails.env.production?
-      "https://app.advisable.com"
+      "https://advisable.com"
     else
       ActionMailer::Base.default_url_options[:host]
     end

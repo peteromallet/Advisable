@@ -8,9 +8,9 @@ import MobileMenu, { MobileMenuLink } from "./MobileMenu";
 import { useBreakpoint } from "src/../../../donut/src";
 
 const LINKS = [
-  { to: "https://advisable.com/testing/freelancers", label: "Get Featured" },
-  { to: "https://advisable.com/testing/clients", label: "Recruit Talent" },
-  // { to: "https://advisable.com/testing/pricing", label: "Pricing" },
+  { to: "https://more.advisable.com/freelancers", label: "Get Featured" },
+  { to: "https://more.advisable.com/clients", label: "Recruit Talent" },
+  // { to: "https://more.advisable.com/pricing", label: "Pricing" },
 ];
 
 function MobilePublicHeader() {

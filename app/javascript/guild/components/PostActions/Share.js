@@ -7,7 +7,7 @@ import ShareModal from "./ShareModal";
 
 function MessagePostAction({ post, size }) {
   const modal = useDialogState();
-  const url = `https://app.advisable.com/posts/${post.id}`;
+  const url = `https://advisable.com/posts/${post.id}`;
 
   return (
     <>

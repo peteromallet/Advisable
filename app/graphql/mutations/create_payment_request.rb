@@ -30,7 +30,7 @@ module Mutations
       conversation = Conversation.by_accounts(current_user, agreement.user)
       conversation.new_message!(kind: "PaymentRequestCreated", payment_request:, send_emails: false)
 
-      SlackMessageJob.perform_later(channel: "payments", text: "#{payment_request.specialist.account.name} has sent a payment request to #{payment_request.company.name} (<https://app.advisable.com/toby/paymentrequests/#{payment_request.id}|View in Toby>)")
+      SlackMessageJob.perform_later(channel: "payments", text: "#{payment_request.specialist.account.name} has sent a payment request to #{payment_request.company.name} (<https://advisable.com/toby/paymentrequests/#{payment_request.id}|View in Toby>)")
 
       {payment_request:}
     end

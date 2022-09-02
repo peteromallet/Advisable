@@ -5,7 +5,7 @@ import AdvisableLogo from "src/components/Logo";
 export default function Header() {
   return (
     <Box gridArea="header" alignSelf="end">
-      <Link.External href="https://advisable.com/">
+      <Link.External href="/">
         <AdvisableLogo color="blue500" />
       </Link.External>
     </Box>

@@ -18,7 +18,7 @@ function SourcingFee({ amount = 0, sourcingFee }) {
       <Link.External
         variant="underlined"
         target="_blank"
-        href="https://www.advisable.com/faq"
+        href="https://more.advisable.com/faq"
       >
         {fee * 100}% Advisable fee
       </Link.External>
@@ -69,15 +69,15 @@ export default function PaymentRequestSummary({
   }, [amount, showClientFee, adminFee]);
 
   return (
-    <div className="md:w-[460px] shrink-0 pb-8">
-      <div className="bg-white p-8 rounded-lg pb-12 relative shadow-2xl">
-        <div className="absolute right-5 top-5">
+    <div className="pb-8 shrink-0 md:w-[460px]">
+      <div className="relative p-8 pb-12 bg-white rounded-lg shadow-2xl">
+        <div className="absolute top-5 right-5">
           <PaymentRequestStatus status={status} />
         </div>
 
-        <h4 className="text-2xl font-medium tracking-tight mb-8">Summary</h4>
+        <h4 className="mb-8 text-2xl font-medium tracking-tight">Summary</h4>
 
-        <div className="grid grid-cols-2 gap-y-7 gap-x-3">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-7">
           <PaymentRequestAttribute
             label="Billed to"
             icon={OfficeBuilding}
@@ -101,11 +101,11 @@ export default function PaymentRequestSummary({
         </div>
 
         <div className="divide-y divide-solid divide-neutral100">
-          <h5 className="font-medium text-lg mt-10 mb-2">Items</h5>
+          <h5 className="mt-10 mb-2 text-lg font-medium">Items</h5>
           {lineItems.map((lineItem, index) => (
             <div key={index} className="flex justify-between py-4">
               <span className="text-neutral800">{lineItem.description}</span>
-              <span className="font-semibold text-lg">
+              <span className="text-lg font-semibold">
                 {currency(lineItem.amount)}
               </span>
             </div>
@@ -114,12 +114,12 @@ export default function PaymentRequestSummary({
           {showClientFee && paymentRequest.adminFee && (
             <div className="flex justify-between py-4">
               <div>
-                <div className="text-neutral800 mb-1">5% Advisable fee</div>
+                <div className="mb-1 text-neutral800">5% Advisable fee</div>
                 <Link.External fontSize="s" variant="underlined">
                   Read more
                 </Link.External>
               </div>
-              <div className="font-medium text-lg">
+              <div className="text-lg font-medium">
                 {currency(paymentRequest.adminFee, { format: "$0,0.00" })}
               </div>
             </div>
@@ -147,8 +147,8 @@ export default function PaymentRequestSummary({
 
         {memo ? (
           <div>
-            <h5 className="font-medium text-lg mt-10 mb-2">Note</h5>
-            <p className="text-md leading-relaxed text-neutral700">{memo}</p>
+            <h5 className="mt-10 mb-2 text-lg font-medium">Note</h5>
+            <p className="leading-relaxed text-md text-neutral700">{memo}</p>
           </div>
         ) : null}
 

@@ -50,7 +50,7 @@ class ClientSignupNotificationJob < ApplicationJob
                 type: "plain_text",
                 text: "View in Toby"
               },
-              url: "https://app.advisable.com/toby/users/#{user.id}"
+              url: "https://advisable.com/toby/users/#{user.id}"
             }
           ]
         }
