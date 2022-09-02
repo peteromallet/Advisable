@@ -1,4 +1,4 @@
-# import "../../graphql/queries/getViewer.graphql
+#import "../../../graphql/fragments/viewerFields.graphql"
 
 mutation CreateFreelancerAccount($input: CreateFreelancerAccountInput!) {
   createFreelancerAccount(input: $input) {

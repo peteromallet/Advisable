@@ -8,11 +8,15 @@ import Card from "./Card";
 const optionClasses = composeStyles({
   base: `
     transition-all
-    shadow-xl hover:shadow-2xl
+    ring-1
+    ring-neutral200
     hover:-translate-y-1
+    hover:ring-blue300
+    hover:ring-2
     bg-white
     rounded-lg
     p-5 md:p-8
+    w-full
     cursor-pointer
 
     flex
@@ -39,10 +43,10 @@ function AccountOption({ illustration, title, subtext }) {
 export default function Intro() {
   return (
     <Card>
-      <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-4 text-blue900 max-w-[480px]">
+      <h2 className="font-semibold text-2xl md:text-2xl tracking-tight leading-none mb-8 text-neutral900">
         What kind of account do you want to create?
       </h2>
-      <div className="flex gap-8 justify-center">
+      <div className="grid w-full justify-stretch grid-flow-col gap-8">
         <Link to="/join/client" className="rounded-lg">
           <AccountOption
             title="Client"

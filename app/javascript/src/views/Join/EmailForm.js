@@ -5,6 +5,7 @@ import { Input, Error } from "@advisable/donut";
 import { object, string, ref } from "yup";
 import { Form, Formik } from "formik";
 import FormField from "src/components/FormField";
+import BackButton from "src/components/BackButton";
 import SubmitButton from "src/components/SubmitButton";
 import { useCreateClientAccount, useCreateFreelancerAccount } from "./queries";
 import Card from "./Card";
@@ -24,7 +25,7 @@ const validationSchema = object().shape({
 });
 
 export default function EmailForm() {
-  const freelancer = useMatch({ path: "/join/freelancer" });
+  const freelancer = useMatch("/join/freelancer/email");
   const [createClientAccount] = useCreateClientAccount();
   const [createFreelancerAccount] = useCreateFreelancerAccount();
   const [searchParams] = useSearchParams();
@@ -42,6 +43,22 @@ export default function EmailForm() {
     const createAccount = freelancer
       ? createFreelancerAccount
       : createClientAccount;
+
+    const payload = freelancer
+      ? {
+          pid: searchParams.get("pid"),
+          campaignName: searchParams.get("utm_campaign"),
+          campaignSource: searchParams.get("utm_source"),
+          referrer: searchParams.get("rid"),
+        }
+      : {
+          rid: searchParams.get("rid"),
+          utmCampaign: searchParams.get("utm_campaign"),
+          utmContent: searchParams.get("utm_content"),
+          utmSource: searchParams.get("utm_source"),
+          utmMedium: searchParams.get("utm_medium"),
+        };
+
     const res = await createAccount({
       variables: {
         input: {
@@ -49,11 +66,7 @@ export default function EmailForm() {
           lastName: values.lastName,
           email: values.email,
           password: values.password,
-          rid: searchParams.get("rid"),
-          utmCampaign: searchParams.get("utm_campaign"),
-          utmContent: searchParams.get("utm_content"),
-          utmSource: searchParams.get("utm_source"),
-          utmMedium: searchParams.get("utm_medium"),
+          ...payload,
         },
       },
     });
@@ -66,8 +79,9 @@ export default function EmailForm() {
 
   return (
     <Card>
-      <div className="text-center mb-8">
-        <h2 className="text-xl mb-3">Start discovering SaaS projects</h2>
+      <div className="mb-8 flex gap-3">
+        <BackButton />
+        <h2 className="text-xl">Start discovering SaaS projects</h2>
       </div>
       <Formik
         onSubmit={handleSubmit}

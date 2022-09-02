@@ -22,7 +22,7 @@ const cardAnimations = {
       y: largeScreen ? 0 : -80,
       opacity: 0,
       zIndex: 1,
-      transition: { duration: 0.3 },
+      transition: { duration: 0.2 },
     };
   },
 };
@@ -32,7 +32,7 @@ export default function Card({ children }) {
 
   return (
     <motion.div
-      className="bg-white inline-block p-12 rounded-xl shadow-xl"
+      className="bg-white p-12 inline-block rounded-xl shadow-xl w-full md:w-[580px]"
       custom={{ largeScreen }}
       variants={cardAnimations}
       initial="enter"
