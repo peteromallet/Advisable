@@ -19,10 +19,12 @@
         <% end %>
         <div class="col-span-6">
         </div>
-        <div class="col-span-6">
-          <%= form.label :specialist_id, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.select :specialist_id, options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
-        </div>
+        <% if current_account.admin? %>
+          <div class="col-span-6">
+            <%= form.label :specialist_id, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :specialist_id, options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+          </div>
+        <% end %>
         <div class="col-span-6">
           <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
           <%= form.text_field :title, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
@@ -33,35 +35,41 @@
             <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm" %>
           </div>
         </div>
-        <div class="col-span-6">
-          <fieldset>
-            <legend class="text-base font-medium text-gray-900">Configuration</legend>
-            <div class="mt-4 space-y-4">
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <%= form.check_box :confidential, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
+        <% if current_account.admin? %>
+          <div class="col-span-6">
+            <fieldset>
+              <legend class="text-base font-medium text-gray-900">Configuration</legend>
+              <div class="mt-4 space-y-4">
+                <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <%= form.check_box :confidential, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <%= form.label :confidential %>
+                    <p class="text-gray-500">Should the company name be hidden?</p>
+                  </div>
                 </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :confidential %>
-                  <p class="text-gray-500">Should the company name be hidden?</p>
+                <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <%= form.check_box :hide_from_search, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <%= form.label :hide_from_search %>
+                    <p class="text-gray-500">Will only be visible via a direct link.</p>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <%= form.check_box :hide_from_search, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
-                </div>
-                <div class="ml-3 text-sm">
-                  <%= form.label :hide_from_search %>
-                  <p class="text-gray-500">Will only be visible via a direct link.</p>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-        <div class="col-span-2">
-          <%= form.label :score, class: "block text-sm font-medium text-gray-700" %>
-          <%= form.number_field :score, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
-        </div>
+            </fieldset>
+          </div>
+          <div class="col-span-2">
+            <%= form.label :score, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.number_field :score, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
+          </div>
+          <div class="col-span-6">
+            <%= form.label :published_at, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.datetime_field :published_at, class: "mt-1 focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm", include_seconds: false %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="md:col-span-3">&nbsp</div>
@@ -85,27 +93,29 @@
               <%= f.label :business_type, class: "block text-sm font-medium text-gray-700" %>
               <%= f.select :business_type, ::Company::VALID_BUSINESS_TYPES, {include_blank: true}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
             </div>
-            <div class="col-span-6">
-              <label class="block text-sm font-medium text-gray-700">Favicon</label>
-              <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-sm">
-                <div class="space-y-1 text-center">
-                  <% if article.company.favicon.attached? %>
-                    <%= image_tag article.company.favicon, class: "mx-auto h-12 w-12" %>
-                  <% else %>
-                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  <% end %>
-                  <div class="flex text-sm text-gray-600">
-                    <%= f.label :favicon, class: "relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
-                      <span>Upload the favicon</span>
-                      <%= f.file_field :favicon, class: "sr-only" %>
+            <% if current_account.admin? %>
+              <div class="col-span-6">
+                <label class="block text-sm font-medium text-gray-700">Favicon</label>
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-sm">
+                  <div class="space-y-1 text-center">
+                    <% if article.company.favicon.attached? %>
+                      <%= image_tag article.company.favicon, class: "mx-auto h-12 w-12" %>
+                    <% else %>
+                      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
                     <% end %>
+                    <div class="flex text-sm text-gray-600">
+                      <%= f.label :favicon, class: "relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
+                        <span>Upload the favicon</span>
+                        <%= f.file_field :favicon, class: "sr-only" %>
+                      <% end %>
+                    </div>
+                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 1MB</p>
                   </div>
-                  <p class="text-xs text-gray-500">PNG, JPG, GIF up to 1MB</p>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         <% end %>
         <div class="col-span-6 sm:col-span-4">

@@ -8,6 +8,7 @@
   </div>
 </div>
 <% content.content["results"].each do |result| %>
+  <% next unless result.respond_to?(:[]) %>
   <div class="block mt-2">
     <p class="text-l font-semibold text-gray-900">
       <%= result["callout"] %>

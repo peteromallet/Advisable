@@ -18,7 +18,7 @@
                 <div class="flex">
                   <div class="flex-grow">
                     <%= f.label :industry, class: "block text-sm font-medium text-gray-700" %>
-                    <%= f.select :industry, ::Industry.where.not(id: article.industries.pluck(:industry_id)).map { |industry| [industry.name, industry.id] }, {prompt: "Select Industry"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+                    <%= f.select :industry, ::Industry.active.order(:name).where.not(id: article.industries.pluck(:industry_id)).map { |industry| [industry.name, industry.id] }, {prompt: "Select Industry"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
                   </div>
                   <div class="ml-2">
                     <label class="block text-sm font-medium text-gray-700">&nbsp;</label>

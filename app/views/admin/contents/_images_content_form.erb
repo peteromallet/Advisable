@@ -1,15 +1,10 @@
-<% if content.persisted? %>
-  <div class="flex justify-between">
-    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
-      Editing Images
-    </span>
-    <%= link_to "Done", admin_content_path(content), class: "text-xs px-2 py-1 border border-transparent rounded shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500", data: {turbo_method: :patch} %>
-  </div>
-<% else %>
-  <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-800 text-fuchsia-100">
+<span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-fuchsia-100 text-fuchsia-800">
+  <% if content.persisted? %>
+    Images
+  <% else %>
     New Images
-  </span>
-<% end %>
+  <% end %>
+</span>
 <ul role="list" class="mt-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6">
   <% content.images.each do |image| %>
     <li class="relative" id="<%= dom_id(image) %>">
@@ -34,9 +29,9 @@
             <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <div class="flex text-sm text-gray-600">
-            <%= form.label :images, class: "mt-3 relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
+            <%= form.label "images-#{content.id}", class: "mt-3 relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
               <span>Select images</span>
-              <%= form.file_field :images, multiple: true, class: "sr-only", onchange: "form.requestSubmit()" %>
+              <%= form.file_field :images, multiple: true, class: "sr-only", id: "images-#{content.id}", onchange: "form.requestSubmit()" %>
             <% end %>
           </div>
         </div>
