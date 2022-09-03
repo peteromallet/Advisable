@@ -78,66 +78,72 @@ export default function EmailForm() {
   };
 
   return (
-    <Formik
-      onSubmit={handleSubmit}
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-    >
-      {({ status }) => (
-        <Form>
-          <div className="flex flex-col sm:flex-row gap-4 mb-4">
-            <div className="w-full">
+    <Card>
+      <div className="mb-8 flex gap-3">
+        <BackButton />
+        <h2 className="text-xl">Start discovering SaaS projects</h2>
+      </div>
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+      >
+        {({ status }) => (
+          <Form>
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              <div className="w-full">
+                <FormField
+                  autoFocus
+                  as={Input}
+                  name="firstName"
+                  size={["sm", "md"]}
+                  className="w-full"
+                  placeholder="First name"
+                />
+              </div>
+              <div className="w-full">
+                <FormField
+                  as={Input}
+                  name="lastName"
+                  size={["sm", "md"]}
+                  className="w-full"
+                  placeholder="Last name"
+                />
+              </div>
+            </div>
+            <div className="mb-4">
               <FormField
-                // autoFocus
                 as={Input}
-                name="firstName"
+                name="email"
                 size={["sm", "md"]}
-                className="w-full"
-                placeholder="First name"
+                placeholder="Email address"
               />
             </div>
-            <div className="w-full">
-              <FormField
-                as={Input}
-                name="lastName"
-                size={["sm", "md"]}
-                className="w-full"
-                placeholder="Last name"
-              />
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+              <div className="w-full">
+                <FormField
+                  type="password"
+                  name="password"
+                  size={["sm", "md"]}
+                  placeholder="Password"
+                />
+              </div>
+              <div className="w-full">
+                <FormField
+                  type="password"
+                  size={["sm", "md"]}
+                  name="passwordConfirmation"
+                  placeholder="Confirm password"
+                />
+              </div>
             </div>
-          </div>
-          <div className="mb-4">
-            <FormField
-              as={Input}
-              name="email"
-              size={["sm", "md"]}
-              placeholder="Email address"
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 mb-4">
-            <div className="w-full">
-              <FormField
-                type="password"
-                name="password"
-                size={["sm", "md"]}
-                placeholder="Password"
-              />
-            </div>
-            <div className="w-full">
-              <FormField
-                type="password"
-                size={["sm", "md"]}
-                name="passwordConfirmation"
-                placeholder="Confirm password"
-              />
-            </div>
-          </div>
-          <Error>{status}</Error>
-          <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
-            Create Your Free Account
-          </SubmitButton>
-        </Form>
-      )}
-    </Formik>
+            <Error>{status}</Error>
+            <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
+              Create Your Free Account
+            </SubmitButton>
+          </Form>
+        )}
+      </Formik>
+    </Card>
   );
 }

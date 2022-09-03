@@ -8,7 +8,7 @@ import LogoMark from "src/components/LogoMark";
 import useMediaQuery from "src/utilities/useMediaQuery";
 import { AnimatePresence } from "framer-motion";
 import { useBreakpoint, Link } from "@advisable/donut";
-import EmailForm from "./EmailForm";
+import EmailStep from "./EmailStep";
 
 export default function Join() {
   const largeScreen = useBreakpoint("lUp");
@@ -21,7 +21,7 @@ export default function Join() {
         {isDesktop ? <Logo /> : <LogoMark />}
       </header>
       <main className="flex items-center flex-col">
-        <div className="min-h-[600px]">
+        <div className="min-h-[540px]">
           <AnimatePresence
             custom={{ largeScreen }}
             initial={false}
@@ -30,13 +30,24 @@ export default function Join() {
             <Routes location={location} key={location.pathname}>
               <Route index element={<Intro />} />
               <Route path="client" element={<Client />} />
-              <Route path="client/email" element={<EmailForm />} />
+              <Route path="client/email" element={<EmailStep />} />
               <Route path="freelancer" element={<Freelancer />} />
-              <Route path="freelancer/email" element={<EmailForm />} />
+              <Route path="freelancer/email" element={<EmailStep />} />
             </Routes>
           </AnimatePresence>
         </div>
       </main>
+      <div className="p-12 pt-10 text-center">
+        <div className="text-base text-neutral700 mb-1 font-normal tracking-tight">
+          Already have an account?{" "}
+        </div>
+        <Link
+          to="/login"
+          className="text-blue700 hover:text-blue500 underline underline-offset-8 decoration-blue100 hover:decoration-blue200 decoration-2"
+        >
+          Login
+        </Link>
+      </div>
     </div>
   );
 }

@@ -46,54 +46,45 @@ function AccountOption({ to, illustration, title, subtext }) {
 
 export default function Intro() {
   return (
-    <Card>
-      <div className="overflow-hidden relative p-10 pb-32 bg-blue-100 bg-gradient-to-br from-indigo-900 to-violet-900">
-        <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
-        <div className="relative z-10">
-          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-white">
-            What kind of account do you want to create?
-          </h1>
-          <p className="text-lg text-indigo-50 max-w-[400px]">
-            Do you want to either explore case studies and hire freelancers or
-            be a freelancer?
-          </p>
+    <>
+      <Card>
+        <div className="overflow-hidden relative p-10 pb-32 bg-blue-100 bg-gradient-to-br from-indigo-900 to-violet-900">
+          <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
+          <div className="relative z-10">
+            <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-white">
+              What kind of account do you want to create?
+            </h1>
+            <p className="text-lg text-indigo-50 max-w-[400px]">
+              Do you want to either explore case studies and hire freelancers or
+              be a freelancer?
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-flow-col auto-cols-fr px-10 gap-8 -mt-24">
-        <AccountOption
-          title="Client account"
-          subtext="Explore and hire"
-          to="/join/client"
-          illustration={
-            <SearchIllustration
-              primaryColor="var(--color-rose-200)"
-              secondaryColor="var(--color-neutral900)"
-            />
-          }
-        />
-        <AccountOption
-          title="Freelancer account"
-          subtext="Find best clients"
-          to="/join/freelancer"
-          illustration={
-            <CandidateIllustration
-              primaryColor="var(--color-teal-300)"
-              secondaryColor="var(--color-teal-900)"
-            />
-          }
-        />
-      </div>
-      <div className="p-12 pt-10 text-center">
-        <div className="text-base text-neutral700 mb-1 font-normal tracking-tight">
-          Already have an account?{" "}
+        <div className="grid grid-flow-col auto-cols-fr px-10 gap-8 -mt-24">
+          <AccountOption
+            title="Client account"
+            subtext="Explore and hire"
+            to="/join/client"
+            illustration={
+              <SearchIllustration
+                primaryColor="var(--color-rose-200)"
+                secondaryColor="var(--color-neutral900)"
+              />
+            }
+          />
+          <AccountOption
+            title="Freelancer account"
+            subtext="Find best clients"
+            to="/join/freelancer"
+            illustration={
+              <CandidateIllustration
+                primaryColor="var(--color-teal-300)"
+                secondaryColor="var(--color-teal-900)"
+              />
+            }
+          />
         </div>
-        <Link
-          to="/login"
-          className="text-blue700 hover:text-blue500 underline underline-offset-8 decoration-blue100 hover:decoration-blue200 decoration-2"
-        >
-          Login
-        </Link>
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 }

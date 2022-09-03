@@ -1,18 +1,29 @@
 import React from "react";
 import Card from "./Card";
-import GeneralForm from "./GeneralForm";
+import SignupForm from "./SignupForm";
 import BackButton from "src/components/BackButton";
+import GridLines from "src/components/GridLines";
 
 export default function JoinFreelancer() {
   return (
     <Card>
-      <div className="flex mb-8 gap-3 items-center">
-        <BackButton />
-        <h2 className="font-semibold text-xl tracking-tight leading-none text-neutral900">
-          Signup as a freelancer
-        </h2>
+      <div className="overflow-hidden relative p-10 pb-8 pt-8 bg-blue-100 bg-gradient-to-br from-indigo-900 to-violet-900">
+        <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
+        <div className="flex gap-4">
+          <BackButton />
+          <div>
+            <h2 className="font-serif font-semibold text-2xl md:text-2xl tracking-tight leading-none text-white">
+              Signup as a freelancer
+            </h2>
+            <p className="text-white">
+              Create case studies and find best opportunities
+            </p>
+          </div>
+        </div>
       </div>
-      <GeneralForm />
+      <div className="p-10 pt-8">
+        <SignupForm />
+      </div>
     </Card>
   );
 }
