@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 import CandidateIllustration from "src/illustrations/zest/candidate";
 import SearchIllustration from "src/illustrations/zest/search";
-import { ArrowSmRight } from "@styled-icons/heroicons-outline";
 import GridLines from "src/components/GridLines";
 import Card from "./Card";
 
@@ -14,8 +13,7 @@ const optionClasses = composeStyles({
     bg-white
     rounded-lg
     w-full
-    pb-8
-    pt-6
+    py-8
     cursor-pointer
     shadow-sm
 
@@ -29,16 +27,13 @@ function AccountOption({ to, illustration, title, subtext }) {
   return (
     <Link to={to} className="rounded-lg z-10">
       <div className={optionClasses()}>
-        <div className="place-items-center w-[150px] h-[180px] hidden md:grid">
+        <div className="place-items-center w-[148px] h-[148px] mb-6 hidden md:grid">
           {cloneElement(illustration)}
         </div>
         <div className="md:text-center flex-1 mb-4">
           <h5 className="text-lg font-medium">{title}</h5>
-          <div className="text-[15px] text-neutral700">{subtext}</div>
+          <div className="text-[15px] leading-5 text-neutral700">{subtext}</div>
         </div>
-        {/* <div>
-          <ArrowSmRight className="w-5 h-5 stroke-neutral600" />
-        </div> */}
       </div>
     </Link>
   );
@@ -60,7 +55,7 @@ export default function Intro() {
             </p>
           </div>
         </div>
-        <div className="grid grid-flow-col auto-cols-fr px-10 gap-8 -mt-24">
+        <div className="grid grid-flow-col auto-cols-fr px-10 pb-10 gap-8 -mt-24">
           <AccountOption
             title="Client account"
             subtext="Explore and hire"
