@@ -26,7 +26,7 @@ export function Client() {
       <HeaderWrapper>
         <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
         <div className="flex gap-4">
-          <BackButton />
+          <BackButton to="/join" />
           <div>
             <Title>Signup as a client</Title>
             <Subtitle>Explore case studies and hire freelancers</Subtitle>
@@ -47,7 +47,7 @@ export function Freelancer() {
       <HeaderWrapper>
         <GridLines color="rgb(255 255 255 / .1)" highlight="#FFFFFF" />
         <div className="flex gap-4">
-          <BackButton />
+          <BackButton to="/join" />
           <div>
             <Title>Signup as a freelancer</Title>
             <Subtitle>Create case studies and find best opportunities</Subtitle>
