@@ -23,7 +23,7 @@ const validationSchema = object().shape({
 });
 
 export default function EmailForm() {
-  const freelancer = useMatch("/join/freelancer/email");
+  const isClient = useMatch("/join/client");
   const [createClientAccount] = useCreateClientAccount();
   const [createFreelancerAccount] = useCreateFreelancerAccount();
   const [searchParams] = useSearchParams();
@@ -38,23 +38,23 @@ export default function EmailForm() {
 
   const handleSubmit = async (values, { setStatus }) => {
     setStatus(null);
-    const createAccount = freelancer
-      ? createFreelancerAccount
-      : createClientAccount;
+    const createAccount = isClient
+      ? createClientAccount
+      : createFreelancerAccount;
 
-    const payload = freelancer
+    const payload = isClient
       ? {
-          pid: searchParams.get("pid"),
-          campaignName: searchParams.get("utm_campaign"),
-          campaignSource: searchParams.get("utm_source"),
-          referrer: searchParams.get("rid"),
-        }
-      : {
           rid: searchParams.get("rid"),
           utmCampaign: searchParams.get("utm_campaign"),
           utmContent: searchParams.get("utm_content"),
           utmSource: searchParams.get("utm_source"),
           utmMedium: searchParams.get("utm_medium"),
+        }
+      : {
+          pid: searchParams.get("pid"),
+          campaignName: searchParams.get("utm_campaign"),
+          campaignSource: searchParams.get("utm_source"),
+          referrer: searchParams.get("rid"),
         };
 
     const res = await createAccount({
@@ -72,7 +72,7 @@ export default function EmailForm() {
       setStatus("Something went wront. Please try again.");
       return;
     }
-    navigate(freelancer ? "/" : "/setup/company");
+    navigate(isClient ? "/setup/company" : "/");
   };
 
   return (
