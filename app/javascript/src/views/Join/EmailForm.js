@@ -5,10 +5,8 @@ import { Input, Error } from "@advisable/donut";
 import { object, string, ref } from "yup";
 import { Form, Formik } from "formik";
 import FormField from "src/components/FormField";
-import BackButton from "src/components/BackButton";
 import SubmitButton from "src/components/SubmitButton";
 import { useCreateClientAccount, useCreateFreelancerAccount } from "./queries";
-import Card from "./Card";
 
 const validationSchema = object().shape({
   firstName: string().required("Please enter your first name"),

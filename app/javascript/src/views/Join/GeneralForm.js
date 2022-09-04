@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@advisable/donut";
 import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
@@ -10,7 +9,7 @@ export default function GeneralForm() {
   const navigate = useNavigate();
 
   return (
-    <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <>
       <LoginWithGoogle size="xl" mode="user" navigate="/setup/company">
         Signup with Google
       </LoginWithGoogle>
@@ -23,6 +22,6 @@ export default function GeneralForm() {
       >
         Signup with email
       </Button>
-    </motion.div>
+    </>
   );
 }
