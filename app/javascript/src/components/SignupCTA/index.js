@@ -105,10 +105,10 @@ export default function SignupCTA() {
             You only pay when you hire someone you discover through us!
           </p>
           <div className="flex gap-4">
-            <Link to="/clients/join">
+            <Link to="/join/client">
               <Button size="lg">Get full access</Button>
             </Link>
-            <Link to="/freelancers/join">
+            <Link to="/join/freelancer">
               <Button variant="whiteOutlined" size="lg">
                 Share your project
               </Button>

@@ -67,7 +67,7 @@ export default function LoginView() {
         <Text fontWeight="medium" mb={2}>
           Don&apos;t have an account?
         </Text>
-        <Link fontSize="s" variant="underlined" to="/login/signup">
+        <Link fontSize="s" variant="underlined" to="/join">
           Signup
         </Link>
       </Box>
