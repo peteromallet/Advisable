@@ -4,21 +4,18 @@ import Client from "./Client";
 import Freelancer from "./Freelancer";
 import Intro from "./Intro";
 import Logo from "src/components/Logo";
-import LogoMark from "src/components/LogoMark";
-import useMediaQuery from "src/utilities/useMediaQuery";
 import { AnimatePresence } from "framer-motion";
 import { useBreakpoint, Link } from "@advisable/donut";
 import EmailStep from "./EmailStep";
 
 export default function Join() {
   const largeScreen = useBreakpoint("lUp");
-  const isDesktop = useMediaQuery("(min-width: 720px)");
   const location = useLocation();
 
   return (
     <div className="relative onboarding flex flex-col lg:min-h-screen">
       <header className="onboarding_heading flex items-center justify-center mb-8 mt-6">
-        {isDesktop ? <Logo /> : <LogoMark />}
+        <Logo />
       </header>
       <main className="flex items-center flex-col">
         <div className="min-h-[540px]">

@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import GeneralForm from "./GeneralForm";
 import SignupForm from "./SignupForm";
-import BackButton from "src/components/BackButton";
+import BackButton from "./BackButton";
 import GridLines from "src/components/GridLines";
 
 export default function Client() {
@@ -13,7 +13,7 @@ export default function Client() {
         <div className="flex gap-4">
           <BackButton />
           <div>
-            <h2 className="font-serif font-semibold text-2xl md:text-2xl tracking-tight leading-none text-white">
+            <h2 className="font-serif font-semibold text-2xl tracking-tight text-white">
               Signup as a client
             </h2>
             <p className="text-white">

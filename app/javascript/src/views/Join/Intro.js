@@ -19,7 +19,7 @@ const optionClasses = composeStyles({
 
     flex
     items-center
-    flex-row md:flex-col
+    flex-row sm:flex-col
   `,
 });
 
@@ -27,10 +27,10 @@ function AccountOption({ to, illustration, title, subtext }) {
   return (
     <Link to={to} className="rounded-lg z-10">
       <div className={optionClasses()}>
-        <div className="place-items-center w-[148px] h-[148px] mb-6 hidden md:grid">
+        <div className="place-items-center w-[148px] h-[148px] mb-6 hidden sm:grid">
           {cloneElement(illustration)}
         </div>
-        <div className="md:text-center flex-1 mb-4">
+        <div className="sm:text-center flex-1 mb-4">
           <h5 className="text-lg font-medium">{title}</h5>
           <div className="text-[15px] leading-5 text-neutral700">{subtext}</div>
         </div>

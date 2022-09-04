@@ -32,7 +32,7 @@ export default function Card({ children }) {
 
   return (
     <motion.div
-      className="bg-white overflow-hidden inline-block rounded-xl shadow-xl w-full md:w-[580px]"
+      className="bg-white overflow-hidden inline-block rounded-xl shadow-xl w-full sm:w-[580px]"
       custom={{ largeScreen }}
       variants={cardAnimations}
       initial="enter"
