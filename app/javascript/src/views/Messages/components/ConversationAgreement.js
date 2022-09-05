@@ -61,6 +61,17 @@ function ConversationActiveAgreement({ conversation }) {
   );
 }
 
+function ConversationPendingAgreement({ conversation }) {
+  const viewer = useViewer();
+  const other = conversation.participants.find((p) => !p.isViewer);
+  return (
+    <div>
+      <h4 className="leading-tight font-medium mb-2">Agreement</h4>
+      <p>You have a pending agreement</p>
+    </div>
+  );
+}
+
 function ConversationNoAgreement({ conversation }) {
   const viewer = useViewer();
   const navigate = useNavigate();
@@ -109,6 +120,11 @@ function ConversationNoAgreement({ conversation }) {
 
 export default function ConversationAgreement({ conversation }) {
   const agreement = agreementForConversation(conversation);
+  const components = {
+    accepted: ConversationActiveAgreement,
+    pending: ConversationPendingAgreement,
+  };
+  const Component = components[agreement.status] || ConversationNoAgreement;
 
   if (!isSpecialistAndUser(conversation)) {
     return null;
@@ -116,11 +132,7 @@ export default function ConversationAgreement({ conversation }) {
 
   return (
     <div className="p-7">
-      {agreement ? (
-        <ConversationActiveAgreement conversation={conversation} />
-      ) : (
-        <ConversationNoAgreement conversation={conversation} />
-      )}
+      <Component conversation={conversation} />
     </div>
   );
 }
