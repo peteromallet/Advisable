@@ -142,7 +142,7 @@ module Types
       requires_current_user!
       return nil if current_user.is_a?(User)
 
-      ::Agreement.latest_accepted_for(specialist: current_user, user: object)
+      ::Agreement.find_by(specialist: current_user, user: object)
     end
   end
 end
