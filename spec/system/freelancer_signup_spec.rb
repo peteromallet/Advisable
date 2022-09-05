@@ -17,8 +17,8 @@ RSpec.describe "Freelancer signup", type: :system do
 
   it "Specialist can create an account and gets redirected to application" do
     visit("/join")
-    expect(page).to have_content("What kind of account do you want to create?")
-    click_on("Freelancer account")
+    expect(page).to have_content("Are you a full-time employee or freelancer?")
+    click_on("Freelancer")
     fill_in("firstName", with: "Dwight")
     fill_in("lastName", with: "Schrute")
     fill_in("email", with: "dwight@theoffice.com")

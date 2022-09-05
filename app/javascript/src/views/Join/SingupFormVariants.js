@@ -28,7 +28,9 @@ export function Client() {
           <BackButton to="/join" />
           <div>
             <Title>Signup as a client</Title>
-            <Subtitle>Explore case studies and hire freelancers</Subtitle>
+            <Subtitle>
+              Explore case studies and collaborate with talent.
+            </Subtitle>
           </div>
         </div>
       </HeaderWrapper>
@@ -48,7 +50,7 @@ export function Freelancer() {
           <BackButton to="/join" />
           <div>
             <Title>Signup as a freelancer</Title>
-            <Subtitle>Create case studies and find best opportunities</Subtitle>
+            <Subtitle>Create case studies and get discovered.</Subtitle>
           </div>
         </div>
       </HeaderWrapper>
