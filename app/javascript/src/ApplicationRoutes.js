@@ -26,7 +26,6 @@ const FreelancerApplication = lazy(() =>
 const FreelancerProfile = lazy(() => import("./views/FreelancerProfile"));
 const Interview = lazy(() => import("./views/Interview"));
 const InterviewRequest = lazy(() => import("./views/InterviewRequest"));
-const Payment = lazy(() => import("./views/Payment"));
 const Messages = lazy(() => import("./views/Messages"));
 const GuildPost = lazy(() => import("./views/Post"));
 const GuildFollows = lazy(() => import("guild/views/Follows"));
@@ -157,15 +156,6 @@ const ApplicationRoutes = () => {
             />
 
             <Route path="/search" element={<Search />} />
-
-            <Route
-              path="/payments/:id"
-              element={
-                <RequireAuthentication clientOnly>
-                  <Payment />
-                </RequireAuthentication>
-              }
-            />
 
             <Route path="/posts/:id/edit" element={<EditPost />} />
 
