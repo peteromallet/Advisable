@@ -54,7 +54,6 @@ function primarySkillForArticle(article) {
 export default function CaseStudyCard({
   article,
   delay,
-  allowPublicAccess,
   showSkill = true,
   ...props
 }) {
@@ -110,7 +109,7 @@ export default function CaseStudyCard({
         <Link
           to={article.path}
           state={{
-            limitedView: !viewer && !allowPublicAccess,
+            signupPrompt: !viewer,
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
           onMouseDown={() => setTapping(true)}

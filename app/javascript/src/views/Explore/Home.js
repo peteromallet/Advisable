@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="pt-12">
-      <CaseStudyGrid loading={loading} results={results} allowPublicAccess />
+      <CaseStudyGrid loading={loading} results={results} />
       {pageInfo?.hasNextPage && <EndlessScroll onLoadMore={handleLoadMore} />}
     </div>
   );

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CaseStudyArticle from "../CaseStudyArticle";
+import SignupOverlay from "./SignupOverlay";
 
 const backdropClassName = `
   fixed
@@ -77,6 +78,7 @@ export default function ArticleModal() {
         data-testid="articleModal"
       >
         <div className="overflow-y-scroll h-full" id="article-scrollable-area">
+          {location.state?.signupPrompt && <SignupOverlay />}
           <CaseStudyArticle />
         </div>
       </motion.div>
