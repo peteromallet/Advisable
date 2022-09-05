@@ -56,6 +56,9 @@ gem "slim"
 gem "stripe"
 gem "twilio-ruby"
 
+gem "rack-mini-profiler"
+gem "stackprof"
+
 group :development, :test do
   gem "database_cleaner-active_record"
   gem "dotenv-rails"
