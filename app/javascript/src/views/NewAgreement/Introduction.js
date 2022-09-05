@@ -60,7 +60,7 @@ function AdvisableProtection() {
           <DonutLink.External
             variant="underlined"
             target="_blank"
-            href="https://www.advisable.com/faq#freelancers-faq"
+            href="https://more.advisable.com/faq#freelancers-faq"
           >
             Learn more
           </DonutLink.External>

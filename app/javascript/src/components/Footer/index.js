@@ -63,13 +63,13 @@ export default function Footer() {
             links={[
               {
                 children: "Pricing",
-                href: "https://www.advisable.com/pricing",
+                href: "https://more.advisable.com/pricing",
               },
               {
                 children: "Vetting",
-                href: "https://www.advisable.com/vetting",
+                href: "https://more.advisable.com/vetting",
               },
-              { children: "FAQ", href: "https://www.advisable.com/faq" },
+              { children: "FAQ", href: "https://more.advisable.com/faq" },
             ]}
           />
 
@@ -83,11 +83,11 @@ export default function Footer() {
               },
               {
                 children: "Terms of Service",
-                href: "https://www.advisable.com/legal/terms-of-service",
+                href: "https://more.advisable.com/legal/terms-of-service",
               },
               {
                 children: "Cookie Policy",
-                href: "https://www.advisable.com/legal/cookie-policy",
+                href: "https://more.advisable.com/legal/cookie-policy",
               },
             ]}
           />

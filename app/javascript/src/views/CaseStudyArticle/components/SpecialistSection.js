@@ -73,7 +73,7 @@ export default function SpecialistSection({ article, modal, isOwner }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.advisable.com/vetting"
+            href="https://more.advisable.com/vetting"
             className="flex absolute right-1 bottom-2 justify-center items-center p-0.5 bg-white rounded-full"
           >
             <BadgeCheck size={24} className="fill-blue500" />

@@ -18,7 +18,7 @@ module Mutations
       accounts = [current_user.account, *other_accounts].compact.uniq
       interview = Interview.create!(status: "Call Requested", requested_by: current_user.account, accounts:, article:)
       message = interview.conversation.new_message!(author: current_user.account, content: args[:message], kind: "InterviewRequest", interview:, send_emails: false)
-      SlackMessageJob.perform_later(channel: "client_activity", text: "#{current_user.account.name_with_company} has requested a call with #{other_accounts.map(&:name_with_company).to_sentence}. (<https://app.advisable.com/toby/interviews/#{interview.id}|View in Toby>)")
+      SlackMessageJob.perform_later(channel: "client_activity", text: "#{current_user.account.name_with_company} has requested a call with #{other_accounts.map(&:name_with_company).to_sentence}. (<https://advisable.com/toby/interviews/#{interview.id}|View in Toby>)")
       other_accounts.each { |account| AccountMailer.interview_request(account, interview, current_user.account, message).deliver_later }
       track_event("Requested Consultation", {other_accounts: args[:accounts]})
 
