@@ -100,43 +100,41 @@ RSpec.describe "Interviews", type: :system do
   end
 
   it "allows the client to reschedule a call" do
-    next_date = Time.current.next_month
     interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
     authenticate_as(user)
     visit "/interviews/#{interview.uid}"
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    click_on("Next Month")
-    first(".DayPicker-Day[aria-disabled=false]").click
+    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']")
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_date.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
     expect(page).to have_content(user.name)
     expect(page).to have_content("New times are better")
   end
 
   it "allows the requestor to reschedule a call" do
-    next_date = Time.current.next_month
     interview = create(:interview, accounts: [specialist.account, user.account], status: "Call Scheduled", requested_by: specialist.account)
     authenticate_as(specialist)
     visit "/interviews/#{interview.uid}"
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    click_on("Next Month")
-    first(".DayPicker-Day[aria-disabled=false]").click
+    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']")
+    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_date.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
     expect(page).to have_content(specialist.name)
     expect(page).to have_content("New times are better")
   end
