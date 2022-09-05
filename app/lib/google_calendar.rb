@@ -91,5 +91,7 @@ class GoogleCalendar
 
     channel = Google::Apis::CalendarV3::Channel.new(address: "#{app_host}/google_calendar_events", id: interview.google_calendar_id, type: "webhook")
     service.watch_event(ENV.fetch("GOOGLE_INTERVIEW_CALENDAR_ID", nil), channel)
+  rescue Google::Apis::ClientError => e
+    Sentry.capture_exception(e, extra: {interview_id: interview.id})
   end
 end
