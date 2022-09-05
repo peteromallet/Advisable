@@ -12,12 +12,13 @@ export default function Trending() {
 
   return (
     <>
-      <ExploreViewHeading title="Trending" description="The latest and greatest projects in SaaS marketing" />
+      <ExploreViewHeading
+        title="Trending"
+        description="The latest and greatest projects in SaaS marketing"
+      />
       <CaseStudyGrid loading={loading} results={results} />
       {viewer && !loading && (
-        <FeedFooter>
-          You've reached the end of the feed.
-        </FeedFooter>
+        <FeedFooter>You've reached the end of the feed.</FeedFooter>
       )}
     </>
   );

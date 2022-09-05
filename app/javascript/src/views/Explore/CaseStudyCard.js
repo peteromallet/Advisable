@@ -51,7 +51,15 @@ function primarySkillForArticle(article) {
   return primarySkill.skill;
 }
 
+const cardClasses = composeStyles({
+  base: "relative w-full h-[500px]",
+  variants: {
+    blurred: "blur-sm opacity-80",
+  },
+});
+
 export default function CaseStudyCard({
+  blurred,
   article,
   delay,
   showSkill = true,
@@ -77,7 +85,7 @@ export default function CaseStudyCard({
         tap: { scale: 0.95 },
       }}
       transition={{ duration: 0.2 }}
-      className="relative w-full h-[500px]"
+      className={cardClasses({ blurred })}
       {...props}
     >
       <motion.div

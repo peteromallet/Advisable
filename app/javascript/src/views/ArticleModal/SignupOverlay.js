@@ -22,7 +22,7 @@ export default function SignupOverlay() {
         <div className="p-6 sm:p-10">
           <Link to="/clients/join" className="block mb-4">
             <Button size="lg" className="w-full">
-              Get full access
+              Get Free Access
             </Button>
           </Link>
           <Link
