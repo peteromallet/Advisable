@@ -101,6 +101,8 @@ Rails.application.routes.draw do
 
   # redirections for old routes
   get "/profile/:username/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
+  get "/clients/join", to: redirect(LogAndRedirect.new("/join/client"))
+  get "/freelancers/join", to: redirect(LogAndRedirect.new("/join/freelancer"))
 
   get "verify_project/:uid", to: "application#verify_project_redirect"
 
