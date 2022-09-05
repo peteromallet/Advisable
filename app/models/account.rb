@@ -41,7 +41,7 @@ class Account < ApplicationRecord
   before_validation :strip_email
   before_save :clear_avatar_cache
 
-  featurize :admin, :team_manager, :editor, column: :permissions
+  featurize :admin, :team_manager, :editor, :developer, column: :permissions
 
   # Can take an array or many params instances of Account, anything that belongs_to Account, or account ids directly.
   # Returns an array of account ids.

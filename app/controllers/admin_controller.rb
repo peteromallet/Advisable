@@ -13,6 +13,6 @@ class AdminController < ApplicationController
   private
 
   def profiling
-    Rack::MiniProfiler.authorize_request
+    Rack::MiniProfiler.authorize_request if current_account.developer?
   end
 end
