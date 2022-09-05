@@ -21,7 +21,6 @@
     "@stripe/stripe-js": "^1.26.0",
     "@styled-icons/boxicons-regular": "^10.38.0",
     "@styled-icons/boxicons-solid": "^10.38.0",
-    "@styled-icons/entypo-social": "^10.34.0",
     "@styled-icons/fa-brands": "^10.38.0",
     "@styled-icons/feather": "^10.34.0",
     "@styled-icons/heroicons-outline": "^10.36.0",
@@ -37,8 +36,6 @@
     "babel-loader": "8.2.5",
     "babel-plugin-styled-components": "^2.0.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "body-scroll-lock": "^4.0.0-beta.0",
-    "camelcase": "^6.3.0",
     "compression-webpack-plugin": "10.0.0",
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^4.0.0",
@@ -57,7 +54,6 @@
     "i18next": "^21.6.14",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-xhr-backend": "^3.2.2",
-    "indefinite": "^2.4.1",
     "intersection-observer": "^0.12.0",
     "json-to-graphql-query": "^2.2.3",
     "linkify-react": "^3.0.4",
@@ -111,8 +107,7 @@
     "webpack-cli": "4",
     "webpack-merge": "5",
     "yarn": "^1.22.18",
-    "yup": "^0.32.11",
-    "zustand": "^3.7.1"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",

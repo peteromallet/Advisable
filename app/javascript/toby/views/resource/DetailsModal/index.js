@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Modal, Box, Text, Tag } from "@advisable/donut";
 import { useNotifications } from "src/components/Notifications";
 import SubmitButton from "src/components/SubmitButton";
-import { useNavigate, useLocation, useMatch } from "react-router";
+import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import {
   attributeFormValueInitializer,
   AttributeInput,
