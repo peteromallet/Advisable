@@ -15,9 +15,9 @@ RSpec.describe "Client signup", type: :system do
 
   it "Client can create an account and gets redirected to projects" do
     Sidekiq::Testing.inline! do
-      visit("/clients/join")
-      expect(page).to have_content("Start discovering SaaS projects")
-      click_on("Signup with email")
+      visit("/join")
+      expect(page).to have_content("What kind of account do you want to create?")
+      click_on("Client account")
       fill_in("firstName", with: "Michael")
       fill_in("lastName", with: "Scott")
       fill_in("email", with: "michael+scott@dundermifflin.com")
