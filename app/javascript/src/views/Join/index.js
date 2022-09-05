@@ -7,7 +7,6 @@ import { Client, Freelancer } from "./SingupFormVariants";
 import { Link, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
 import Logo from "src/components/Logo";
-import EmailStep from "./EmailStep";
 import Intro from "./Intro";
 
 export default function Join() {
@@ -31,9 +30,7 @@ export default function Join() {
           <Routes location={location} key={location.pathname}>
             <Route index element={<Intro />} />
             <Route path="client" element={<Client />} />
-            <Route path="client/email" element={<EmailStep />} />
             <Route path="freelancer" element={<Freelancer />} />
-            <Route path="freelancer/email" element={<EmailStep />} />
           </Routes>
         </AnimatePresence>
       </main>

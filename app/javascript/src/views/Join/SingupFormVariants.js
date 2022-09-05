@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "./Card";
-import GeneralForm from "./GeneralForm";
 import SignupForm from "./SignupForm";
 import BackButton from "./BackButton";
 import GridLines from "src/components/GridLines";
@@ -34,7 +33,6 @@ export function Client() {
         </div>
       </HeaderWrapper>
       <FormWrapper>
-        {/* <GeneralForm /> */}
         <SignupForm />
       </FormWrapper>
     </Card>
@@ -55,7 +53,6 @@ export function Freelancer() {
         </div>
       </HeaderWrapper>
       <FormWrapper>
-        {/* <GeneralForm /> */}
         <SignupForm />
       </FormWrapper>
     </Card>
