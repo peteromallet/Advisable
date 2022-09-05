@@ -28,6 +28,9 @@ query Article($slug: ID!) {
             url
           }
         }
+        ... on Podcast {
+          url
+        }
       }
     }
     similar {
