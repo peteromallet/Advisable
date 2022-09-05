@@ -16,7 +16,7 @@ function Summary({ status, children, icon }) {
   return (
     <div className="flex w-full">
       {icon && (
-        <div className="shrink-0 text-neutral500 mr-4">
+        <div className="mr-4 shrink-0 text-neutral500">
           {React.cloneElement(icon, { size: 28 })}
         </div>
       )}
@@ -143,6 +143,9 @@ export default function PaymentRequestStatusSummary({ paymentRequest }) {
           <>
             This request has been paid by {company.name} and has been
             transferred to {specialist.name}.
+            <div className="pt-4">
+              <DownloadInvoice payment={payment} />
+            </div>
           </>
         )}
       </Summary>
