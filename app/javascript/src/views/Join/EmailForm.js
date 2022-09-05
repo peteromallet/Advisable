@@ -72,7 +72,7 @@ export default function EmailForm() {
       setStatus("Something went wront. Please try again.");
       return;
     }
-    navigate(isClient ? "/setup/company" : "/");
+    navigate(isClient ? "/setup/company" : "/freelancers/apply");
   };
 
   return (
