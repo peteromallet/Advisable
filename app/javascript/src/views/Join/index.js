@@ -1,16 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { Client, Freelancer } from "./SingupFormVariants";
-import Intro from "./Intro";
-import Logo from "src/components/Logo";
 import { AnimatePresence } from "framer-motion";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useNotifications } from "src/components/Notifications";
+import { Client, Freelancer } from "./SingupFormVariants";
 import { Link, useBreakpoint } from "@advisable/donut";
+import useViewer from "src/hooks/useViewer";
+import Logo from "src/components/Logo";
 import EmailStep from "./EmailStep";
+import Intro from "./Intro";
 
 export default function Join() {
+  const viewer = useViewer();
   const location = useLocation();
   const isMobile = useBreakpoint("s");
+  const notification = useNotifications();
+
+  if (viewer) {
+    notification.notify("You already logged in");
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="relative onboarding flex flex-col lg:min-h-screen">
