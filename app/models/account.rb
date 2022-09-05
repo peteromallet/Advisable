@@ -21,6 +21,7 @@ class Account < ApplicationRecord
   has_many :interests, class_name: "CaseStudy::Interest", dependent: :destroy
   has_many :interest_articles, class_name: "CaseStudy::InterestArticle", through: :interests
   has_many :favorited_articles, class_name: "CaseStudy::FavoritedArticle", dependent: :destroy
+  has_many :interest_previews, class_name: "CaseStudy::InterestPreview", dependent: :destroy
   has_many :messages, dependent: :nullify, foreign_key: :author_id, inverse_of: :author
   has_many :conversation_participants, dependent: :destroy
   has_many :conversations, through: :conversation_participants
