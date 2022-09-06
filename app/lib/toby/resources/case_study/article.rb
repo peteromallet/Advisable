@@ -17,12 +17,18 @@ module Toby
         attribute :published_at, Attributes::DateTime
         attribute :deleted_at, Attributes::DateTime
 
+        action :open_editor, label: "Open editor"
+
         def self.label(record, _context)
           record.title
         end
 
         def self.search(query)
           ::CaseStudy::Article.where("title ILIKE ?", "%#{query}%")
+        end
+
+        def self.open_editor(object, _context)
+          {url: "#{Advisable::Application::ORIGIN_HOST}/admin/articles/#{object.id}/edit"}
         end
       end
     end
