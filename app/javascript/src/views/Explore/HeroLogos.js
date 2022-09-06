@@ -1,33 +1,10 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLocation, useNavigate } from "react-router-dom";
 
-function HeroSquare({
-  color,
-  delay,
-  onHoverStart,
-  onHoverEnd,
-  scale = 1,
-  path,
-  backgroundPosition,
-}) {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleClick = () =>
-    navigate(path, {
-      state: {
-        limitedView: true,
-        backgroundLocation: location?.state?.backgroundLocation || location,
-      },
-    });
-
+function HeroSquare({ color, delay, scale = 1, backgroundPosition }) {
   return (
     <div className="hero-square">
       <motion.div
-        onClick={handleClick}
-        onHoverEnd={onHoverEnd}
-        onHoverStart={onHoverStart}
         style={{ background: color }}
         className="hero-square-diamond"
         transition={{ delay }}
