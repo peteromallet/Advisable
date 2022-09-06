@@ -4,6 +4,7 @@ query DashboardData {
   viewer {
     ... on Specialist {
       id
+      unavailableUntil
       caseStudiesCount
       reviews {
         id

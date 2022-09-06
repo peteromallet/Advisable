@@ -1,46 +1,10 @@
 import React from "react";
 import pluralize from "pluralize";
 import css from "@styled-system/css";
-import {
-  Box,
-  Skeleton,
-  Text,
-  Modal,
-  useModal,
-  DialogDisclosure,
-} from "@advisable/donut";
+import { Box, Skeleton, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import useViewer from "src/hooks/useViewer";
-import styled from "styled-components";
-
-const StyledAvailabilityButton = styled.div`
-  ${css({
-    display: "inline",
-    position: "relative",
-    border: "2px solid",
-    borderColor: "neutral200",
-    borderRadius: "12px",
-    lineHeight: "16px",
-    paddingY: 1.5,
-    fontSize: "sm",
-    color: "neutral600",
-    paddingLeft: 8,
-    paddingRight: 3,
-  })}
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 12px;
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-    width: 12px;
-    height: 12px;
-    background-color: green;
-    border-radius: 50%;
-  }
-`;
+import Availability from "./Availability";
 
 function ReviewsAndCaseStudies({ reviews, caseStudies }) {
   return (
@@ -74,9 +38,13 @@ function LoadingReviewsAndCaseStudies() {
   );
 }
 
-export default function Hero({ loading, caseStudies, reviews }) {
+export default function Hero({
+  loading,
+  caseStudies,
+  reviews,
+  unavailableUntil,
+}) {
   const viewer = useViewer();
-  const modal = useModal();
 
   return (
     <>
@@ -110,10 +78,7 @@ export default function Hero({ loading, caseStudies, reviews }) {
               reviews={reviews}
             />
           )}
-          <Modal modal={modal}>Some modal</Modal>
-          <DialogDisclosure as={StyledAvailabilityButton} {...modal}>
-            <span>Available for projects</span>
-          </DialogDisclosure>
+          <Availability loading={loading} unavailableUntil={unavailableUntil} />
         </Box>
       </Box>
     </>
