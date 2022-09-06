@@ -12,10 +12,10 @@
 <% end %>
 
 <div class="mb-4">
-  <%= form.text_area :title, class: "w-full text-3xl font-serif font-medium tracking-tight", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input" } %>
+  <%= form.text_area :title, form: "article_form", class: "w-full text-3xl font-serif font-medium tracking-tight", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input" } %>
 </div>
 
 <div class="mb-12">
-  <%= form.label :subtitle, class: "block text-sm font-medium text-gray-700" %>
-  <%= form.text_area :subtitle, rows: 3, class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input"} %>
+  <%= form.label :subtitle, 'Subtitle', class: "block text-sm font-medium text-gray-700" %>
+  <%= form.text_area :subtitle, form: 'article_form', class: "shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border border-gray-300 rounded-sm", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input"} %>
 </div>

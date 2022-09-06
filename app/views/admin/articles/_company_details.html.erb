@@ -5,15 +5,15 @@
       <%= form.fields_for :company do |f| %>
         <div class="flex items-center justify-between gap-4">
           <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
-          <%= f.text_field :name, class: "w-[200px] focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
+          <%= f.text_field :name, form: "article_form", class: "w-[200px] focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
         </div>
         <div class="flex items-center justify-between gap-4">
           <%= f.label :website, class: "block text-sm font-medium text-gray-700" %>
-          <%= f.text_field :website, class: "w-[200px] focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
+          <%= f.text_field :website, form: "article_form", class: "w-[200px] focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm" %>
         </div>
         <div class="flex items-center justify-between gap-4">
           <%= f.label :business_type, class: "block text-sm font-medium text-gray-700" %>
-          <%= f.select :business_type, ::Company::VALID_BUSINESS_TYPES, {include_blank: true}, {class: "w-[200px] block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+          <%= f.select :business_type, ::Company::VALID_BUSINESS_TYPES, {include_blank: true}, {form: "article_form", class: "w-[200px] block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
         </div>
 
         <fieldset>
@@ -22,7 +22,7 @@
             <% CaseStudy::Article::COMPANY_TYPES.each do |type| %>
               <div class="flex items-start">
                 <div class="flex items-center h-5">
-                  <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
+                  <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), form: "article_form", class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
                 </div>
                 <div class="ml-3 text-sm">
                   <label for="company_type_<%= type.parameterize %>" class="font-medium text-gray-700"><%= type %></label>
