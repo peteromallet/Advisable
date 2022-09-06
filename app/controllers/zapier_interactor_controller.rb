@@ -98,6 +98,24 @@ class ZapierInteractorController < ApplicationController
     render json: {status: "OK.", conversation: conversation.uid}
   end
 
+  def create_or_update_case_study
+    article = CaseStudy::Article.find_or_initialize_by(uid: params[:uid])
+    article.specialist = Specialist.find_by!(uid: params[:specialist]) if params[:specialist].present?
+
+    %w[title subtitle score confidential hide_from_search published_at company_type].each do |attribute|
+      article.public_send("#{attribute}=", params[attribute]) if params[attribute].present? || params[attribute] == false
+    end
+
+    company = article.company || article.build_company
+    %w[company_name company_website company_business_type].each do |attribute|
+      company_attribute = attribute.sub("company_", "")
+      company.public_send("#{company_attribute}=", params[attribute]) if params[attribute].present?
+    end
+
+    article.save!
+    render json: {status: "OK.", case_study: article.uid}
+  end
+
   private
 
   def find_and_update(model, attrs = {})

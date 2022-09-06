@@ -100,6 +100,7 @@ Rails.application.routes.draw do
   post "zapier_interactor/import_case_study"
   post "zapier_interactor/send_email"
   post "zapier_interactor/create_message"
+  post "zapier_interactor/create_or_update_case_study"
 
   # redirections for old routes
   get "/profile/:username/:article", to: redirect(LogAndRedirect.new("/articles/%{article}"))
