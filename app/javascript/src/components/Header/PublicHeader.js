@@ -17,7 +17,7 @@ function MobilePublicHeader() {
   return (
     <HeaderBar className="justify-between px-5">
       <MobileMenu className="mr-4">
-        <MobileMenuLink href="/clients/join">Sign Up</MobileMenuLink>
+        <MobileMenuLink href="/join">Sign Up</MobileMenuLink>
         {LINKS.map((link, index) => (
           <MobileMenuLink key={index} href={link.to}>
             {link.label}

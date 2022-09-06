@@ -12,8 +12,6 @@ const ConfirmAccount = lazy(() => import("./views/ConfirmAccount"));
 const TestimonialFlow = lazy(() => import("./views/TestimonialFlow"));
 const Availability = lazy(() => import("./views/Availability"));
 const Join = lazy(() => import("./views/Join"));
-const ClientJoin = lazy(() => import("./views/ClientJoin"));
-const FreelancerJoin = lazy(() => import("./views/FreelancerJoin"));
 const VideoCall = lazy(() => import("./views/VideoCall"));
 
 const MainRoutes = () => {
@@ -42,8 +40,6 @@ const MainRoutes = () => {
           }
         />
         <Route path="/join/*" element={<Join />} />
-        <Route path="/clients/join/*" element={<ClientJoin />} />
-        <Route path="/freelancers/join/*" element={<FreelancerJoin />} />
         <Route
           path="/review/:id/case_studies/:article_id/*"
           element={<CaseStudyReview />}
