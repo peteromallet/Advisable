@@ -31,9 +31,7 @@ module Mutations
     private
 
     def assign_industry(id)
-      return current_company.industry = nil if id.blank?
-
-      current_company.industry = Industry.find_by("uid = :id OR name = :id", id:)
+      current_company.industry = id.blank? ? nil : Industry.find_by(uid: id) || Industry.find_by(name: id)
     end
   end
 end
