@@ -11,7 +11,7 @@ import BuildingBlocksIllustration from "src/illustrations/zest/buildingBlocks";
 const optionClasses = composeStyles({
   base: `
     w-full
-    max-w-[280px]
+    sm:max-w-[280px]
     transition-all
     shadow-xl hover:shadow-2xl
     hover:-translate-y-1
@@ -23,7 +23,7 @@ const optionClasses = composeStyles({
     flex
     shrink-0
     items-center
-    flex-row md:flex-col
+    flex-row sm:flex-col
     gap-2
   `,
 });
@@ -31,10 +31,10 @@ const optionClasses = composeStyles({
 function HiringOption({ illustration, title, subtext, ...props }) {
   return (
     <div className={optionClasses()} {...props}>
-      <div className="hidden place-items-center md:grid w-[150px] h-[180px]">
+      <div className="hidden place-items-center sm:grid w-[150px] h-[180px]">
         {cloneElement(illustration)}
       </div>
-      <div className="flex-1 md:text-center">
+      <div className="flex-1 sm:text-center">
         <h5 className="text-lg font-medium">{title}</h5>
         <div className="text-[15px] text-neutral700">{subtext}</div>
       </div>
@@ -72,7 +72,7 @@ export default function Industry() {
           SaaS, your results won’t be very relevant.
         </p>
       </div>
-      <div className="flex gap-2 justify-center mx-auto md:gap-8 max-w-[860px]">
+      <div className="flex flex-col gap-2 justify-center mx-auto sm:flex-row md:gap-8 max-w-[860px]">
         <HiringOption
           data-testid="notSaaS"
           title="We're not SaaS"
