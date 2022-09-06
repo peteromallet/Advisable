@@ -67,7 +67,15 @@ function ConversationPendingAgreement({ conversation }) {
   return (
     <div>
       <h4 className="leading-tight font-medium mb-2">Agreement</h4>
-      <p>You have a pending agreement</p>
+      <p className="leading-tight text-[15px] text-neutral-700 mb-2">
+        You have a pending agreement
+      </p>
+      <ConversationActionsList>
+        <ConversationAction icon={DocumentText}>
+          {" "}
+          View agreement
+        </ConversationAction>
+      </ConversationActionsList>
     </div>
   );
 }
