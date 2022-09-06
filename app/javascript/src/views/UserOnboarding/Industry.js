@@ -1,33 +1,59 @@
-import React, { useMemo, useState } from "react";
-import Fuse from "fuse.js";
+import React, { cloneElement } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import Input from "src/components/Input";
-import { ChevronRight, Search } from "@styled-icons/heroicons-solid";
+import composeStyles from "src/utilities/composeStyles";
 import { useUpdateCompany } from "./queries";
-import { trackEvent } from "src/utilities/segment";
+import { useNavigate } from "react-router-dom";
+import { ArrowSmRight } from "@styled-icons/heroicons-outline";
+import { trackEvent, updateTraits } from "src/utilities/segment";
+import ThumbsupIllustration from "src/illustrations/zest/thumbsup";
+import BuildingBlocksIllustration from "src/illustrations/zest/buildingBlocks";
 
-export default function Industry({ data }) {
-  const [update] = useUpdateCompany();
+const optionClasses = composeStyles({
+  base: `
+    w-full
+    max-w-[280px]
+    transition-all
+    shadow-xl hover:shadow-2xl
+    hover:-translate-y-1
+    bg-white
+    rounded-lg
+    p-5 md:p-8
+    cursor-pointer
+
+    flex
+    shrink-0
+    items-center
+    flex-row md:flex-col
+    gap-2
+  `,
+});
+
+function HiringOption({ illustration, title, subtext, ...props }) {
+  return (
+    <div className={optionClasses()} {...props}>
+      <div className="hidden place-items-center md:grid w-[150px] h-[180px]">
+        {cloneElement(illustration)}
+      </div>
+      <div className="flex-1 md:text-center">
+        <h5 className="text-lg font-medium">{title}</h5>
+        <div className="text-[15px] text-neutral700">{subtext}</div>
+      </div>
+      <div>
+        <ArrowSmRight className="w-5 h-5" />
+      </div>
+    </div>
+  );
+}
+
+export default function Industry() {
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState("");
+  const [update] = useUpdateCompany();
 
-  const filteredIndustries = useMemo(() => {
-    if (!searchValue?.trim()) return data.industries;
-
-    const fuse = new Fuse(data.industries, { keys: ["name"] });
-    return fuse.search(searchValue).map((obj) => obj.item);
-  }, [searchValue, data]);
-
-  const handleSelection = (industry) => async () => {
-    await update({
-      variables: {
-        input: { industry: industry.id },
-      },
-    });
-
-    trackEvent("Setup - Submitted Industry", { industry: industry.name });
-    navigate("../audience");
+  const setSass = (isSaaS) => {
+    update({ variables: { input: { industry: isSaaS ? "SaaS" : null } } });
+    updateTraits({ industry: isSaaS ? "SaaS" : null });
+    trackEvent("Setup - Industry");
+    navigate("/setup/hiring");
   };
 
   return (
@@ -37,36 +63,40 @@ export default function Industry({ data }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="text-center mb-4 md:mb-12">
-        <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-1 text-blue900">
-          What industry is your company in?
+      <div className="mx-auto mb-12 text-center max-w-[500px]">
+        <h2 className="mb-4 text-2xl font-semibold tracking-tight leading-none md:text-3xl text-blue900">
+          Are you from a SaaS company?
         </h2>
-        <p className="md:text-lg text-neutral700 mb-6">
-          We’ll use this to recommend projects from similar industries.
+        <p className="text-lg text-neutral900">
+          Advisable only has SaaS-related projects currently. If you’re not
+          SaaS, your results won’t be very relevant.
         </p>
-        <div className="w-auto md:w-[400px] mx-auto">
-          <Input
-            rounded
-            autoFocus
-            prefix={<Search className="w-5 h-5 text-neutral600" />}
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </div>
       </div>
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {filteredIndustries.map((industry) => (
-          <div
-            key={industry.id}
-            data-testid="industry"
-            className="bg-white flex items-center shadow-md rounded-md p-5 cursor-pointer border-2 border-solid border-transparent hover:shadow-xl hover:border-neutral700"
-            onClick={handleSelection(industry)}
-          >
-            <div className="flex-1">{industry.name}</div>
-            <ChevronRight className="w-5 h-5 text-neutral600 shrink-0" />
-          </div>
-        ))}
+      <div className="flex gap-2 justify-center mx-auto md:gap-8 max-w-[860px]">
+        <HiringOption
+          data-testid="notSaaS"
+          title="We're not SaaS"
+          onClick={() => setSass(false)}
+          subtext="The projects you see won’t be highly-relevant."
+          illustration={
+            <BuildingBlocksIllustration
+              primaryColor="var(--color-rose-100)"
+              secondaryColor="var(--color-neutral900)"
+            />
+          }
+        />
+        <HiringOption
+          data-testid="saas"
+          title="We are SaaS!"
+          onClick={() => setSass(true)}
+          subtext="You’ll see projects tailored to your space."
+          illustration={
+            <ThumbsupIllustration
+              primaryColor="var(--color-blue-100)"
+              secondaryColor="var(--color-neutral900)"
+            />
+          }
+        />
       </div>
     </motion.div>
   );

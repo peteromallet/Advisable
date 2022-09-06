@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Company from "./Company";
 import Industry from "./Industry";
-import Audience from "./Audience";
 import Interests from "./Interests";
 import Logo from "src/components/Logo";
 import { useOnboardingData } from "./queries";
@@ -30,11 +29,6 @@ export const STEPS = [
     title: "Industry",
     path: "industry",
     component: Industry,
-  },
-  {
-    title: "Audience",
-    path: "audience",
-    component: Audience,
   },
   {
     title: "Hiring",

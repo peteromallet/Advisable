@@ -5,9 +5,7 @@ require "rails_helper"
 RSpec.describe "Client signup", type: :system do
   before do
     allow_any_instance_of(User).to receive(:sync_to_airtable)
-    create(:industry, name: "Financial Services")
-    create(:industry, name: "Development")
-    create(:industry, name: "Design")
+    create(:industry, name: "SaaS")
     create(:skill, name: "Linkedin Advertising")
     create(:skill, name: "Facebook Advertising")
     create(:skill, name: "Twitter Advertising")
@@ -31,11 +29,7 @@ RSpec.describe "Client signup", type: :system do
       click_on("Continue")
 
       # Industry step
-      find("*[data-testid=industry]", text: "Development").click
-
-      # Customer
-      fill_in("audience", with: "I'm looking for a developer")
-      click_on("Continue")
+      find("*[data-testid=saas]").click
 
       # hiring
       find_by_test_id("hire").click
