@@ -1,35 +1,24 @@
-<div class="bg-white shadow px-4 py-5 sm:rounded-md sm:p-6">
-  <div class="md:grid md:grid-cols-3 md:gap-6">
-    <div class="md:col-span-1">
-      <h3 class="text-lg font-medium leading-6 text-gray-900">Skills</h3>
-      <p class="mt-1 text-sm text-gray-500">Skills this Article applies to</p>
+<div class="py-10 px-8">
+  <h3 class="text-sm text-neutral-900 font-bold uppercase mb-2">Skills</h3>
+  <turbo-frame id="<%= dom_id(article, "skills") %>">
+    <div class="divide-y divide-y-neutral-100">
+      <% article.skills.order(:id).each do |skill| %>
+        <%= render "admin/articles/skill", skill: skill %>
+      <% end %>
     </div>
-    <div class="mt-5 md:mt-0 md:col-span-2">
-      <div class="grid grid-cols-6 gap-6">
-        <div class="col-span-6">
-          <turbo-frame id="<%= dom_id(article, "skills") %>">
-            <div class="space-y-3">
-              <% article.skills.order(:id).each do |skill| %>
-                <%= render "admin/articles/skill", skill: skill %>
-              <% end %>
-            </div>
-            <div class="mt-5">
-              <%= fields_for(article.skills.build) do |f| %>
-                <div class="flex">
-                  <div class="flex-grow">
-                    <%= f.label :skill, class: "block text-sm font-medium text-gray-700" %>
-                    <%= f.select :skill, ::Skill.active.order(:name).where.not(id: article.skills.pluck(:skill_id)).map { |skill| [skill.name, skill.id] }, {prompt: "Select Skill"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
-                  </div>
-                  <div class="ml-2">
-                    <label class="block text-sm font-medium text-gray-700">&nbsp;</label>
-                    <%= f.button "Add", formmethod: "post", formaction: add_skill_admin_article_path, data: { turbo_frame: dom_id(article, "skills")}, class: "mt-1 block justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </turbo-frame>
+    <%= fields_for(article.skills.build) do |f| %>
+      <div class="flex">
+        <div class="flex-grow">
+          <%= f.select :skill, ::Skill.active.order(:name).where.not(id: article.skills.pluck(:skill_id)).map { |skill| [skill.name, skill.id] }, {prompt: "Add a skill"}, {class: "block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+        </div>
+        <div class="ml-2">
+          <%= f.button formmethod: "post", formaction: add_skill_admin_article_path, data: { turbo_frame: dom_id(article, "skills")}, class: "block justify-center py-2 px-3 border border-solid border-neutral-100 rounded-sm bg-neutral-100 hover:bg-neutral-200" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+            </svg>
+          <% end %>
         </div>
       </div>
-    </div>
-  </div>
+    <% end %>
+  </turbo-frame>
 </div>

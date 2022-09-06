@@ -1,0 +1,20 @@
+  <aside class="w-[400px] shrink-0 sticky top-0 h-screen shadow-lg">
+    <div class="flex flex-col h-full">
+      <div class="overflow-y-scroll h-full flex-1 divide-y divide-y-neutral-100">
+        <% if current_account.admin? %>
+          <div class="col-span-6">
+            <%= form.label :specialist_id, class: "block text-sm font-medium text-gray-700" %>
+            <%= form.select :specialist_id, options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+          </div>
+        <% end %>
+
+        <%= render "company_details", form: form, article: article %>
+        <%= render "skills", article: article %>
+        <%= render "industries", article: article %>
+      </div>
+
+      <div class="px-8 py-6 border-t border-solid border-neutral-200">
+        <%= form.submit "Save Changes", class: "bg-neutral-900 hover:bg-neutral-700 active:bg-neutral-900 text-white w-full rounded-full font-medium px-8 py-3 cursor-pointer" %>
+      </div>
+    </div>
+  </aside>

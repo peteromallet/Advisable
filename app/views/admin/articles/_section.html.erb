@@ -1,5 +1,5 @@
 <turbo-frame id="<%= dom_id(section) %>">
-  <div class="grid gap-6" data-controller="sortable" data-sortable-handle-value=".handle">
+  <div data-controller="sortable" data-sortable-handle-value=".handle">
     <% section.contents.by_position.each do |content| %>
       <%= render "admin/contents/base", content: content %>
     <% end %>

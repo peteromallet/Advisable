@@ -9,3 +9,6 @@ application.register("menu", MenuController)
 
 import SearchController from "./search_controller"
 application.register("search", SearchController)
+
+import TextareaController from "./textarea_controller"
+application.register("textarea", TextareaController)
