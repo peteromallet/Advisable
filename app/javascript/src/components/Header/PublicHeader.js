@@ -61,7 +61,7 @@ export default function PublicHeader() {
           <Link to="/login">
             <Button variant="outlined">Login</Button>
           </Link>
-          <Link to="/clients/join">
+          <Link to="/join">
             <Button>Get Started</Button>
           </Link>
         </div>

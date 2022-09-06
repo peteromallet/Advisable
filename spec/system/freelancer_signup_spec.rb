@@ -16,14 +16,15 @@ RSpec.describe "Freelancer signup", type: :system do
   end
 
   it "Specialist can create an account and gets redirected to application" do
-    visit("/freelancers/join")
+    visit("/join")
+    expect(page).to have_content("Are you a full-time employee or freelancer?")
+    click_on("Freelancer")
     fill_in("firstName", with: "Dwight")
     fill_in("lastName", with: "Schrute")
     fill_in("email", with: "dwight@theoffice.com")
-    click_on("Start Application")
     fill_in("password", with: "testing123")
     fill_in("passwordConfirmation", with: "testing123")
-    click_on("Continue")
+    click_on("Create Your Free Account")
 
     expect(page).to have_content("Welcome to Advisable")
     click_on("Get Started")
