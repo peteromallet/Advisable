@@ -24,7 +24,8 @@ module Admin
 
     def create
       @content = CaseStudy::Content.new(section:, type: params[:type])
-      content.assign_attributes(**content_params, position: section.contents.by_position.last.position + 1)
+      position = (section.contents.by_position.last&.position || 0) + 1
+      content.assign_attributes(**content_params, position:)
 
       if content.save
         render turbo_stream: turbo_stream.replace(section, partial: "admin/articles/section", locals: {section:})
