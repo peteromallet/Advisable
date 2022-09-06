@@ -5,6 +5,7 @@ import { Box, Skeleton, Text } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
 import useViewer from "src/hooks/useViewer";
 import Availability from "./Availability";
+import { Link } from "react-router-dom";
 
 function ReviewsAndCaseStudies({ reviews, caseStudies }) {
   return (
@@ -60,16 +61,11 @@ export default function Hero({
           size={{ _: "lg", l: "xl" }}
         />
         <Box>
-          <Text
-            fontSize="3xl"
-            fontWeight={550}
-            color="neutral900"
-            lineHeight="l"
-            letterSpacing="-0.02rem"
-            mb={1}
-          >
-            {viewer.name}
-          </Text>
+          <Link to={viewer.profilePath} className="mb-1">
+            <div className="text-2xl font-semibold tracking-tight hover:underline text-neutral900 decoration-blue200">
+              {viewer.name}
+            </div>
+          </Link>
           {loading ? (
             <LoadingReviewsAndCaseStudies />
           ) : (
