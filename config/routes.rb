@@ -22,9 +22,9 @@ class UsernameConstraint
 end
 
 Rails.application.routes.draw do
-  match "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "app.advisable.com"}
-  match "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "www.advisable.com"}
-  match "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, via: :all, constraints: {host: "advisable.herokuapp.com"}
+  get "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, constraints: {host: "app.advisable.com"}
+  get "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, constraints: {host: "www.advisable.com"}
+  get "(*any)", to: redirect { |_, req| "https://advisable.com#{req.fullpath}" }, constraints: {host: "advisable.herokuapp.com"}
 
   get "/graphiql", to: "application#graphiql" if Rails.env.development? || ENV.fetch("STAGING", nil)
 
