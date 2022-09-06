@@ -95,7 +95,7 @@ export default function Footer() {
           <FooterMenu
             title="Get Started"
             links={[
-              { children: "Create Account", href: "/join" },
+              { children: "Create Account", href: "/clients/join" },
               { children: "Login", href: "/login" },
             ]}
           />
