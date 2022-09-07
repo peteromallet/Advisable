@@ -28,7 +28,7 @@ export default function UpcomingEvents({ upcomingEvents }) {
   const events = upcomingEvents.map((e) => <Event key={e.id} event={e} />);
 
   return (
-    <>
+    <div>
       <Box
         display="flex"
         alignItems="baseline"
@@ -48,6 +48,6 @@ export default function UpcomingEvents({ upcomingEvents }) {
       ) : (
         <EmptyState />
       )}
-    </>
+    </div>
   );
 }

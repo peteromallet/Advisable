@@ -1,8 +1,9 @@
 import React from "react";
 import pluralize from "pluralize";
 import { Link } from "react-router-dom";
-import { Skeleton } from "@advisable/donut";
+import { Skeleton, useBreakpoint } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
+import composeStyles from "src/utilities/composeStyles";
 import useViewer from "src/hooks/useViewer";
 
 function ReviewsAndCaseStudies({ reviews, caseStudies }) {
@@ -29,33 +30,59 @@ function LoadingReviewsAndCaseStudies() {
   );
 }
 
+const profileClasses = composeStyles({
+  base: `
+    p-4
+    flex sm:inline-flex
+    min-w-[460px]
+    gap-5
+    cursor-pointer
+    rounded-md
+    ring-neutral200
+    items-center
+    transition-all
+  `,
+  variants: {
+    mobile: `
+      bg-white
+      ring-1
+      hover:drop-shadow
+    `,
+    desktop: `
+      -m-4
+      hover:bg-white
+      hover:ring-1
+    `,
+  },
+});
+
 export default function Hero({ loading, caseStudies, reviews }) {
   const viewer = useViewer();
+  const lUp = useBreakpoint("lUp");
 
   return (
-    <>
-      <div className="flex w-full items-center lg:items-center gap-5">
-        <PassportAvatar
-          src={viewer.avatar}
-          name={viewer.name}
-          size={{ _: "lg", l: "xl" }}
-        />
-        <div className="space-y-2">
-          <Link to={viewer.profilePath}>
-            <div className="text-2xl font-semibold tracking-tight hover:underline text-neutral900 decoration-blue200">
-              {viewer.name}
-            </div>
-          </Link>
-          {loading ? (
-            <LoadingReviewsAndCaseStudies />
-          ) : (
-            <ReviewsAndCaseStudies
-              caseStudies={caseStudies}
-              reviews={reviews}
-            />
-          )}
+    <Link
+      to={viewer.profilePath}
+      className={profileClasses({ mobile: !lUp, desktop: lUp })}
+      title="Go to profile"
+      aria-label="Go to profile"
+    >
+      <PassportAvatar
+        src={viewer.avatar}
+        name={viewer.name}
+        size={{ _: "lg", l: "xl" }}
+        className="pointer-events-none"
+      />
+      <div className="space-y-2">
+        <div className="text-2xl font-semibold tracking-tight text-neutral900">
+          {viewer.name}
         </div>
+        {loading ? (
+          <LoadingReviewsAndCaseStudies />
+        ) : (
+          <ReviewsAndCaseStudies caseStudies={caseStudies} reviews={reviews} />
+        )}
       </div>
-    </>
+    </Link>
   );
 }
