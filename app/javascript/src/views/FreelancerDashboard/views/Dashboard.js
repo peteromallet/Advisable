@@ -32,7 +32,6 @@ export default function Dashboard() {
             loading={loading}
             caseStudies={data?.viewer?.caseStudiesCount}
             reviews={data?.viewer?.reviews?.length}
-            unavailableUntil={data?.viewer?.unavailableUntil}
           />
         </Box>
       </Box>
