@@ -10,11 +10,11 @@ function ReviewsAndCaseStudies({ reviews, caseStudies }) {
   return (
     <div>
       <div className="text-neutral700 font-normal">
-        <b className="text-neutral800 font-semibold">{caseStudies} </b>
+        <b className="font-semibold">{caseStudies} </b>
         case {pluralize("study", caseStudies)}
       </div>
       <div className="text-neutral700 font-normal">
-        <b className="text-neutral800 font-semibold">{reviews} </b>
+        <b className="font-semibold">{reviews} </b>
         {pluralize("testimonial", reviews)}
       </div>
     </div>
@@ -34,7 +34,7 @@ const profileClasses = composeStyles({
   base: `
     p-4
     flex sm:inline-flex
-    min-w-[460px]
+    sm:min-w-[460px]
     gap-5
     cursor-pointer
     rounded-md
