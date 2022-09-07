@@ -43,7 +43,9 @@ fragment ViewerFields on ViewerUnion {
     firstName
     lastName
     confirmed
+    unavailableUntil
     applicationStage
+    collaborationTypes
     completedTutorials
     needsToSetAPassword
     unreadNotifications

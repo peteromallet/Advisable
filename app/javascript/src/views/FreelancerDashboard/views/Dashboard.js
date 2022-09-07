@@ -27,7 +27,7 @@ export default function Dashboard() {
           paddingY={{ _: 8, m: 14 }}
           paddingX={{ _: 4, m: 8 }}
         >
-          <Welcome />
+          <Welcome unavailableUntil={data?.viewer?.unavailableUntil} />
           <Profile
             loading={loading}
             caseStudies={data?.viewer?.caseStudiesCount}
