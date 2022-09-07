@@ -573,14 +573,15 @@ RSpec.describe ZapierInteractorController, type: :request do
     end
 
     context "when UID" do
-      let(:article) { create(:case_study_article, hide_from_search: true) }
+      let(:article) { create(:case_study_article, hide_from_search: true, subtitle: "Old Subtitle") }
 
-      it "updates the article" do
-        post("/zapier_interactor/create_or_update_case_study", params: params.merge(uid: article.uid, hide_from_search: false))
+      it "updates the article respecting false value and nullifying `-` value" do
+        post("/zapier_interactor/create_or_update_case_study", params: params.merge(uid: article.uid, subtitle: "-", hide_from_search: false))
         expect(response).to have_http_status(:success)
         article.reload
         expect(JSON[response.body]["case_study"]).to eq(article.uid)
         expect(article.title).to eq("New Title")
+        expect(article.subtitle).to be_nil
         expect(article.hide_from_search).to be(false)
         expect(article.company.name).to eq("ACME")
       end
