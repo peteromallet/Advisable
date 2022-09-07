@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     const results = document.getElementById("search_results")
-    if (results.hasChildNodes()) {
+    if (results && results.hasChildNodes()) {
       document.getElementById("search_results").scrollIntoView({ behavior: "smooth" })
     }
   }

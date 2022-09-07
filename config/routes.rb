@@ -56,6 +56,8 @@ Rails.application.routes.draw do
     resources :articles, except: [:show] do
       collection do
         get :search
+        post :filter
+        get :filter
       end
       member do
         post :add_insight

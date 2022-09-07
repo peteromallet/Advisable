@@ -8,7 +8,7 @@ module Admin
 
     attr_reader :article
 
-    before_action :set_article, except: %i[index search new create]
+    before_action :set_article, except: %i[index search filter new create]
     skip_before_action :admin?, only: SPECIALIST_ACTIONS
     before_action :admin_or_as_specialist?, only: SPECIALIST_ACTIONS
 
@@ -16,6 +16,15 @@ module Admin
 
     def index
       @pagy, @articles = pagy(::CaseStudy::Article.reverse_chronological)
+    end
+
+    def filter
+      @articles = ::CaseStudy::Article.reverse_chronological.where("title ILIKE ?", "%#{params[:title]}%")
+      @pagy, @articles = pagy_array(@articles, params: {title: params[:title]})
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(:articles, partial: "admin/articles/articles", locals: {articles: @articles, pagy: @pagy}) }
+        format.html { render :index }
+      end
     end
 
     def search
