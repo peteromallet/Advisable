@@ -31,17 +31,17 @@ export default function Company({ data }) {
   };
 
   return (
-    <div className="mx-auto max-w-[640px] w-full">
+    <div className="mx-auto w-full max-w-[640px]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white shadow-xl rounded-xl p-8 md:p-10"
+        className="p-8 bg-white rounded-xl shadow-xl md:p-10"
       >
-        <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-2 text-blue900">
+        <h2 className="mb-2 text-2xl font-semibold tracking-tight leading-none md:text-3xl text-blue900">
           Tell us about your company
         </h2>
-        <p className="md:text-lg text-neutral700 mb-8">
+        <p className="mb-8 md:text-lg text-neutral700">
           We’ll use this information to recommend projects relevant to your
           company.
         </p>
@@ -76,7 +76,6 @@ export default function Company({ data }) {
                 <option>Medium-Sized Business</option>
                 <option>Non-Profit</option>
                 <option>Government</option>
-                <option>Growth-Stage Startup</option>
                 <option>Small Business</option>
                 <option>Major Corporation</option>
               </FormField>
