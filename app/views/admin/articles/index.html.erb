@@ -17,24 +17,14 @@
   <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-sm">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">Title</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">Specialist</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <% @articles.each do |article| %>
-                  <%= render "admin/articles/article", article: article %>
-                <% end %>
-              </tbody>
-            </table>
-            <%= render partial: "admin/shared/pagination", locals: {pagy: @pagy} %>
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8" data-controller="search">
+          <div class="my-4">
+            <%= form_with(url: filter_admin_articles_path, data: {search_target: "form"}) do |f| %>
+              <%= f.search_field :title, value: params[:title], placeholder: "Filter by Title", class: "w-1/2", data: {action: "search#submit"} %>
+              <%= f.submit "Filter", class: "w-1/6 cursor-pointer py-2 px-4 border border-transparent shadow-sm md:text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+            <% end %>
           </div>
+          <%= render partial: "articles", locals: {pagy: @pagy, articles: @articles} %>
         </div>
       </div>
     </div>
