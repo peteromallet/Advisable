@@ -19,7 +19,10 @@ module Admin
     end
 
     def filter
-      @articles = ::CaseStudy::Article.reverse_chronological.where("title ILIKE ?", "%#{params[:title]}%")
+      specialists = Specialist.joins(:account)
+      specialists = specialists.where("accounts.first_name ILIKE ?", "%#{params[:title]}%").or(specialists.where("accounts.last_name ILIKE ?", "%#{params[:title]}%"))
+      @articles = ::CaseStudy::Article.where("title ILIKE ?", "%#{params[:title]}%").or(::CaseStudy::Article.where(specialist: specialists))
+      @articles = @articles.reverse_chronological.includes(specialist: :account)
       @pagy, @articles = pagy_array(@articles, params: {title: params[:title]})
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace(:articles, partial: "admin/articles/articles", locals: {articles: @articles, pagy: @pagy}) }
