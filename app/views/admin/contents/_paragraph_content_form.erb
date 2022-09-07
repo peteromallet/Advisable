@@ -1,5 +1,5 @@
-<%= form_with(**content_form_params(content), class: "mb-4 border-2 border-solid border-emerald-500") do |form| %>
-  <%= form.text_area :text, autofocus: true, value: content.content["text"], rows: 10, class: "text-base w-full focus:ring-0 block border-none p-0", data: { controller: "textarea", action: "input->textarea#resize", textarea_target: "input"} %>
+<%= form_with(**content_form_params(content), class: "mb-12 border-2 border-solid border-emerald-500") do |form| %>
+  <%= form.text_area :text, autofocus: true, value: content.content["text"], rows: 4, class: "text-base w-full focus:ring-0 block border-none p-0", data: { controller: "textarea", action: "input->textarea#resize", textarea_target: "input"} %>
   <%= form.hidden_field :section_id, value: content.section.id %>
   <%= form.hidden_field :type, value: content.type %>
   <div class="absolute top-0 right-0 p-2 gap-2 flex justify-between">
