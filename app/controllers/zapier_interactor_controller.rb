@@ -5,6 +5,8 @@ class ZapierInteractorController < ApplicationController
 
   ALLOWED_USER_FIELDS = %i[campaign_name campaign_medium campaign_source application_status trustpilot_review_status].freeze
   ALLOWED_SPECIALIST_FIELDS = %i[campaign_name campaign_source application_stage application_status campaign_medium case_study_status trustpilot_review_status].freeze
+  CS_ARTICLE_FIELDS = %w[title subtitle score confidential hide_from_search published_at company_type].freeze
+  CS_ARTICLE_COMPANY_FIELDS = %w[company_name company_website company_business_type].freeze
   TASK_STAGE_MAPPING = {"Quote Requested" => :quote_requested_at, "Quote Provided" => :quote_provided_at, "Assigned" => :assigned_at, "Submitted" => :submitted_at, "Approved" => :approved_at, "Working" => :started_working_at}.freeze
 
   skip_before_action :verify_authenticity_token
@@ -98,6 +100,25 @@ class ZapierInteractorController < ApplicationController
     render json: {status: "OK.", conversation: conversation.uid}
   end
 
+  def create_or_update_case_study
+    article = CaseStudy::Article.find_or_initialize_by(uid: params[:uid])
+    article.specialist = Specialist.find_by!(uid: params[:specialist]) if params[:specialist].present?
+
+    attrs = parse_params(params.permit(CS_ARTICLE_FIELDS + CS_ARTICLE_COMPANY_FIELDS))
+    CS_ARTICLE_FIELDS.each do |attribute|
+      article.public_send("#{attribute}=", attrs[attribute]) if attrs.key?(attribute)
+    end
+
+    company = article.company || article.build_company
+    CS_ARTICLE_COMPANY_FIELDS.each do |attribute|
+      company_attribute = attribute.sub("company_", "")
+      company.public_send("#{company_attribute}=", attrs[attribute]) if attrs.key?(attribute)
+    end
+
+    article.save!
+    render json: {status: "OK.", case_study: article.uid}
+  end
+
   private
 
   def find_and_update(model, attrs = {})
@@ -134,9 +155,10 @@ class ZapierInteractorController < ApplicationController
 
   # Remove empty keys to avoid nullifying
   # Make explicit nullifying possible via `-`
+  # Allow `false` values
   def parse_params(attrs)
     attrs.to_h.filter_map do |k, v|
-      next if v.blank? && v != "-"
+      next if v.blank? && v != false
 
       [k, v == "-" ? nil : v]
     end.to_h

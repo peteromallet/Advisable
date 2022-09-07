@@ -547,4 +547,44 @@ RSpec.describe ZapierInteractorController, type: :request do
       end
     end
   end
+
+  describe "POST /create_or_update_case_study" do
+    let(:params) { {title: "New Title", company_name: "ACME", key:} }
+
+    context "when no key" do
+      let(:key) { "" }
+
+      it "is unauthorized" do
+        post("/zapier_interactor/create_or_update_case_study", params:)
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "when no UID" do
+      let(:specialist) { create(:specialist) }
+
+      it "creates the article" do
+        post("/zapier_interactor/create_or_update_case_study", params: params.merge(specialist: specialist.uid))
+        expect(response).to have_http_status(:success)
+        article = CaseStudy::Article.find_by(uid: JSON[response.body]["case_study"])
+        expect(article.title).to eq("New Title")
+        expect(article.company.name).to eq("ACME")
+      end
+    end
+
+    context "when UID" do
+      let(:article) { create(:case_study_article, hide_from_search: true, subtitle: "Old Subtitle") }
+
+      it "updates the article respecting false value and nullifying `-` value" do
+        post("/zapier_interactor/create_or_update_case_study", params: params.merge(uid: article.uid, subtitle: "-", hide_from_search: false))
+        expect(response).to have_http_status(:success)
+        article.reload
+        expect(JSON[response.body]["case_study"]).to eq(article.uid)
+        expect(article.title).to eq("New Title")
+        expect(article.subtitle).to be_nil
+        expect(article.hide_from_search).to be(false)
+        expect(article.company.name).to eq("ACME")
+      end
+    end
+  end
 end
