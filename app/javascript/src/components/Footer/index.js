@@ -1,6 +1,7 @@
 import React from "react";
 import { Twitter, LinkedinIn, Facebook } from "@styled-icons/fa-brands";
 import Logo from "../Logo";
+import useViewer from "src/hooks/useViewer";
 
 function SocialLink(props) {
   return (
@@ -32,6 +33,7 @@ function FooterMenu({ title, links }) {
 }
 
 export default function Footer() {
+  const viewer = useViewer();
   const year = new Date().getFullYear();
 
   return (
@@ -57,7 +59,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-16 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-16 justify-end sm:grid-cols-2 lg:flex">
           <FooterMenu
             title="Overview"
             links={[
@@ -92,13 +94,15 @@ export default function Footer() {
             ]}
           />
 
-          <FooterMenu
-            title="Get Started"
-            links={[
-              { children: "Create Account", href: "/clients/join" },
-              { children: "Login", href: "/login" },
-            ]}
-          />
+          {!viewer && (
+            <FooterMenu
+              title="Get Started"
+              links={[
+                { children: "Create Account", href: "/clients/join" },
+                { children: "Login", href: "/login" },
+              ]}
+            />
+          )}
 
           <FooterMenu
             title="More"
