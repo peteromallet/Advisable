@@ -1,12 +1,41 @@
-  <aside class="w-[400px] shrink-0 sticky top-0 h-screen shadow-lg">
+  <aside class="w-[400px] shrink-0 sticky top-[var(--header-height)] h-viewport shadow-lg">
     <div class="flex flex-col h-full">
       <div class="overflow-y-scroll h-full flex-1 divide-y divide-y-neutral-100">
+
         <% if current_account.admin? %>
-          <div class="col-span-6">
-            <%= label_tag "case_study_article[specialist_id]", class: "block text-sm font-medium text-gray-700" %>
-            <%= select_tag "case_study_article[specialist_id]", options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"} %>
+          <div class="p-8">
+            <h3 class="text-sm text-neutral-900 font-bold uppercase mb-3">Basics</h3>
+
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <%= @form.label :specialist_id, form: "article_form", class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
+                <%= @form.select :specialist_id, options_for_select(Specialist.all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {form: "article_form", class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" } %>
+              </div>
+
+              <div class="flex items-center">
+                <%= form.label :score, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
+                <%= form.number_field :score, form: "article_form", class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" %>
+              </div>
+
+              <div class="flex items-center">
+                <%= form.label :published_at, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
+                <%= form.datetime_field :published_at, form: "article_form", class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm", include_seconds: false %>
+              </div>
+
+              <div class="pt-3 flex items-start">
+                <div class="flex items-center h-5">
+                  <%= form.check_box :hide_from_search, form: "article_form", class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
+                </div>
+                <div class="ml-3 text-sm">
+                  <%= form.label :hide_from_search %>
+                  <p class="text-gray-500">Will only be visible via a direct link.</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         <% end %>
+
 
         <%= render "company_details",  article: article, form: form %>
         <%= render "skills", article: article %>
