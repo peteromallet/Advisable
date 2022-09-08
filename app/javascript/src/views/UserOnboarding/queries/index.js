@@ -5,8 +5,8 @@ import DELETE_INTEREST from "./deleteInterest.gql";
 import { useMutation, useQuery } from "@apollo/client";
 import RESULTS from "./results.gql";
 
-export const useOnboardingData = () => {
-  return useQuery(ONBOARDING_DATA);
+export const useOnboardingData = (opts) => {
+  return useQuery(ONBOARDING_DATA, opts);
 };
 
 export const useUpdateCompany = () => {

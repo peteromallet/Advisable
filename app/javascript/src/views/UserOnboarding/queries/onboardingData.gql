@@ -1,5 +1,5 @@
-query OnboardingData {
-  currentCompany {
+query OnboardingData($isFreelancer: Boolean!) {
+  currentCompany @skip(if: $isFreelancer) {
     id
     name
     kind

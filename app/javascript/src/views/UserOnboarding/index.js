@@ -37,7 +37,11 @@ export const STEPS = [
 
 export default function UserOnboarding() {
   const viewer = useViewer();
-  const { loading, data } = useOnboardingData();
+  const { loading, data } = useOnboardingData({
+    variables: {
+      isFreelancer: viewer.isSpecialist,
+    },
+  });
 
   if (loading) return <Loading />;
 
