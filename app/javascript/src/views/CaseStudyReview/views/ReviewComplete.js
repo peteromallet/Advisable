@@ -69,7 +69,7 @@ export default function ReviewComplete({ data }) {
           top talent with experience in different areas, backed by a no
           questions asked money-back guarantee.
         </Text>
-        <Button as={Link} to="/clients/join" size="l" variant="gradient">
+        <Button as={Link} to="/join" size="l" variant="gradient">
           Join Advisable
         </Button>
       </Box>
