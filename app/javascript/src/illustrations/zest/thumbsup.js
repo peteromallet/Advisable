@@ -2,8 +2,8 @@ import React from "react";
 import { Box } from "@advisable/donut";
 
 function ThumbsupIllustration({
-  primaryColor = "#FFCE00",
-  secondaryColor = "#232323",
+  primaryColor = "var(--color-blue100)",
+  secondaryColor = "var(--color-blue900)",
   ...props
 }) {
   return (

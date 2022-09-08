@@ -1,7 +1,11 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import styled from "styled-components";
-import { Card, Box, Text, Circle, Button, Link } from "@advisable/donut";
+import { Box, Text, Link } from "@advisable/donut";
+import Button from "src/components/Button";
 import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import PaintRollerIllustration from "src/illustrations/zest/paintroller";
+import CandidateIllustration from "src/illustrations/zest/candidate";
+import ThumbsupIllustration from "src/illustrations/zest/thumbsup";
 
 export const StyledHeader = styled(Text)`
   background: linear-gradient(90deg, #00199b, #00cbbf);
@@ -11,71 +15,37 @@ export const StyledHeader = styled(Text)`
   -webkit-text-fill-color: transparent;
 `;
 
-export const StyledDescription = styled(Text)`
-  max-width: 540px;
-`;
-
-function Section({ number, header, description }) {
+function Section({ illustration, header, description }) {
   return (
-    <Box display="flex" flexDirection={{ _: "row", m: "column" }}>
-      <Box>
-        <Circle
-          bg="orange200"
-          size={40}
-          color="orange800"
-          mb={4}
-          mr={{ _: 4, m: 0 }}
-        >
-          <Text fontWeight="bold" fontSize="m">
-            {number}
-          </Text>
-        </Circle>
-      </Box>
-      <Box>
-        <Text
-          fontWeight="medium"
-          fontSize="17px"
-          lineHeight="s"
-          mb={2}
-          color="neutral900"
-        >
-          {header}
-        </Text>
-        <Text fontSize="sm" lineHeight="xs" color="neutral600">
-          {description}
-        </Text>
-      </Box>
-    </Box>
+    <div className="flex flex-row gap-5 md:flex-col">
+      {illustration && (
+        <div className="mb-3">
+          {cloneElement(illustration, { className: "w-[132px]" })}
+        </div>
+      )}
+      <div>
+        <h5 className="mb-1.5 text-lg font-medium leading-tight">{header}</h5>
+        <p className="text-neutral-800">{description}</p>
+      </div>
+    </div>
   );
 }
 
 export default function AccountCreated() {
   return (
-    <Card
-      as={Box}
-      mb={10}
-      elevation="l"
-      borderRadius="12px"
-      p={[6, 10, 12, 14]}
-      pb={[10, 12, 14, 20]}
-    >
+    <div className="p-8 pb-16 mb-10 rounded-lg shadow-xl lg:p-14 lg:pb-20">
       <Box
         display="flex"
         alignItems={{ _: "start", m: "center" }}
         flexDirection="column"
-        textAlign={{ _: "left", m: "center" }}
       >
-        <StyledHeader mb={3} fontSize={["3xl", "40px"]} fontWeight="semibold">
-          Join our freelance network
+        <StyledHeader className="mb-3 font-serif text-4xl font-semibold md:text-center">
+          Get your projects featured
         </StyledHeader>
-        <StyledDescription
-          mb={[8, 8, 10, 14]}
-          lineHeight="s"
-          color="neutral800"
-        >
-          You&apos;ve created an account but you have not yet been accepted into
-          our network. Begin your application to get started.
-        </StyledDescription>
+        <p className="mx-auto mb-14 text-lg md:text-center max-w-[520px] text-neutral-800">
+          To get your work featured and join our network of independent talent,
+          you can begin your application below.
+        </p>
         <Box
           display="grid"
           gridTemplateColumns={{ m: "repeat(3, 25.3%)" }}
@@ -85,32 +55,34 @@ export default function AccountCreated() {
           mb={[9, 10, 12, 16]}
         >
           <Section
-            number={1}
-            header="Be Discovered For Opportunities"
+            illustration={<PaintRollerIllustration />}
+            header="Show off your best achievements"
+            description="Our profiles help tell the story of the most impressive projects you've executed."
+          />
+          <Section
+            illustration={<CandidateIllustration />}
+            header="Be discovered for opportunities"
             description="We recommend you to clients who need your expertise for meaningful projects."
           />
           <Section
-            number={2}
-            header="Join A Network Of Brilliant Peers"
+            illustration={<ThumbsupIllustration />}
+            header="Join a network of brilliant peers"
             description="Access a private network featuring talented peers from across hundreds of skills."
           />
-          <Section
-            number={3}
-            header="Show Off Your Best Achievements"
-            description="Our profiles help tell the story of the most impressive projects you've executed."
-          />
         </Box>
-        <Button
-          as={Link}
-          size={{ _: "m", m: "l" }}
-          variant="gradient"
-          suffix={<ArrowRight />}
+        <Link
           to="/freelancers/apply"
-          width={{ _: "100%", m: "auto" }}
+          className="block mx-auto w-full md:inline md:w-auto"
         >
-          Start Application
-        </Button>
+          <Button
+            size="lg"
+            suffix={<ArrowRight />}
+            className="w-full md:w-auto"
+          >
+            Get Featured
+          </Button>
+        </Link>
       </Box>
-    </Card>
+    </div>
   );
 }

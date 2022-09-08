@@ -1,6 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useBreakpoint } from "src/../../../donut/src";
 import { useLogout } from "src/graphql/mutations";
+import useViewer from "src/hooks/useViewer";
+import Button from "../Button";
 import HeaderLogo from "../HeaderLogo";
 import Searchbox from "../Searchbox";
 import CurrentUser from "./CurrentUser";
@@ -10,7 +13,7 @@ import MessagesDropdown from "./MessagesDropdown";
 import MobileMenu, { MobileMenuLink } from "./MobileMenu";
 import Notifications from "./Notifications";
 
-function MobileClientHeader() {
+function MobileHeader() {
   const logout = useLogout();
   return (
     <HeaderBar className="justify-between px-5">
@@ -34,7 +37,20 @@ function MobileClientHeader() {
   );
 }
 
-function DesktopClientHeader() {
+function CollaboratePrompt() {
+  const viewer = useViewer();
+  if (!viewer?.isSpecialist || viewer.isAccepted) return null;
+
+  return (
+    <Link to="/collaborate">
+      <Button variant="subtle" to="/collaborate">
+        Share your work
+      </Button>
+    </Link>
+  );
+}
+
+function DesktopHeader() {
   const isCollaborationView = useIsCollaborationView();
 
   return (
@@ -53,6 +69,7 @@ function DesktopClientHeader() {
       </div>
 
       <div className="flex flex-1 gap-3 justify-end items-center ml-auto">
+        <CollaboratePrompt />
         <MessagesDropdown />
         <Notifications />
         <CurrentUser />
@@ -61,12 +78,12 @@ function DesktopClientHeader() {
   );
 }
 
-export default function ClientHeader() {
+export default function AppHeader() {
   const isDesktop = useBreakpoint("lUp");
 
   if (isDesktop) {
-    return <DesktopClientHeader />;
+    return <DesktopHeader />;
   }
 
-  return <MobileClientHeader />;
+  return <MobileHeader />;
 }
