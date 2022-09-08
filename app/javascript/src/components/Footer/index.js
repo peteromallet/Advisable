@@ -109,7 +109,7 @@ export default function Footer() {
             links={[
               {
                 children: "Podcast",
-                href: "https://thefirstmarketerpodcast.buzzsprout.com",
+                href: "https://more.advisable.com/podcast",
               },
             ]}
           />
