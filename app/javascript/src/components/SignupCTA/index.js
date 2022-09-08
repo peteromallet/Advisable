@@ -76,7 +76,7 @@ function Map() {
   useInterval(updateFreelancers, 2000);
 
   return (
-    <div className="absolute bottom-0 right-5 z-0 h-full select-none w-[720px]">
+    <div className="hidden absolute bottom-0 right-5 z-0 h-full select-none lg:block w-[720px]">
       {FREELANCER_MAP.map((index) => (
         <Freelancer key={index} visible={visibleFreelancers.includes(index)} />
       ))}
@@ -94,22 +94,24 @@ export default function SignupCTA() {
           boxShadow:
             "0 12px 40px -8px rgb(0 0 0 / .6), 0 -40px 40px -24px rgb( 0 0 0 / .28)",
         }}
-        className="relative py-20 px-16 rounded-2xl lg:-mx-8 signupCTA bg-blue900"
+        className="relative py-12 px-10 rounded-2xl lg:py-20 lg:px-16 lg:-mx-8 signupCTA bg-blue900"
       >
         <div className="relative z-10">
-          <h1 className="mb-5 font-serif text-5xl font-semibold tracking-tight leading-tight text-white max-w-[520px]">
+          <h1 className="mb-5 font-serif text-4xl font-semibold tracking-tight leading-tight text-white lg:text-5xl max-w-[520px]">
             Explore 100s of case studies for free
           </h1>
-          <p className="mb-12 text-lg leading-relaxed text-white opacity-80 max-w-[460px]">
+          <p className="mb-12 leading-relaxed text-white opacity-80 md:text-lg max-w-[460px]">
             Get free access to our full library of SaaS marketing case studies.
             You only pay when you hire someone you discover through us!
           </p>
-          <div className="flex gap-4">
-            <Link to="/join/client">
-              <Button size="lg">Get full access</Button>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <Link to="/join" className="block">
+              <Button className="w-full" size="lg">
+                Get full access
+              </Button>
             </Link>
-            <Link to="/join/freelancer">
-              <Button variant="whiteOutlined" size="lg">
+            <Link to="/join/freelancer" className="block">
+              <Button className="w-full" variant="whiteOutlined" size="lg">
                 Share your project
               </Button>
             </Link>
