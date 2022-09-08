@@ -39,10 +39,10 @@ function HiringOption({ illustration, title, subtext, option }) {
 
   return (
     <div className={optionClasses()} onClick={handleClick} data-testid={option}>
-      <div className="place-items-center w-[150px] h-[180px] hidden md:grid">
+      <div className="hidden place-items-center md:grid w-[150px] h-[180px]">
         {cloneElement(illustration)}
       </div>
-      <div className="md:text-center flex-1">
+      <div className="flex-1 md:text-center">
         <h5 className="text-lg font-medium">{title}</h5>
         <div className="text-[15px] text-neutral700">{subtext || option}</div>
       </div>
@@ -61,15 +61,15 @@ export default function Hiring() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="text-center mx-auto max-w-[500px] mb-12">
-        <h2 className="font-semibold text-2xl md:text-3xl tracking-tight leading-none mb-4 text-blue900">
-          Interested in connecting with the people behind the projects?
+      <div className="mx-auto mb-12 text-center max-w-[500px]">
+        <h2 className="mb-4 text-2xl font-semibold tracking-tight leading-none md:text-3xl text-blue900">
+          Are you interested in connecting with the people behind the projects?
         </h2>
         <p className="text-lg text-neutral900">
           They can give you advice, mentorship or hands-on support!
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 max-w-[860px] gap-2 md:gap-8 mx-auto">
+      <div className="grid grid-cols-1 gap-2 mx-auto md:grid-cols-3 md:gap-8 max-w-[860px]">
         <HiringOption
           title="No"
           subtext="I’m only interested in reading projects"

@@ -17,7 +17,7 @@ module Mutations
 
     def resolve(**args)
       current_company.business_type = args[:business_type] if args[:business_type]
-      current_company.industry = Industry.find_by!(uid: args[:industry]) if args[:industry]
+      assign_industry(args[:industry]) if args.key?(:industry)
       current_company.intent = args[:intent] if args[:intent]
       current_company.kind = args[:kind] if args[:kind]
       current_company.name = args[:name] if args[:name]
@@ -26,6 +26,12 @@ module Mutations
       current_account_responsible_for { current_company.save }
 
       {user: current_user}
+    end
+
+    private
+
+    def assign_industry(id)
+      current_company.industry = id.blank? ? nil : Industry.find_by(uid: id) || Industry.find_by(name: id)
     end
   end
 end
