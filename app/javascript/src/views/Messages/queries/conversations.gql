@@ -12,6 +12,7 @@ fragment ConversationFields on Conversation {
     isViewer
     user {
       id
+      firstName
       agreement {
         ...AgreementFields
       }
@@ -33,6 +34,7 @@ fragment ConversationFields on Conversation {
     specialist {
       id
       name
+      firstName
       profilePath
       agreement {
         ...AgreementFields

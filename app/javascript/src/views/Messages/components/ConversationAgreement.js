@@ -9,6 +9,7 @@ import ConversationAction, {
 import ConversationActionsList from "./ConversationActionsList";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
 import { agreementForConversation, isSpecialistAndUser } from "../utilities";
+import { AgreementModal } from "./AgreementCreatedMessage";
 
 function ConversationActiveAgreement({ conversation }) {
   const viewer = useViewer();
@@ -61,20 +62,36 @@ function ConversationActiveAgreement({ conversation }) {
   );
 }
 
-function ConversationPendingAgreement({ conversation }) {
+function ConversationPendingAgreement({ conversation, agreement }) {
+  const modal = useModal();
   const viewer = useViewer();
-  const other = conversation.participants.find((p) => !p.isViewer);
+  const user = conversation.participants.find((p) => p.user)?.user;
+  const specialist = conversation.participants.find(
+    (p) => p.specialist,
+  )?.specialist;
+
   return (
     <div>
-      <h4 className="leading-tight font-medium mb-2">Agreement</h4>
+      <h4 className="leading-tight font-medium mb-2">Pending agreement</h4>
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
-        You have a pending agreement
+        {viewer.isSpecialist ? (
+          <>{user.firstName} hasn't made a decision on the agreement yet.</>
+        ) : (
+          <>
+            {specialist.firstName} has created an agreement and waiting for your
+            decision.
+          </>
+        )}
       </p>
+      <AgreementModal agreement={agreement} modal={modal} />
       <ConversationActionsList>
-        <ConversationAction icon={DocumentText}>
-          {" "}
-          View agreement
-        </ConversationAction>
+        <DialogDisclosure {...modal}>
+          {(disclosure) => (
+            <ConversationAction icon={DocumentText} {...disclosure}>
+              View agreement
+            </ConversationAction>
+          )}
+        </DialogDisclosure>
       </ConversationActionsList>
     </div>
   );
@@ -132,15 +149,13 @@ export default function ConversationAgreement({ conversation }) {
     accepted: ConversationActiveAgreement,
     pending: ConversationPendingAgreement,
   };
-  const Component = components[agreement.status] || ConversationNoAgreement;
+  const Component = components[agreement?.status] || ConversationNoAgreement;
 
-  if (!isSpecialistAndUser(conversation)) {
-    return null;
-  }
+  if (!isSpecialistAndUser(conversation)) return null;
 
   return (
     <div className="p-7">
-      <Component conversation={conversation} />
+      <Component conversation={conversation} agreement={agreement} />
     </div>
   );
 }

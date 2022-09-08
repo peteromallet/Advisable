@@ -4,4 +4,12 @@ fragment AgreementFields on Agreement {
   invoicing
   hourlyRate
   collaboration
+  specialist {
+    id
+    name
+  }
+  company {
+    id
+    name
+  }
 }
