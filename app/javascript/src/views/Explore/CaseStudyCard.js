@@ -123,6 +123,7 @@ export default function CaseStudyCard({
           onMouseDown={() => setTapping(true)}
           onMouseUp={() => setTapping(false)}
           className="p-6 rounded-xl no-tap-highlight case-study-card-content"
+          aria-label={article.title}
         >
           {showSkill && primarySkill && (
             <div className={skillClasses({ color: primarySkill.color })}>
