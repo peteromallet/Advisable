@@ -1,5 +1,4 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 import { useQuery } from "@apollo/client";
 import { Provider as DonutProvider } from "@advisable/donut";
 import Loading from "../Loading";
@@ -34,9 +33,6 @@ const ApplicationProvider = ({ children }) => {
 
   return (
     <ApplicationContext.Provider value={context}>
-      <Helmet>
-        <title>Advisable</title>
-      </Helmet>
       <DonutProvider>{children}</DonutProvider>
     </ApplicationContext.Provider>
   );
