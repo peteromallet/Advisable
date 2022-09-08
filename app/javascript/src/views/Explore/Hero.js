@@ -30,8 +30,8 @@ export default function Hero() {
             transition={{ delay: 0.05, duration: 1 }}
             className="text-lg md:text-xl md:leading-relaxed text-blue900 max-w-[600px]"
           >
-            Find out what’s working for leading marketers and connect with them
-            for mentorship & fractional support.
+            Explore case studies of 100s of successful SaaS growth projects -
+            written by the marketers who did the work
           </motion.p>
         </div>
       </div>
