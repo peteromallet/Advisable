@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if ! command -v rdbg &> /dev/null
+then
+  echo "Installing rdbg..."
+  gem install rdbg
+fi
+
+rdbg
