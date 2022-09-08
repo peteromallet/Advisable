@@ -3,12 +3,17 @@ import { Form, Formik } from "formik";
 import { object, string, ref } from "yup";
 import { useNavigate } from "react-router";
 import { useSearchParams, useMatch } from "react-router-dom";
-import { Input, Error, useBreakpoint } from "@advisable/donut";
+import { Input, useBreakpoint } from "@advisable/donut";
 import Divider from "src/components/Divider";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import LoginWithGoogle from "src/views/Login/LoginWithGoogle";
 import { useCreateClientAccount, useCreateFreelancerAccount } from "./queries";
+
+const ERROR_CODE_MESSAGES = {
+  EMAIL_TAKEN: "An account with that email already exists",
+  default: "Something went wrong. Please try again.",
+};
 
 const validationSchema = object().shape({
   firstName: string().required("Please enter your first name"),
@@ -72,7 +77,9 @@ export default function SignupForm() {
       },
     });
     if (res.errors) {
-      setStatus("Something went wront. Please try again.");
+      const code = res.errors[0]?.extensions?.code;
+      const message = ERROR_CODE_MESSAGES[code] || ERROR_CODE_MESSAGES.default;
+      setStatus(message);
       return;
     }
     navigate(isClient ? "/setup/company" : "/freelancers/apply");
@@ -95,7 +102,7 @@ export default function SignupForm() {
       >
         {({ status }) => (
           <Form>
-            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+            <div className="flex flex-col gap-4 mb-4 sm:flex-row">
               <div className="w-full">
                 <FormField
                   as={Input}
@@ -123,7 +130,7 @@ export default function SignupForm() {
                 placeholder="Email address"
               />
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+            <div className="flex flex-col gap-4 mb-4 sm:flex-row">
               <div className="w-full">
                 <FormField
                   type="password"
@@ -141,7 +148,11 @@ export default function SignupForm() {
                 />
               </div>
             </div>
-            <Error>{status}</Error>
+            {status && (
+              <div className="py-2 px-4 mb-4 text-red-900 bg-red-100 rounded-md border border-red-700 border-solid">
+                {status}
+              </div>
+            )}
             <SubmitButton size={["m", "l"]} variant="gradient" width="100%">
               Create Your Free Account
             </SubmitButton>
