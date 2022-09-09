@@ -32,7 +32,7 @@ export default function LatestProjects({ topCaseStudies }) {
   ));
 
   return (
-    <>
+    <div>
       <SectionHeader mb={3}>Top-rated projects</SectionHeader>
       {caseStudies.length > 0 ? (
         <Stack spacing={6} divider="neutral100">
@@ -41,6 +41,6 @@ export default function LatestProjects({ topCaseStudies }) {
       ) : (
         <EmptyState />
       )}
-    </>
+    </div>
   );
 }

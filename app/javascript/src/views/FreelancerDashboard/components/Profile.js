@@ -1,95 +1,88 @@
 import React from "react";
 import pluralize from "pluralize";
-import css from "@styled-system/css";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, Skeleton, Text } from "@advisable/donut";
+import { Skeleton, useBreakpoint } from "@advisable/donut";
 import PassportAvatar from "src/components/PassportAvatar";
+import composeStyles from "src/utilities/composeStyles";
 import useViewer from "src/hooks/useViewer";
-
-const StyledLink = styled(Link)(
-  css({
-    color: "blue500",
-    fontSize: "m",
-    fontWeight: 450,
-    "&:hover": {
-      color: "blue700",
-    },
-  }),
-);
 
 function ReviewsAndCaseStudies({ reviews, caseStudies }) {
   return (
-    <Box display="flex" flexWrap="wrap" mb={3} css={css({ columnGap: 5 })}>
-      <Text lineHeight="m" color="neutral700" fontWeight={350}>
-        <Text as="span" fontWeight={520} color="neutral900">
-          {caseStudies}
-        </Text>{" "}
-        <Text as="span" fontWeight={420}>
-          case {pluralize("study", caseStudies)}
-        </Text>
-      </Text>
-      <Text lineHeight="m" color="neutral700" fontWeight={350}>
-        <Text as="span" fontWeight={520} color="neutral900">
-          {reviews}
-        </Text>{" "}
-        <Text as="span" fontWeight={420}>
-          {pluralize("testimonial", reviews)}
-        </Text>
-      </Text>
-    </Box>
+    <div>
+      <div className="text-neutral700 font-normal">
+        <b className="font-semibold">{caseStudies} </b>
+        case {pluralize("study", caseStudies)}
+      </div>
+      <div className="text-neutral700 font-normal">
+        <b className="font-semibold">{reviews} </b>
+        {pluralize("testimonial", reviews)}
+      </div>
+    </div>
   );
 }
 
 function LoadingReviewsAndCaseStudies() {
   return (
-    <Box display="flex" flexWrap="wrap" mb={3} css={css({ columnGap: 5 })}>
-      <Skeleton width="100px" height="18px" my={0.5} />
-      <Skeleton width="98px" height="18px" my={0.5} />
-    </Box>
+    <div className="py-1 space-y-2">
+      <Skeleton width="100px" height="16px" />
+      <Skeleton width="98px" height="16px" />
+    </div>
   );
 }
 
+const profileClasses = composeStyles({
+  base: `
+    p-4
+    flex sm:inline-flex
+    sm:min-w-[460px]
+    gap-5
+    cursor-pointer
+    rounded-md
+    ring-neutral200
+    items-center
+    transition-all
+  `,
+  variants: {
+    mobile: `
+      bg-white
+      ring-1
+      hover:drop-shadow
+    `,
+    desktop: `
+      -m-4
+      hover:bg-white
+      hover:ring-1
+    `,
+  },
+});
+
 export default function Hero({ loading, caseStudies, reviews }) {
   const viewer = useViewer();
+  const lUp = useBreakpoint("lUp");
 
   return (
-    <>
-      <Box
-        display="flex"
-        width="100%"
-        alignItems={{ _: "start", l: "center" }}
-        css={css({ columnGap: 5 })}
-      >
-        <PassportAvatar
-          src={viewer.avatar}
-          name={viewer.name}
-          size={{ _: "lg", l: "xl" }}
-        />
-        <Box>
-          <Text
-            fontSize="3xl"
-            fontWeight={550}
-            color="neutral900"
-            lineHeight="l"
-            letterSpacing="-0.02rem"
-            mb={1}
-          >
-            {viewer.name}
-          </Text>
-          {loading ? (
-            <LoadingReviewsAndCaseStudies />
-          ) : (
-            <ReviewsAndCaseStudies
-              caseStudies={caseStudies}
-              reviews={reviews}
-            />
-          )}
-          <StyledLink to="/profile" size="s">
-            Update profile
-          </StyledLink>
-        </Box>
-      </Box>
-    </>
+    <Link
+      to={viewer.profilePath}
+      className={profileClasses({ mobile: !lUp, desktop: lUp })}
+      title="Go to profile"
+      aria-label="Go to profile"
+    >
+      <PassportAvatar
+        src={viewer.avatar}
+        name={viewer.name}
+        size={{ _: "lg", l: "xl" }}
+        className="pointer-events-none"
+      />
+      <div className="space-y-2">
+        <div className="text-2xl font-semibold tracking-tight text-neutral900">
+          {viewer.name}
+        </div>
+        {loading ? (
+          <LoadingReviewsAndCaseStudies />
+        ) : (
+          <ReviewsAndCaseStudies caseStudies={caseStudies} reviews={reviews} />
+        )}
+      </div>
+    </Link>
   );
 }
