@@ -1,3 +1,5 @@
+#import './agreementFields.gql'
+
 fragment MessageFields on MessageInterface {
   id
   content
@@ -81,6 +83,9 @@ fragment MessageFields on MessageInterface {
         id
         name
         firstName
+        agreement {
+          ...AgreementFields
+        }
       }
       company {
         id

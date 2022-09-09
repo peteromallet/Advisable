@@ -48,6 +48,7 @@ RSpec.describe "Agreements", type: :system do
     click_button("Send request")
     expect(page).to have_content("Dwight requested to work together")
     expect(page).to have_content("01.jpg")
+    expect(page).not_to have_content("Create agreement")
   end
 
   it "allows client to accept an agreement" do
