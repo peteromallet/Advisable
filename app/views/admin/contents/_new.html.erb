@@ -1,15 +1,36 @@
 <turbo-frame id="<%= dom_id(section, "new_content") %>">
-  <div class="flex">
-    <div class="w-full">
-      <%= form_with(url: new_admin_content_path, method: :get, class: "mb-6") do |form| %>
-        <div class="mt-1">
-          <%= form.select :type, options_for_select(CaseStudy::Content.descendants.map{|t| [t.name.demodulize.sub(/Content$/, ""), t.name]}, (params[:action] == "new" && params["type"])), {prompt: "Add new content"}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500", onchange: "form.requestSubmit()"} %>
-        </div>
-        <%= form.hidden_field :section_id, value: section.id %>
+  <div class="bg-neutral-100 p-6 rounded-lg">
+    <h5 class="text-sm uppercase font-semibold mb-3">Add more content</h5>
+    <div class="flex gap-2">
+      <%= render "admin/contents/content_type_button", section: section, type: "CaseStudy::HeadingContent", label: "Heading" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" height="24" width="24"><g><line x1="9.5" y1="13.5" x2="0.5" y2="13.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="10.5" x2="0.5" y2="10.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><line x1="13.5" y1="7.5" x2="0.5" y2="7.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><rect x="5" y="-4" width="4" height="13" rx="0.5" transform="translate(4.5 9.5) rotate(-90)" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></rect></g></svg>
       <% end %>
-      <% if defined?(content) %>
-        <%= render "admin/contents/#{content.class.name.demodulize.underscore}_form", content: content %>
+
+      <%= render "admin/contents/content_type_button", section: section, type: "CaseStudy::ParagraphContent", label: "Paragraph" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" height="24" width="24"><g><line x1="7" y1="0.5" x2="7" y2="13.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><line x1="4.5" y1="13.5" x2="9.5" y2="13.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><path d="M1.5,3V1.5a1,1,0,0,1,1-1h9a1,1,0,0,1,1,1V3" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+      <% end %>
+
+      <%= render "admin/contents/content_type_button", section: section, type: "CaseStudy::ImagesContent", label: "Images" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" height="24" width="24"><g><g><rect x="3" y="4" width="10.5" height="8.5" rx="1" transform="translate(16.5 16.5) rotate(180)" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M.5,10V2.5a1,1,0,0,1,1-1h9" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path></g><path d="M3.6,12.42,7.53,8.27A1,1,0,0,1,9,8.26l3.95,4.14" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+      <% end %>
+
+      <% if current_account.admin? %>
+        <%= render "admin/contents/content_type_button", section: section, type: "CaseStudy::ResultsContent", label: "Results" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" height="24" width="24"><g><circle cx="1" cy="2.5" r="0.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="4.5" y1="2.5" x2="13.5" y2="2.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><circle cx="1" cy="7" r="0.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="4.5" y1="7" x2="13.5" y2="7" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line><circle cx="1" cy="11.5" r="0.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></circle><line x1="4.5" y1="11.5" x2="13.5" y2="11.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+        <% end %>
+
+        <%= render "admin/contents/content_type_button", section: section, type: "CaseStudy::PodcastContent", label: "Podcast" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" height="24" width="24"><g><path d="M9.5,6.5a2.5,2.5,0,0,1-5,0V3a2.5,2.5,0,0,1,5,0Z" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12,7h0a4.49,4.49,0,0,1-4.5,4.5h-1A4.49,4.49,0,0,1,2,7H2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path><line x1="7" y1="11.5" x2="7" y2="13.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></line></g></svg>
+        <% end %>
       <% end %>
     </div>
+
+      <% if defined?(content) %>
+        <div class="border-t border-solid border-solid-200 pt-5 mt-5">
+          <div class="relative">
+            <%= render "admin/contents/#{content.class.name.demodulize.underscore}_form", content: content %>
+          </div>
+        </div>
+      <% end %>
   </div>
 </turbo-frame>
