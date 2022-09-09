@@ -8,25 +8,20 @@ import ConversationAction, {
 } from "./ConversationAction";
 import ConversationActionsList from "./ConversationActionsList";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
-import { agreementForConversation, isSpecialistAndUser } from "../utilities";
+import { isSpecialistAndUser } from "../utilities";
 import { AgreementModal } from "./AgreementCreatedMessage";
 
-function ConversationActiveAgreement({ conversation }) {
+function ConversationActiveAgreement({ agreement }) {
   const viewer = useViewer();
   const detailsModal = useModal();
-  const other = conversation.participants.find((p) => !p.isViewer);
-  const agreement = agreementForConversation(conversation);
-  const user = conversation.participants.find((p) => p.user)?.user;
-  const specialist = conversation.participants.find(
-    (p) => p.specialist,
-  )?.specialist;
+  const { specialist, company } = agreement;
 
   return (
     <>
       <Modal modal={detailsModal}>
         <AgreementDetails
-          specialistName={specialist.name}
-          companyName={user.company.name}
+          specialistName={specialist?.name}
+          companyName={company?.name}
           collaboration={agreement.collaboration}
           invoicing={agreement.invoicing}
           hourlyRate={agreement.hourlyRate}
@@ -35,9 +30,9 @@ function ConversationActiveAgreement({ conversation }) {
       <h4 className="leading-tight font-medium mb-2">Agreement</h4>
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
         {viewer.isSpecialist ? (
-          <>You have an active agreement with {other.user.company.name}.</>
+          <>You have an active agreement with {company.name}.</>
         ) : (
-          <>You have an active agreement with {other.firstName}.</>
+          <>You have an active agreement with {specialist.firstName}.</>
         )}
       </p>
       <ConversationActionsList>
@@ -62,20 +57,20 @@ function ConversationActiveAgreement({ conversation }) {
   );
 }
 
-function ConversationPendingAgreement({ conversation, agreement }) {
+function ConversationPendingAgreement({ agreement }) {
   const modal = useModal();
   const viewer = useViewer();
-  const user = conversation.participants.find((p) => p.user)?.user;
-  const specialist = conversation.participants.find(
-    (p) => p.specialist,
-  )?.specialist;
+  const { specialist, company } = agreement;
 
   return (
     <div>
       <h4 className="leading-tight font-medium mb-2">Pending agreement</h4>
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
         {viewer.isSpecialist ? (
-          <>{user.firstName} hasn't made a decision on the agreement yet.</>
+          <>
+            You have a pending agreement with {company.name}. They hasn't made a
+            decision yet.
+          </>
         ) : (
           <>
             {specialist.firstName} has created an agreement and waiting for your
@@ -88,7 +83,7 @@ function ConversationPendingAgreement({ conversation, agreement }) {
         <DialogDisclosure {...modal}>
           {(disclosure) => (
             <ConversationAction icon={DocumentText} {...disclosure}>
-              View agreement
+              {viewer.isSpecialist ? "View agreement" : "Respond"}
             </ConversationAction>
           )}
         </DialogDisclosure>
@@ -144,7 +139,7 @@ function ConversationNoAgreement({ conversation }) {
 }
 
 export default function ConversationAgreement({ conversation }) {
-  const agreement = agreementForConversation(conversation);
+  const { agreement } = conversation;
   const components = {
     accepted: ConversationActiveAgreement,
     pending: ConversationPendingAgreement,

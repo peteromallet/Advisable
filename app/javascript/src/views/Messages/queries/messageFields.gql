@@ -73,19 +73,22 @@ fragment MessageFields on MessageInterface {
   }
 
   ... on AgreementCreatedMessage {
+    conversation {
+      agreement {
+        id
+      }
+    }
     agreement {
       id
       status
       invoicing
       hourlyRate
       collaboration
+      ...AgreementFields
       specialist {
         id
         name
         firstName
-        agreement {
-          ...AgreementFields
-        }
       }
       company {
         id
@@ -102,6 +105,7 @@ fragment MessageFields on MessageInterface {
   ... on AgreementDeclinedMessage {
     agreement {
       id
+      status
       user {
         id
         name
@@ -116,6 +120,7 @@ fragment MessageFields on MessageInterface {
   ... on AgreementAcceptedMessage {
     agreement {
       id
+      status
       user {
         id
         name

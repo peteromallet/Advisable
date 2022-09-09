@@ -7,6 +7,12 @@ fragment AgreementFields on Agreement {
   specialist {
     id
     name
+    firstName
+  }
+  user {
+    id
+    name
+    firstName
   }
   company {
     id

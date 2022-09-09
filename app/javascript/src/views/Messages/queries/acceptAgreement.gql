@@ -4,9 +4,6 @@ mutation AcceptAgreement($input: AcceptAgreementInput!) {
   acceptAgreement(input: $input) {
     agreement {
       ...AgreementFields
-      specialist {
-        id
-      }
     }
   }
 }

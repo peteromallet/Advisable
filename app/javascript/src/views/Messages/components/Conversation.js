@@ -38,7 +38,10 @@ export default function Conversation({ conversations, currentAccount }) {
             <ConversationNotFound />
           )}
         </Box>
-        <div className="hidden lg:block shrink-0 w-[340px] border-l border-solid border-neutral100">
+        <div
+          id="conversation-details"
+          className="hidden lg:block shrink-0 w-[340px] border-l border-solid border-neutral100"
+        >
           <SimpleBar className="h-viewport">
             <ConversationDetails conversation={conversation} />
           </SimpleBar>
