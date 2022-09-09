@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_091439) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_134456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "hstore"
@@ -500,10 +500,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_091439) do
     t.string "zoom_meeting_id"
     t.string "uid", null: false
     t.datetime "call_scheduled_at", precision: nil
-    t.datetime "requested_more_time_options_at", precision: nil
-    t.datetime "more_time_options_added_at", precision: nil
-    t.datetime "client_requested_reschedule_at", precision: nil
-    t.datetime "specialist_requested_reschedule_at", precision: nil
     t.jsonb "log_data"
     t.string "google_calendar_id"
     t.string "reason"
