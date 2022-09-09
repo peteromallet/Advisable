@@ -16,6 +16,12 @@ RSpec.describe "Discover", type: :system do
     })
   end
 
+  let(:articles) do
+    Array.new(20) do |i|
+      create(:case_study_article, :with_content, score: 100 - i)
+    end
+  end
+
   before do
     allow_any_instance_of(CaseStudy::TermData).to receive(:articles_for_interest).and_return([])
     allow_any_instance_of(CaseStudy::Article).to receive(:similar).and_return([])
@@ -23,10 +29,10 @@ RSpec.describe "Discover", type: :system do
 
   it "feed shows results and loads more results on scroll" do
     interest = create(:case_study_interest, account: user.account)
-    articles = create_list(:case_study_article, 20, :with_content)
     articles.each do |article|
       create(:case_study_interest_article, interest:, article:)
     end
+
     authenticate_as(user)
     visit("/")
     expect(page).to have_content(articles.first.title)
@@ -40,7 +46,6 @@ RSpec.describe "Discover", type: :system do
   end
 
   it "shows the results for a topic and loads more on scroll" do
-    articles = create_list(:case_study_article, 20, :with_content)
     create(:case_study_topic, slug: "seo")
     allow_any_instance_of(CaseStudy::Topic).to receive(:results).and_return(articles)
     authenticate_as(user)
@@ -103,7 +108,6 @@ RSpec.describe "Discover", type: :system do
 
   context "when not logged in" do
     it "shows the home page and prompts them to signup" do
-      articles = create_list(:case_study_article, 9)
       create(:case_study_topic, name: "Home", hidden: true, result_ids: articles.map(&:id))
       visit("/")
       expect(page).to have_content(/discover the growth/i)
