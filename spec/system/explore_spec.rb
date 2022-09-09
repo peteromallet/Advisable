@@ -120,7 +120,7 @@ RSpec.describe "Discover", type: :system do
   end
 
   describe "/" do
-    it "Lists topics and they can click into one" do
+    it "lists topics and they can click into one" do
       create(:case_study_topic, name: "SEO", slug: "seo")
       authenticate_as(user)
       visit("/")
