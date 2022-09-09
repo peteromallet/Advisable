@@ -18,6 +18,7 @@ RSpec.describe "Discover", type: :system do
 
   before do
     allow_any_instance_of(CaseStudy::TermData).to receive(:articles_for_interest).and_return([])
+    allow_any_instance_of(CaseStudy::Article).to receive(:similar).and_return([])
   end
 
   it "feed shows results and loads more results on scroll" do
