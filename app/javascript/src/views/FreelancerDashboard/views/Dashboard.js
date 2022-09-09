@@ -34,7 +34,7 @@ export default function Dashboard() {
     <>
       <div className="bg-neutral50">
         <div className={headerClasses()}>
-          <div className="space-y-4 mb-16 lg:mb-0">
+          <div className="mb-16 space-y-3 lg:mb-0">
             <Welcome />
             <Availability />
           </div>
@@ -46,7 +46,7 @@ export default function Dashboard() {
         </div>
       </div>
       <Page width="1080px">
-        <div className="py-8 md:py-12 px-4 md:px-8 max-w-[720px] lg:max-w-none mx-auto">
+        <div className="py-8 px-4 mx-auto md:py-12 md:px-8 lg:max-w-none max-w-[720px]">
           <AccountConfirmationPrompt />
           <div
             id="dashboardContainer"
@@ -61,7 +61,7 @@ export default function Dashboard() {
                   top={84}
                   bottomBoundary="#dashboardContainer"
                 >
-                  <div className="col-start-2 row-start-1 space-y-16 pb-8 mb-10">
+                  <div className="col-start-2 row-start-1 pb-8 mb-10 space-y-16">
                     <LatestProjects topCaseStudies={data.topCaseStudies} />
                     <UpcomingEvents upcomingEvents={data.upcomingEvents} />
                   </div>

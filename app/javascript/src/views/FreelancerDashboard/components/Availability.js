@@ -33,19 +33,17 @@ const CommaSeparated = ({ children }) => {
 const Available = ({ collaborationTypes }) => {
   const availableFor = collaborationTypes.map((t) => COLLABORATION_TYPES[t]);
   const availabilities = availableFor.map((a, i) => (
-    <b key={i} className="font-bold text-blue-900">
+    <b key={i} className="font-semibold text-neutral-900">
       {a}
     </b>
   ));
 
   return (
     <div>
-      <p className="text-neutral900 mb-1 max-w-[480px]">
+      <p className="mb-2 text-neutral900 max-w-[420px]">
         You are currently available for{" "}
         {availabilities.length ? (
-          <span>
-            <CommaSeparated>{availabilities}</CommaSeparated>
-          </span>
+          <CommaSeparated>{availabilities}</CommaSeparated>
         ) : (
           "work"
         )}
@@ -57,9 +55,9 @@ const Available = ({ collaborationTypes }) => {
 
 const Unavailable = () => {
   return (
-    <p className="text-neutral900 mb-1">
+    <p className="mb-2 text-neutral900">
       You are currently{" "}
-      <b className="font-semibold text-neutral800">not available</b> for work
+      <b className="font-semibold text-neutral900">unavailable</b> for work.
     </p>
   );
 };
@@ -79,7 +77,7 @@ export default function Availability() {
       )}
       <Link
         to="/settings/availability"
-        className="text-blue500 hover:text-blue700 font-semibold underline underline-offset-8 decoration-2 decoration-blue200"
+        className="font-medium underline text-neutral-600 underline-offset-8 decoration-2 decoration-neutral-200 hover:text-blue700"
       >
         Update availability
       </Link>
