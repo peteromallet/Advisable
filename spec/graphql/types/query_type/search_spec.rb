@@ -77,15 +77,6 @@ RSpec.describe "QueryType search field", type: :feature do
     end
   end
 
-  context "when current_user is specialist" do
-    let(:user) { create(:specialist) }
-
-    it "returns an error" do
-      error = request["errors"][0]["extensions"]["code"]
-      expect(error).to eq("MUST_BE_USER")
-    end
-  end
-
   context "when there is no user" do
     let(:context) { {current_user: nil} }
 

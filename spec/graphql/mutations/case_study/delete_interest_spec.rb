@@ -37,16 +37,6 @@ RSpec.describe Mutations::CaseStudy::DeleteInterest do
     end
   end
 
-  context "when current_user is specialist" do
-    let(:user) { create(:specialist) }
-
-    it "returns an error" do
-      response = AdvisableSchema.execute(query, context:)
-      error = response["errors"][0]["extensions"]["code"]
-      expect(error).to eq("MUST_BE_USER")
-    end
-  end
-
   context "when there is no user" do
     let(:context) { {current_user: nil} }
 
