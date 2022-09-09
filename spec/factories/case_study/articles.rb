@@ -10,7 +10,7 @@ FactoryBot.define do
     subtitle { Faker::Lorem.paragraph(sentence_count: 4) }
     comment { "MyString" }
     excerpt { "MyString" }
-    published_at { "2021-04-07 15:36:48" }
+    published_at { 1.day.ago }
     specialist
     interviewer { association :account }
     editor { association :account }
@@ -18,6 +18,15 @@ FactoryBot.define do
 
     trait :with_skills do
       skills { [association(:case_study_skill, primary: true), association(:case_study_skill)] }
+    end
+
+    trait :with_content do
+      after(:create) do |article|
+        section = create(:case_study_section, article:)
+        create(:case_study_heading_content, section:, position: 0)
+        create(:case_study_paragraph_content, section:, position: 1)
+        create(:case_study_results_content, section:, position: 2)
+      end
     end
   end
 end
