@@ -32,7 +32,7 @@
                 <div class="flex text-sm text-gray-600">
                   <%= f.label :favicon, class: "relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
                     <span>Upload the favicon</span>
-                    <%= f.file_field :favicon, class: "sr-only" %>
+                    <%= f.file_field :favicon, class: "sr-only", onChange: "form.requestSubmit()" %>
                   <% end %>
                 </div>
                 <p class="text-xs text-gray-500">PNG, JPG, GIF up to 1MB</p>
