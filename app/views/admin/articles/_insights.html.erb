@@ -10,11 +10,13 @@
         <%= render "admin/articles/insight", insight: insight %>
       <% end %>
       <div class="pt-5">
-        <%= fields_for(article.insights.build) do |f| %>
-          <p class="font-semibold text-gray-800 mb-2">Add a takeaway</p>
-          <%= f.text_field :title, form: "article_form", class: "focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm mb-2", placeholder: "Title" %>
-          <%= f.text_area :description, form: "article_form", class: "focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm mb-2", placeholder: "Description" %>
-          <%= f.button "Add", form: "article_form", formmethod: "post", formaction: add_insight_admin_article_path, data: { turbo_frame: dom_id(article, "insights")}, class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-neutral-900 hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+        <%= form_with(model: @article, url: add_insight_admin_article_path, method: "post") do |form| %>
+          <%= fields_for(article.insights.build) do |f| %>
+            <p class="font-semibold text-gray-800 mb-2">Add a takeaway</p>
+            <%= f.text_field :title, class: "focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm mb-2", placeholder: "Title" %>
+            <%= f.text_area :description, class: "focus:ring-emerald-500 focus:border-emerald-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-sm mb-2", placeholder: "Description" %>
+            <%= f.button "Add", class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-full text-white bg-neutral-900 hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" %>
+          <% end %>
         <% end %>
       </div>
     </div>

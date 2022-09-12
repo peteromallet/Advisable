@@ -1,24 +1,10 @@
-<%#
-TODO: We have a few different forms rendering on this page, some for article fields
-and some for pieces of content. In order to achieve the layout we need, we need to
-use the "form" attribute on inputs to place them outside of the actual form tag to
-prevent having nested form tags on the page. In order to continue using the rails
-form builder I have just dumped the form into an instance variable which can then
-be used in the other partials, if you aren't a fan of this approach we could also
-use just plain form tag helpers but thought that could be messy.
-%>
-
-<%= form_with(model: @article, url: admin_article_path(@article), id: "article_form") do |form| %>
-  <% @form = form %>
-<% end %>
-
 <div class="flex relative">
   <main class="flex-1 sm:px-6 lg:px-8">
     <div class="max-w-[760px] mx-auto py-12">
-      <%= render "basic", article: @article, form: @form %>
+      <%= render "basic", article: @article %>
       <%= render "insights", article: @article %>
       <%= render "sections", article: @article %>
     </div>
   </main>
-  <%= render "sidebar", article: @article, form: @form %>
+  <%= render "sidebar", article: @article %>
 </div>
