@@ -7,8 +7,8 @@ RSpec.describe Conversation, type: :model do
   let(:user) { create(:user) }
   let(:specialist) { create(:specialist) }
   let(:interview) { create(:interview) }
-  let(:pdf) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/test.pdf")), filename: "test.pdf").signed_id }
-  let(:image) { ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join("spec/support/01.jpg")), filename: "01.jpg").signed_id }
+  let(:pdf) { ActiveStorage::Blob.create_and_upload!(io: Rails.root.join("spec/support/test.pdf").open, filename: "test.pdf").signed_id }
+  let(:image) { ActiveStorage::Blob.create_and_upload!(io: Rails.root.join("spec/support/01.jpg").open, filename: "01.jpg").signed_id }
 
   it "has a valid factory" do
     expect(build(:conversation)).to be_valid
