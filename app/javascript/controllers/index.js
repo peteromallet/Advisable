@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import InlineEditingController from "./inline_editing_controller"
+application.register("inline-editing", InlineEditingController)
+
 import MenuController from "./menu_controller"
 application.register("menu", MenuController)
 
