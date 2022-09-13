@@ -99,10 +99,23 @@ RSpec.describe "Discover", type: :system do
   end
 
   context "when logged in as specialist" do
-    it "/ redirects to dashboard on / path" do
-      authenticate_as(create(:specialist, application_stage: "Accepted"))
-      visit "/"
-      expect(page).to have_content("Collaboration requests")
+    it "shows results and loads more results on scroll" do
+      specialist = create(:specialist)
+      interest = create(:case_study_interest, account: specialist.account)
+      articles.each do |article|
+        create(:case_study_interest_article, interest:, article:)
+      end
+
+      authenticate_as(specialist)
+      visit("/")
+      expect(page).to have_content(articles.first.title)
+      expect(page).not_to have_content(articles.last.title)
+      scroll_to(:bottom)
+      expect(page).to have_selector("*[data-testid=casestudy-card-skeleton]")
+      expect(page).to have_content(articles.last.title)
+      click_link(articles.last.title)
+      expect(page).to have_content(articles.last.subtitle)
+      expect(page).to have_content(articles.last.contents.by_position.first.content["text"])
     end
   end
 
@@ -135,8 +148,8 @@ RSpec.describe "Discover", type: :system do
       user.account.update(completed_tutorials: [])
       authenticate_as(user)
       visit("/")
-      expect(page).to have_content("Tell us about your company")
-      expect(page).to have_current_path("/setup/company")
+      expect(page).to have_content(/what topics are you interested in/i)
+      expect(page).to have_current_path("/setup/interests")
     end
   end
 end

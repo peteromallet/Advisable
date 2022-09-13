@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Deleting account", type: :system do
-  let(:specialist) { create(:specialist, account: create(:account, password: "testing123")) }
+  let(:specialist) { create(:specialist, account: create(:account, password: "testing123", completed_tutorials: ["onboarding"])) }
   let(:user) { create(:user, account: create(:account, password: "testing123", completed_tutorials: ["onboarding"])) }
 
   before do
@@ -16,7 +16,7 @@ RSpec.describe "Deleting account", type: :system do
     fill_in "email", with: specialist.account.email
     fill_in "password", with: "testing123"
     click_on "Login"
-    expect(page).to have_content("Welcome back")
+    expect(page).to have_content(/your feed/i)
 
     visit "/settings/account"
     click_on "Delete account"

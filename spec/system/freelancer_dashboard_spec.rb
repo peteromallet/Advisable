@@ -12,7 +12,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
   it "displays posts, events and articles" do
     authenticate_as(specialist)
-    visit("/")
+    visit("/collaborate")
     expect(page).to have_content(post.title)
     expect(page).to have_content(event.title)
     expect(page).to have_content(article.title)
@@ -87,7 +87,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "prompts the user to confirm an email" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("Please confirm your account")
     end
   end
