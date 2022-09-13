@@ -1,5 +1,5 @@
   <aside class="w-[400px] shrink-0 sticky top-[var(--header-height)] h-viewport shadow-lg">
-    <%= form_with(model: @article, url: admin_article_path(@article), id: "article_form", class: "h-full") do |form| %>
+    <%= form_with(model: @article, url: @article.persisted? ? admin_article_path(@article) : admin_articles_path, id: "article_form", class: "h-full") do |form| %>
       <div class="flex flex-col h-full">
         <div class="overflow-y-scroll h-full flex-1 divide-y divide-y-neutral-100">
 
@@ -38,9 +38,11 @@
           <% end %>
 
 
-          <%= render "company_details",  article: article, form: form %>
-          <%= render "skills", article: article %>
-          <%= render "industries", article: article %>
+          <% if article.persisted? %>
+            <%= render "company_details",  article: article, form: form %>
+            <%= render "skills", article: article %>
+            <%= render "industries", article: article %>
+          <% end %>
         </div>
 
         <div class="px-8 py-6 border-t border-solid border-neutral-200">
