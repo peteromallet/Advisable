@@ -34,7 +34,7 @@ module Types
     def agreement
       return unless object.specialist_and_user?
 
-      ::Agreement.where(specialist: object.specialist, user: object.user).last
+      ::Agreement.latest_for(specialist: object.specialist, user: object.user)
     end
 
     private
