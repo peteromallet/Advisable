@@ -135,7 +135,7 @@ module Admin
     end
 
     def article_params
-      params.require(:case_study_article).permit(:title, :subtitle, :score, :published_at, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[name website business_type favicon])
+      params.require(:case_study_article).permit(:title, :subtitle, :score, :published_at, :specialist_id, :confidential, :hide_from_search, company_type: [], company_attributes: %i[id name website business_type favicon])
     end
   end
 end

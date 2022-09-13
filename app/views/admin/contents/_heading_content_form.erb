@@ -1,16 +1,9 @@
-<span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-red-800 text-red-100">
-  <% if content.persisted? %>
-    Editing Heading <%= content.content["size"].capitalize %>
-  <% else %>
-    New Heading
-  <% end %>
-</span>
 <%= form_with(**content_form_params(content), class: "mt-3") do |form| %>
   <div class="mt-1">
     <%= form.select :size, options_for_select((1..2).map { |s| ["H#{s}", "h#{s}"] }, content.content["size"]), {}, {class: "mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-sm shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"} %>
   </div>
   <div class="mt-1">
-    <%= form.text_area :text, value: content.content["text"], rows: 10, class: "text-base w-full shadow-sm block focus:ring-emerald-500 focus:border-emerald-500 border-gray-300 rounded-sm" %>
+    <%= form.text_area :text, value: content.content["text"], rows: 4, class: "text-base w-full shadow-sm block focus:ring-emerald-500 focus:border-emerald-500 border-gray-300 rounded-sm" %>
   </div>
   <%= form.hidden_field :section_id, value: content.section.id %>
   <%= form.hidden_field :type, value: content.type %>

@@ -1,0 +1,72 @@
+<% if article.company&.persisted? %>
+  <div class="p-8">
+  <h3 class="text-sm text-neutral-900 font-bold uppercase mb-2">Company</h3>
+    <div class="space-y-2">
+      <%= form.fields_for :company do |f| %>
+          <%= f.hidden_field :id %>
+        <div class="flex items-center">
+          <%= f.label :name, class: "block text-neutral-600 leading-none text-sm w-[180px]" %>
+          <%= f.text_field :name, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" %>
+        </div>
+        <div class="flex items-center">
+          <%= f.label :website, class: "block text-neutral-600 leading-none text-sm w-[180px]" %>
+          <%= f.text_field :website, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" %>
+        </div>
+        <div class="flex items-center">
+          <%= f.label :business_type, class: "block text-neutral-600 leading-none text-sm w-[180px]" %>
+          <%= f.select :business_type, ::Company::VALID_BUSINESS_TYPES, {include_blank: true}, {class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm"} %>
+        </div>
+
+        <% if current_account.admin? %>
+          <div class="col-span-6">
+            <label class="block text-sm text-neutral-600 mt-4 mb-2">Favicon</label>
+            <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-sm mb-6">
+              <div class="space-y-1 text-center">
+                <% if article.company.favicon.attached? %>
+                  <%= image_tag article.company.favicon, class: "mx-auto h-12 w-12" %>
+                <% else %>
+                  <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                <% end %>
+                <div class="flex text-sm text-gray-600">
+                  <%= f.label :favicon, class: "relative cursor-pointer bg-white rounded-sm font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500" do %>
+                    <span>Upload the favicon</span>
+                    <%= f.file_field :favicon, class: "sr-only", onChange: "form.requestSubmit()" %>
+                  <% end %>
+                </div>
+                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 1MB</p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend class="block text-sm font-medium text-gray-700">Company Type</legend>
+          <div class="mt-4 space-y-4">
+            <% CaseStudy::Article::COMPANY_TYPES.each do |type| %>
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <%= check_box_tag "case_study_article[company_type][]", type, article.company_type.include?(type), class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded", id: "company_type_#{type.parameterize}" %>
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="company_type_<%= type.parameterize %>" class="font-medium text-gray-700"><%= type %></label>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </fieldset>
+
+        <div class="flex gap-3 items-start">
+          <div class="flex items-center h-5">
+            <%= form.check_box :confidential, class: "focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded" %>
+          </div>
+          <div class="text-sm">
+            <%= form.label :confidential %>
+            <p class="text-gray-500">Hide the company details</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
