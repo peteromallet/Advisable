@@ -21,6 +21,7 @@ const COLLABORATE_PATHS = [
   "/guild/*",
   "/post*",
   "/events/*",
+  "/freelancers/apply/*",
 ];
 
 function ToggleLink({ children, active, to }) {

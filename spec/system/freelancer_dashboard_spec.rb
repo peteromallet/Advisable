@@ -24,7 +24,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "displays empty state of latest projects and upcoming events" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("There are no upcoming Events")
       expect(page).to have_content("No Case Studies have been created recently")
     end
@@ -35,9 +35,9 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "prompts user to start their application to advisable" do
       authenticate_as(specialist)
-      visit("/")
-      expect(page).to have_content("Join our freelance network")
-      click_on("Start Application")
+      visit("/collaborate")
+      expect(page).to have_content(/join our network/i)
+      first(:button, "Get Featured").click
       expect(page).to have_content("Welcome to Advisable")
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "informs user we are reviewing their application" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("We are reviewing your application")
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "prompts the user to build a case study" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("Invited to the next step")
     end
   end
@@ -67,7 +67,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "prompts the user the call was scheduled" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("Call Scheduled")
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe "Freelancer dashboard", type: :system do
 
     it "prompts the user that case study submitted" do
       authenticate_as(specialist)
-      visit("/")
+      visit("/collaborate")
       expect(page).to have_content("Case study submitted")
     end
   end
