@@ -68,13 +68,13 @@ function ConversationPendingAgreement({ agreement }) {
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
         {viewer.isSpecialist ? (
           <>
-            You have a pending agreement with {company.name}. They hasn't made a
-            decision yet.
+            You have sent {company.name} a request to work together, we will let
+            you know when they respond.
           </>
         ) : (
           <>
-            {specialist.firstName} has created an agreement and waiting for your
-            decision.
+            {specialist.firstName} has requested to work together and is waiting
+            for your response.
           </>
         )}
       </p>
