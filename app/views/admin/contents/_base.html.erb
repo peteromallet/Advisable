@@ -1,4 +1,4 @@
-<div data-controller="inline-editing" data-inline-editing-edit-url-value="<%= edit_admin_content_path(content) %>" data-sortable-update-url="<%= move_admin_content_path(content) %>">
+<div data-testid="<%= content.uid %>" data-controller="inline-editing" data-inline-editing-edit-url-value="<%= edit_admin_content_path(content) %>" data-sortable-update-url="<%= move_admin_content_path(content) %>">
   <turbo-frame id="<%= dom_id(content) %>" data-inline-editing-target="turboFrame">
     <div class="group flex relative">
       <div class="absolute handle top-0 -left-10 text-gray-900 mr-1">

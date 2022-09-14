@@ -8,9 +8,6 @@ module Types
       implements Types::CaseStudy::ContentInterface
 
       field :text, String, null: true
-      def text
-        object.content["text"]
-      end
     end
   end
 end
