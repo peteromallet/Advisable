@@ -87,7 +87,7 @@ RSpec.describe "Agreements", type: :system do
       fill_in("address.city", with: "Scranton")
       fill_in("address.state", with: "Pennsylvania")
       select("Italy", from: "address.country")
-      fill_in("vatNumber", with: "IE123456789")
+      fill_in("vatNumber", with: "IT123456789")
       click_on("Save & Accept")
       expect(page).to have_content("Michael Scott accepted Dwight’s request to work together")
     end
