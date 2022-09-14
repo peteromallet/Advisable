@@ -6,6 +6,7 @@ import { Box } from "@advisable/donut";
 import Loading from "../Loading";
 import FormField from "../FormField";
 import AddressFields from "../AddressFields";
+import { validateVAT } from "src/utilities/validateVAT";
 
 export const GET_DATA = gql`
   query getCountries {
@@ -30,6 +31,15 @@ const emailValidation = string()
   .required("Please enter your billing email")
   .email("Please enter a valid email");
 
+const composeValidation =
+  (...fns) =>
+  (value) => {
+    for (let validator of fns) {
+      const error = validator(value);
+      if (error) return error;
+    }
+  };
+
 const InvoiceSettingsFields = ({ formik }) => {
   const { data, loading } = useQuery(GET_DATA);
   const countries = data?.countries || [];
@@ -42,6 +52,11 @@ const InvoiceSettingsFields = ({ formik }) => {
 
   const required = (errorMessage) => (value) => {
     if (!value) return errorMessage;
+  };
+
+  const validateVatNumber = (message) => (value) => {
+    const isValid = validateVAT(country.code, value);
+    if (!isValid) return message;
   };
 
   const { touched, errors } = formik;
@@ -84,9 +99,12 @@ const InvoiceSettingsFields = ({ formik }) => {
         <Box mb="m">
           <FormField
             name="vatNumber"
-            validate={required("Please provide your VAT number")}
             label="VAT Number"
             placeholder="VAT Number"
+            validate={composeValidation(
+              required("Please provide your VAT number"),
+              validateVatNumber(`Invalid VAT number for ${country.name}`),
+            )}
           />
         </Box>
       )}
