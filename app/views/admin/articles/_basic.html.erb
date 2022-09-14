@@ -12,7 +12,7 @@
 <% end %>
 
 <div class="mb-4">
-  <%= text_area_tag "case_study_article[title]", article.title, form: "article_form", class: "w-full text-3xl font-serif font-medium tracking-tight", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input" } %>
+  <%= text_area_tag "case_study_article[title]", article.title, form: "article_form", placeholder: "Title", class: "w-full text-3xl font-serif font-medium tracking-tight", data: { controller: "textarea", action: "input->textarea#resize keydown->textarea#preventLineBreak", textarea_target: "input" } %>
 </div>
 
 <div class="mb-12">
