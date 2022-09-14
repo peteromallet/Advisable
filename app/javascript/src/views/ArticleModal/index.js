@@ -6,7 +6,7 @@ import SignupOverlay from "./SignupOverlay";
 
 const backdropClassName = `
   fixed
-  z-50
+  z-20
   inset-0
   pt-12
   bg-[rgba(0,0,0,.4)]
