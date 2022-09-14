@@ -1,28 +1,29 @@
-import React from "react";
+import React, { createElement } from "react";
 
-const Heading = ({ id, section, ...props }) => (
-  <div className="heading first:mt-0 mt-20" {...props}>
-    <h6 className="inline text-sm uppercase font-[550] leading-5 bg-clip-text text-transparent bg-gradient-to-r from-blue500 to-purple500">
-      <div id={id} className="relative top-[-180px]" />
-      {section.type}
-    </h6>
-    <h1 className="text-[2rem] text-neutral-900 leading-10 mb-4 pb-px font-[550] tracking-tight">
-      {props.children}
-    </h1>
-  </div>
-);
-
-const Subheading = ({ id, children, ...props }) => (
-  <h2
-    className="heading text-[1.625rem] text-neutral-900 font-[550] leading-8 pt-[3px] pb-px mt-1 mb-4 tracking-tight"
+const H1 = ({ block, ...props }) => (
+  <h1
+    className="mt-6 mb-6 text-3xl tracking-tight leading-tight text-neutral-900 font-[550]"
     {...props}
   >
-    <div id={id} className="relative top-[-180px]" />
-    {children}
+    {block.text}
+  </h1>
+);
+
+const H2 = ({ block, ...props }) => (
+  <h2
+    className="block mt-8 mb-6 text-2xl tracking-tight leading-tight heading text-neutral-900 font-[550]"
+    {...props}
+  >
+    {block.text}
   </h2>
 );
 
-export default function CaseStudyHeading(props) {
-  const Component = props.size == "h1" ? Heading : Subheading;
-  return <Component {...props}>{props.text}</Component>;
+const SIZES = {
+  h1: H1,
+  h2: H2,
+};
+
+export default function CaseStudyHeading({ block, ...props }) {
+  const component = SIZES[block.size] || SIZES.h2;
+  return createElement(component, { block, ...props });
 }
