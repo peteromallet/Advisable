@@ -3,7 +3,6 @@
 module Types
   class CountryType < Types::BaseType
     field :id, ID, null: false, method: :uid
-    field :code, String, null: true, method: :alpha2
     field :name, String, null: false
     field :states, [String], null: false
 
@@ -21,6 +20,11 @@ module Types
 
     def currency
       Rails.cache.fetch("#{object.name}_currency") { object.data.try(:currency) }
+    end
+
+    field :code, String, null: true
+    def code
+      object.data&.alpha2 || object.alpha2
     end
   end
 end
