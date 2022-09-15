@@ -4,15 +4,13 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="<%= @guild_post.title.truncate(60) %>">
     <meta property="og:url" content="<%= guild_post_url(@guild_post) %>">
-    <meta property="og:description" content='<%= @guild_post.excerpt %>'>
-    <meta property="article:published_time" content=<%= @guild_post.created_at.strftime("%Y-%m-%d") %>>
-
+    <meta property="og:description" content="<%= @guild_post.excerpt %>">
+    <meta property="article:published_time" content="<%= @guild_post.created_at.strftime("%Y-%m-%d") %>">
     <%# twitter  %>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<%= @guild_post.title.truncate(55) %>">
     <meta name="twitter:description" content="<%= @guild_post.excerpt %> ">
     <meta name="twitter:image" content="<%= @guild_post.cover_image&.resized_image_url %>">
-
     <%# linked in  %>
     <meta name="author" content="<%= @guild_post.account.name %>">
     <meta name="image" property="og:image" content="<%= url_for(@guild_post.cover_image&.resized_image) %>">
