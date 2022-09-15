@@ -1,22 +1,22 @@
 <% if @specialist %>
-  <% content_for :title, "Advisable | #{@specialist.account.name}"%>
+  <% content_for :title, "Advisable | #{@specialist.account.name}" %>
   <% content_for :meta_tags do %>
     <meta name="description" content="<%= @specialist.bio %>">
 
-    <meta property="og:site_name" content="Advisable" />
-    <meta property="og:title" content="<%= @specialist.account.name %>" />
-    <meta property="og:url" content="<%= freelancer_profile_url(@specialist.username_or_uid) %>" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:description" content="<%= @specialist.bio %>" />
+    <meta property="og:site_name" content="Advisable">
+    <meta property="og:title" content="<%= @specialist.account.name %>">
+    <meta property="og:url" content="<%= freelancer_profile_url(@specialist.username_or_uid) %>">
+    <meta property="og:type" content="profile">
+    <meta property="og:description" content="<%= @specialist.bio %>">
     <%= specialist_image_meta_tags(@specialist) %>
 
-    <meta name="twitter:site" content="AdvisableHQ" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<%= @specialist.account.name %>" />
-    <meta name="twitter:description" content="<%= @specialist.bio %>" />
+    <meta name="twitter:site" content="AdvisableHQ">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= @specialist.account.name %>">
+    <meta name="twitter:description" content="<%= @specialist.bio %>">
 
     <% if @specialist.twitter %>
-      <meta name="twitter:creator" content="@<%= @specialist.twitter %>" />
+      <meta name="twitter:creator" content="@<%= @specialist.twitter %>">
     <% end %>
   <% end %>
 <% end %>

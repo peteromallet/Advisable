@@ -1,114 +1,111 @@
 <% content_for :head do -%>
-		<!--[if gte mso 15]>
-		<xml>
-			<o:OfficeDocumentSettings>
-			<o:AllowPNG/>
-			<o:PixelsPerInch>96</o:PixelsPerInch>
-			</o:OfficeDocumentSettings>
-		</xml>
-		<![endif]-->
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
+    <!--[if gte mso 15]>
+    <xml>
+      <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
 
+    <title></title>
+    <style type="text/css">
+      /* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
+      #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
+      .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
+      body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+      table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+      img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+      /* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
+      body{margin:0; padding:0;}
+      img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+      table{border-collapse:collapse !important;}
+      body, #wrapTable, #wrapCell{height:100% !important; margin:0; padding:0; width:100% !important;}
+      div[style*="margin: 16px 0;"] { margin:0 !important; } /* Android Center Fix */
+          a[x-apple-data-detectors] {color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; } /*iOS Link fix*/
 
+      /* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+      /* ========== Page Styles ========== */
 
-		<title></title>
-		<style type="text/css">
-			/* /\/\/\/\/\/\/\/\/ CLIENT-SPECIFIC STYLES /\/\/\/\/\/\/\/\/ */
-			#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
-			.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
-			body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
-			table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
-			img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
-			/* /\/\/\/\/\/\/\/\/ RESET STYLES /\/\/\/\/\/\/\/\/ */
-			body{margin:0; padding:0;}
-			img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
-			table{border-collapse:collapse !important;}
-			body, #wrapTable, #wrapCell{height:100% !important; margin:0; padding:0; width:100% !important;}
-			div[style*="margin: 16px 0;"] { margin:0 !important; } /* Android Center Fix */
-	      	a[x-apple-data-detectors] {color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important; } /*iOS Link fix*/
+      #wrapCell {padding: 50px 0 30px 0;}
+      td {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;}
 
-			/* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
-			/* ========== Page Styles ========== */
+      .name {
+        color: #000000;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 0 0 0 10px;
+      }
 
-			#wrapCell {padding: 50px 0 30px 0;}
-			td {font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+      .name a {
+        color: #000000;
+        text-decoration: none;
+      }
 
-			.name {
-				color: #000000;
-				font-size: 16px;
-				font-weight: 500;
-				padding: 0 0 0 10px;
-			}
+      .time {
+        color: #717178;
+        font-size: 12px;
+        padding: 0 0 0 10px;
+        font-weight: 400;
+      }
 
-			.name a {
-				color: #000000;
-				text-decoration: none;
-			}
+      .title {
+        color: #000000;
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: -.1px;
+        padding: 25px 0 15px 0;
+        font-weight: 600;
+      }
 
-			.time {
-				color: #717178;
-				font-size: 12px;
-				padding: 0 0 0 10px;
-				font-weight: 400;
-			}
+      .copy {
+        color: #000000;
+        font-weight: 400;
+        line-height: 21px;
+        font-size: 15px;
+        padding: 0;
+      }
 
-			.title {
-				color: #000000;
-				font-size: 24px;
-				line-height: 30px;
-				letter-spacing: -.1px;
-				padding: 25px 0 15px 0;
-				font-weight: 600;
-			}
+      .link {
+        color: #15259b;
+        font-weight: 400;
+        line-height: 21px;
+        font-size: 14px;
+        padding: 20px 0;
+      }
 
-			.copy {
-				color: #000000;
-				font-weight: 400;
-				line-height: 21px;
-				font-size: 15px;
-				padding: 0;
-			}
+      .link a {
+        color: #15259b;
+        text-decoration: none;
+      }
 
-			.link {
-				color: #15259b;
-				font-weight: 400;
-				line-height: 21px;
-				font-size: 14px;
-				padding: 20px 0;
-			}
+      /* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
+      @media only screen and (max-width: 600px){
+      /* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
+      body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none !important;} /* Prevent Webkit platforms from changing default text sizes */
+      body{width:100% !important; min-width:100% !important;} /* Prevent iOS Mail from adding padding to the body */
+      /* /\/\/\/\/\/\/ MOBILE RESET STYLES /\/\/\/\/\/\/ */
 
-			.link a {
-				color: #15259b;
-				text-decoration: none;
-			}
+      .mobile {width: 90% !important;}
+      .full {width: 100% !important;}
+      .inner {width: 90% !important;}
 
-			/* /\/\/\/\/\/\/\/\/ MOBILE STYLES /\/\/\/\/\/\/\/\/ */
-			@media only screen and (max-width: 600px){
-			/* /\/\/\/\/\/\/ CLIENT-SPECIFIC MOBILE STYLES /\/\/\/\/\/\/ */
-			body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none !important;} /* Prevent Webkit platforms from changing default text sizes */
-			body{width:100% !important; min-width:100% !important;} /* Prevent iOS Mail from adding padding to the body */
-			/* /\/\/\/\/\/\/ MOBILE RESET STYLES /\/\/\/\/\/\/ */
+      .small_spc {padding: 20px !important;}
+      }
 
-			.mobile {width: 90% !important;}
-			.full {width: 100% !important;}
-			.inner {width: 90% !important;}
+      /*Font Fix*/
+      @media only screen {
+        td {font-family: 'Poppins', sans-serif !important;}
+      }
 
-			.small_spc {padding: 20px !important;}
-			}
-
-			/*Font Fix*/
-			@media only screen {
-				td {font-family: 'Poppins', sans-serif !important;}
-			}
-
-		</style>
+    </style>
 <% end %>
-
 
 <div style="padding-left: 20px; padding-top: 20px; padding-bottom: 20px;">
 Hi <%= @subscriber.account.first_name %>,<br><br>
@@ -121,96 +118,88 @@ Thanks,<br><br>
 
 Advisable Guild<br><br>
 
-</div
+</div>
+  <table align="center" bgcolor="#DFE4EF" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="wrapTable" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;border-collapse: collapse !important;height: 100% !important;width: 100% !important;">
 
+    <tr>
+      <td align="center" valign="top" id="wrapCell" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;margin: 0;padding: 50px 0 30px 0;height: 100% !important;width: 100% !important;">
 
-<center>
-	<table align="center" bgcolor="#DFE4EF" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="wrapTable" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;border-collapse: collapse !important;height: 100% !important;width: 100% !important;">
+        <!-- Email Body -->
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="720" class="mobile" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
 
-		<tr>
-			<td align="center" valign="top" id="wrapCell" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;margin: 0;padding: 50px 0 30px 0;height: 100% !important;width: 100% !important;">
+          <tr>
+            <td align="center" valign="top" class="small_spc" style="background-color: #ffffff;border-radius: 20px;box-shadow: 0px 4px 16px rgba(23, 43, 73, 0.05);padding: 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
 
+              <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                <tr>
+                  <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
 
-				<!-- Email Body -->
-				<table align="center" border="0" cellpadding="0" cellspacing="0" width="720" class="mobile" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                      <tr>
+                        <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
 
-					<tr>
-						<td align="center" valign="top" class="small_spc" style="background-color: #ffffff;border-radius: 20px;box-shadow: 0px 4px 16px rgba(23, 43, 73, 0.05);padding: 30px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                          <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                            <tr>
+                              <td align="center" valign="top" width="40" style="padding: 3px 0 0 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                                <div style="background-image: url('<%= @author.account.resized_avatar_url || asset_url("avatar.png") %>'); background-color: #eee; background-repeat: no-repeat; background-size: cover; background-position: center; width: 40px; height: 40px; border-radius: 20px; overflow: hidden; -webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">
+                                </div>
+                              </td>
+                              <td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
+                                  <tr>
+                                    <td align="left" valign="top" class="name" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-size: 16px;font-weight: 500;">
+                                      <a clicktracking="off" href="https://advisable.com/profile/<%= @author.uid %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #000000;text-decoration: none;"><%= @author.account.name %></a>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" class="time" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #717178;font-size: 12px;padding: 0 0 0 10px;font-weight: 400;">
+                                      <%= time_ago_in_words(@guild_post.created_at) %> ago
+                                    </td>
+                                  </tr>
+                                </table>
 
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
 
-							<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-								<tr>
-									<td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                    </table>
 
-										<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-											<tr>
-												<td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                  </td>
+                </tr>
 
-													<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-														<tr>
-															<td align="center" valign="top" width="40" style="padding: 3px 0 0 0;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-																<div style="background-image: url('<%= @author.account.resized_avatar_url || asset_url("avatar.png") %>'); background-color: #eee; background-repeat: no-repeat; background-size: cover; background-position: center; width: 40px; height: 40px; border-radius: 20px; overflow: hidden; -webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">
-																</div>
-															</td>
-															<td align="center" valign="top" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-																<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
-																	<tr>
-																		<td align="left" valign="top" class="name" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-size: 16px;font-weight: 500;">
-																			<a clicktracking="off" href="https://advisable.com/profile/<%= @author.uid %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #000000;text-decoration: none;"><%= @author.account.name %></a>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td align="left" valign="top" class="time" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #717178;font-size: 12px;padding: 0 0 0 10px;font-weight: 400;">
-																			<%= time_ago_in_words(@guild_post.created_at) %> ago
-																		</td>
-																	</tr>
-																</table>
+                <tr>
+                  <td align="left" valign="top" class="title" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-size: 24px;line-height: 30px;letter-spacing: -.1px;padding: 25px 0 15px 0;font-weight: 600;">
+                    <%= @guild_post.title %>
+                  </td>
+                </tr>
 
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
+                <tr>
+                  <td align="left" valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-weight: 400;line-height: 21px;font-size: 15px;padding: 0;">
+                    <%= @guild_post.excerpt %>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" valign="top" class="link" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #15259b;font-weight: 400;line-height: 21px;font-size: 14px;padding: 20px 0;">
+                    <a clicktracking="off" href="<%= magic_link_guild_post(@guild_post, @subscriber.account) %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;">Read More</a>
+                  </td>
+                </tr>
+              </table>
 
+            </td>
+          </tr>
 
-										</table>
+          <tr>
+            <td align="center" valign="top" style="padding: 10px; font-size: 12px; font-weight: 400; color: #666666;">
+              You're receiving this email because you follow Guild topics related to this Post: <%= @label_names %>. You can manage your followed topics <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking=off href="<%= magic_link_manage_guild_follows(@subscriber.account) %>">here</a>.<br><br>
 
-									</td>
-								</tr>
-
-								<tr>
-									<td align="left" valign="top" class="title" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-size: 24px;line-height: 30px;letter-spacing: -.1px;padding: 25px 0 15px 0;font-weight: 600;">
-										<%= @guild_post.title %>
-									</td>
-								</tr>
-
-								<tr>
-									<td align="left" valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #000000;font-weight: 400;line-height: 21px;font-size: 15px;padding: 0;">
-										<%= @guild_post.excerpt %>
-									</td>
-								</tr>
-								<tr>
-									<td align="left" valign="top" class="link" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: #15259b;font-weight: 400;line-height: 21px;font-size: 14px;padding: 20px 0;">
-										<a clicktracking="off" href="<%= magic_link_guild_post(@guild_post, @subscriber.account) %>" target="_blank" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;">Read More</a>
-									</td>
-								</tr>
-							</table>
-
-
-						</td>
-					</tr>
-
-
-					<tr>
-						<td align="center" valign="top" style="padding: 10px; font-size: 12px; font-weight: 400; color: #666666;">
-							You're receiving this email because you follow Guild topics related to this Post: <%= @label_names %>. You can manage your followed topics <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking=off href="<%= magic_link_manage_guild_follows(@subscriber.account) %>">here</a>.<br><br>
-
-							No longer want to receive emails about Advisable Guild? You can unsubscribe <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking="off" href="<%= specialist_unsubscribe_url(@subscriber) %>&field75977585=Advisable%20Guild">here</a>.
-						</td>
-					</tr>
-				</table>
-				<!-- // Email Body -->
-			</td> <!-- // wrapCell -->
-		</tr>
-	</table> <!-- // wrapTable -->
+              No longer want to receive emails about Advisable Guild? You can unsubscribe <a style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;color: #15259b;text-decoration: none;" clicktracking="off" href="<%= specialist_unsubscribe_url(@subscriber) %>&field75977585=Advisable%20Guild">here</a>.
+            </td>
+          </tr>
+        </table>
+        <!-- // Email Body -->
+      </td> <!-- // wrapCell -->
+    </tr>
+  </table> <!-- // wrapTable -->
 </center>

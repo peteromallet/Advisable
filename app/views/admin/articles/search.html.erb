@@ -18,7 +18,7 @@
         <% @results.each do |result| %>
           <li>
             <%= result[:similarity] %>
-            <%= link_to result[:article].title, "https://advisable.com/articles/#{result[:article].slug}", class: "underline hover:no-underline", target: "_blank" %>
+            <%= link_to result[:article].title, "https://advisable.com/articles/#{result[:article].slug}", class: "underline hover:no-underline", target: "_blank", rel: "noopener" %>
           </li>
         <% end %>
       </ol>

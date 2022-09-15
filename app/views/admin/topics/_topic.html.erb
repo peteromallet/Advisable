@@ -14,7 +14,7 @@
   </td>
   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex">
     <div class="flex-grow"></div>
-    <%= link_to "Edit" , edit_admin_topic_path(topic), class: "text-emerald-600 hover:text-emerald-900 mr-4" %>
-    <%= button_to "Delete", admin_topic_path(topic), method: :delete, class: "text-red-600 hover:text-red-900", form: { data: { turbo_confirm: "Are you sure?" } } %>
+    <%= link_to "Edit", edit_admin_topic_path(topic), class: "text-emerald-600 hover:text-emerald-900 mr-4" %>
+    <%= button_to "Delete", admin_topic_path(topic), method: :delete, class: "text-red-600 hover:text-red-900", form: {data: {turbo_confirm: "Are you sure?"}} %>
   </td>
 </tr>

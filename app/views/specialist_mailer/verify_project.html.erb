@@ -6,9 +6,6 @@
 
       <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
 
-
-
-
         <!-- Logo -->
         <tr>
           <td align="center" valign="top" class="logo" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;padding: 50px 0 40px 0;">
@@ -17,11 +14,10 @@
         </tr>
         <!-- Logo -->
 
-
         <!-- Copy -->
         <tr>
           <td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
-            Hi <%= @specialist.account.first_name %>,<br />
+            Hi <%= @specialist.account.first_name %>,<br>
             Thanks for adding the <b><%= @project.primary_skill.try(:name) %></b> project with <b><%= @project.client_name %></b> to Advisable. Please complete step 1 below to begin the validation process for this project.
           </td>
         </tr>
@@ -65,7 +61,7 @@
           <td style="padding-left: 40px; padding-right: 40px; padding-bottom: 30px;">
             <p style="margin: 0; padding-bottom: 4px; font-size: 12px; text-transform: uppercase; font-weight: bold; color: #636577;">Validation URL</p>
             <p style="padding: 0; margin: 0; background: #EFF1FA; padding: 10px 20px; border-radius: 8px;">
-              <a href="<%=root_url%>verify_project/<%= @project.uid %>" style="font-size: 15px; text-decoration: none; color: #0425E8; "><%=root_url%>verify_project/<%= @project.uid %></a>
+              <a href="<%= root_url %>verify_project/<%= @project.uid %>" style="font-size: 15px; text-decoration: none; color: #0425E8; "><%= root_url %>verify_project/<%= @project.uid %></a>
             </p>
             <p style="margin: 0; padding-top: 10px; color: #414251; font-size: 16px; line-height: 18px;">
               You can also copy and paste this link to share with <%= @project.contact_name %> anywhere.
@@ -76,16 +72,13 @@
           <!-- Copy -->
         <tr>
           <td valign="top" class="copy" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-style: normal;font-weight: normal;line-height: 21px;font-size: 16px;letter-spacing: -.2;color: #414251;padding: 0 40px;">
-            If you're having any issues validating this project, please email hello@advisable.com.<br />
-            <br />
-            Thanks,<br />
+            If you're having any issues validating this project, please email hello@advisable.com.<br>
+            <br>
+            Thanks,<br>
             Advisable Team
           </td>
         </tr>
         <!-- Copy -->
-
-
-
 
         <!-- Spacer -->
         <tr>
@@ -94,9 +87,6 @@
           </td>
         </tr>
         <!-- Spacer -->
-
-
-
 
       </table>
 
