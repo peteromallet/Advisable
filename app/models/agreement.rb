@@ -36,7 +36,7 @@ class Agreement < ApplicationRecord
   def acceptable?
     status == "pending"
   end
-  alias declinable? acceptable?
+  alias_method :declinable?, :acceptable?
 end
 
 # == Schema Information

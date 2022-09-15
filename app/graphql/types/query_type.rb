@@ -5,9 +5,9 @@ module Types
     description "A defined set of types describing what can be queried"
 
     field :interview,
-          Types::Interview,
-          description: "Fetch an interview record by its airtable ID",
-          null: true do
+      Types::Interview,
+      description: "Fetch an interview record by its airtable ID",
+      null: true do
       argument :id, ID, required: true
     end
 
@@ -16,8 +16,8 @@ module Types
     end
 
     field :user,
-          Types::User,
-          description: "Fetch a user record by its airtable ID", null: true do
+      Types::User,
+      description: "Fetch a user record by its airtable ID", null: true do
       argument :id, ID, required: true
     end
 
@@ -40,9 +40,9 @@ module Types
     field :current_account, Types::Account, null: true
 
     field :countries,
-          [Types::CountryType],
-          "Return the list of countries",
-          null: false
+      [Types::CountryType],
+      "Return the list of countries",
+      null: false
 
     def countries
       ::Country.all.order(name: :asc)

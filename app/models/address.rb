@@ -18,7 +18,7 @@ class Address
     output += "\n#{city},"
     output += "\n#{state},"
     output += "\n#{country},"
-    output += "\n#{postcode.try(:blank?) ? 'N/A' : postcode}"
+    output += "\n#{postcode.try(:blank?) ? "N/A" : postcode}"
     output
   end
 

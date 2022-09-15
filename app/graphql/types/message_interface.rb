@@ -13,9 +13,9 @@ module Types
     field :attachments, [Types::AttachmentType], null: true
 
     orphan_types Types::UserMessage,
-                 Types::SystemMessage,
-                 Types::GuildPostMessage,
-                 *Types::Messages.constants.map { |k| "Types::Messages::#{k}".constantize }
+      Types::SystemMessage,
+      Types::GuildPostMessage,
+      *Types::Messages.constants.map { |k| "Types::Messages::#{k}".constantize }
 
     definition_methods do
       def resolve_type(object, _)

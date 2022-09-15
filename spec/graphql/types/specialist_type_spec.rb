@@ -91,9 +91,9 @@ RSpec.describe Types::SpecialistType do
         specialist_posts = response.dig("data", "specialist", "guildPosts", "nodes")
         expect(specialist_posts.size).to eq(2)
         expect(specialist_posts).to eq([
-                                         {"status" => "removed", "id" => removed_post.id},
-                                         {"status" => "published", "id" => published_post.id}
-                                       ])
+          {"status" => "removed", "id" => removed_post.id},
+          {"status" => "published", "id" => published_post.id}
+        ])
       end
     end
   end

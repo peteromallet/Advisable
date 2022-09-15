@@ -119,7 +119,7 @@ RSpec.describe Resizable do
   end
 
   context "when pdf" do
-    let(:file)  { Rails.root.join("spec/support/test.pdf") }
+    let(:file) { Rails.root.join("spec/support/test.pdf") }
     let(:avatar) { ActiveStorage::Blob.create_and_upload!(io: File.open(file), filename: "test.pdf").signed_id }
 
     it "removes the image" do

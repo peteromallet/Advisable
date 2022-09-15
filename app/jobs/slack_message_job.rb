@@ -9,7 +9,7 @@ class SlackMessageJob < ApplicationJob
     return if ENV["SLACK_BOT_TOKEN"].blank?
 
     headers = {
-      "Authorization" => "Bearer #{ENV.fetch('SLACK_BOT_TOKEN', nil)}",
+      "Authorization" => "Bearer #{ENV.fetch("SLACK_BOT_TOKEN", nil)}",
       "Content-type" => "application/json; charset=utf-8"
     }
     api = Faraday.new(URL, headers:)

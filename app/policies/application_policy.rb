@@ -8,14 +8,14 @@ class ApplicationPolicy < BasePolicy
   def specialist?
     record.specialist == current_user
   end
-  alias send_proposal? specialist?
-  alias reject_invitation? specialist?
+  alias_method :send_proposal?, :specialist?
+  alias_method :reject_invitation?, :specialist?
 
   def owner_or_manager?
     user_owner? || (owned_by_company? && team_manager?)
   end
-  alias set_type_for_project? owner_or_manager?
-  alias start_working? owner_or_manager?
+  alias_method :set_type_for_project?, :owner_or_manager?
+  alias_method :start_working?, :owner_or_manager?
 
   def owned_by_user_or_company?
     user_owner? || owned_by_company?
@@ -24,8 +24,8 @@ class ApplicationPolicy < BasePolicy
   def read?
     specialist? || owned_by_user_or_company? || admin?
   end
-  alias write? read?
-  alias create? read?
+  alias_method :write?, :read?
+  alias_method :create?, :read?
 
   def stop_working?
     owner_or_manager? || specialist?

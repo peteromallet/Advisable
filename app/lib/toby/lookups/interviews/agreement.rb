@@ -17,7 +17,7 @@ module Toby
         end
 
         filter "is not blank", Filters::CheckNotNil do |records, _attribute, _value|
-          ids = interviews_with_agreements(records.pluck(:id)).reject { |_, agreement| agreement.nil? }.map(&:first) # rubocop:disable Style/CollectionCompact
+          ids = interviews_with_agreements(records.pluck(:id)).reject { |_, agreement| agreement.nil? }.map(&:first)
           records.where(id: ids)
         end
 

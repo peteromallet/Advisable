@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe "Events view", type: :system do
-  let(:account)    { create(:account) }
+  let(:account) { create(:account) }
   let(:specialist) { create(:specialist, account:) }
-  let(:host)       { create(:specialist) }
+  let(:host) { create(:specialist) }
 
   before do
     authenticate_as(specialist)

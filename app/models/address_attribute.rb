@@ -46,7 +46,7 @@ class AddressAttribute
         decoded =
           begin
             ::ActiveSupport::JSON.decode(value)
-          rescue StandardError
+          rescue
             nil
           end
         hash = decoded unless decoded.nil?

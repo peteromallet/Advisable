@@ -5,7 +5,6 @@ module Toby
     class Label
       attr_reader :klass, :id, :context, :suffix, :id_column, :includes, :value_column, :value_block
 
-      # rubocop: disable Metrics/ParameterLists
       def initialize(klass, id, context, suffix: "", id_column: :id, includes: nil, value_column: nil, &value_block)
         @klass = klass
         @id = id

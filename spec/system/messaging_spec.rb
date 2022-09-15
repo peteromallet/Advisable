@@ -183,12 +183,12 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     visit("/messages/#{conversation2.uid}")
     click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{dwight.first_name}")
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")
@@ -223,12 +223,12 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     visit("/messages/#{conversation2.uid}")
     click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{michael.first_name}")
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")
@@ -263,12 +263,12 @@ RSpec.describe "Messaging", type: :system, action_cable: :async do
     visit("/messages/#{conversation2.uid}")
     click_on("Schedule a call")
     expect(page).to have_content("Request a call with #{jim.first_name}")
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     click_on("Next")
     expect(page).to have_content("Attach a message")
     click_on("Request without message")

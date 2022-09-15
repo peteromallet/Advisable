@@ -48,10 +48,10 @@ module Toby
           ar.where(column => state[:pending]).each do |record|
             key = record.public_send(column)
             value = if attribute.respond_to?(:lazy_read)
-                      attribute.lazy_read(record)
-                    else
-                      record
-                    end
+              attribute.lazy_read(record)
+            else
+              record
+            end
             state[:loaded][key] ||= []
             state[:loaded][key] << value
           end

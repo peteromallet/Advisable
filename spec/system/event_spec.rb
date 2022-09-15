@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Event view", type: :system do
-  let(:account)    { create(:account) }
+  let(:account) { create(:account) }
   let(:specialist) { create(:specialist, account:) }
-  let(:host)       { create(:specialist) }
-  let!(:event)     { create(:event, host:, url: "http://event.test") }
+  let(:host) { create(:specialist) }
+  let!(:event) { create(:event, host:, url: "http://event.test") }
 
   context "when logged in" do
     before do

@@ -12,12 +12,12 @@ RSpec.describe "Update availability", type: :system do
     next_monday = monday + delta
 
     visit "/clients/#{user.uid}/availability"
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_monday.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_monday.strftime("%-d %b %Y, 12:30")}']").click
 
     click_on "Update Availability"
 

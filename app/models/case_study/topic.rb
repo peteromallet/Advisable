@@ -25,7 +25,7 @@ module CaseStudy
     def move_to!(position)
       ids_by_position = self.class.by_position.where.not(id:).pluck(:id)
       ids_by_position.insert(position - 1, id)
-      ActiveRecord::Base.connection.execute("UPDATE case_study_topics SET position = array_position(array[#{ids_by_position.join(',')}]::bigint[], id)")
+      ActiveRecord::Base.connection.execute("UPDATE case_study_topics SET position = array_position(array[#{ids_by_position.join(",")}]::bigint[], id)")
     end
 
     def move_result_to!(result, position)

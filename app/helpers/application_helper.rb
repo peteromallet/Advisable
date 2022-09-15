@@ -3,10 +3,10 @@
 module ApplicationHelper
   def specialist_image_meta_tags(specialist)
     image = if specialist.cover_photo.attached?
-              specialist.cover_photo
-            elsif specialist.account.avatar.attached?
-              specialist.account.avatar
-            end
+      specialist.cover_photo
+    elsif specialist.account.avatar.attached?
+      specialist.account.avatar
+    end
 
     return unless image
 

@@ -90,10 +90,10 @@ class Interview < ApplicationRecord
 
   def set_kind
     self.kind = if specialist_and_user? && !Agreement.exists?(specialist:, company: user.company)
-                  "Consultation"
-                else
-                  "Interview"
-                end
+      "Consultation"
+    else
+      "Interview"
+    end
   end
 end
 

@@ -19,15 +19,15 @@ namespace :data do
       hourly_rate = (specialist.hourly_rate / 100).round.to_i
 
       price_range_index = case hourly_rate
-                          when (..75)
-                            0
-                          when 75..150
-                            1
-                          when 150..300
-                            2
-                          when (300..)
-                            3
-                          end
+      when (..75)
+        0
+      when 75..150
+        1
+      when 150..300
+        2
+      when (300..)
+        3
+      end
       specialist.price_range = ::Specialist::VALID_PRICE_RANGES[price_range_index]
 
       specialist.save

@@ -8,7 +8,7 @@ RSpec.describe Guild::PostBoostMailer do
       described_class.new_post(post: guild_post, subscriber_id: specialist.id)
     end
 
-    let(:account)    { create(:account) }
+    let(:account) { create(:account) }
     let(:specialist) { create(:specialist, account:) }
     let(:guild_post) { create(:guild_post, title: "This is a long title that should be truncated when sent as a subject line") }
 

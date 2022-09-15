@@ -9,5 +9,5 @@ class SpecialistPolicy < BasePolicy
   def current_user?
     record == current_user
   end
-  alias specialist? current_user?
+  alias_method :specialist?, :current_user?
 end

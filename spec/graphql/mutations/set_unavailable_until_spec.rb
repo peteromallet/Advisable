@@ -27,7 +27,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
   end
 
   context "when date in the future" do
-    let(:params) { "date: \"#{4.days.from_now.strftime('%Y-%m-%d')}\"" }
+    let(:params) { "date: \"#{4.days.from_now.strftime("%Y-%m-%d")}\"" }
 
     it "Update the specialists unavailable_until date" do
       AdvisableSchema.execute(query, context:)
@@ -36,7 +36,7 @@ RSpec.describe Mutations::SetUnavailableUntil do
   end
 
   context "when date in the past" do
-    let(:params) { "date: \"#{2.days.ago.strftime('%Y-%m-%d')}\"" }
+    let(:params) { "date: \"#{2.days.ago.strftime("%Y-%m-%d")}\"" }
 
     it "returns an error" do
       response = AdvisableSchema.execute(query, context:)

@@ -4,7 +4,7 @@ class ConversationPolicy < BasePolicy
   def create_message?
     conversation_participant? || admin?
   end
-  alias update_last_read? create_message?
+  alias_method :update_last_read?, :create_message?
 
   private
 

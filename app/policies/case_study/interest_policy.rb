@@ -5,7 +5,7 @@ module CaseStudy
     def read?
       user_owner? || admin?
     end
-    alias delete? read?
+    alias_method :delete?, :read?
 
     def user_owner?
       record.account&.user == current_user

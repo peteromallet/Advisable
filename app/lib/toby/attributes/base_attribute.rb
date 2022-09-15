@@ -98,7 +98,7 @@ module Toby
           @attribute_type ||= begin
             root = self
             Class.new(GraphQL::Schema::Object) do
-              graphql_name("#{root.name.split('::').last}Attribute")
+              graphql_name("#{root.name.split("::").last}Attribute")
               implements(Types::AttributeInterface)
 
               root.extension_fields.each do |name, type|
