@@ -26,6 +26,17 @@ RSpec.describe "Freelancer signup", type: :system do
     fill_in("passwordConfirmation", with: "testing123")
     click_on("Create Your Free Account")
 
+    first(:button, "Creative PR Strategy").click
+    first(:button, "Improve SEO Rankings").click
+    click_on("Continue")
+    expect(page).to have_content("Setting up your feed")
+    # We have an intentional 5 second delay on the 'setting up your feed' step.
+    sleep(6)
+
+    first(:button, "Share your work").click
+    expect(page).to have_content(/join our network/i)
+    first(:button, "Get Featured").click
+
     expect(page).to have_content("Welcome to Advisable")
     click_on("Get Started")
 

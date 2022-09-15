@@ -10,7 +10,7 @@ RSpec.describe "Collaboration requests", type: :system do
   it "Specialist can post a new collaboration request" do
     specialist = create(:specialist)
     authenticate_as(specialist)
-    visit("/")
+    visit("/collaborate")
     click_button("Post")
     fill_in("title", with: "This is my post title")
     find(".public-DraftEditor-content").base.send_keys("This is the post body")
@@ -24,7 +24,7 @@ RSpec.describe "Collaboration requests", type: :system do
     dropdown.send_keys(:enter)
     click_on("Publish")
 
-    expect(page).to have_current_path("/")
+    expect(page).to have_current_path("/collaborate")
     expect(page).to have_content("This is my post title")
     post = Guild::Post.last
     labels = post.labels.map(&:name)
