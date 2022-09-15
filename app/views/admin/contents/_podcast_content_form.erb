@@ -1,6 +1,6 @@
 <%= form_with(**content_form_params(content), class: "mt-3") do |form| %>
   <div class="mt-1">
-    <%= form.label :url, 'Buzzsprout URL' %>
+    <%= form.label :url, "Buzzsprout URL" %>
     <%= form.text_field :url, value: content.content["url"], rows: 10, class: "text-base w-full shadow-sm block focus:ring-emerald-500 focus:border-emerald-500 border-gray-300 rounded-sm" %>
   </div>
   <%= form.hidden_field :section_id, value: content.section.id %>

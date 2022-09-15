@@ -10,6 +10,10 @@ FactoryBot.define do
     sequence(:uid) { "use_#{SecureRandom.hex[0..14]}" }
     sequence(:airtable_id) { |n| "recuser#{n}" }
 
+    trait :admin do
+      association :account, :admin
+    end
+
     trait :team_manager do
       association :account, :team_manager
     end

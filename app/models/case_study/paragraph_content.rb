@@ -4,6 +4,10 @@ module CaseStudy
   class ParagraphContent < Content
     uid_prefix "csc"
 
+    def text
+      content["text"]
+    end
+
     private
 
     # { type: "paragraph", content: { text: "..." } }
