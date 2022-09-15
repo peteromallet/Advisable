@@ -43,7 +43,7 @@ export default function CaseStudyArticle() {
 
   const scrollToTop = () => {
     let el = document.getElementById("article-scrollable-area");
-    el.scrollTo(0, 0);
+    el?.scrollTo(0, 0);
   };
 
   return (
