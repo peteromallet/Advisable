@@ -18,7 +18,7 @@ RSpec.describe "editor", type: :system do
       expect(article.reload.title).not_to eq("Updated")
       expect(article.reload.subtitle).not_to eq("Changed subtitle")
       expect(article.reload.score).not_to eq(90)
-      expect(article.reload.published_at.to_date).not_to eq(new_published_date.to_date)
+      expect(article.reload.published_at.strftime("%Y%m%d")).not_to eq(new_published_date.strftime("%Y%m%d"))
       fill_in("case_study_article[title]", with: "Updated", fill_options: {clear: :backspace})
       fill_in("case_study_article[subtitle]", with: "Changed subtitle", fill_options: {clear: :backspace})
       fill_in("case_study_article[score]", with: "90", fill_options: {clear: :backspace})
@@ -29,7 +29,7 @@ RSpec.describe "editor", type: :system do
       expect(article.reload.title).to eq("Updated")
       expect(article.reload.subtitle).to eq("Changed subtitle")
       expect(article.reload.score).to eq(90)
-      expect(article.reload.published_at.to_date).to eq(new_published_date.to_date)
+      expect(article.reload.published_at.strftime("%Y%m%d")).to eq(new_published_date.strftime("%Y%m%d"))
       expect(article.reload.hide_from_search).to be_truthy
     end
 
@@ -144,7 +144,7 @@ def edit_heading
   block.hover
   within(block) do
     click_on("Edit")
-    find_field("text").send_keys([:meta, "a"], "Updated")
+    fill_in("text", with: "Updated")
     click_on("Save")
   end
   expect(page).to have_selector("h3", text: "Updated")
@@ -182,7 +182,7 @@ def edit_paragraph
   block.hover
   within(block) do
     click_on("Edit")
-    find_field("text").send_keys([:meta, "a"], "Updated")
+    fill_in("text", with: "Updated")
     click_on("Save")
   end
   expect(page).to have_selector("p", text: "Updated")
