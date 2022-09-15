@@ -14,22 +14,24 @@ RSpec.describe "editor", type: :system do
     end
 
     it "allows them to change the basic information" do
-      new_published_date = article.published_at - 2.days
+      article.update published_at: nil
       expect(article.reload.title).not_to eq("Updated")
       expect(article.reload.subtitle).not_to eq("Changed subtitle")
       expect(article.reload.score).not_to eq(90)
-      expect(article.reload.published_at.strftime("%Y%m%d")).not_to eq(new_published_date.strftime("%Y%m%d"))
+      expect(article.reload.published_at).to be_nil
       fill_in("case_study_article[title]", with: "Updated", fill_options: {clear: :backspace})
       fill_in("case_study_article[subtitle]", with: "Changed subtitle", fill_options: {clear: :backspace})
       fill_in("case_study_article[score]", with: "90", fill_options: {clear: :backspace})
-      find_field("case_study_article[published_at]").send_keys(new_published_date.strftime("%d%m%Y"))
+      find_field("case_study_article[published_at]").click
+      first(".flatpickr-prev-month").click
+      first(".flatpickr-day").click
       check("case_study_article[hide_from_search]")
       click_on("Save Changes")
       expect(page).to have_content(/article was successfully updated/i)
       expect(article.reload.title).to eq("Updated")
       expect(article.reload.subtitle).to eq("Changed subtitle")
       expect(article.reload.score).to eq(90)
-      expect(article.reload.published_at.strftime("%Y%m%d")).to eq(new_published_date.strftime("%Y%m%d"))
+      expect(article.reload.published_at).not_to be_nil
       expect(article.reload.hide_from_search).to be_truthy
     end
 

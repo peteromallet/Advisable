@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import DatePickerController from "./date_picker_controller"
+application.register("date-picker", DatePickerController)
+
 import InlineEditingController from "./inline_editing_controller"
 application.register("inline-editing", InlineEditingController)
 
