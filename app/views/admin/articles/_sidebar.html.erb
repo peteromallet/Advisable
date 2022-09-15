@@ -13,15 +13,17 @@
                   <%= form.select :specialist_id, options_for_select(Specialist.includes(:account).all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" } %>
                 </div>
 
-                <div class="flex items-center">
-                  <%= form.label :score, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
-                  <%= form.number_field :score, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" %>
-                </div>
+                <% if article.persisted? %>
+                  <div class="flex items-center">
+                    <%= form.label :score, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
+                    <%= form.number_field :score, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" %>
+                  </div>
 
-                <div class="flex items-center">
-                  <%= form.label :published_at, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
-                  <%= form.datetime_field :published_at, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm", include_seconds: false %>
-                </div>
+                  <div class="flex items-center">
+                    <%= form.label :published_at, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
+                    <%= form.datetime_field :published_at, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm", include_seconds: false %>
+                  </div>
+                <% end %>
 
                 <div class="pt-3 flex items-start">
                   <div class="flex items-center h-5">
@@ -46,7 +48,7 @@
         </div>
 
         <div class="px-8 py-6 border-t border-solid border-neutral-200">
-          <%= form.submit "Save Changes", class: "bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white w-full rounded-full font-medium px-8 py-3 cursor-pointer" %>
+          <%= form.submit article.persisted? ? "Save Changes" : "Create Article", class: "bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white w-full rounded-full font-medium px-8 py-3 cursor-pointer" %>
         </div>
       </div>
     <% end %>

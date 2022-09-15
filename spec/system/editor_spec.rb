@@ -33,6 +33,46 @@ RSpec.describe "editor", type: :system do
       expect(article.reload.hide_from_search).to be_truthy
     end
 
+    it "allows them to create a new article" do
+      create(:specialist, account: create(:account, first_name: "Jim", last_name: "Halpert"))
+      visit("/admin/articles")
+      click_on("New Article")
+      fill_in("case_study_article[title]", with: "This is the title")
+      fill_in("case_study_article[subtitle]", with: "This is the subtitle")
+      select("Jim Halpert", from: "case_study_article[specialist_id]")
+      click_on("Create Article")
+      expect(page).to have_content(/successfully created/i)
+    end
+
+    it "allows them to change company information" do
+      fill_in("case_study_article[company_attributes][name]", with: "Changed", fill_options: {clear: :backspace})
+      fill_in("case_study_article[company_attributes][website]", with: "https://advisable.com", fill_options: {clear: :backspace})
+      click_on("Save Changes")
+      expect(page).to have_content(/article was successfully updated/i)
+      expect(article.reload.company.name).to eq("Changed")
+      expect(article.reload.company.website).to eq("https://advisable.com")
+    end
+
+    it "allows them to add key take aways" do
+      add_takeaways
+    end
+
+    it "allows them to add a skill" do
+      add_skill
+    end
+
+    it "allows them to add an industry" do
+      add_industry
+    end
+
+    it "allows them to edit a heading" do
+      edit_heading
+    end
+
+    it "allows them to create a heading" do
+      create_heading
+    end
+
     it "allows them to edit a paragraph" do
       edit_paragraph
     end
@@ -59,6 +99,26 @@ RSpec.describe "editor", type: :system do
       expect(article.reload.subtitle).to eq("Changed subtitle")
     end
 
+    it "allows them to add key take aways" do
+      add_takeaways
+    end
+
+    it "allows them to add a skill" do
+      add_skill
+    end
+
+    it "allows them to add an industry" do
+      add_industry
+    end
+
+    it "allows them to edit a heading" do
+      edit_heading
+    end
+
+    it "allows them to create a heading" do
+      create_heading
+    end
+
     it "allows them to edit a paragraph" do
       edit_paragraph
     end
@@ -78,6 +138,44 @@ RSpec.describe "editor", type: :system do
   end
 end
 
+def edit_heading
+  content = article.contents.find_by(type: "CaseStudy::HeadingContent")
+  block = find_by_test_id(content.uid)
+  block.hover
+  within(block) do
+    click_on("Edit")
+    find_field("text").send_keys([:meta, "a"], "Updated")
+    click_on("Save")
+  end
+  expect(page).to have_selector("h3", text: "Updated")
+  expect(content.reload.text).to eq("Updated")
+end
+
+def create_heading
+  new_content = find("#new_content_case_study_section_#{article.sections.first.id}")
+  within(new_content) do
+    click_button("Heading")
+    find_field("text").send_keys("A new heading")
+    click_on("Save")
+    expect(page).not_to have_field("text")
+  end
+  content = article.contents.last
+  expect(content).to be_instance_of(CaseStudy::HeadingContent)
+  expect(content.text).to eq("A new heading")
+end
+
+def add_takeaways
+  insights = find_by_test_id("insights")
+  within(insights) do
+    fill_in("case_study_insight[title]", with: "This is a takeaway")
+    fill_in("case_study_insight[description]", with: "This is the description")
+    click_on("Add")
+  end
+  expect(insights).to have_content("This is a takeaway")
+  insight = article.insights.last
+  expect(insight.title).to eq("This is a takeaway")
+end
+
 def edit_paragraph
   content = article.contents.find_by(type: "CaseStudy::ParagraphContent")
   block = find_by_test_id(content.uid)
@@ -86,8 +184,8 @@ def edit_paragraph
     click_on("Edit")
     find_field("text").send_keys([:meta, "a"], "Updated")
     click_on("Save")
-    expect(block).to have_link("Edit")
   end
+  expect(page).to have_selector("p", text: "Updated")
   expect(content.reload.text).to eq("Updated")
 end
 
@@ -100,5 +198,32 @@ def create_paragraph
     expect(page).not_to have_field("text")
   end
   content = article.contents.last
+  expect(content).to be_instance_of(CaseStudy::ParagraphContent)
   expect(content.reload.text).to eq("A new paragraph")
+end
+
+def add_skill
+  new_skill = create(:skill, name: "New skill", active: true)
+  visit("/editor/#{article.id}")
+  skills = find_by_test_id("skills")
+  within(skills) do
+    select("New skill", from: "case_study_skill[skill]")
+    click_on("Add skill")
+  end
+  expect(page).to have_selector("p", text: "New skill")
+  skill_ids = article.reload.skills.map(&:skill_id)
+  expect(skill_ids).to include(new_skill.id)
+end
+
+def add_industry
+  new_industry = create(:industry, name: "New industry")
+  visit("/editor/#{article.id}")
+  industries = find_by_test_id("industries")
+  within(industries) do
+    select("New industry", from: "case_study_industry[industry]")
+    click_on("Add industry")
+  end
+  expect(page).to have_selector("p", text: "New industry")
+  ids = article.reload.industries.map(&:industry_id)
+  expect(ids).to include(new_industry.id)
 end

@@ -4,6 +4,14 @@ module CaseStudy
   class HeadingContent < Content
     uid_prefix "csc"
 
+    def text
+      content["text"]
+    end
+
+    def size
+      content["size"]
+    end
+
     private
 
     # { type: "heading", content: { size: "h1", text: "..." } }
