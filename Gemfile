@@ -36,13 +36,13 @@ gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem "pagy"
 gem "pdfmonkey"
-gem "pg", ">= 0.18", "< 2.0"
+gem "pg"
 gem "pghero"
 gem "propshaft"
 gem "puma"
 gem "pundit"
 gem "rack-attack"
-gem "rails", "~> 7.0.0"
+gem "rails"
 gem "ruby-openai"
 gem "ruby-progressbar", require: false
 gem "rubyzip"
@@ -76,6 +76,8 @@ group :development do
   gem "guard-rspec", require: false
   gem "letter_opener"
   gem "listen"
+  gem "standard", require: false
+  gem "erb_lint", require: false
   gem "rubocop", require: false
   gem "rubocop-graphql", require: false
   gem "rubocop-performance", require: false
