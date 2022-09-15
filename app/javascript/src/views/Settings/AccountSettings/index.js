@@ -4,6 +4,7 @@ import GeneralInfoForm from "./GeneralInfoForm";
 import { useAccountDetails } from "./queries";
 import { Loading } from "src/components";
 import DeleteAccountModal from "./DeleteAccountModal";
+import AvatarInput from "./AvatarInput";
 
 export default function AccountSettings() {
   const { loading, data } = useAccountDetails();
@@ -13,9 +14,14 @@ export default function AccountSettings() {
   return (
     <Card padding={10} borderRadius="12px">
       <Heading marginBottom={8}>Account Settings</Heading>
+      <AvatarInput
+        avatar={data.currentAccount.avatar}
+        name={data.currentAccount.name}
+      />
+      <hr className="pb-[3px] mb-6 mt-10" />
       <GeneralInfoForm currentAccount={data.currentAccount} />
       <hr className="pb-[3px] mb-6 mt-10" />
-      <h2 className="text-2xl text-neutral900 font-medium mb-1">
+      <h2 className="mb-1 text-2xl font-medium text-neutral900">
         Delete account
       </h2>
       <p className="mb-4 text-neutral900">

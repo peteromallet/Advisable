@@ -6,6 +6,7 @@ mutation UpdateAccount($input: UpdateAccountInput!) {
       lastName
       email
       timezone
+      avatar
     }
   }
 }
