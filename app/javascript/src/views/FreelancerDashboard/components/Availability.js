@@ -20,10 +20,11 @@ const CommaSeparated = ({ children }) => {
     );
   const firsts = children.slice(0, children.length - 1);
   const last = children[children.length - 1];
+
   return (
     <>
       {firsts.map((f) => (
-        <>{f}, </>
+        <span key={f.key}>{f}, </span>
       ))}
       and {last}
     </>
