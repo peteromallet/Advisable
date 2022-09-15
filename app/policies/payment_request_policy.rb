@@ -8,7 +8,7 @@ class PaymentRequestPolicy < BasePolicy
   def approve?
     company_user? || admin?
   end
-  alias dispute? approve?
+  alias_method :dispute?, :approve?
 
   def cancel?
     specialist_owner? || admin?

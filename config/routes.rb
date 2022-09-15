@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   get "/graphiql", to: "application#graphiql" if Rails.env.development? || ENV.fetch("STAGING", nil)
 
-  mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
+  mount Sidekiq::Web => "/sidekiq", :constraints => AdminConstraint.new
   mount PgHero::Engine, at: "/pghero", constraints: AdminConstraint.new
 
   post "/toby_graphql", to: "graphql#toby"

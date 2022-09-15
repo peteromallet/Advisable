@@ -74,7 +74,8 @@ module Admin
       end
     end
 
-    def edit; end
+    def edit
+    end
 
     def add_insight
       article.insights.create!(params.require(:case_study_insight).permit(:title, :description))

@@ -20,10 +20,10 @@ module Featurable
         define_method("toggle_#{feature}") do
           current = public_send(column)
           value = if current.include?(feature)
-                    current - [feature]
-                  else
-                    current + [feature]
-                  end
+            current - [feature]
+          else
+            current + [feature]
+          end
           public_send("#{column}=", value)
         end
 

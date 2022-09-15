@@ -46,10 +46,10 @@ module Airtable
       end
 
       self["Remote OK"] = if specialist.remote
-                            "Yes, I'm happy to work remote"
-                          else
-                            "No, I only work with clients in person"
-                          end
+        "Yes, I'm happy to work remote"
+      else
+        "No, I only work with clients in person"
+      end
 
       self["Freelancing Status"] = "Yes, freelancing is my primary occupation" if specialist.primarily_freelance == true
 

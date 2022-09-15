@@ -33,8 +33,8 @@ class GraphqlController < ApplicationController
 
   def set_timezone
     return if !current_account ||
-              request.headers["X-TIMEZONE"].blank? ||
-              current_account.timezone.present?
+      request.headers["X-TIMEZONE"].blank? ||
+      current_account.timezone.present?
 
     current_account.update(timezone: request.headers["X-TIMEZONE"])
   end

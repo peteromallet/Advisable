@@ -1,4 +1,4 @@
-<%= button_to new_admin_content_path, method: :get, params: { type:, section_id: section.id }, class: "bg-neutral-200 hover:bg-neutral-300 w-20 p-4 text-xs text-neutral-700 rounded-md flex justify-center items-center flex-col gap-2" do %>
+<%= button_to new_admin_content_path, method: :get, params: {type:, section_id: section.id}, class: "bg-neutral-200 hover:bg-neutral-300 w-20 p-4 text-xs text-neutral-700 rounded-md flex justify-center items-center flex-col gap-2" do %>
   <%= yield %>
   <%= label %>
 <% end %>

@@ -41,11 +41,11 @@ class UserMailer < ApplicationMailer
     pdf = Faraday.get(payment.pdf_url)
     raise "Payment does not have a pdf" unless pdf.success?
 
-    attachments["#{payment.uid.sub(/^pay_/, '')}-advisable-invoice.pdf"] = {mime_type: "application/pdf", content: pdf.body}
+    attachments["#{payment.uid.sub(/^pay_/, "")}-advisable-invoice.pdf"] = {mime_type: "application/pdf", content: pdf.body}
     mail(
       to: payment.company.billing_email,
       cc: "finance@advisable.com",
-      subject: "Invoice from Advisable (#{payment.uid.sub(/^pay_/, '')})"
+      subject: "Invoice from Advisable (#{payment.uid.sub(/^pay_/, "")})"
     )
   end
 

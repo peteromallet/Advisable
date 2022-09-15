@@ -8,7 +8,7 @@ class UserPolicy < BasePolicy
   def current_user?
     record == current_user
   end
-  alias user? current_user?
+  alias_method :user?, :current_user?
 
   def invoices?
     owned_by_company? && team_manager?

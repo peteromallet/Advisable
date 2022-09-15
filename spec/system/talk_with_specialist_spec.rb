@@ -22,12 +22,12 @@ RSpec.describe "Talk with specialist button", type: :system do
     find("*[aria-label=\"Request call\"]").click
     expect(page).to have_content("Request a call with #{article.specialist.first_name}")
     expect(page).to have_content("Please select at least 6 available times to continue")
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     expect(page).not_to have_content("Please select at least 6 available times to continue")
     click_button("Next")
     fill_in("message", with: "I would like to chat with you")
@@ -74,12 +74,12 @@ RSpec.describe "Talk with specialist button", type: :system do
     find("*[aria-label=\"Request call\"]").click
     expect(page).to have_content("Request a call with #{article.specialist.first_name}")
     expect(page).to have_content("Please select at least 6 available times to continue")
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     expect(page).not_to have_content("Please select at least 6 available times to continue")
     click_button("Next")
     fill_in("message", with: "I would like to chat with you")

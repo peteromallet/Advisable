@@ -4,13 +4,13 @@ class InterviewPolicy < BasePolicy
   def read?
     participant? || admin?
   end
-  alias resend_request? read?
-  alias request_reschedule? read?
-  alias request_more_times? read?
-  alias invite_user? read?
-  alias reschedule? read?
-  alias schedule? read?
-  alias decline? read?
+  alias_method :resend_request?, :read?
+  alias_method :request_reschedule?, :read?
+  alias_method :request_more_times?, :read?
+  alias_method :invite_user?, :read?
+  alias_method :reschedule?, :read?
+  alias_method :schedule?, :read?
+  alias_method :decline?, :read?
 
   private
 

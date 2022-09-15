@@ -8,7 +8,7 @@ class AuthProvidersController < ApplicationController
     raise ActionController::RoutingError, "Unknown provider" if PROVIDERS.exclude?(provider)
 
     public_send(provider)
-  rescue StandardError => e
+  rescue => e
     Sentry.capture_exception(e, extra: {oauth: request.env["omniauth.auth"], oparams:})
     flash[:notice] = "Something went wrong."
     redirect_to "/login/signup"

@@ -37,12 +37,12 @@ RSpec.describe "Accept interview request", type: :system do
     authenticate_as(specialist)
     visit "/interview_request/#{interview.uid}"
     click_on "Suggest alternative times"
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     click_on("Next")
     expect(page).to have_content(/unfortunately, none of these times work for me/i)
     click_button("Send Request")
@@ -58,12 +58,12 @@ RSpec.describe "Accept interview request", type: :system do
     authenticate_as(user)
     visit "/interview_request/#{interview2.uid}"
     click_on "Suggest alternative times"
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 10:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 11:30')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:00')}']").click
-    find("[aria-label='#{next_work_day.strftime('%-d %b %Y, 12:30')}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 10:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 11:30")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:00")}']").click
+    find("[aria-label='#{next_work_day.strftime("%-d %b %Y, 12:30")}']").click
     click_on("Next")
     expect(page).to have_content(/unfortunately, none of these times work for me/i)
     click_button("Send Request")

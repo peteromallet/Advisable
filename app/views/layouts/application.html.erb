@@ -16,22 +16,19 @@
     <%= csp_meta_tag %>
     <%= yield :meta_tags %>
 
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" />
-    <link rel="icon" href="/favicon-192.png" sizes="192x192" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32">
+    <link rel="icon" href="/favicon-192.png" sizes="192x192">
     <link rel="stylesheet" href="https://use.typekit.net/fty7vwx.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <link
       href="https://assets.calendly.com/assets/external/widget.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet">
     <script
       src="https://assets.calendly.com/assets/external/widget.js"
-      type="text/javascript"
-    ></script>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-
+      type="text/javascript"></script>
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
 
     <%# Google analytics tag %>
     <% if ENV["GOOGLE_ANALYTICS"] %>
@@ -79,7 +76,7 @@
   </head>
 
   <body>
-    <div id="keys" data-value="<%= { stripePublicKey: ENV.fetch("STRIPE_PUBLIC_KEY", nil) }.to_json %>"></div>
+    <div id="keys" data-value="<%= {stripePublicKey: ENV.fetch("STRIPE_PUBLIC_KEY", nil)}.to_json %>"></div>
 
     <% if ENV["GTM"] %>
       <!-- Google Tag Manager (noscript) -->
@@ -94,7 +91,7 @@
       <script type="text/javascript">
         _linkedin_partner_id = "<%= ENV["LINKEDIN_PARTNER_ID"] %>"; window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; window._linkedin_data_partner_ids.push(_linkedin_partner_id); </script><script type="text/javascript"> (function(){var s = document.getElementsByTagName("script")[0]; var b = document.createElement("script"); b.type = "text/javascript";b.async = true; b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; s.parentNode.insertBefore(b, s);})();
       </script>
-      <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=<%= ENV["LINKEDIN_PARTNER_ID"] %>&fmt=gif" /> </noscript>
+      <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=<%= ENV["LINKEDIN_PARTNER_ID"] %>&fmt=gif"> </noscript>
     <% end %>
 
     <% if flash.any? %>
@@ -102,7 +99,6 @@
         window.flash = JSON.parse('<%== flash.to_hash.to_json %>')
       </script>
     <% end %>
-
 
     <%= javascript_pack_tag "application" %>
     <%= stylesheet_pack_tag "application" %>

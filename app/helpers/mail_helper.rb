@@ -9,7 +9,7 @@ module MailHelper
   end
 
   def specialist_update_skills_url(specialist)
-    "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(', '))}"
+    "#{root_host}/update-skills?sid=#{specialist.uid}&skill=#{ERB::Util.url_encode(specialist.skills.pluck(:name).join(", "))}"
   end
 
   def magic_link_manage_guild_follows(account)

@@ -51,10 +51,10 @@ class GoogleCalendar
 
   def create_event(interview)
     reschedule_email = if interview.specialist_and_user?
-                         "#{interview.user.company.sales_person.name} at #{interview.user.company.sales_person.email}"
-                       else
-                         "us at hello@advisable.com"
-                       end
+      "#{interview.user.company.sales_person.name} at #{interview.user.company.sales_person.email}"
+    else
+      "us at hello@advisable.com"
+    end
 
     description = <<~DESCRIPTION.strip
       You can use the following link for you call: #{app_host}/calls/#{interview.video_call.uid}.\n

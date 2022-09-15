@@ -172,15 +172,15 @@ class ZapierInteractorController < ApplicationController
 
   def find_account_by_uid(uid)
     klass = case uid
-            when /^spe/
-              Specialist
-            when /^use/
-              User
-            when /^acc/
-              return Account.find_by!(uid:)
-            else
-              raise ActiveRecord::RecordNotFound
-            end
+    when /^spe/
+      Specialist
+    when /^use/
+      User
+    when /^acc/
+      return Account.find_by!(uid:)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
     klass.public_send(:find_by!, uid:).account
   end
 

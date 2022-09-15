@@ -10,7 +10,7 @@
               <div class="space-y-2">
                 <div class="flex items-center">
                   <%= form.label :specialist_id, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
-                  <%= form.select :specialist_id, options_for_select(Specialist.includes(:account).all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm" } %>
+                  <%= form.select :specialist_id, options_for_select(Specialist.includes(:account).all.map { |s| [s.name, s.id] }, article.specialist_id), {prompt: "Select Specialist"}, {class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm"} %>
                 </div>
 
                 <% if article.persisted? %>
@@ -21,7 +21,7 @@
 
                   <div class="flex items-center">
                     <%= form.label :published_at, class: "block text-neutral-600 leading-none text-sm shrink-0 w-[120px]" %>
-                    <%= form.text_field :published_at, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm", data: { controller: "date-picker" } %>
+                    <%= form.text_field :published_at, class: "px-2 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full bg-zinc-100 border-transparent rounded-sm", data: {controller: "date-picker"} %>
                   </div>
                 <% end %>
 
@@ -39,9 +39,8 @@
             </div>
           <% end %>
 
-
           <% if article.persisted? %>
-            <%= render "company_details",  article: article, form: form %>
+            <%= render "company_details", article: article, form: form %>
             <%= render "skills", article: article %>
             <%= render "industries", article: article %>
           <% end %>

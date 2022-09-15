@@ -5,11 +5,11 @@ require "rails_helper"
 RSpec.describe "Interviews", type: :system do
   let(:account) do
     create(:account, availability: [
-             2.days.from_now.change({hour: 10, min: 0, secs: 0}),
-             2.days.from_now.change({hour: 10, min: 30, secs: 0}),
-             2.days.from_now.change({hour: 11, min: 0, secs: 0}),
-             2.days.from_now.change({hour: 11, min: 30, secs: 0})
-           ])
+      2.days.from_now.change({hour: 10, min: 0, secs: 0}),
+      2.days.from_now.change({hour: 10, min: 30, secs: 0}),
+      2.days.from_now.change({hour: 11, min: 0, secs: 0}),
+      2.days.from_now.change({hour: 11, min: 30, secs: 0})
+    ])
   end
   let(:next_work_day) { Time.current.next_weekday.beginning_of_day }
   let(:user) { create(:user, account:) }
@@ -106,15 +106,15 @@ RSpec.describe "Interviews", type: :system do
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']")
-    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime("%a %b %d %Y")}']")
+    find("[aria-label='#{next_work_day.strftime("%a %b %d %Y")}']").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime("%d %B %Y")} at 01:30AM")
     expect(page).to have_content(user.name)
     expect(page).to have_content("New times are better")
   end
@@ -126,15 +126,15 @@ RSpec.describe "Interviews", type: :system do
     click_on "Reschedule"
     expect(page).to have_content("Reschedule")
     find("[aria-label='Date picker']").click
-    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']")
-    find("[aria-label='#{next_work_day.strftime('%a %b %d %Y')}']").click
+    click_on("Next Month") unless page.has_css?("[aria-label='#{next_work_day.strftime("%a %b %d %Y")}']")
+    find("[aria-label='#{next_work_day.strftime("%a %b %d %Y")}']").click
     select("01", from: "hour")
     select("30", from: "minute")
     fill_in("comment", with: "New times are better")
     within("*[role='dialog']") do
       click_button("Reschedule")
     end
-    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime('%d %B %Y')} at 01:30AM")
+    expect(page).to have_content("Your upcoming call was rescheduled to #{next_work_day.strftime("%d %B %Y")} at 01:30AM")
     expect(page).to have_content(specialist.name)
     expect(page).to have_content("New times are better")
   end
