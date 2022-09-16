@@ -2,7 +2,6 @@ import { darken } from "polished";
 import { object, string } from "yup";
 import React, { useCallback, useMemo, useState } from "react";
 import { Formik, Form, Field } from "formik";
-import { useTranslation } from "react-i18next";
 import possesive from "src/utilities/possesive";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { DialogDisclosure } from "reakit/Dialog";
@@ -21,6 +20,7 @@ import {
   useModal,
 } from "@advisable/donut";
 import styled from "styled-components";
+import messageForError from "src/utilities/errorMessages";
 
 export const GET_TEAM_MEMBERS = gql`
   query getTeamMembers {
@@ -114,7 +114,6 @@ const validationSchema = object({
 });
 
 function InviteNewMember({ interview, onInvite }) {
-  const { t } = useTranslation();
   const [inviteMember] = useMutation(INVITE_TO_INTERVIEW);
 
   const initialValues = {
@@ -135,8 +134,7 @@ function InviteNewMember({ interview, onInvite }) {
     });
 
     if (errors) {
-      const errorCode = errors?.[0]?.extensions?.code;
-      formik.setStatus(errorCode);
+      formik.setStatus(messageForError(errors?.[0]));
       formik.setSubmitting(false);
     } else {
       formik.resetForm();
@@ -183,7 +181,7 @@ function InviteNewMember({ interview, onInvite }) {
               color="red600"
               borderRadius="12px"
             >
-              {t(`errors.${formik.status}`)}
+              {formik.status}
             </Box>
           )}
         </Form>

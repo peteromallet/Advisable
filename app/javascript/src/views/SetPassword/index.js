@@ -1,13 +1,13 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import { object, string, ref } from "yup";
-import { useTranslation } from "react-i18next";
 import { Navigate, useLocation } from "react-router";
 import { Card, Box, Text } from "@advisable/donut";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import useViewer from "src/hooks/useViewer";
 import { useUpdatePassword } from "./queries";
+import messageForError from "src/utilities/errorMessages";
 
 const validationSchema = object({
   password: string()
@@ -21,7 +21,6 @@ const validationSchema = object({
 export default function SetPassword() {
   const viewer = useViewer();
   const location = useLocation();
-  const { t } = useTranslation();
   const [setPassword] = useUpdatePassword();
   const { from } = location.state || {
     from: { pathname: "/" },
@@ -44,8 +43,7 @@ export default function SetPassword() {
     });
 
     if (errors) {
-      const errorCode = errors?.[0]?.extensions?.code;
-      formik.setStatus(errorCode);
+      formik.setStatus(messageForError(errors?.[0]));
       formik.setSubmitting(false);
       return;
     }
@@ -113,7 +111,7 @@ export default function SetPassword() {
                   color="red600"
                   borderRadius="12px"
                 >
-                  {t(`errors.${formik.status}`)}
+                  {formik.status}
                 </Box>
               )}
             </Form>

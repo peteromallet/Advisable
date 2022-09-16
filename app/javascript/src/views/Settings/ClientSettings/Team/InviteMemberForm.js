@@ -1,21 +1,13 @@
 import React from "react";
-import { object, string } from "yup";
-import { useTranslation } from "react-i18next";
 import { Box, Text, Columns, Toggle } from "@advisable/donut";
 import { Send } from "@styled-icons/ionicons-solid/Send";
 import { Formik, Form, Field } from "formik";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { useCreateUserForCompany } from "./queries";
+import messageForError from "src/utilities/errorMessages";
 
-const validationSchema = object({
-  firstName: string().required("First name is required"),
-  lastName: string().required("Last name is required"),
-  email: string().required("Email is required").email("Invalid email"),
-});
-
-export default function InviteMemberForm({ company, onInvite = () => {} }) {
-  const { t } = useTranslation();
+export default function InviteMemberForm({ company, onInvite = () => { } }) {
   const [invite] = useCreateUserForCompany(company);
 
   const initialValues = {
@@ -33,8 +25,7 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
     });
 
     if (errors) {
-      const errorCode = errors?.[0]?.extensions?.code;
-      formik.setStatus(errorCode);
+      formik.setStatus(messageForError(errors?.[0]));
       formik.setSubmitting(false);
     } else {
       onInvite(data.createUserForCompany.user);
@@ -49,10 +40,7 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
       <Text lineHeight="18px" color="neutral700" marginBottom={8}>
         Enter the name and email of the person you want to invite to your team
       </Text>
-      <Formik
-        onSubmit={handleSubmit}
-        initialValues={initialValues}
-      >
+      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {(formik) => (
           <Form>
             <Columns spacing={4} marginBottom={4}>
@@ -93,7 +81,7 @@ export default function InviteMemberForm({ company, onInvite = () => {} }) {
                 color="red600"
                 borderRadius="12px"
               >
-                {t(`errors.${formik.status}`)}
+                {formik.status}
               </Box>
             )}
           </Form>
