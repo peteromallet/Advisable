@@ -1,8 +1,10 @@
 query AccountDetails {
   currentAccount {
     id
+    avatar
     firstName
     lastName
+    name
     email
     timezone
   }

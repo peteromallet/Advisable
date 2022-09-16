@@ -7,6 +7,25 @@ RSpec.describe "Specialist settings", type: :system do
     allow_any_instance_of(Specialist).to receive(:sync_to_airtable)
   end
 
+  it "allows specialist to upload, update, and delete avatar" do
+    account = create(:account, password: "testing123", first_name: "Sam", last_name: "One")
+    specialist = create(:specialist, account:)
+    authenticate_as specialist
+    expect(account.avatar).not_to be_attached
+    visit "/settings/account"
+    expect(page).to have_content("Upload profile picture")
+    attach_file(
+      "upload-avatar",
+      Rails.root.join("spec/support/01.jpg"),
+      make_visible: true
+    )
+    expect(page).not_to have_content("Upload profile picture")
+    expect(account.avatar).to be_attached
+    click_on("Delete profile picture")
+    expect(page).to have_content("Upload profile picture")
+    expect(account.avatar).not_to be_attached
+  end
+
   it "allows specialist to change their password" do
     account = create(:account, password: "testing123")
     specialist = create(:specialist, account:)
