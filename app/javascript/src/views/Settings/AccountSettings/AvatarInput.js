@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useBreakpoint } from "@advisable/donut";
 import { DirectUpload } from "@rails/activestorage";
-import Avatar from "src/components/Avatar";
+import { Trash } from "@styled-icons/heroicons-outline";
 import matchFileType from "src/utilities/matchFileType";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import { useNotifications } from "src/components/Notifications";
-import { useUpdateAccount } from "./queries";
 import CircularButton from "src/components/CircularButton";
-import { Trash } from "@styled-icons/heroicons-outline";
-import { useBreakpoint } from "src/../../../donut/src";
+import Avatar from "src/components/Avatar";
+import { useUpdateAccount } from "./queries";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -97,7 +97,7 @@ export default function AvatarInput({
       {uploading ? (
         <div
           style={{ width: `${percentage}%` }}
-          className={`absolute top-0 left-0 h-1 bg-blue300`}
+          className="absolute top-0 left-0 h-1 bg-blue300"
         />
       ) : (
         <input
