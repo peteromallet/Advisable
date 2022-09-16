@@ -1,3 +1,5 @@
+#import './agreementFields.gql'
+
 fragment MessageFields on MessageInterface {
   id
   content
@@ -71,21 +73,14 @@ fragment MessageFields on MessageInterface {
   }
 
   ... on AgreementCreatedMessage {
-    agreement {
+    conversation {
       id
-      status
-      invoicing
-      hourlyRate
-      collaboration
-      specialist {
+      agreement {
         id
-        name
-        firstName
       }
-      company {
-        id
-        name
-      }
+    }
+    agreement {
+      ...AgreementFields
     }
     author {
       id
@@ -96,33 +91,13 @@ fragment MessageFields on MessageInterface {
 
   ... on AgreementDeclinedMessage {
     agreement {
-      id
-      user {
-        id
-        name
-      }
-      specialist {
-        id
-        firstName
-      }
+      ...AgreementFields
     }
   }
 
   ... on AgreementAcceptedMessage {
     agreement {
-      id
-      user {
-        id
-        name
-      }
-      company {
-        id
-        name
-      }
-      specialist {
-        id
-        firstName
-      }
+      ...AgreementFields
     }
   }
 

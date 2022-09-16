@@ -1,6 +1,21 @@
 fragment AgreementFields on Agreement {
   id
+  status
   invoicing
   hourlyRate
   collaboration
+  specialist {
+    id
+    name
+    firstName
+  }
+  user {
+    id
+    name
+    firstName
+  }
+  company {
+    id
+    name
+  }
 }

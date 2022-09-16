@@ -3,6 +3,9 @@
 fragment ConversationFields on Conversation {
   id
   unreadCount
+  agreement {
+    ...AgreementFields
+  }
   participants {
     id
     firstName
@@ -12,9 +15,7 @@ fragment ConversationFields on Conversation {
     isViewer
     user {
       id
-      agreement {
-        ...AgreementFields
-      }
+      firstName
       company {
         id
         name
@@ -33,10 +34,8 @@ fragment ConversationFields on Conversation {
     specialist {
       id
       name
+      firstName
       profilePath
-      agreement {
-        ...AgreementFields
-      }
     }
   }
   lastMessage {

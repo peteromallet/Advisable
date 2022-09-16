@@ -48,6 +48,7 @@ RSpec.describe "Agreements", type: :system do
     click_button("Send request")
     expect(page).to have_content("Dwight requested to work together")
     expect(page).to have_content("01.jpg")
+    expect(page).not_to have_content("Create agreement")
   end
 
   it "allows client to accept an agreement" do
@@ -58,10 +59,34 @@ RSpec.describe "Agreements", type: :system do
     expect(page).to have_content("Michael Scott accepted Dwight’s request to work together")
   end
 
+  it "allows client to accept an agreement via sidebar" do
+    authenticate_as(user)
+    visit("/messages/#{conversation.uid}")
+    within "#conversation-details" do
+      click_button("Respond")
+    end
+    click_button("Accept")
+    expect(page).to have_content("Michael Scott accepted Dwight’s request to work together")
+  end
+
   it "allows client to decline an agreement" do
     authenticate_as(user)
     visit("/messages/#{conversation.uid}")
     click_button("Respond")
+    click_button("Decline")
+    within("*[role='dialog']") do
+      fill_in("message", with: "Not interested")
+      click_on("Decline Request")
+    end
+    expect(page).to have_content("Michael Scott declined Dwight’s request to work together")
+  end
+
+  it "allows client to decline an agreement via sidebar" do
+    authenticate_as(user)
+    visit("/messages/#{conversation.uid}")
+    within "#conversation-details" do
+      click_button("Respond")
+    end
     click_button("Decline")
     within("*[role='dialog']") do
       fill_in("message", with: "Not interested")

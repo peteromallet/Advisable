@@ -1,10 +1,12 @@
+#import '../../Messages/queries/agreementFields.gql'
+
 mutation CreateAgreement($input: CreateAgreementInput!) {
   createAgreement(input: $input) {
-    agreement {
-      id
-    }
     conversation {
       id
+      agreement {
+        ...AgreementFields
+      }
     }
   }
 }

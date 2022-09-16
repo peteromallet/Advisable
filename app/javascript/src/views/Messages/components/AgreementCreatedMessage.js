@@ -273,7 +273,7 @@ function SetupPayments({ agreement, onSuccess }) {
   );
 }
 
-function AgreementModal({ agreement, modal }) {
+export function AgreementModal({ agreement, modal }) {
   const [step, setStep] = useState("VIEW");
 
   useEffect(() => {

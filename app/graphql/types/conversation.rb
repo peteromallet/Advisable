@@ -30,6 +30,13 @@ module Types
       participant&.unread_count || 0
     end
 
+    field :agreement, Types::Agreement, null: true
+    def agreement
+      return unless object.specialist_and_user?
+
+      ::Agreement.latest_for(specialist: object.specialist, user: object.user)
+    end
+
     private
 
     # Can return `nil` if we're an admin logged in as that user

@@ -8,24 +8,20 @@ import ConversationAction, {
 } from "./ConversationAction";
 import ConversationActionsList from "./ConversationActionsList";
 import AgreementDetails from "src/views/NewAgreement/AgreementDetails";
-import { agreementForConversation, isSpecialistAndUser } from "../utilities";
+import { isSpecialistAndUser } from "../utilities";
+import { AgreementModal } from "./AgreementCreatedMessage";
 
-function ConversationActiveAgreement({ conversation }) {
+function ConversationActiveAgreement({ agreement }) {
   const viewer = useViewer();
   const detailsModal = useModal();
-  const other = conversation.participants.find((p) => !p.isViewer);
-  const agreement = agreementForConversation(conversation);
-  const user = conversation.participants.find((p) => p.user)?.user;
-  const specialist = conversation.participants.find(
-    (p) => p.specialist,
-  )?.specialist;
+  const { specialist, company } = agreement;
 
   return (
     <>
       <Modal modal={detailsModal}>
         <AgreementDetails
-          specialistName={specialist.name}
-          companyName={user.company.name}
+          specialistName={specialist?.name}
+          companyName={company?.name}
           collaboration={agreement.collaboration}
           invoicing={agreement.invoicing}
           hourlyRate={agreement.hourlyRate}
@@ -34,9 +30,9 @@ function ConversationActiveAgreement({ conversation }) {
       <h4 className="leading-tight font-medium mb-2">Agreement</h4>
       <p className="leading-tight text-[15px] text-neutral-700 mb-2">
         {viewer.isSpecialist ? (
-          <>You have an active agreement with {other.user.company.name}.</>
+          <>You have an active agreement with {company.name}.</>
         ) : (
-          <>You have an active agreement with {other.firstName}.</>
+          <>You have an active agreement with {specialist.firstName}.</>
         )}
       </p>
       <ConversationActionsList>
@@ -58,6 +54,41 @@ function ConversationActiveAgreement({ conversation }) {
         </DialogDisclosure>
       </ConversationActionsList>
     </>
+  );
+}
+
+function ConversationPendingAgreement({ agreement }) {
+  const modal = useModal();
+  const viewer = useViewer();
+  const { specialist, company } = agreement;
+
+  return (
+    <div>
+      <h4 className="leading-tight font-medium mb-2">Pending agreement</h4>
+      <p className="leading-tight text-[15px] text-neutral-700 mb-2">
+        {viewer.isSpecialist ? (
+          <>
+            You have sent {company.name} a request to work together, we will let
+            you know when they respond.
+          </>
+        ) : (
+          <>
+            {specialist.firstName} has requested to work together and is waiting
+            for your response.
+          </>
+        )}
+      </p>
+      <AgreementModal agreement={agreement} modal={modal} />
+      <ConversationActionsList>
+        <DialogDisclosure {...modal}>
+          {(disclosure) => (
+            <ConversationAction icon={DocumentText} {...disclosure}>
+              {viewer.isSpecialist ? "View agreement" : "Respond"}
+            </ConversationAction>
+          )}
+        </DialogDisclosure>
+      </ConversationActionsList>
+    </div>
   );
 }
 
@@ -108,19 +139,18 @@ function ConversationNoAgreement({ conversation }) {
 }
 
 export default function ConversationAgreement({ conversation }) {
-  const agreement = agreementForConversation(conversation);
+  const { agreement } = conversation;
+  const components = {
+    accepted: ConversationActiveAgreement,
+    pending: ConversationPendingAgreement,
+  };
+  const Component = components[agreement?.status] || ConversationNoAgreement;
 
-  if (!isSpecialistAndUser(conversation)) {
-    return null;
-  }
+  if (!isSpecialistAndUser(conversation)) return null;
 
   return (
     <div className="p-7">
-      {agreement ? (
-        <ConversationActiveAgreement conversation={conversation} />
-      ) : (
-        <ConversationNoAgreement conversation={conversation} />
-      )}
+      <Component conversation={conversation} agreement={agreement} />
     </div>
   );
 }
