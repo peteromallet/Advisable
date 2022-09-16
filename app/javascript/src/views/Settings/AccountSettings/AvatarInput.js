@@ -19,7 +19,7 @@ const FormatTag = ({ children }) => (
 
 export default function AvatarInput({
   accept = ".png, .jpg, .jpeg",
-  maxSizeInMB = 2,
+  maxSizeInMB = 3,
   avatar,
   name,
 }) {
@@ -45,7 +45,6 @@ export default function AvatarInput({
       if (error) {
         console.error(error);
       } else {
-        // setPercentage(90);
         await updateAccount({
           variables: {
             input: { avatar: blob.signed_id },
@@ -97,13 +96,14 @@ export default function AvatarInput({
       </div>
       {uploading ? (
         <div
-          className={`absolute top-0 left-0 w-[${percentage}%] h-1 bg-blue300`}
+          style={{ width: `${percentage}%` }}
+          className={`absolute top-0 left-0 h-1 bg-blue300`}
         />
       ) : (
         <input
           type="file"
           name="upload-avatar"
-          accept=".png, .jpg, .jpeg"
+          accept={accept}
           onChange={handleChange}
           className="absolute inset-0 z-10 w-full h-full rounded-md opacity-0 cursor-pointer"
         />
