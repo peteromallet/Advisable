@@ -5,9 +5,9 @@ import matchFileType from "src/utilities/matchFileType";
 import filesExceedLimit from "src/utilities/filesExceedLimit";
 import { useNotifications } from "src/components/Notifications";
 import { useUpdateAccount } from "./queries";
-import Button from "src/components/Button";
 import CircularButton from "src/components/CircularButton";
-import { Close } from "@styled-icons/ionicons-outline/Close";
+import { Trash } from "@styled-icons/heroicons-outline";
+import { useBreakpoint } from "src/../../../donut/src";
 
 const DIRECT_UPLOAD_URL = "/rails/active_storage/direct_uploads";
 
@@ -27,11 +27,11 @@ export default function AvatarInput({
   const [updateAccount] = useUpdateAccount();
   const [uploading, setUploading] = useState(false);
   const [percentage, setPercentage] = useState(0);
+  const sUp = useBreakpoint("sUp");
 
   const progressHandler = {
     directUploadWillStoreFileWithXHR(request) {
       request.upload.addEventListener("progress", (e) => {
-        console.log("loaded", e.loaded, e.total);
         const p = Math.round((100 * e.loaded) / e.total);
         setPercentage(p);
       });
@@ -77,22 +77,22 @@ export default function AvatarInput({
   };
 
   return (
-    <div className="relative flex items-center gap-6 p-4 mb-8 overflow-hidden transition-all rounded-lg  bg-white ring-2 ring-neutral100 hover:ring-2 hover:-translate-y-0.5 hover:ring-neutral200 hover:shadow-lg">
+    <div className="relative flex items-center gap-3 sm:gap-6 p-3 sm:p-4 mb-8 overflow-hidden transition-all rounded-md sm:rounded-lg  bg-white ring-2 ring-neutral100 hover:ring-2 hover:-translate-y-0.5 hover:ring-neutral200 hover:shadow-lg">
       <Avatar
         src={avatar}
         name={name}
-        size="2xl"
-        className="border border-solid border-neutral100 ring-1 ring-white"
+        size={sUp ? "3xl" : "xl"}
+        className="border border-white border-solid ring-1 ring-neutral100"
       />
       <div className="space-y-2">
-        <h4 className="text-lg font-medium text-neutral800">
-          {avatar ? <>Update profile picture</> : <>Upload a profile picture</>}
+        <h4 className="text-base font-medium sm:text-lg text-neutral800">
+          {avatar ? <>Update profile picture</> : <>Upload profile picture</>}
         </h4>
         <div className="flex flex-row gap-2">
           <FormatTag>PNG</FormatTag>
           <FormatTag>JPG</FormatTag>
           <FormatTag>JPEG</FormatTag>
-          <FormatTag>1 MB</FormatTag>
+          <FormatTag>{maxSizeInMB} MB</FormatTag>
         </div>
       </div>
       {uploading ? (
@@ -108,10 +108,11 @@ export default function AvatarInput({
           className="absolute inset-0 z-10 w-full h-full rounded-md opacity-0 cursor-pointer"
         />
       )}
-      {Boolean(avatar) && (
+      {Boolean(avatar) && sUp && (
         <CircularButton
-          icon={Close}
+          icon={Trash}
           title="Delete profile picture"
+          size={sUp ? "md" : "sm"}
           className="z-20 ml-auto"
           onClick={() =>
             updateAccount({ variables: { input: { avatar: null } } })
@@ -120,14 +121,6 @@ export default function AvatarInput({
           Delete
         </CircularButton>
       )}
-      {/* <Button
-        className="z-20"
-        onClick={() =>
-          updateAccount({ variables: { input: { avatar: null } } })
-        }
-      >
-        Delete
-      </Button> */}
     </div>
   );
 }

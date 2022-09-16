@@ -18,7 +18,6 @@ export default function AccountSettings() {
         avatar={data.currentAccount.avatar}
         name={data.currentAccount.name}
       />
-      <hr className="pb-[3px] mb-6 mt-10" />
       <GeneralInfoForm currentAccount={data.currentAccount} />
       <hr className="pb-[3px] mb-6 mt-10" />
       <h2 className="mb-1 text-2xl font-medium text-neutral900">
