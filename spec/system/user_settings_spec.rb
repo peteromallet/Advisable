@@ -3,6 +3,32 @@
 require "rails_helper"
 
 RSpec.describe "User settings" do
+  it "allows user to upload, update, and delete avatar" do
+    account = create(:account, password: "testing123", first_name: "Sam", last_name: "One")
+    user = create(:user, account:)
+    authenticate_as user
+    visit "/settings/account"
+    expect(page).to have_content("Upload profile picture")
+    attach_file(
+      "upload-avatar",
+      Rails.root.join("spec/support/01.jpg"),
+      make_visible: true
+    )
+    expect(page).to have_selector("img[alt='Sam One’s avatar']")
+    attach_file(
+      "upload-avatar",
+      Rails.root.join("spec/support/02.jpg"),
+      make_visible: true
+    )
+    click_on("Delete profile picture")
+    wait_until do
+      expect(page).not_to have_selector("img[alt='Sam One’s avatar']")
+    end
+    wait_until do
+      expect(page).to have_content("Upload profile picture")
+    end
+  end
+
   it "allows user to change their password" do
     account = create(:account, password: "testing123")
     user = create(:user, account:)

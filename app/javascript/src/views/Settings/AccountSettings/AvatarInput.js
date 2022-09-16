@@ -102,7 +102,7 @@ export default function AvatarInput({
       ) : (
         <input
           type="file"
-          name={name}
+          name="upload-avatar"
           accept=".png, .jpg, .jpeg"
           onChange={handleChange}
           className="absolute inset-0 z-10 w-full h-full rounded-md opacity-0 cursor-pointer"

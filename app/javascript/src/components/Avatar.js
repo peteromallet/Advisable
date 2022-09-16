@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useImage } from "react-image";
 import composeStyles from "src/utilities/composeStyles";
+import possessive from "src/utilities/possesive";
 
 const avatarStyles = composeStyles({
   base: `
@@ -78,7 +79,11 @@ function Avatar({ src, name, size, className }) {
       {src ? (
         <Suspense fallback={<Initials name={name} />}>
           <ErrorBoundary fallback={<Initials name={name} />}>
-            <AvatarImg src={src} className={imgClasses()} />
+            <AvatarImg
+              src={src}
+              className={imgClasses()}
+              alt={`${possessive(name)} avatar`}
+            />
           </ErrorBoundary>
         </Suspense>
       ) : (
