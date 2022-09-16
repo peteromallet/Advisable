@@ -46,7 +46,7 @@
     "file-loader": "^6.2.0",
     "flatpickr": "^4.6.13",
     "formik": "^2.2.9",
-    "framer-motion": "^6.2.8",
+    "framer-motion": "^7.3.5",
     "fuse.js": "^6.5.3",
     "graphql": "^16.5.0",
     "graphql-ruby-client": "^1.10.6",
