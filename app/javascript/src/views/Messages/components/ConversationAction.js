@@ -1,4 +1,4 @@
-import React, { createElement } from "react";
+import React, { createElement, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import composeStyles from "src/utilities/composeStyles";
 
@@ -30,22 +30,19 @@ const iconClasses = composeStyles({
   },
 });
 
-export default function ConversationAction({
-  icon,
-  children,
-  className,
-  variant = "neutral",
-  ...props
-}) {
+const ConversationAction = forwardRef(function ConversationAction(
+  { icon, children, className, variant = "neutral", ...props },
+  ref,
+) {
   return (
-    <button className={classNames({ className })} {...props}>
+    <button ref={ref} className={classNames({ className })} {...props}>
       <div className={iconClasses({ variant })}>
         {createElement(icon, { className: "w-4 h-4" })}
       </div>
-      <span className="pl-2 flex-1 font-medium">{children}</span>
+      <span className="flex-1 pl-2 font-medium">{children}</span>
     </button>
   );
-}
+});
 
 export function ConversationActionLink({
   icon,
@@ -59,7 +56,9 @@ export function ConversationActionLink({
       <div className={iconClasses({ variant })}>
         {createElement(icon, { className: "w-4 h-4" })}
       </div>
-      <span className="pl-2 flex-1 font-medium">{children}</span>
+      <span className="flex-1 pl-2 font-medium">{children}</span>
     </Link>
   );
 }
+
+export default ConversationAction;
