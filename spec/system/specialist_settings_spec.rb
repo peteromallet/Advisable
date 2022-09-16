@@ -11,6 +11,7 @@ RSpec.describe "Specialist settings", type: :system do
     account = create(:account, password: "testing123", first_name: "Sam", last_name: "One")
     specialist = create(:specialist, account:)
     authenticate_as specialist
+    expect(account.avatar).not_to be_attached
     visit "/settings/account"
     expect(page).to have_content("Upload profile picture")
     attach_file(
@@ -18,19 +19,11 @@ RSpec.describe "Specialist settings", type: :system do
       Rails.root.join("spec/support/01.jpg"),
       make_visible: true
     )
-    expect(page).to have_selector("img[alt='Sam One’s avatar']")
-    attach_file(
-      "upload-avatar",
-      Rails.root.join("spec/support/02.jpg"),
-      make_visible: true
-    )
+    expect(page).not_to have_content("Upload profile picture")
+    expect(account.avatar).to be_attached
     click_on("Delete profile picture")
-    wait_until do
-      expect(page).not_to have_selector("img[alt='Sam One’s avatar']")
-    end
-    wait_until do
-      expect(page).to have_content("Upload profile picture")
-    end
+    expect(page).to have_content("Upload profile picture")
+    expect(account.avatar).not_to be_attached
   end
 
   it "allows specialist to change their password" do
