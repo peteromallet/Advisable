@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Divider from "src/components/Divider";
 import queryString from "query-string";
 import { Formik, Form } from "formik";
-import { useTranslation } from "react-i18next";
 import FormField from "components/FormField";
 import SubmitButton from "components/SubmitButton";
 import { useMutation, useApolloClient } from "@apollo/client";
@@ -12,11 +11,11 @@ import VIEWER from "src/graphql/queries/getViewer.graphql";
 import validationSchema from "./validationSchema";
 import LOGIN from "./login";
 import LoginWithGoogle from "./LoginWithGoogle";
+import messageForError from "src/utilities/errorMessages";
 
 export default function LoginForm() {
   const location = useLocation();
   const client = useApolloClient();
-  const { t } = useTranslation();
   const [login] = useMutation(LOGIN);
   const queryParams = queryString.parse(location.search);
 
@@ -30,10 +29,9 @@ export default function LoginForm() {
       variables: { input },
     });
 
-    const errorCode = errors?.[0]?.extensions?.code;
-
-    if (errorCode) {
-      formikBag.setStatus(errorCode);
+    if (errors) {
+      const errorMessage = messageForError(errors?.[0]);
+      formikBag.setStatus(errorMessage);
       formikBag.setSubmitting(false);
       return;
     }
@@ -92,7 +90,7 @@ export default function LoginForm() {
                 color="red600"
                 borderRadius="12px"
               >
-                {t(`errors.${formik.status}`)}
+                {formik.status}
               </Box>
             )}
           </Form>

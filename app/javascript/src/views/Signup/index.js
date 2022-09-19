@@ -10,13 +10,13 @@ import {
 } from "react-router-dom";
 import { Button, Text, Link } from "@advisable/donut";
 import { useApolloClient, useMutation } from "@apollo/client";
-import { useTranslation } from "react-i18next";
 import FormField from "src/components/FormField";
 import useScrollRestore from "src/utilities/useScrollRestore";
 import useViewer from "src/hooks/useViewer";
 import validationSchema from "./validationSchema";
 import { Container, Card, Error } from "./styles";
 import SIGNUP from "./signup";
+import messageForError from "src/utilities/errorMessages";
 
 const Signup = () => {
   useScrollRestore();
@@ -24,7 +24,6 @@ const Signup = () => {
   const params = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
   const client = useApolloClient();
   const [signup] = useMutation(SIGNUP);
   const queryParams = queryString.parse(location.search);
@@ -48,7 +47,7 @@ const Signup = () => {
     });
 
     if (errors) {
-      formikBag.setStatus(errors[0].extensions?.code);
+      formikBag.setStatus(messageForError(errors?.[0]));
       formikBag.setSubmitting(false);
     } else {
       await client.resetStore();
@@ -85,7 +84,7 @@ const Signup = () => {
           Create your Account
         </Text>
         <Text fontSize="s" marginBottom="xl" textAlign="center">
-          {notice && t(notice)}
+          {notice}
         </Text>
         <Formik
           onSubmit={handleSubmit}
@@ -123,7 +122,7 @@ const Signup = () => {
               >
                 Signup
               </Button>
-              {formik.status && <Error>{t(`errors.${formik.status}`)}</Error>}
+              {formik.status && <Error>{formik.status}</Error>}
             </form>
           )}
         </Formik>

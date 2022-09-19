@@ -1,18 +1,16 @@
 import React from "react";
 import { Elements } from "@stripe/react-stripe-js";
-import { I18nextProvider } from "react-i18next";
 import { MemoryRouter } from "react-router-dom";
 import { render, configure } from "@testing-library/react";
 import useBreakpoints from "../../../../donut/src/hooks/useBreakpoints";
 import ApplicationProvider from "components/ApplicationProvider";
 import { NotificationsProvider } from "components/Notifications";
 import { MockedProvider } from "@apollo/client/testing";
-import i18n from "./i18next";
 import App from "../App";
 import createCache from "../apolloCache";
 
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+  constructor() { }
   disconnect() {
     return null;
   }
@@ -76,7 +74,7 @@ Object.defineProperty(window, "scrollTo", {
   value: jest.fn(),
 });
 
-Element.prototype.scrollTo = () => {};
+Element.prototype.scrollTo = () => { };
 
 if (!SVGElement.prototype.getTotalLength) {
   SVGElement.prototype.getTotalLength = () => 1;
@@ -118,23 +116,21 @@ function Providers({ children, route, graphQLMocks }) {
   const cache = createCache();
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <MockedProvider
-        mocks={graphQLMocks}
-        cache={cache}
-        defaultOptions={{
-          mutate: {
-            errorPolicy: "all",
-          },
-        }}
-      >
-        <MemoryRouter initialEntries={[route]}>
-          <NotificationsProvider>
-            <Elements stripe={mockStripe()}>{children}</Elements>
-          </NotificationsProvider>
-        </MemoryRouter>
-      </MockedProvider>
-    </I18nextProvider>
+    <MockedProvider
+      mocks={graphQLMocks}
+      cache={cache}
+      defaultOptions={{
+        mutate: {
+          errorPolicy: "all",
+        },
+      }}
+    >
+      <MemoryRouter initialEntries={[route]}>
+        <NotificationsProvider>
+          <Elements stripe={mockStripe()}>{children}</Elements>
+        </NotificationsProvider>
+      </MemoryRouter>
+    </MockedProvider>
   );
 }
 

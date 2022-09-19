@@ -1,12 +1,12 @@
 import React from "react";
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
-import { useTranslation } from "react-i18next";
 import { useNotifications } from "src/components/Notifications";
 import { gql, useMutation } from "@apollo/client";
 import FormField from "src/components/FormField";
 import SubmitButton from "src/components/SubmitButton";
 import { Box, Columns } from "@advisable/donut";
+import messageForError from "src/utilities/errorMessages";
 
 const validationSchema = object({
   firstName: string().required("First name is required"),
@@ -66,7 +66,6 @@ const useInviteMember = () => {
 };
 
 export default function InviteTeamMember({ onInvite = () => {} }) {
-  const { t } = useTranslation();
   const { notify } = useNotifications();
   const [inviteMember] = useInviteMember();
 
@@ -84,8 +83,7 @@ export default function InviteTeamMember({ onInvite = () => {} }) {
     });
 
     if (errors) {
-      const errorCode = errors?.[0];
-      formik.setStatus(errorCode);
+      formik.setStatus(messageForError(errors?.[0]));
       formik.setSubmitting(false);
     } else {
       formik.resetForm();
@@ -128,9 +126,7 @@ export default function InviteTeamMember({ onInvite = () => {} }) {
               color="red600"
               borderRadius="12px"
             >
-              {t(`errors.${formik.status?.extensions?.code}`, {
-                error: formik.status,
-              })}
+              {formik.status}
             </Box>
           )}
         </Form>
