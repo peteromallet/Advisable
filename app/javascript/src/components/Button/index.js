@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React, { cloneElement, forwardRef } from "react";
 import composeStyles from "src/utilities/composeStyles";
 
 export const buttonStyles = composeStyles({
@@ -105,25 +105,29 @@ export const loadingStyles = composeStyles({
   },
 });
 
-function Button({
-  className,
-  size,
-  variant,
-  prefix,
-  suffix,
-  children,
-  loading,
-  disabled,
-  ...props
-}) {
+const Button = forwardRef(function Button(
+  {
+    className,
+    size,
+    variant,
+    prefix,
+    suffix,
+    children,
+    loading,
+    disabled,
+    ...props
+  },
+  ref,
+) {
   return (
     <button
+      ref={ref}
       disabled={loading || disabled}
       className={buttonStyles({ className, size, variant, loading, disabled })}
       {...props}
     >
       {loading && (
-        <div className="inset-0 absolute grid place-items-center">
+        <div className="grid absolute inset-0 place-items-center">
           <div className={loadingStyles({ variant })} />
         </div>
       )}
@@ -134,7 +138,7 @@ function Button({
         cloneElement(suffix, { className: buttonSuffixStyles({ size }) })}
     </button>
   );
-}
+});
 
 Button.defaultProps = {
   size: "md",
