@@ -69,15 +69,15 @@ const StyledImages = styled.div`
   ${(p) => STYLES[p.number] || GRID};
 `;
 
-function CaseStudyImages({ images, ...props }) {
+function CaseStudyImages({ block, ...props }) {
   const dialog = useImageGallery();
 
   return (
     <motion.div className="pt-2 pb-12" {...props}>
-      <ImageGallery dialog={dialog} images={images} />
+      <ImageGallery dialog={dialog} images={block.images} />
 
-      <StyledImages number={images.length - 1}>
-        {images.map((image, index) => (
+      <StyledImages number={block.images.length - 1}>
+        {block.images.map((image, index) => (
           <StyledImage
             key={image.id}
             onClick={() => dialog.open(index)}
@@ -90,6 +90,6 @@ function CaseStudyImages({ images, ...props }) {
 }
 
 export default function CaseStudyImagesContainer(props) {
-  if (props.images.length === 0) return null;
+  if (props.block.images.length === 0) return null;
   return <CaseStudyImages {...props} />;
 }

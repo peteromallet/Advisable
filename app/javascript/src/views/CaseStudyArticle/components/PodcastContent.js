@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef } from "react";
 
-export default function PodcastContent({ id, url }) {
+export default function PodcastContent({ block }) {
+  const { id, url } = block;
   const container = useRef();
 
   useLayoutEffect(() => {
