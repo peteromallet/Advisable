@@ -22,6 +22,7 @@ jobs:
       TWILIO_API_KEY_SID: ${{ secrets.TWILIO_API_KEY_SID }}
       TWILIO_API_KEY_SECRET: ${{ secrets.TWILIO_API_KEY_SECRET }}
       API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
+      OPENAI_ACCESS_TOKEN: irrelevant
       ACCOUNTS_CREATE_KEY: testing-key
       RAILS_INBOUND_EMAIL_PASSWORD: testing123
       GUILD_REPLIES_DOMAIN: guild-replies
