@@ -1,14 +1,14 @@
-p Hi #{@receiver.account.first_name},
+p Hi #{@receiver.first_name},
 
-p This is a reminder to respond to the meeting request from  #{@sender.account.name}, who would like to discuss a potential project with you.
+p This is a reminder to respond to the meeting request from  #{@sender.name}, who would like to discuss a potential project with you.
 
 p This is a great opportunity for you to understand their requirements and figure out how you can work together.
 
-p As a reminder, #{@sender.account.name_with_company} left the following message:
+p As a reminder, #{@sender.name_with_company} left the following message:
 
 p "#{@message.content}"
 
-p You can accept or decline their request <a clicktracking=off href="#{magic_link(@receiver.account, interview_request_url(@message.conversation))}">here</a>.
+p You can accept or decline their request <a clicktracking=off href="#{magic_link(@receiver, interview_request_url(@message.conversation))}">here</a>.
 
 p If this project is not a good fit for you, ensure you still decline the request. If you don't respond within the next 2 days it will be automatically declined. This could negatively affect your case study ranking and the chances of you being recommended in the future.
 
