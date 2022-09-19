@@ -8,6 +8,7 @@ FactoryBot.define do
     application_stage { "Accepted" }
     bank_holder_name { "Jane Doe" }
     bank_currency { "EUR" }
+    bio { "I have the best words. I write the best placeholder text, and I'm the biggest developer on the web by far ... That other text? They’re bringing mistakes. We are going to make placeholder text great again." }
     hourly_rate { 200 }
     average_score { 75 }
     sequence(:uid) { "spe_#{SecureRandom.hex[0..14]}" }
