@@ -12,7 +12,7 @@ RSpec.describe InterviewRequestReminderJob do
     described_class.perform_now
     described_class.perform_now
 
-    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("SpecialistMailer", "interview_request_reminder", "deliver_now", {args: [interview]}).once
+    expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("AccountMailer", "interview_request_reminder", "deliver_now", {args: [interview]}).once
   end
 
   context "when less than 2 days ago" do
@@ -20,7 +20,7 @@ RSpec.describe InterviewRequestReminderJob do
 
     it "does not send reminder" do
       described_class.perform_now
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_reminder", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_request_reminder", "deliver_now", any_args)
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe InterviewRequestReminderJob do
 
     it "does not send reminder" do
       described_class.perform_now
-      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("SpecialistMailer", "interview_request_reminder", "deliver_now", any_args)
+      expect(ActionMailer::MailDeliveryJob).not_to have_been_enqueued.with("AccountMailer", "interview_request_reminder", "deliver_now", any_args)
     end
   end
 end

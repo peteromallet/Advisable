@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :sales_person do
-    first_name { "MyString" }
-    last_name { "MyString" }
-    email { "MyString" }
-    username { "MyString" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    sequence(:email) { |n| "sales_person_#{n}@test.com" }
+    sequence(:username) { |n| "sales_person_#{n}" }
     active { false }
     out_of_office { false }
     slack { "MyString" }
