@@ -61,6 +61,23 @@ class AccountMailer < ApplicationMailer
     end
   end
 
+  def interview_request_reminder(interview)
+    @interview = interview
+    @message = @interview.messages.interview_requests.order(:created_at).last
+    @sender = @interview.requested_by
+    @receiver = @interview.guests.first
+    @sales_person = consultations_sales_person(@interview.user&.company)
+
+    mail(
+      from: @sales_person.email_with_name,
+      to: @receiver.email_with_name,
+      bcc: @sales_person.email_with_name,
+      subject: "Reminder for consultation request from #{@sender.name_with_company}"
+    ) do |format|
+      format.html { render layout: false }
+    end
+  end
+
   def alternate_interview_request(account, interview, requester, reason)
     @account = account
     @interview = interview
