@@ -10,7 +10,7 @@ module Mutations
       field :interests, [Types::CaseStudy::Interest], null: false
 
       def authorized?(**_args)
-        requires_client!
+        requires_current_user!
       end
 
       def resolve(terms:)

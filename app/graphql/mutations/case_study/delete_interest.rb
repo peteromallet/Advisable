@@ -11,7 +11,7 @@ module Mutations
       field :success, Boolean, null: true
 
       def authorized?(id:)
-        requires_client!
+        requires_current_user!
 
         interest = ::CaseStudy::Interest.find_by!(uid: id)
         policy = ::CaseStudy::InterestPolicy.new(current_user, interest)

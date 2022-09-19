@@ -82,7 +82,7 @@ export default function SignupForm() {
       setStatus(message);
       return;
     }
-    navigate(isClient ? "/setup/company" : "/freelancers/apply");
+    navigate(isClient ? "/setup/company" : "/setup/interests");
   };
 
   return (
@@ -90,7 +90,7 @@ export default function SignupForm() {
       <LoginWithGoogle
         size={isMobile ? "l" : "xl"}
         mode={isClient ? "user" : "specialist"}
-        navigate={isClient ? "/setup/company" : "/freelancers/apply"}
+        navigate={isClient ? "/setup/company" : "/setup/interests"}
       >
         Signup with Google
       </LoginWithGoogle>

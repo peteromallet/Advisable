@@ -3,7 +3,6 @@ import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Container, useBreakpoint } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
-import { useNotifications } from "src/components/Notifications";
 import View from "src/components/View";
 import Navigation from "./components/Navigation";
 import Welcome from "./steps/Welcome";
@@ -16,7 +15,6 @@ import Loading from "src/components/Loading";
 import { useGetSpecialist } from "./queries";
 
 export default function FreelancerApplication() {
-  const { notify } = useNotifications();
   const location = useLocation();
   const viewer = useViewer();
   const navigate = useNavigate();
@@ -24,7 +22,6 @@ export default function FreelancerApplication() {
   const largeScreen = useBreakpoint("lUp");
 
   if (viewer.isClient) {
-    notify("You already registered as a client");
     navigate("/");
   }
 

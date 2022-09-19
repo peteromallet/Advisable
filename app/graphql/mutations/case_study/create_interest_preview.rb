@@ -10,7 +10,7 @@ module Mutations
       field :interest_preview, Types::CaseStudy::InterestPreview, null: false
 
       def authorized?(**_args)
-        requires_client!
+        requires_current_user!
       end
 
       def resolve(term:)

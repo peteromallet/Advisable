@@ -7,7 +7,7 @@ module CaseStudy
     end
 
     def user_owner?
-      record.account&.user == current_user
+      record.account == current_user&.account
     end
   end
 end

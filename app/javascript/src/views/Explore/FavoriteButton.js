@@ -33,7 +33,7 @@ function FavoriteButton({ article, size }) {
   const [unfavorite] = useUnfavoriteArticle(article);
   const { isFavorited } = article;
 
-  if (!viewer || viewer?.__typename === "Specialist") return null;
+  if (!viewer) return null;
 
   const handleClick = async () => {
     client.cache.modify({

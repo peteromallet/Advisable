@@ -48,7 +48,7 @@ const MainRoutes = () => {
         <Route
           path="/setup/*"
           element={
-            <RequireAuthentication clientOnly>
+            <RequireAuthentication>
               <UserOnboarding />
             </RequireAuthentication>
           }

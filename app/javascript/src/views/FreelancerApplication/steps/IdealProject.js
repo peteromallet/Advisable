@@ -44,7 +44,7 @@ export default function IdealProject({ specialist }) {
       await complete({ variables: { input: {} } });
     }
 
-    navigate("/");
+    navigate("/collaborate");
   };
 
   return (

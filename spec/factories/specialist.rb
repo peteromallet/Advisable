@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :specialist do
-    account
+    account { create(:account, completed_tutorials: %w[onboarding]) }
     country
     city { "City" }
     application_stage { "Accepted" }

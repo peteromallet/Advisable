@@ -14,14 +14,14 @@ export default function Explore() {
   const onboarding = useTutorial("onboarding");
 
   if (!onboarding.isComplete) {
-    return <Navigate replace to="/setup/company" />;
+    return <Navigate replace to="/setup/interests" />;
   }
 
   return (
     <>
       {!viewer && <Hero />}
       <ScrollToTop />
-      <div className="max-w-[1300px] mx-auto px-5 lg:px-10 pb-10 min-h-[80vh]">
+      <div className="px-5 pb-10 mx-auto lg:px-10 max-w-[1300px] min-h-[80vh]">
         <TopicsBar />
         <div className="h-px bg-neutral-200" />
         <Outlet />
