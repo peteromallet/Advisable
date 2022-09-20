@@ -79,7 +79,7 @@ class Account < ApplicationRecord
   end
 
   def cached_avatar_url
-    Rails.cache.fetch("account_avatar_#{id}", expires_in: 1.day) { resized_avatar_url }
+    Rails.cache.fetch("account_avatar_#{id}", expires_in: 1.day) { resized_avatar_url(expires_in: 1.day) }
   end
 
   def has_password? # rubocop:disable Naming/PredicateName

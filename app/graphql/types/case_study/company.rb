@@ -13,14 +13,9 @@ module Types
       field :description, String, null: true
       field :articles, [Article], null: false
 
-      field :logo, String, null: true
-      def logo
-        Rails.cache.fetch("cs_company_logo_#{object.id}", expires_in: 1.day) { object.resized_logo_url }
-      end
-
       field :favicon, String, null: true
       def favicon
-        Rails.cache.fetch("cs_company_favicon_#{object.id}", expires_in: 1.day) { object.favicon.url || clearbit_logo }
+        Rails.cache.fetch("cs_company_favicon_#{object.id}", expires_in: 1.day) { object.favicon.url(expires_in: 1.day) || clearbit_logo }
       end
 
       private

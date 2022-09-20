@@ -15,7 +15,6 @@ fragment HeroFields on CaseStudyArticle {
   company {
     id
     name
-    logo
     favicon
     businessType
     website

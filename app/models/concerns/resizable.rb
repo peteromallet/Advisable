@@ -11,9 +11,9 @@ module Resizable
           get_resized_image(image, options)
         end
 
-        define_method("resized_#{name}_url") do
+        define_method("resized_#{name}_url") do |**options|
           image = public_send("resized_#{name}")
-          get_resized_image_url(image)
+          get_resized_image_url(image, options)
         end
       end
     end
@@ -59,12 +59,12 @@ module Resizable
     nil
   end
 
-  def get_resized_image_url(image)
+  def get_resized_image_url(image, options = {})
     return if image.blank?
 
     if image.respond_to?(:variation)
       if image.processed?
-        Rails.application.routes.url_helpers.rails_representation_url(image, host: Advisable::Application::ORIGIN_HOST)
+        Rails.application.routes.url_helpers.rails_representation_url(image, host: Advisable::Application::ORIGIN_HOST, **options)
       else
         ProcessImageJob.perform_later(image.blob, image.variation.transformations)
         Rails.application.routes.url_helpers.rails_blob_url(image.blob, host: Advisable::Application::ORIGIN_HOST)

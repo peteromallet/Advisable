@@ -54,11 +54,6 @@ module Airtable
         company = ::CaseStudy::Company.find_or_initialize_by(name: fields["Client Name"])
         company.business_type = fields["Company Focus"]
         company.website = fields["Client URL"]
-        if fields["Client Logo"].present?
-          url = URI.parse(fields["Client Logo"].first["url"])
-          filename = File.basename(url.path)
-          company.logo.attach(io: url.open, filename:)
-        end
         company.save!
         CompanyFaviconFinderJob.perform_later(company)
         article.company = company
