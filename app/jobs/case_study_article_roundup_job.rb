@@ -17,7 +17,7 @@ class CaseStudyArticleRoundupJob < ApplicationJob
 
       if article_ids.size == AMOUNT_OF_ARTICLES
         account.update!(showcased_articles: already_showcased + article_ids)
-        UserMailer.case_study_article_roundup(account.user, article_ids).deliver_later
+        AccountMailer.case_study_article_roundup(account, article_ids).deliver_later
       end
     end
   end

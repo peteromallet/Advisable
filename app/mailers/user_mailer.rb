@@ -97,20 +97,6 @@ class UserMailer < ApplicationMailer
     payment_request_mail(payment_request, "Payment Request Due")
   end
 
-  def case_study_article_roundup(user, article_ids)
-    @user = user
-    @articles = ::CaseStudy::Article.where(id: article_ids)
-    highest_article = @articles.order(:score).last
-    @account = user.account
-    mail(
-      from: "Advisable Weekly Digest <hello@advisable.com>",
-      to: @account.email,
-      subject: highest_article.title
-    ) do |format|
-      format.html { render layout: "email_v2" }
-    end
-  end
-
   private
 
   def payment_request_mail(payment_request, subject)

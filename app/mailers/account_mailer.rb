@@ -154,4 +154,17 @@ class AccountMailer < ApplicationMailer
       format.html { render layout: false }
     end
   end
+
+  def case_study_article_roundup(account, article_ids)
+    @account = account
+    @articles = ::CaseStudy::Article.where(id: article_ids)
+    highest_article = @articles.order(:score).last
+    mail(
+      from: "Advisable Weekly Digest <hello@advisable.com>",
+      to: @account.email,
+      subject: highest_article.title
+    ) do |format|
+      format.html { render layout: "email_v2" }
+    end
+  end
 end
