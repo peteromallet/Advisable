@@ -117,7 +117,6 @@ export default function CaseStudyCard({
         <Link
           to={article.path}
           state={{
-            signupPrompt: !viewer,
             backgroundLocation: location?.state?.backgroundLocation || location,
           }}
           onMouseDown={() => setTapping(true)}
