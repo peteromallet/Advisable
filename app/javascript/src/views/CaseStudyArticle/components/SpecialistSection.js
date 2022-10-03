@@ -134,22 +134,34 @@ export default function SpecialistSection({ article, modal, isOwner }) {
         </div> */}
       </div>
 
-      {!specialist.unavailableUntil && !isOwner && (
-        <div className="mt-8">
-          <DialogDisclosure {...modal}>
-            {(disclosure) => (
-              <Button
-                className="w-full"
-                size="lg"
-                aria-label="Talk with specialist"
-                {...disclosure}
-              >
-                Contact
-              </Button>
-            )}
-          </DialogDisclosure>
-        </div>
-      )}
+      {!specialist.unavailableUntil &&
+        !isOwner &&
+        (specialist.linkedin ? (
+          <a className="mt-8 block" href={specialist.linkedin} target="_blank" rel="noreferrer">
+            <Button
+              className="w-full"
+              size="lg"
+              aria-label="Talk with specialist"
+            >
+              Contact
+            </Button>
+          </a>
+        ) : (
+          <div className="mt-8">
+            <DialogDisclosure {...modal}>
+              {(disclosure) => (
+                <Button
+                  className="w-full"
+                  size="lg"
+                  aria-label="Talk with specialist"
+                  {...disclosure}
+                >
+                  Contact
+                </Button>
+              )}
+            </DialogDisclosure>
+          </div>
+        ))}
     </>
   );
 }

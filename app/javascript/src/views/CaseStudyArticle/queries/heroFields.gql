@@ -24,6 +24,7 @@ fragment HeroFields on CaseStudyArticle {
     bio
     avatar
     name
+    linkedin
     firstName
     profilePath
     priceRange
