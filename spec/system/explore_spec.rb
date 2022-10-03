@@ -119,19 +119,6 @@ RSpec.describe "Discover", type: :system do
     end
   end
 
-  context "when not logged in" do
-    it "shows the home page and prompts them to signup" do
-      create(:case_study_topic, name: "Home", hidden: true, result_ids: articles.map(&:id))
-      visit("/")
-      expect(page).to have_content(/discover the growth/i)
-      expect(page).to have_content(articles.first.title)
-      click_link(articles.first.title)
-      expect(page).to have_content(/explore 100s of full case studies for free/i)
-      click_button("Get Free Access")
-      expect(page).to have_current_path("/join")
-    end
-  end
-
   describe "/" do
     it "lists topics and they can click into one" do
       create(:case_study_topic, name: "SEO", slug: "seo")
