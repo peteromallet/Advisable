@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import StickyBox from "react-sticky-box";
+import { Chat } from "@styled-icons/heroicons-outline";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBackground, useModal } from "@advisable/donut";
 import useViewer from "src/hooks/useViewer";
@@ -24,6 +25,7 @@ import { useArticle } from "./queries";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SpecialistBar from "./components/SpecialistBar";
 import SimilarArticles from "./components/SimilarArticles";
+import { Linkedin } from "@styled-icons/fa-brands";
 
 export default function CaseStudyArticle() {
   useBackground("white");
@@ -73,6 +75,21 @@ export default function CaseStudyArticle() {
             <ShareArticleButton slug={data.caseStudy.slug} />
             <EditCaseStudyButton article={data.caseStudy} />
             <FavoriteButton article={data.caseStudy} />
+            {specialist.linkedin && (
+              <a href={specialist.linkedin} rel="noreferrer" target="_blank">
+                <CircularButton icon={Linkedin} />
+              </a>
+            )}
+            {!specialist.unavailableUntil && !isOwner && (
+              <div className="shrink-0">
+                <CircularButton
+                  color="blue"
+                  aria-label="Contact"
+                  icon={Chat}
+                  onClick={contactModal.show}
+                />
+              </div>
+            )}
             {backgroundLocation && (
               <CircularButton
                 aria-label="Close modal"

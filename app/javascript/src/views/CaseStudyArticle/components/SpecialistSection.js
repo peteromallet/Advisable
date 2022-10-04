@@ -124,44 +124,42 @@ export default function SpecialistSection({ article, modal, isOwner }) {
             </div>
           </div>
         )}
-
-        {/* <div className="flex gap-2">
-          <StyledIcon icon={Briefcase} color="cyan" />
-          <div>
-            <StyledCategoryName>Previous Roles</StyledCategoryName>
-            <div>See work history</div>
-          </div>
-        </div> */}
       </div>
 
-      {!specialist.unavailableUntil &&
-        !isOwner &&
-        (specialist.linkedin ? (
-          <a className="mt-8 block" href={specialist.linkedin} target="_blank" rel="noreferrer">
+      <div className="mt-8 flex flex-col gap-4">
+        {specialist.linkedin ? (
+          <a
+            className="mt-8 block"
+            href={specialist.linkedin}
+            target="_blank"
+            rel="noreferrer"
+          >
             <Button
+              variant="subtle"
               className="w-full"
               size="lg"
               aria-label="Talk with specialist"
             >
-              Contact
+              View on Linkedin
             </Button>
           </a>
-        ) : (
-          <div className="mt-8">
-            <DialogDisclosure {...modal}>
-              {(disclosure) => (
-                <Button
-                  className="w-full"
-                  size="lg"
-                  aria-label="Talk with specialist"
-                  {...disclosure}
-                >
-                  Contact
-                </Button>
-              )}
-            </DialogDisclosure>
-          </div>
-        ))}
+        ) : null}
+
+        {!specialist.unavailableUntil && !isOwner && (
+          <DialogDisclosure {...modal}>
+            {(disclosure) => (
+              <Button
+                className="w-full"
+                size="lg"
+                aria-label="Talk with specialist"
+                {...disclosure}
+              >
+                Contact
+              </Button>
+            )}
+          </DialogDisclosure>
+        )}
+      </div>
     </>
   );
 }
