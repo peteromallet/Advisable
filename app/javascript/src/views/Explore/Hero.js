@@ -19,9 +19,9 @@ export default function Hero() {
             transition={{ delay: 0, duration: 0.8 }}
             className="mb-4 font-serif text-4xl font-bold md:text-5xl text-blue900 tracking-[-0.02em]"
           >
-            Discover the growth secrets of{" "}
+            Discover the best of{" "}
             <span className="font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-              SaaS Startups
+              SaaS Marketing
             </span>
           </motion.h1>
           <motion.p
@@ -30,8 +30,8 @@ export default function Hero() {
             transition={{ delay: 0.05, duration: 1 }}
             className="text-lg md:text-xl md:leading-relaxed text-blue900 max-w-[600px]"
           >
-            Explore case studies of 100s of successful SaaS growth projects -
-            written by the marketers who did the work
+            Explore case studies of 100s of successful SaaS growth projects and
+            meet the people behind them.
           </motion.p>
         </div>
       </div>
