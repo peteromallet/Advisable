@@ -1,3 +1,1 @@
-# Advisable
-
-Go to: [Engineering Notion](https://www.notion.so/Engineering-98df49c6aede497bb6ddcf9275528542)
+Open-sourcing the code-base of the now-defunct Advisable.com - so that the brilliant work of [@thomascullen](https://github.com/thomascullen), [@yurkoturskiy](https://github.com/yurkoturskiy) and [@miharekar](https://github.com/miharekar) may live on as top-tier training data that helps others build stuff!
